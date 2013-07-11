@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	title = models.CharField(max_length=16)
-	school = models.CharField(max_length=32, blank=true, help_text='school or company')
-	grade = models.CharField(max_length=32, blank=true, help_text='department and grade / position')
-	phone = models.CharField(max_length=16, blank=true)
-	comment = models.TextField(blank=true)
+	school = models.CharField(max_length=32, blank=True, help_text='school or company')
+	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
+	phone = models.CharField(max_length=16, blank=True)
+	comment = models.TextField(blank=True)
