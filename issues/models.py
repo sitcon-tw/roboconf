@@ -9,13 +9,13 @@ class Label(models.Model):
 
 class Issue(models.Model):
 	title = models.CharField(max_length=128)
-	creator = models.ForeignKey(User, editable=False, on_delete=models.SET_NULL)
+	creator = models.ForeignKey(User, editable=False, related_name='created_issues')
 	creation_time = models.DateTimeField(editable=False)
 	is_open = models.BooleanField(default=True)
-	assignee = models.ForeignKey(User, blank=True)
+	assignee = models.ForeignKey(User, blank=True, related_name='assigned_issues')
 	due_time = models.DateTimeField(blank=True)
-	labels = models.ManyToManyField(Label)
-	# depends_on = models.ManyToManyField('self', symmetrical=False)
+	labels = models.ManyToManyField(Label, related_name='issues')
+	# depends_on = models.ManyToManyField('self', symmetrical=False, related_name='required_by')
 	content = models.TextField()
 
 class IssueHistory(models.Model):
@@ -35,7 +35,7 @@ class IssueHistory(models.Model):
 		)
 
 	issue = models.ForeignKey(Issue, editable=False, related_name='histories')
-	user = models.ForeignKey(User, editable=False)
+	user = models.ForeignKey(User, editable=False, related_name='issue_histories')
 	timestamp = models.DateTimeField(editable=False)
 	mode = models.CharField(max_length=1, editable=False, choices=MODE_CHOICES, default=COMMENT)
 	content = models.TextField()
