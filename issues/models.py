@@ -15,21 +15,27 @@ class Issue(models.Model):
 	assignee = models.ForeignKey(User, blank=True)
 	due_time = models.DateTimeField(blank=True)
 	labels = models.ManyToManyField(Label)
+	# depends_on = models.ManyToManyField('self')
 	content = models.TextField()
 
 class IssueHistory(models.Model):
 	COMMENT = '.'
 	ASSIGN = 'A'
 	CHANGE_STATE = 'S'
+	SET_DUE = 'D'
+	MERGE_TO = 'M'
+	MERGE_IN = 'I'
 	MODE_CHOICES = (
 			(COMMENT, 'Commented'),
 			(ASSIGN, 'Assigned to'),
-			(CHANGE_STATE, 'Changed state')
+			(CHANGE_STATE, 'Changed state'),
+			(SET_DUE, 'Set due time'),
+			(MERGE_TO, 'Merged to'),
+			(MERGE_IN, 'Merged in')
 		)
 
 	issue = models.ForeignKey(Issue, editable=False, related_name='histories')
 	user = models.ForeignKey(User, editable=False)
 	timestamp = models.DateTimeField(editable=False)
 	mode = models.CharField(max_length=1, editable=False, choices=MODE_CHOICES, default=COMMENT)
-	affected_value = models.TextField()
-	comment = models.TextField()
+	content = models.TextField()
