@@ -15,7 +15,7 @@ class Issue(models.Model):
 	assignee = models.ForeignKey(User, blank=True)
 	due_time = models.DateTimeField(blank=True)
 	labels = models.ManyToManyField(Label)
-	# depends_on = models.ManyToManyField('self')
+	# depends_on = models.ManyToManyField('self', symmetrical=False)
 	content = models.TextField()
 
 class IssueHistory(models.Model):
