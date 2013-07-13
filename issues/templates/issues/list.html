@@ -2,7 +2,7 @@
 {% if issues %}
 	<ul>
 	{% for issue in issues %}
-		<li><a href="/issues/{{ issue.id }}">{{ issue.title }}</a></li>
+		<li><a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a></li>
 	{% endfor %}
 	</ul>
 {% else %}
