@@ -31,4 +31,4 @@ def create(request):
 
 		return HttpResponseRedirect(reverse('issues:detail', args=(i.id,)))
 
-	return render(request, 'issues/create.html', {})
+	return render(request, 'issues_create.html', {})
