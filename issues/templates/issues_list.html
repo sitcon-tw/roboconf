@@ -44,7 +44,7 @@
 				<div class="small-10 columns">
 					<h6>
 						<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
-						{% for label in issue.labels %}
+						{% for label in issue.labels.all %}
 						<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
 						{% endfor %}
 					</h6>
