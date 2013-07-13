@@ -4,8 +4,8 @@
 <h1>待辦事項</h1>
 <form action="{% url 'issues:create' %}" method="POST">
 {% csrf_token %}
-	<p><input type="text" name="title" maxlength="128" placeholder="標題" required="required" /></p>
-	<p><textarea name="content" placeholder="寫下留言" required="required"></textarea></p>
+	<p><input type="text" name="title" size="30" maxlength="128" placeholder="標題" required="required" /></p>
+	<p><textarea name="content" placeholder="寫下留言" cols="30" rows="40" required="required"></textarea></p>
 	<p><input type="submit" class="button radius" name="submit" value="提交新議題" /></p>
 </form>
 {% endblock %}
