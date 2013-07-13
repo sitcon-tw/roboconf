@@ -4,30 +4,30 @@
 <div class="row">
 	<div class="large-3 columns">
 		<ul class="side-nav">
-			<li><a href="{% url 'issues:list' %}">所有議題</a></li>
-			<li><a href="{% url 'issues:assigned' %}">分派給我</a></li>
-			<li><a href="{% url 'issues:created' %}">由我建立</a></li>
-			<li><a href="{% url 'issues:starred' %}">已加星號</a></li>
+			<li{% if mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a></li>
+			<li{% if mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a></li>
+			<li{% if mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a></li>
+			<li{% if mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號</a></li>
 		</ul>
 		<hr/>
 		<h5>標籤</h5>
 		<ul class="side-nav">
 		{% for label in labels %}
-			<li><span style="display: inline-block; width: 1em; height: 1em; background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</li>
+			<li><a href="{{ current_url }}?label={{ label.id }}"><span style="display: inline-block; width: 1em; height: 1em; background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</li>
 		{% endfor %}
 		</ul>
 	</div>
 	<div class="large-9 columns">
 		<ul class="button-group" style="float: left;">
-			<li><a href="{% url 'issues:list' %}?state=open" class="small radius secondary button">待處理</a></li>
-			<li><a href="{% url 'issues:list' %}?state=closed" class="small radius secondary button">已結案</a></li>
+			<li><a href="{{ current_url }}?state=open" class="small radius secondary button {{ is_open|yesno:'active,' }}">待處理</a></li>
+			<li><a href="{{ current_url }}?state=closed" class="small radius secondary button {{ is_open|yesno:',active' }}">已結案</a></li>
 		</ul>
-		<a class="small radius dropdown button" href="#" style="float: left;">排序：最新</a>
+		<a class="small radius dropdown button" data-options="is_hover:true" href="#" style="float: left;">排序：{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}</a>
 		<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
-			<li><a href="{% url 'issues:list' %}?sort=created&amp;direction=desc">最新</a></li>
-			<li><a href="{% url 'issues:list' %}?sort=created&amp;direction=asc">最新</a></li>
-			<li><a href="{% url 'issues:list' %}?sort=due&amp;direction=desc">最先到期</a></li>
-			<li><a href="{% url 'issues:list' %}?sort=due&amp;direction=asc">最晚到期</a></li>
+			<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
+			<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
+			<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
+			<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
 		</ul>
 		<a class="small radius button" href="{% url 'issues:create' %}" style="float: right;">提交議題</a>
 		<div class="radius panel" style="clear: both;">
