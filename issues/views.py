@@ -32,7 +32,7 @@ def list_common(request, dataset, mode):
 	})
 
 def list(request):
-	return list_common(request, dataset=Issue.objects.all, mode='list')
+	return list_common(request, dataset=Issue.objects.all(), mode='list')
 
 def assigned(request, user_id):
 	return list_common(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
