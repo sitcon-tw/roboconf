@@ -15,11 +15,11 @@
 		</ul>
 		<ul class="right">
 			<li class="divider hide-for-small"></li>
-			{% if request.user.is_authenticated %}
+			{% if user.is_authenticated %}
 			<li class="has-dropdown">
-				<a href="#">{{ request.user.username }}</a>
+				<a href="#">{{ user.username }}</a>
 				<ul class="dropdown">
-					<li><label>{{ request.user.last_name }} {{ request.user.first_name }}</label></li>
+					<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>
 					<li><a href="#">帳號設定</a></li>
 					<li><a href="/backend/">系統設定</a></li>
 					<li class="divider"></li>
