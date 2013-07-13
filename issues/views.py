@@ -7,37 +7,37 @@ from issues.models import Issue
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
-def list(request, dataset=None, action='list'):
-	context = list_context()
+def list(request, dataset=None, mode='list'):
 	if not dataset:
 		dataset = Issue.objects.all()
 
 	# Filter
-	state = not (request.GET.get('state') == 'closed')
-	dataset.filter(is_open=state)
+	is_open = not (request.GET.get('state') == 'closed')
+	dataset.filter(is_open=is_open)
 
 	label = request.GET.get('label')
 	if label and str(label).isdigit():
 		dataset.filter(labels__pk=label)
 
 	# Sort
-	direction = (request.GET.get('direction') == 'asc')
+	is_asc = (request.GET.get('direction') == 'asc')
 	sorting = request.GET.get('sort', 'created')
-	dataset.order_by(('' if direction else '-') + order_mapping[sorting])
+	dataset.order_by(('' if is_asc else '-') + order_mapping[sorting])
 
-	context['current_url'] = request.path 
-	context['issues'] = dataset
-	context['sorting'] = sorting
-	context['is_asc'] = direction
-	context['is_open'] = state
-	context['mode'] = action
-	return render(request, 'issues_list.html', context)
+	return render(request, 'issues_list.html', {
+		'current_url': request.path,
+		'issues': dataset,
+		'sorting': sorting,
+		'is_asc': is_asc,
+		'is_open': is_open,
+		'mode': mode,
+	})
 
 def assigned(request, user_id):
-	return list(request, dataset=Issue.objects.filter(assignee__pk=user_id), action='assigned')
+	return list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
 
 def created(request, user_id):
-	return list(request, dataset=Issue.objects.filter(creator__pk=user_id), action='created')
+	return list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
 
 def starred(request, user_id):
 	# TODO: Implement "starring" (a.k.a watch issue)
