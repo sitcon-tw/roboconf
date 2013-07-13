@@ -18,23 +18,25 @@
 		</ul>
 	</div>
 	<div class="large-9 columns">
-		<div style="float: left;">
-			<ul class="radius button-group">
-				<li><a href="{{ current_url }}?state=open" class="small button {{ is_open|yesno:',secondary' }}">待處理</a></li>
-				<li><a href="{{ current_url }}?state=closed" class="small button {{ is_open|yesno:'secondary,' }}">已結案</a></li>
+		<div class="row">
+			<ul class="large-8 columns inline-list">
+				<li><ul class="radius button-group">
+					<li><a href="{{ current_url }}?state=open" class="small button">待處理</a></li>
+					<li><a href="{{ current_url }}?state=closed" class="small button">已結案</a></li>
+				</li></ul>
+				<li><a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" data-options="is_hover:true" href="#">排序：{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}</a>
+				<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
+					<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
+					<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
+					<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
+					<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
+				</ul></li>
 			</ul>
-			<a class="small radius dropdown button" data-options="is_hover:true" href="#">排序：{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}</a>
-			<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
-				<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
-				<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
-				<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
-				<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
-			</ul>
+			<div style="large-4 columns">
+				<a class="small radius button" href="{% url 'issues:create' %}">提交議題</a>
+			</div>
 		</div>
-		<div style="float: right;">
-			<a class="small radius button" href="{% url 'issues:create' %}">提交議題</a>
-		</div>
-		<div class="radius panel" style="clear: both;">
+		<div class="radius panel">
 		{% for issue in issues %}
 			<h5>#{{ issue.id }}: <a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a></h5>
 		{% empty %}
