@@ -1,18 +1,19 @@
-from django.http import HttpResponse
-from django.template import RequestContext, loader
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
 
 from issues.models import Issue
 
 def list(request):
 	issues = Issue.objects.order_by('+id')[:10]
-	template = loader.get_template('issues/list.html')
-	context = RequestContext(request, {
-			'issues': issues,
-		})
-    return HttpResponse(template.render(context))
+	context = { 'issues': issues }
+    return render(request, 'issues/list.html', context)
     
 def create(request):
 	return HttpResponse('Create issue')
 
 def detail(request, id):
-	return HttpResponse('Issue #%s' % id)
+	try:
+		issue = Issue.objects.get(pk=id)
+	except Issue.DoesNotExist:
+		raise Http404
+	return render(request, 'issues/detail.html', { 'issue': issue })
