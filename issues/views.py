@@ -1,13 +1,21 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.views import generic
 
 from issues.models import Issue
 
-def list(request):
-	issues = Issue.objects.order_by('id')[:10]
-	return render(request, 'issues/list.html', { 'issues': issues })
-    
+class ListView(generic.ListView):
+	template_name = 'issues_list.html'
+	context_object_name = 'issues'
+
+	def get_queryset(self):
+		return Issue.objects.order_by('id')[:10]
+
+class DetailView(generic.DetailView):
+	model = Issue
+	template_name = 'issues_detail.html'
+
 #@login_required
 def create(request):
 	if 'submit' in request.POST:
@@ -24,7 +32,3 @@ def create(request):
 		return HttpResponseRedirect(reverse('issues:detail', args=(i.id,)))
 
 	return render(request, 'issues/create.html', {})
-
-def detail(request, id):
-	issue = get_object_or_404(Issue, pk=id)
-	return render(request, 'issues/detail.html', { 'issue': issue })
