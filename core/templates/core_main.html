@@ -9,18 +9,19 @@
 	</ul>
 	<section class="top-bar-section">
 		<ul class="left">
+			{% if user.is_authenticated %}
 			<li><a href="#">文件</a></li>
 			<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
 			<li><a href="#">聚會</a></li>
 			<li><a href="#">時間表</a></li>
 			<li><a href="#">人員</a></li>
+			{% endif %}
 		</ul>
 		<ul class="right">
-			<li class="divider hide-for-small"></li>
 			{% if user.is_authenticated %}
 			<li class="has-dropdown">
 				<a href="#">
-					<img src="{{ user.email|get_avatar }}" alt="{{ user.username }}" style="width: 1.5em; height: 1.5em; border-radius: 3px; margin: 5px;" />
+					<img src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" style="width: 1.5em; height: 1.5em; border-radius: 3px; margin: 5px;" />
 					{{ user.username }}
 				</a>
 				<ul class="dropdown">
