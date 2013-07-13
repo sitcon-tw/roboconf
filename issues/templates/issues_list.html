@@ -1,3 +1,6 @@
+{% extends 'core_base.html' %}
+{% block title %}Issues{{ block.super }}{% endblock %}
+{% block content_block %}
 <h1>Issue tracker</h1>
 {% if issues %}
 	<ul>
@@ -9,3 +12,4 @@
 	<p>No issues yet.</p>
 {% endif %}
 <a href="{% url 'issues:create' %}">Submit issue</a>
+{% endblock %}
