@@ -4,5 +4,5 @@ from issues import views
 urlpatterns = patterns('',
 		url(r'^$', views.ListView.as_view(), name='list'),
 		url(r'^new$', views.create, name='create'),
-		url(r'^(?P<id>\d+)$', views.DetailView.as_view(), name='detail')
+		url(r'^(?P<pk>\d+)$', views.DetailView.as_view(), name='detail')
 	)
