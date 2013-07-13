@@ -9,7 +9,7 @@ def list(request):
     
 #@login_required
 def create(request):
-	if request.POST['submit']:
+	if 'submit' in request.POST:
 		# TODO: Check permissions
 		if not request.user.is_authenticated():
 			return HttpResponseRedirect(reverse('issues:list'))
