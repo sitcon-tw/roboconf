@@ -1,4 +1,5 @@
 {% extends 'core_base.html' %}
+{% load users %}
 {% block content_block %}
 <nav class="top-bar">
 	<ul class="title-area">
@@ -17,7 +18,10 @@
 			<li class="divider hide-for-small"></li>
 			{% if user.is_authenticated %}
 			<li class="has-dropdown">
-				<a href="#">{{ user.username }}</a>
+				<a href="#">
+					<img src="{{ user.email|get_avatar }}" alt="{{ user.username }}" style="width: 1.5em; height: 1.5em; border-radius: 3px; margin: 5px;" />
+					{{ user.username }}
+				</a>
 				<ul class="dropdown">
 					<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>
 					<li><a href="#">帳號設定</a></li>
