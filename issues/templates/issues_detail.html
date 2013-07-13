@@ -3,5 +3,5 @@
 {% block content %}
 <h1>待辦事項</h1>
 <h3>#{{ issue.id }}: {{ issue.title }}</h3>
-<p>{{ issue.content }}</p>
+{{ issue.content|linebreaks }}
 {% endblock %}
