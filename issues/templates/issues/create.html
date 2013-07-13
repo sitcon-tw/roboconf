@@ -1,1 +1,8 @@
 <h2>Create issue</h2>
+<form action="{% url 'issues:create' %}" method="POST">
+{% csrf_token %}
+	<input type="text" name="title" maxlength="128" placeholder="Title" required="required" />
+	<textarea name="content" placeholder="Leave a comment" required="required">
+	</textarea>
+	<input type="submit" name="submit" value="Submit new issue" />
+</form>
