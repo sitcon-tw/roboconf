@@ -7,22 +7,19 @@ from issues.models import Issue, Label
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
-def list(request, dataset=None, mode='list'):
-	if not dataset:
-		dataset = Issue.objects.all()
-
+def list_common(request, dataset, mode):
 	# Filter
 	is_open = not (request.GET.get('state') == 'closed')
-	dataset.filter(is_open=is_open)
+	dataset = dataset.filter(is_open=is_open)
 
 	label = request.GET.get('label')
 	if label and str(label).isdigit():
-		dataset.filter(labels__pk=label)
+		dataset = dataset.filter(labels__pk=label)
 
 	# Sort
 	is_asc = (request.GET.get('direction') == 'asc')
 	sorting = request.GET.get('sort', 'created')
-	dataset.order_by(('' if is_asc else '-') + order_mapping[sorting])
+	dataset = dataset.order_by(('' if is_asc else '-') + order_mapping[sorting])
 
 	return render(request, 'issues_list.html', {
 		'current_url': request.path,
@@ -34,11 +31,14 @@ def list(request, dataset=None, mode='list'):
 		'mode': mode,
 	})
 
+def list(request):
+	return list_common(request, dataset=Issue.objects.all, mode='list')
+
 def assigned(request, user_id):
-	return list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
+	return list_common(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
 
 def created(request, user_id):
-	return list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
+	return list_common(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
 
 def starred(request, user_id):
 	# TODO: Implement "starring" (a.k.a watch issue)

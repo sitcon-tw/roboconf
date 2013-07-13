@@ -19,7 +19,7 @@
 	</div>
 	<div class="large-9 columns">
 		<div class="row"><div class="large-12 columns">
-			<div style="float: left; margin-left: 0.5em; margin-right: 0.5em;">
+			<div style="float: left; margin-right: 0.5em;">
 				<ul class="radius button-group">
 					<li><a href="{{ current_url }}?state=open" class="small secondary button">待處理</a></li>
 					<li><a href="{{ current_url }}?state=closed" class="small secondary button">已結案</a></li>
@@ -43,6 +43,7 @@
 		</div></div>
 		<div class="radius panel">
 		{% for issue in issues %}
+		{% if not forloop.first %}<hr/>{% endif %}
 			<div class="row">
 				<div class="small-10 columns">
 					<h6>
