@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User, related_name='profile')
 	title = models.CharField(max_length=16)
 	school = models.CharField(max_length=32, blank=True, help_text='school or company')
 	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')

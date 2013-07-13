@@ -1,0 +1,30 @@
+{% extends 'core_main.html' %}
+{% block title %}SITCON{% endblock %}
+{% load users %}
+{% block content %}
+<div class="row">
+	{% if user.is_authenticated %}
+	<div class="large-3 columns">
+		<img src="{{ user.email|get_avatar }}" alt="{{ user.username }}" style="border-radius: 6px;" />
+		<h4>{{ user.username }}</h4>
+		<h5 class="subheader">{{ user.profile.title }}</h5>
+	</div>
+	<div class="large-5 columns">
+		<h5><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
+		<hr/>
+	</div>
+	<div class="large-4 columns">
+		<h5>聚會概覽</h5>
+		<hr/>
+		<p></p>
+	</div>
+	{% else %}
+	<div class="large-6 small-9 small-centered columns">
+		<h4 style="text-align: center;">
+			必須<a href="/backend/">登入</a>才能存取此系統。<br/>
+			<small>新進工作人員請向行政組索取帳號。</small>
+		</h4>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}
