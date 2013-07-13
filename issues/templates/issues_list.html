@@ -18,26 +18,29 @@
 		</ul>
 	</div>
 	<div class="large-9 columns">
-		<ul class="button-group" style="float: left;">
-			<li><a href="{{ current_url }}?state=open" class="small radius secondary button {{ is_open|yesno:'active,' }}">待處理</a></li>
-			<li><a href="{{ current_url }}?state=closed" class="small radius secondary button {{ is_open|yesno:',active' }}">已結案</a></li>
-		</ul>
-		<a class="small radius dropdown button" data-options="is_hover:true" href="#" style="float: left;">排序：{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}</a>
-		<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
-			<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
-			<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
-			<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
-			<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
-		</ul>
-		<a class="small radius button" href="{% url 'issues:create' %}" style="float: right;">提交議題</a>
+		<div style="float: left;">
+			<ul class="radius button-group">
+				<li><a href="{{ current_url }}?state=open" class="small button {{ is_open|yesno:',secondary' }}">待處理</a></li>
+				<li><a href="{{ current_url }}?state=closed" class="small button {{ is_open|yesno:'secondary,' }}">已結案</a></li>
+			</ul>
+			<a class="small radius dropdown button" data-options="is_hover:true" href="#">排序：{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}</a>
+			<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
+				<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
+				<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
+				<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
+				<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
+			</ul>
+		</div>
+		<div style="float: right;">
+			<a class="small radius button" href="{% url 'issues:create' %}">提交議題</a>
+		</div>
 		<div class="radius panel" style="clear: both;">
 		{% for issue in issues %}
-			<h5><a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a></h5>
+			<h5>#{{ issue.id }}: <a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a></h5>
 		{% empty %}
 			<p>尚無議題。</p>
 		{% endfor %}
 		</div>
 	</div>
 </div>
-<h1>待辦事項</h1>
 {% endblock %}

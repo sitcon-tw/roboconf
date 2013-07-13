@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from issues.models import Issue
+from issues.models import Issue, Label
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
@@ -27,6 +27,7 @@ def list(request, dataset=None, mode='list'):
 	return render(request, 'issues_list.html', {
 		'current_url': request.path,
 		'issues': dataset,
+		'labels': Label.objects.all(),
 		'sorting': sorting,
 		'is_asc': is_asc,
 		'is_open': is_open,
