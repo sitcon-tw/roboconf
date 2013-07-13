@@ -1,0 +1,10 @@
+<h1>Issue tracker</h1>
+{% if issues %}
+	<ul>
+	{% for issue in issues %}
+		<li><a href="/issues/{{ issue.id }}">{{ issue.title }}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No issues yet.</p>
+{% endif %}
