@@ -1,7 +1,7 @@
-{% extends 'core_base.html' %}
-{% block title %}Issues{{ block.super }}{% endblock %}
-{% block content_block %}
-<h1>Issue tracker</h1>
+{% extends 'core_main.html' %}
+{% block title %}待辦事項{{ block.super }}{% endblock %}
+{% block content %}
+<h1>待辦事項</h1>
 {% if issues %}
 	<ul>
 	{% for issue in issues %}
@@ -9,7 +9,7 @@
 	{% endfor %}
 	</ul>
 {% else %}
-	<p>No issues yet.</p>
+	<p>尚無議題。</p>
 {% endif %}
-<a href="{% url 'issues:create' %}">Submit issue</a>
+<a href="{% url 'issues:create' %}">提交議題</a>
 {% endblock %}

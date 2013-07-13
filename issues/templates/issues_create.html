@@ -1,7 +1,11 @@
-<h2>Create issue</h2>
+{% extends 'core_main.html' %}
+{% block title %}待辦事項{{ block.super }}{% endblock %}
+{% block content %}
+<h1>待辦事項</h1>
 <form action="{% url 'issues:create' %}" method="POST">
 {% csrf_token %}
-	<p><input type="text" name="title" maxlength="128" placeholder="Title" required="required" /></p>
-	<p><textarea name="content" placeholder="Leave a comment" required="required"></textarea></p>
-	<p><input type="submit" name="submit" value="Submit new issue" /></p>
+	<p><input type="text" name="title" maxlength="128" placeholder="標題" required="required" /></p>
+	<p><textarea name="content" placeholder="寫下留言" required="required"></textarea></p>
+	<p><input type="submit" name="submit" value="提交新議題" /></p>
 </form>
+{% endblock %}

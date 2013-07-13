@@ -1,2 +1,7 @@
-<h2>#{{ issue.id }}: {{ issue.title }}</h2>
+{% extends 'core_main.html' %}
+{% block title %}待辦事項{{ block.super }}{% endblock %}
+{% block content %}
+<h1>待辦事項</h1>
+<h3>#{{ issue.id }}: {{ issue.title }}</h3>
 <p>{{ issue.content }}</p>
+{% endblock %}
