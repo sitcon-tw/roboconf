@@ -27,9 +27,13 @@ img.avatar.large { border-radius: 6px; }
 .issue-list .issue-id { float: right; }
 .issue-list h4 { font-size: 166.66%; margin: 0.2em auto; }
 .issue-list .labels { margin: auto 0.25em; font-size: 60%; }
+form.issue-edit .columns, form.issue-edit .form-main { margin-bottom: 1em; }
 form.issue-edit .form-main { background: #f6f6f6; padding: 1em; border: 1px solid #e5e5e5; border-radius: 3px; }
 form.issue-edit textarea { height: 18.5em; }
 form.custom .label-item label { font-size: 0.6em; line-height: 200%; }
 form.custom .label-item .custom.checkbox { border-radius: 3px; border: 0; }
 form.custom .label-item .custom.checkbox.checked:before {content: ''; top: auto; left: auto; margin: 4px;
 	width: 8px; height: 8px; background: #fff; border: 1px solid #eee; border-radius: 2px; }
+.icon-back { opacity: 0.05; }
+.icon-back:hover, .icon-back:focus { opacity: 0.6; }
+.icon-back img { width: 20px; height: 15px; }
