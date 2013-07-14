@@ -50,11 +50,10 @@ class DetailView(generic.DetailView):
 
 #@login_required
 def create(request):
-	if 'submit' in request.POST:
-		# TODO: Check permissions
-		if not request.user.is_authenticated():
-			return HttpResponseRedirect(reverse('issues:list'))
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('issues:list'))
 
+	if 'submit' in request.POST:
 		i = Issue()
 		i.title = request.POST['title']
 		i.content = request.POST['content']

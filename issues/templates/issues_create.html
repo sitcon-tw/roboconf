@@ -4,10 +4,21 @@
 <form class="issue-edit custom" action="{% url 'issues:create' %}" method="POST">
 	{% csrf_token %}
 	<div class="row">
-		<div class="large-8 columns">
-			<p><input type="text" name="title" size="30" maxlength="128" placeholder="標題" required="required" /></p>
-			<p><textarea name="content" placeholder="寫下留言" cols="30" rows="40" required="required"></textarea></p>
-			<p><input type="submit" class="button radius right" name="submit" value="提交新議題" /></p>
+		<div class="large-1 columns">
+			<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
+		</div>
+		<div class="large-7 columns">
+			<div class="form-main">
+				<div class="row"><div class="large-12 columns">
+					<input type="text" name="title" size="30" maxlength="128" placeholder="標題" required="required" />
+				</div></div>
+				<div class="row"><div class="large-12 columns">
+					<textarea name="content" placeholder="寫下留言" cols="30" rows="40" required="required"></textarea>
+				</div></div>
+			</div>
+			<div>
+				<input type="submit" class="button radius right" name="submit" value="提交新議題" />
+			</div>
 		</div>
 		<div class="large-4 columns">
 			<h5>新增標籤</h5>
