@@ -6,13 +6,9 @@
 <form class="issue-edit custom" action="{% url 'issues:create' %}" method="POST">
 	{% csrf_token %}
 	<div class="row">
-		<div class="large-1 columns">
-			<div>
-				<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
-			</div>
-			<div>
-				<a class="icon-back" href="{% url 'issues:list' %}"><img src="{% static 'img/icon-back.png' %}" alt="回到待辦事項" /></a>
-			</div>
+		<div class="large-1 avatars columns">
+			<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
+			<a class="right icon-back" href="{% url 'issues:list' %}"><img src="{% static 'img/icon-back.png' %}" alt="回到待辦事項" /></a>
 		</div>
 		<div class="large-7 columns">
 			<div class="form-main">
