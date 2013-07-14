@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.contrib.auth.models import User
 
 from issues.models import Issue, Label
 
@@ -65,4 +66,5 @@ def create(request):
 
 	return render(request, 'issues_create.html', {
 		'labels': Label.objects.all(),
+		'users': User.objects.all(),
 	})

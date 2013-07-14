@@ -8,15 +8,34 @@
 	<div class="row">
 		<div class="large-1 avatars columns">
 			<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
-			<a class="right icon-back" href="{% url 'issues:list' %}"><img src="{% static 'img/icon-back.png' %}" alt="回到待辦事項" /></a>
+			<a class="right icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項"><img src="{% static 'img/icon-back.png' %}" alt="" /></a>
 		</div>
 		<div class="large-7 columns">
 			<div class="form-main">
 				<div class="row"><div class="large-12 columns">
-					<input type="text" name="title" size="30" maxlength="128" placeholder="標題" required="required" />
+					<input type="text" name="title" size="30" maxlength="128" placeholder="標題" required />
 				</div></div>
+				{% if users %}{# TODO: Use permissions #}
+				<div class="row">
+					<div class="large-4 small-6 columns">
+						<select id="assignee" name="assignee">
+							<option disabled>將此議題指派給</option>
+							{% for u in users %}
+							<option value="{{ u.id }}">
+								<h5><img class="avatar small" src="{{ u.email|get_avatar:'144' }}" alt="{{ user.username }}" /> {{ u.username }} <small>{{ u.last_name }} {{ u.first_name }}</small></h5>
+							</option>
+							{% endfor %}
+							<option value="" selected>（未指派）</option>
+						</select>
+					</div>
+					<div class="large-4 small-2 columns"></div>
+					<div class="small-4 columns">
+						<input type="text" name="due_time" maxlength="10" placeholder="期限（年-月-日）" />
+					</div>
+				</div>
+				{% endif %}
 				<div class="row"><div class="large-12 columns">
-					<textarea name="content" placeholder="寫下留言" cols="30" rows="40" required="required"></textarea>
+					<textarea name="content" placeholder="寫下留言" cols="30" rows="40" required></textarea>
 				</div></div>
 			</div>
 			<div>
