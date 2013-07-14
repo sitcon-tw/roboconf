@@ -5,7 +5,7 @@
 <div class="row">
 	{% if user.is_authenticated %}
 	<div class="large-3 columns">
-		<img src="{{ user.email|get_avatar:400 }}" alt="{{ user.username }}" style="border-radius: 6px;" />
+		<img class="avatar large" src="{{ user.email|get_avatar:400 }}" alt="{{ user.username }}" />
 		<h4>{{ user.username }}</h4>
 		<h5 class="subheader">{{ user.profile.title }}</h5>
 	</div>
@@ -20,7 +20,7 @@
 	</div>
 	{% else %}
 	<div class="large-6 small-9 small-centered columns">
-		<h4 style="text-align: center;">
+		<h4 class="align-center">
 			必須<a href="/backend/">登入</a>才能存取此系統。<br/>
 			<small>新進工作人員請向行政組索取帳號。</small>
 		</h4>

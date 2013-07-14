@@ -1,0 +1,18 @@
+img.logo { width: 80px; height: auto; }
+img.avatar { border-radius: 3px; }
+img.avatar.small { width: 1.6em; height: 1.6em; }
+img.avatar.large { border-radius: 6px; }
+.top-bar-section img.avatar { margin: auto 0.25em; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+.button label { font-weight: lighter; }
+.button.secondary.active { background-color: #ddd; }
+.button-row>* { margin: auto 0.5em; }
+.button-row>*.left { float: left; }
+.button-row>*.left:first-child { margin-left: 0em; }
+.button-row>*.right { float: right; }
+.button-row>*.right:first-child { margin-right: 0em; }
+.label-item .color { display: inline-block; width: 1em; height: 1em; vertical-align: middle; border-radius: 3px; }
+.side-nav>li { transition: background-color 300ms ease-out; }
+.side-nav>li:hover, .side-nav>li:active { background-color: #eee; }
+.issue-list .issue-entry { font-size: 0.65em; color: #333; }

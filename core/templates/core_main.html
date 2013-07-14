@@ -4,7 +4,7 @@
 {% block content_block %}
 <nav class="top-bar">
 	<ul class="title-area">
-		<li class="name"><h1><a href="/"><img src="{% static 'img/SITCON.png' %}" width="80" alt="SITCON" /></a></h1></li>
+		<li class="name"><h1><a href="/"><img src="{% static 'img/SITCON.png' %}" class="logo" alt="SITCON" /></a></h1></li>
 		<li class="toggle-topbar menu-icon"><a href="#"><span>功能表</span></a></li>
 	</ul>
 	<section class="top-bar-section">
@@ -21,7 +21,7 @@
 			{% if user.is_authenticated %}
 			<li class="has-dropdown">
 				<a href="#">
-					<img src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" style="width: 1.5em; height: 1.5em; border-radius: 3px; margin: 5px;" />
+					<img class="avatar small" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
 					{{ user.username }}
 				</a>
 				<ul class="dropdown">
