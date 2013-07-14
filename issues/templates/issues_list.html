@@ -46,7 +46,7 @@
 			<li class="issue-entry">
 				<div class="issue-id">#{{ issue.id }}</div>
 				<h4>
-					<span class="issue-icon iconize icon-{% if issue.is_open %}{{ issue.is_expired|yesno:'issue-expired,issue-open' }}{% else %}issue-closed{% end-if %}"></span>
+					<span class="issue-icon iconize icon-{% if issue.is_open %}{{ issue.is_expired|yesno:'issue-expired,issue-open' }}{% else %}issue-closed{% endif %}"></span>
 					<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
 					<span class="labels">{% for label in issue.labels.all %}
 						<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
