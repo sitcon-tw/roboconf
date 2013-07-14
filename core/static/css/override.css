@@ -53,6 +53,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-thread .issue-main { margin-left: 4em; }
 .issue-thread>* { margin-bottom: 1em; }
 .issue-thread .issue-main .avatar { float: left; margin: -1em auto auto -5em; }
+.issue-thread .button-row { margin-top: 1em; }
 .issue-meta { font-size: 0.6em; color: #666; }
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin-bottom: 1em; }
