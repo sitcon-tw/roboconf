@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="large-1 avatars columns">
 			<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
-			<a class="right icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項"><img src="{% static 'img/icon-back.png' %}" alt="" /></a>
+			<a class="right iconize icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項"></a>
 		</div>
 		<div class="large-8 columns">
 			<div class="form-main">
@@ -44,7 +44,7 @@
 			<h5>新增標籤</h5>
 			<ul class="side-nav">
 			{% for label in labels %}
-				<li class="label-item"><label for="labels[]"><input type="checkbox" id="labels[]" style="display: none;" /><span class="color custom checkbox" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
+				<li class="label-item"><label for="labels[]"><input type="checkbox" id="labels[]" style="display: none;" /><span class="color custom checkbox iconize" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
 			{% endfor %}
 			</ul>
 		</div>
