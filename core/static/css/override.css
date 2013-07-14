@@ -23,8 +23,8 @@ img.avatar.large { border-radius: 6px; }
 .issue-list>li:first-child { border-top-left-radius: 3px; border-top-right-radius: 3px; border-top-width: 1px; }
 .issue-list>li:last-child { border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 .issue-list>li:hover, .issue-list>li:focus { background-color: #f9f9f9; }
-.issue-list .issue-entry { padding-bottom: 0.75em; }
-.issue-list .issue-id { float: right; }
+.issue-list .issue-entry { padding-bottom: 0.75em; color: #666; }
+.issue-list .issue-id { float: right; color: #aaa; }
 .issue-list h4 { font-size: 166.66%; margin: 0.2em auto; }
 .issue-list .labels { margin: auto 0.25em; font-size: 60%; }
 form.issue-edit>*>.columns, form.issue-edit .form-main { margin-bottom: 1em; }
@@ -36,6 +36,6 @@ form.custom .label-item .custom.checkbox { border-radius: 3px; border: 0; }
 form.custom .label-item .custom.checkbox.checked:before {content: ''; top: auto; left: auto; margin: 4px;
 	width: 8px; height: 8px; background: #fff; border: 1px solid #eee; border-radius: 2px; }
 @media only screen and (min-width: 768px) { .avatars.column { padding-right: 0; text-align: right; } }
-.icon-back { opacity: 0.05; display: inline-block; padding: 0.5em; float: right; }
+.icon-back { opacity: 0.05; display: inline-block; padding: 0.5em; float: right; border: 0; }
 .icon-back:hover, .icon-back:focus { opacity: 0.6; }
 .icon-back img { width: 20px; height: 15px; -webkit-user-drag: none; }
