@@ -1,11 +1,22 @@
 {% extends 'core_main.html' %}
 {% block title %}待辦事項{{ block.super }}{% endblock %}
 {% block content %}
-<h1>待辦事項</h1>
-<form action="{% url 'issues:create' %}" method="POST">
-{% csrf_token %}
-	<p><input type="text" name="title" size="30" maxlength="128" placeholder="標題" required="required" /></p>
-	<p><textarea name="content" placeholder="寫下留言" cols="30" rows="40" required="required"></textarea></p>
-	<p><input type="submit" class="button radius" name="submit" value="提交新議題" /></p>
+<form class="issue-edit custom" action="{% url 'issues:create' %}" method="POST">
+	{% csrf_token %}
+	<div class="row">
+		<div class="large-8 columns">
+			<p><input type="text" name="title" size="30" maxlength="128" placeholder="標題" required="required" /></p>
+			<p><textarea name="content" placeholder="寫下留言" cols="30" rows="40" required="required"></textarea></p>
+			<p><input type="submit" class="button radius right" name="submit" value="提交新議題" /></p>
+		</div>
+		<div class="large-4 columns">
+			<h5>新增標籤</h5>
+			<ul class="side-nav">
+			{% for label in labels %}
+				<li class="label-item"><label for="labels[]"><input type="checkbox" id="labels[]" style="display: none;" /><span class="color custom checkbox" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
 </form>
 {% endblock %}

@@ -59,8 +59,11 @@ def create(request):
 		i.title = request.POST['title']
 		i.content = request.POST['content']
 		i.creator = request.user
+		# TODO: Add labels
 		i.save()
 
 		return HttpResponseRedirect(reverse('issues:detail', args=(i.id,)))
 
-	return render(request, 'issues_create.html', {})
+	return render(request, 'issues_create.html', {
+		'labels': Label.objects.all(),
+	})
