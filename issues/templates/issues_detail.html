@@ -20,11 +20,11 @@
 		</div>
 	</div>
 	<div class="large-2 columns">
-		<div class="issue-state">{% if issue.is_open %}
-			{% if issue.is_expired %}<div class="expired">已逾時</div>
-			{% else %}<div class="open">待處理</div>
-			{% else %}<div class="closed">已結案</div>
-		{% endif %}</div>
+		<div class="issue-state">{% if issue.is_open %}{% if issue.is_expired %}
+			<div class="expired">已逾時</div>{% else %}
+			<div class="open">待處理</div>{% endif %}{% else %}
+			<div class="closed">已結案</div>{% endif %}
+		</div>
 		<div class="divider"></div>
 		<h6>標籤</h6>
 		<ul class="side-nav">

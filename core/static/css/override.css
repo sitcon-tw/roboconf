@@ -40,6 +40,7 @@ form.custom .label-item .custom.checkbox { border-radius: 3px; border: 0; }
 form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shadow: #222 0 0 3px; }
 @media only screen and (min-width: 768px) { .avatars.columns { padding-right: 0; text-align: right; } }
 .iconize+.description { display: none; }
+.iconize.with-text { padding: 0 0.25em; }
 .icon-back { opacity: 0.1; display: inline-block; padding: 0.5em 0.25em 1em 0; float: right; font-size: 1.5em; border: 0; }
 .icon-back:hover, .icon-back:focus { opacity: 0.8; border: 0; }
 .issue-head { color: #999; }
