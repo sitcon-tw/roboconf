@@ -27,7 +27,7 @@ class Issue(models.Model):
 		return self.title
 
 	def is_expired(self):
-		if (not is_open) or (not due_time):
+		if (not self.is_open) or (not self.due_time):
 			return False
 		return self.due_time < timezone.now()
 
