@@ -26,6 +26,11 @@ class Issue(models.Model):
 	def __unicode__(self):
 		return self.title
 
+	def is_expired(self):
+		if (not is_open) or (not due_time):
+			return False
+		return self.due_time < timezone.now()
+
 class IssueHistory(models.Model):
 	COMMENT = '.'
 	ASSIGN = 'A'
