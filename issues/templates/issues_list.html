@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
 	<div class="large-3 columns main-side-nav">
-		<ul class="side-nav">
+		<ul class="side-nav filter">
 			<li{% if mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a></li>
 			<li{% if mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a></li>
 			<li{% if mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a></li>
@@ -26,7 +26,7 @@
 				</ul>
 			</div>
 			<div class="left">
-				<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" data-options="is_hover:true" href="#">
+				<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" href="#">
 					<span>排序：</span>
 					{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
 				</a>
@@ -43,20 +43,15 @@
 		</div></div>
 		<ul class="issue-list">
 		{% for issue in issues %}
-		{% if not forloop.first %}<div class="divider"></div>{% endif %}
-			<li class="row issue-entry">
-				<div class="small-10 columns">
-					<h5>
-						<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
-						<span class="labels">{% for label in issue.labels.all %}
-							<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
-						{% endfor %}</span>
-					</h5>
-					<div><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
-				</div>
-				<div class="small-2 columns">
-					<div class="issue-id">#{{ issue.id }}</div>
-				</div>
+			<li class="issue-entry">
+				<div class="issue-id">#{{ issue.id }}</div>
+				<h4>
+					<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
+					<span class="labels">{% for label in issue.labels.all %}
+						<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
+					{% endfor %}</span>
+				</h4>
+				<div><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
 			</li>
 		{% empty %}
 			<p>尚無議題。</p>
