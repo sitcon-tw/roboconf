@@ -28,6 +28,6 @@
 .icon-user:before { content: '\e00e'; }
 .icon-tag:before { content: '\e050'; }
 .icon-tags:before { content: '\e051'; }
-.issue-actions .button .iconize { font-size: 16px; }
+.issue-actions .button .iconize { font-size: 16px; vertical-align: middle; }
 form.custom .label-item .custom.checkbox.checked:before { content: '\e027'; margin-top: 8px; margin-left: -7px; }
 form.custom .custom.dropdown .current:before { content: '\e00e'; font-family: 'IcoMoon'; speak: none; font-weight: normal; padding-right: 0.5em; }

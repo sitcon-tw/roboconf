@@ -18,8 +18,22 @@
 				{{ issue.content|linebreaks }}
 			</div>
 		</div>
+		{% if user.is_authenticated %}
+		<form class="issue-comment" action="#" method="POST">
+			<div class="issue-main">
+				<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
+				<div class="row"><div class="large-12 columns">
+					<textarea name="content" placeholder="寫下留言" cols="30" rows="40" required></textarea>
+				</div></div>
+			</div>
+			<div>
+				<input type="submit" class="secondary radius button right" name="submit" value="結案" />
+				<input type="submit" class="radius button right" name="submit" value="留言" />
+			</div>
+		</form>
+		{% endif %}
 	</div>
-	<div class="large-2 columns">
+	<div class="large-2 columns page-side-nav">
 		<div class="issue-state">{% if issue.is_open %}{% if issue.is_expired %}
 			<div class="expired">已逾時</div>{% else %}
 			<div class="open">待處理</div>{% endif %}{% else %}
@@ -27,11 +41,9 @@
 		</div>
 		<div class="divider"></div>
 		<h6>標籤</h6>
-		<ul class="side-nav">
 		{% for label in issue.labels.all %}
-			<li><span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span></li>
+		<div class="radius label" style="background: #{{ label.color }};">{{ label.name }}</div>
 		{% endfor %}
-		</ul>
 	</div>
 </div>
 {% endblock %}

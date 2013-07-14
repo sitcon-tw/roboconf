@@ -14,7 +14,7 @@ img.avatar.large { border-radius: 6px; }
 .button-row>*:last-child { margin-right: 0em; }
 .f-dropdown li a { line-height: 166.66%; }
 .main-side-nav>.side-nav, h5+.side-nav { padding: 0; }
-.main-side-nav .divider { border: solid #ddd; border-width: 1px 0 0; margin: 0.5em auto 0.75em; }
+.main-side-nav .divider, .page-side-nav .divider { border: solid #ddd; border-width: 1px 0 0; margin: 0.5em auto 0.75em; }
 .side-nav.filter { line-height: 225%; }
 .side-nav>li { transition: background-color 200ms ease; padding: 0 0.5em; border-radius: 3px; }
 .side-nav>li:hover, .side-nav>li:focus { background-color: #eee; }
@@ -31,7 +31,8 @@ img.avatar.large { border-radius: 6px; }
 .issue-list h4 { font-size: 166.66%; margin: 0.2em auto; }
 .issue-list .issue-icon { float: left; margin: 0.25em auto auto -1.5em; }
 .issue-list .labels { margin: auto 0.25em; font-size: 60%; }
-.issue-main { background: #f6f6f6; padding: 1em; border: 1px solid #e5e5e5; border-radius: 3px; }
+.issue-main { padding: 1em; border: 1px solid #e5e5e5; border-radius: 3px; }
+form .issue-main { background: #f6f6f6; }
 form.issue-edit>*>.columns, form.issue-edit .form-main { margin-bottom: 1em; }
 form.issue-edit textarea { height: 18.5em; }
 form.custom .custom.dropdown { border-radius: 3px; }
@@ -43,11 +44,15 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .iconize.with-text { padding: 0 0.25em; }
 .icon-back { opacity: 0.1; display: inline-block; padding: 0.5em 0.25em 1em 0; float: right; font-size: 1.5em; border: 0; }
 .icon-back:hover, .icon-back:focus { opacity: 0.8; border: 0; }
-.issue-head { color: #999; }
+.issue-head, .issue-head h4 { color: #999; font-weight: lighter; }
 .issue-head h4 strong { color: #666; }
-.issue-state>div { line-height: 250%; text-align: center; padding: 0.75em 1em; color: #fff; border-radius: 3px; }
+.issue-state>div { text-align: center; padding: 0.75em 1em; color: #fff; border-radius: 3px; }
 .issue-state .open { background: #3b9900; }
 .issue-state .expired { background: ##24a1c7; }
 .issue-state .closed { background: #e9e9e9; color: #333; }
 .issue-thread .issue-main { margin-left: 4em; }
-.issue-thread .issue-main .avatar { float: left; margin-left: -4em; }
+.issue-thread>* { margin-bottom: 1em; }
+.issue-thread .issue-main .avatar { float: left; margin: -1em auto auto -5em; }
+.issue-meta { font-size: 0.6em; color: #666; }
+.issue-content { font-size: 0.8em; }
+.issue-content p { margin-bottom: 1em; }
