@@ -9,9 +9,9 @@ img.avatar.large { border-radius: 6px; }
 .button span { font-weight: lighter; }
 .button.secondary.active { background-color: #ddd; }
 .button.secondary.active:hover, .button.secondary.active:focus { background-color: #d0d0d0; }
-.button-row>* { margin: auto 0.5em; }
-.button-row>*:first-child { margin-left: 0em; }
-.button-row>*:last-child { margin-right: 0em; }
+.button-row>.left>*, .button-row>.right>* { margin: auto 0.5em; float: left; }
+.button-row>.left>*:first-child { margin-left: 0em; }
+.button-row>.right>*:last-child { margin-right: 0em; }
 .f-dropdown li a { line-height: 166.66%; }
 .main-side-nav>.side-nav, h5+.side-nav { padding: 0; }
 .main-side-nav .divider, .page-side-nav .divider { border: solid #ddd; border-width: 1px 0 0; margin: 0.5em auto 0.75em; }

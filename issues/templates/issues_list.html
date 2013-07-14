@@ -20,22 +20,24 @@
 	<div class="large-9 columns">
 		<div class="row"><div class="large-12 columns button-row">
 			<div class="left">
-				<ul class="radius button-group">
-					<li><a href="{{ current_url }}?state=open" class="small secondary button {{ is_open|yesno:'active,' }}">待處理</a></li>
-					<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ is_open|yesno:',active' }}">已結案</a></li>
-				</ul>
-			</div>
-			<div class="left">
-				<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" href="#">
-					<span>排序：</span>
-					{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
-				</a>
-				<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
-					<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
-					<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
-					<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
-					<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
-				</ul>
+				<div>
+					<ul class="radius button-group">
+						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ is_open|yesno:'active,' }}">待處理</a></li>
+						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ is_open|yesno:',active' }}">已結案</a></li>
+					</ul>
+				</div>
+				<div>
+					<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" href="#">
+						<span>排序：</span>
+						{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
+					</a>
+					<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
+						<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
+						<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
+						<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
+						<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="right">
 				<a class="small radius button" href="{% url 'issues:create' %}">提交議題</a>
