@@ -5,14 +5,17 @@ img.avatar.large { border-radius: 6px; }
 .top-bar-section img.avatar { margin: auto 0.25em; }
 .align-center { text-align: center; }
 .align-right { text-align: right; }
-.button label { font-weight: lighter; }
+.button span { font-weight: lighter; }
 .button.secondary.active { background-color: #ddd; }
+.button.secondary.active:hover, .button.secondary.active:active { background-color: #d0d0d0; }
 .button-row>* { margin: auto 0.5em; }
-.button-row>*.left { float: left; }
-.button-row>*.left:first-child { margin-left: 0em; }
-.button-row>*.right { float: right; }
-.button-row>*.right:first-child { margin-right: 0em; }
+.button-row>*:first-child { margin-left: 0em; }
+.button-row>*:last-child { margin-right: 0em; }
 .label-item .color { display: inline-block; width: 1em; height: 1em; vertical-align: middle; border-radius: 3px; }
 .side-nav>li { transition: background-color 300ms ease-out; }
 .side-nav>li:hover, .side-nav>li:active { background-color: #eee; }
-.issue-list .issue-entry { font-size: 0.65em; color: #333; }
+.issue-list { color: #333; }
+.issue-list h5 { font-size: 1em; }
+.issue-list .labels { font-size: 60%; margin: auto 0.25em; }
+.issue-list p { font-size: 60%; }
+.issue-list .issue-id { text-align: right; }

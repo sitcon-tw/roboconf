@@ -18,7 +18,7 @@
 		</ul>
 	</div>
 	<div class="large-9 columns">
-		<div class="row"><div class="large-12 columns">
+		<div class="row"><div class="large-12 columns button-row">
 			<div class="left">
 				<ul class="radius button-group">
 					<li><a href="{{ current_url }}?state=open" class="small secondary button {{ is_open|yesno:'active,' }}">待處理</a></li>
@@ -27,7 +27,7 @@
 			</div>
 			<div class="left">
 				<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" data-options="is_hover:true" href="#">
-					<label>排序：</label>
+					<span>排序：</span>
 					{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
 				</a>
 				<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
@@ -48,11 +48,11 @@
 				<div class="small-10 columns">
 					<h6>
 						<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
-						{% for label in issue.labels.all %}
-						<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
-						{% endfor %}
+						<span class="labels">{% for label in issue.labels.all %}
+							<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
+						{% endfor %}</span>
 					</h6>
-					<small><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</small>
+					<p><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</p>
 				</div>
 				<div class="small-2 columns">
 					<p class="issue-id">#{{ issue.id }}</p>
