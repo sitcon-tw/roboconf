@@ -33,6 +33,6 @@ form.issue-edit textarea { height: 18.5em; }
 form.custom .custom.dropdown { border-radius: 3px; }
 form.custom .label-item label { font-size: 0.6em; line-height: 200%; }
 form.custom .label-item .custom.checkbox { border-radius: 3px; border: 0; }
-@media only screen and (min-width: 768px) { .avatars.column { padding-right: 0; text-align: right; } }
+@media only screen and (min-width: 768px) { .avatars.columns { padding-right: 0; text-align: right; } }
 .icon-back { opacity: 0.05; display: inline-block; padding: 0.5em; float: right; border: 0; }
 .icon-back:hover, .icon-back:focus { opacity: 0.6; }
