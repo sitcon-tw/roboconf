@@ -9,7 +9,7 @@ img.avatar.large { border-radius: 6px; }
 .button span { font-weight: lighter; }
 .button.secondary.active { background-color: #ddd; }
 .button.secondary.active:hover, .button.secondary.active:focus { background-color: #d0d0d0; }
-.button-row>.left>*, .button-row>.right>* { margin: auto 0.5em; float: left; }
+.button-row>.left>*, .button-row>.right>* { margin: auto 0.25em; float: left; }
 .button-row>.left>*:first-child { margin-left: 0em; }
 .button-row>.right>*:last-child { margin-right: 0em; }
 .f-dropdown li a { line-height: 166.66%; }
@@ -57,3 +57,4 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-meta { font-size: 0.6em; color: #666; }
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin-bottom: 1em; }
+.issue-labels div.label { width: 100%; }

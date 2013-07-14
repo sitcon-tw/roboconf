@@ -28,8 +28,8 @@
 			</div>
 			<div class="button-row">
 				<div class="right">
-					<input type="submit" class="secondary radius button right" name="submit" value="結案" />
-					<input type="submit" class="radius button right" name="submit" value="留言" />
+					<input type="submit" class="secondary radius button" name="close_issue" value="{{ issue.is_open|yesno:'結案,復議' }}" />
+					<input type="submit" class="radius button" name="comment_issue" value="留言" />
 				</div>
 			</div>
 		</form>
@@ -44,7 +44,9 @@
 		<div class="divider"></div>
 		<h6>標籤</h6>
 		{% for label in issue.labels.all %}
-		<div class="radius label" style="background: #{{ label.color }};">{{ label.name }}</div>
+		<div class="issue-labels">
+			<div class="radius label" style="background: #{{ label.color }};">{{ label.name }}</div>
+		</div>
 		{% endfor %}
 	</div>
 </div>
