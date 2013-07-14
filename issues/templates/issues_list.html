@@ -2,14 +2,14 @@
 {% block title %}待辦事項{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
-	<div class="large-3 columns">
+	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav">
 			<li{% if mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a></li>
 			<li{% if mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a></li>
 			<li{% if mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a></li>
 			<li{% if mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號</a></li>
 		</ul>
-		<hr/>
+		<div class="divider"></div>
 		<h5>標籤</h5>
 		<ul class="side-nav">
 		{% for label in labels %}
@@ -41,27 +41,27 @@
 				<a class="small radius button" href="{% url 'issues:create' %}">提交議題</a>
 			</div>
 		</div></div>
-		<div class="radius panel issue-list">
+		<ul class="issue-list">
 		{% for issue in issues %}
-		{% if not forloop.first %}<hr/>{% endif %}
-			<div class="row issue-entry">
+		{% if not forloop.first %}<div class="divider"></div>{% endif %}
+			<li class="row issue-entry">
 				<div class="small-10 columns">
-					<h6>
+					<h5>
 						<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
 						<span class="labels">{% for label in issue.labels.all %}
 							<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
 						{% endfor %}</span>
-					</h6>
-					<p><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</p>
+					</h5>
+					<div><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
 				</div>
 				<div class="small-2 columns">
-					<p class="issue-id">#{{ issue.id }}</p>
+					<div class="issue-id">#{{ issue.id }}</div>
 				</div>
-			</div>
+			</li>
 		{% empty %}
 			<p>尚無議題。</p>
 		{% endfor %}
-		</div>
+		</ul>
 	</div>
 </div>
 {% endblock %}
