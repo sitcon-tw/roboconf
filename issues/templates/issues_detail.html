@@ -1,7 +1,36 @@
 {% extends 'core_main.html' %}
 {% block title %}待辦事項{{ block.super }}{% endblock %}
 {% block content %}
-<h1>待辦事項</h1>
-<h3>#{{ issue.id }}: {{ issue.title }}</h3>
-{{ issue.content|linebreaks }}
+<div class="row">
+	<div class="large-12 columns issue-head">
+		<a class="left iconize icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項"></a>
+		<h4 class="right">議題 <strong>#{{ issue.id }}</strong></h4>
+	</div>
+</div>
+<div class="row">
+	<div class="large-10 columns issue-thread">
+		<div class="issue-main">
+			<img class="avatar medium" src="{{ issue.creator.email|get_avatar:'144' }}" alt="{{ issue.creator.username }}" />
+			<div class="issue-meta"><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
+			<h4>{{ issue.title }}</h4>
+			<div class="issue-content">
+				{{ issue.content|linebreaks }}
+			</div>
+		</div>
+	</div>
+	<div class="large-2 columns">
+		<div class="issue-state">{% if issue.is_open %}
+			{% if issue.is_expired %}<div class="expired">已逾時</div>
+			{% else %}<div class="open">待處理</div>
+			{% else %}<div class="closed">已結案</div>
+		{% endif %}</div>
+		<div class="divider"></div>
+		<h6>標籤</h6>
+		<ul class="side-nav">
+		{% for label in issue.labels.all %}
+			<li><span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span></li>
+		{% endfor %}
+		</ul>
+	</div>
+</div>
 {% endblock %}

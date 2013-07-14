@@ -31,6 +31,7 @@ class Issue(models.Model):
 			return False
 		return self.due_time < timezone.now()
 
+
 class IssueHistory(models.Model):
 	COMMENT = '.'
 	ASSIGN = 'A'
