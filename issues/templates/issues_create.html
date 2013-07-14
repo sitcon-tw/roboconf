@@ -1,4 +1,5 @@
 {% extends 'core_main.html' %}
+{% load users %}
 {% block title %}待辦事項{{ block.super }}{% endblock %}
 {% block content %}
 <form class="issue-edit custom" action="{% url 'issues:create' %}" method="POST">
