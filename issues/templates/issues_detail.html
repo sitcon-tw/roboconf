@@ -22,12 +22,19 @@
 						<form class="issue-assign" id="assign-form" action="{% url 'issues:detail' issue.id %}" method="POST">
 						{% csrf_token %}
 							<input type="hidden" name="action" id="action-field" value="assign" />
-							<select id="assignee" name="assignee" value="{% if issue.assignee %}{{ issue.assignee.id }}{% endif %}">
+							<select id="assignee" name="assignee">
 								<option disabled>將此議題指派給</option>
+							{% if issue.assignee %}
+								{% for u in users %}
+								<option value="{{ u.id }}" {% ifequal u.id issue.assignee.id %}selected{% endifequal %}>{{ u.username }}</option>
+								{% endfor %}
+								<option value="">（未指派）</option>
+							{% else %}
 								{% for u in users %}
 								<option value="{{ u.id }}">{{ u.username }}</option>
 								{% endfor %}
-								<option value="">（未指派）</option>
+								<option value="" selected>（未指派）</option>
+							{% endif %}
 							</select>
 						</form>
 					{% endif %}
