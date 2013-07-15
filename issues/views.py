@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils import dateparse
+import datetime
 
 from issues.models import Issue, Label, IssueHistory
 
@@ -89,7 +91,34 @@ def create(request):
 		i.title = request.POST['title']
 		i.content = request.POST['content']
 		i.creator = request.user
-		# TODO: Add labels
+
+		if 'due_time' in request.POST:
+			try:
+				due_time = request.POST['due_time'].strip()
+				if len(due_time) <= 10:
+					due_time = datetime.combine(dateparse.parse_date(due_time), datetime.time())
+				else:
+					due_time = dateparse.parse_datetime(due_time)
+
+				if due_time:
+					i.due_time = due_time
+				else:
+					pass	# Do some warnings here
+			except ValueError:
+				pass		# Do some warnings here
+
+		if 'assignee' in request.POST:
+			try:
+				i.assignee = User.objects.get(id=request.POST.get('assignee'))
+			except User.DoesNotExist:
+				pass	# Just in case we're under attack...
+
+		for label_id in request.POST.getlist('labels'):
+			try:
+				i.labels.add(Label(id=label_id))
+			except Label.DoesNotExist:
+				pass	# Never mind...
+
 		i.save()
 
 		return redirect(reverse('issues:detail', args=(i.id,)))
