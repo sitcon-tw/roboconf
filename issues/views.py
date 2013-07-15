@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.core.urlresolvers import reverse, redirect
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
