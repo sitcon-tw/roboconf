@@ -47,8 +47,8 @@ def starred(request, user_id):
 	return redirect(reverse('issues:list'))
 
 @login_required
-def detail(request, pk):
-	issue = get_object_or_404(Issue, pk)
+def detail(request, issue_id):
+	issue = get_object_or_404(Issue, pk=issue_id)
 	mode = ''
 
 	# Check if postback
