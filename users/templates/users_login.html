@@ -3,10 +3,10 @@
 {% load users %}
 {% block content %}
 {% if error %}
-<div class="radius {% if error == 'invalid_login' %}alert{% endif %} alert-box" data-alert>
+<div class="radius {% if error == 'invalid_login' %}alert{% else %}secondary{% endif %} alert-box" data-alert>
 	{% if error == 'invalid_login' %}不正確的使用者或密碼。
 	{% elif error == 'account_disabled' %}帳號已停用。請聯繫行政組以取得協助。
-	{% else %}發生不明錯誤。（{{ error }}）{% endif %}
+	{% else %}發生不明錯誤，請回報行政組處理。（{{ error }}）{% endif %}
 	<a href="#" class="close">&times;</a>
 </div>
 {% endif %}
