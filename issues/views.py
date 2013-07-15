@@ -48,7 +48,7 @@ def starred(request, user_id):
 
 @login_required
 def detail(request, pk):
-	issue = get_object_or_404(Issue, issue_id)
+	issue = get_object_or_404(Issue, pk)
 	mode = ''
 
 	# Check if postback
