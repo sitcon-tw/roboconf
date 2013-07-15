@@ -59,7 +59,7 @@ def detail(request, issue_id):
 		if action == 'assign':
 			if 'assignee' in request.POST:
 				try:
-					issue.assignee = User.objects.get(id=request.POST.get('assignee'))
+					issue.assignee = User.objects.get(id=request.POST.get('assignee')) if assignee else None
 					issue.save()
 				except User.DoesNotExist:
 					pass	# Just in case we're under attack...
@@ -116,14 +116,14 @@ def create(request):
 
 		if 'assignee' in request.POST:
 			try:
-				i.assignee = User.objects.get(id=request.POST.get('assignee'))
+				i.assignee = User.objects.get(id=request.POST.get('assignee')) if assignee else None
 			except User.DoesNotExist:
 				pass	# Just in case we're under attack...
 
 		for label_id in request.POST.getlist('labels[]'):
 			try:
 				i.labels.add(Label(id=label_id))
-			except Label.DoesNotExist:
+			except ValueError, Label.DoesNotExist:
 				pass	# Never mind...
 
 		i.save()
