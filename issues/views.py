@@ -1,6 +1,5 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, redirect
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -44,7 +43,7 @@ def created(request, user_id):
 
 def starred(request, user_id):
 	# TODO: Implement "starring" (a.k.a watch issue)
-	return HttpResponseRedirect(reverse('issues:list'))
+	return redirect(reverse('issues:list'))
 
 class DetailView(generic.DetailView):
 	model = Issue
@@ -60,7 +59,7 @@ def create(request):
 		# TODO: Add labels
 		i.save()
 
-		return HttpResponseRedirect(reverse('issues:detail', args=(i.id,)))
+		return redirect(reverse('issues:detail', args=(i.id,)))
 
 	return render(request, 'issues_create.html', {
 		'labels': Label.objects.all(),

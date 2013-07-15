@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 
 def login(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('index'))
+		return redirect(reverse('index'))
 
 	context = {}
 	if 'submit' in request.POST:
@@ -16,7 +17,7 @@ def login(request):
 				# Do redirection if provided
 				url = request.POST.get('next')
 				url = reverse('index') if (not url) or ('//' in url) else url
-				return HttpResponseRedirect(url)
+				return redirect(url)
 			context['error'] = 'account_disabled'
 		else:
 			context['error'] = 'invalid_login'
@@ -27,4 +28,4 @@ def login(request):
 
 def logout(request):
 	logout(request)
-	return HttpResponseRedirect(reverse('users:login'))
+	return redirect(reverse('users:login'))
