@@ -49,11 +49,8 @@ class DetailView(generic.DetailView):
 	model = Issue
 	template_name = 'issues_detail.html'
 
-#@login_required
+@login_required
 def create(request):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('users:login'))
-
 	if 'submit' in request.POST:
 		i = Issue()
 		i.title = request.POST['title']

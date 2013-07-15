@@ -21,8 +21,7 @@ def login(request):
 		else:
 			context['error'] = 'invalid_login'
 
-	url = request.GET.get('next')
-	url = url if url else request.POST.get('next')
+	url = request.REQUEST.get('next')
 	context['redirect_url'] = url
 	return render(request, 'users_login.html', context)
 
