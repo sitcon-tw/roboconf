@@ -96,7 +96,7 @@
 				<div class="right">
 					<input type="hidden" name="action" id="action-field" value="comment" />
 					<input type="button" class="secondary radius button" id="toggle-button" data-action="{{ issue.is_open|yesno:'結案,復議' }}" data-action-with-comment="{{ issue.is_open|yesno:'留言並結案,留言並復議' }}" value="{{ issue.is_open|yesno:'結案,復議' }}" />
-					<input type="submit" class="radius button" id="comment-button" value="留言" disabled />
+					<input type="submit" class="radius button" id="comment-button" value="留言" />
 				</div>
 			</div>
 		</form>
@@ -125,7 +125,6 @@ $(document).ready(function() {
 		var has_value = ($(this).val().length > 0);
 		var toggle_button = $('#toggle-button');
 
-		$('#comment-button').prop('disabled', !has_value);
 		toggle_button.val(toggle_button.data(has_value ? 'action-with-comment' : 'action'));
 	});
 

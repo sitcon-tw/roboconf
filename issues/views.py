@@ -125,14 +125,14 @@ def create(request):
 				pass	# Just in case we're under attack...
 
 		for label_id in request.POST.getlist('labels'):
-			try:
-				i.labels.add(Label.objects.get(label_id))
-			except ValueError, Label.DoesNotExist:
-				pass	# Never mind...
+			#try:
+			i.labels.add(Label.objects.get(label_id))
+			#except ValueError, Label.DoesNotExist:
+			#	pass	# Never mind...
 
-		i.save()
+		#i.save()
 
-		return redirect(reverse('issues:detail', args=(i.id,)))
+		#return redirect(reverse('issues:detail', args=(i.id,)))
 
 	return render(request, 'issues_create.html', {
 		'labels': Label.objects.all(),
