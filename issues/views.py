@@ -124,17 +124,20 @@ def create(request):
 			except User.DoesNotExist:
 				pass	# Just in case we're under attack...
 
-		for label_id in request.POST.getlist('labels'):
-			#try:
-			i.labels.add(Label.objects.get(label_id))
-			#except ValueError, Label.DoesNotExist:
-			#	pass	# Never mind...
+		if len(errors) < 1:
+			i.save()	# Need to save before we can enforce N to N relationship
 
-		#i.save()
+			for label_id in request.POST.getlist('labels'):
+				try:
+					i.labels.add(Label.objects.get(id=label_id))
+				except Label.DoesNotExist:
+					pass
 
-		#return redirect(reverse('issues:detail', args=(i.id,)))
+			i.save()	# Now save the labels
+			return redirect(reverse('issues:detail', args=(i.id,)))
 
 	return render(request, 'issues_create.html', {
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
+		'errors': errors,
 	})
