@@ -96,7 +96,7 @@ def create(request):
 			try:
 				due_time = request.POST['due_time'].strip()
 				if len(due_time) <= 10:
-					due_time = datetime.combine(dateparse.parse_date(due_time), datetime.time())
+					due_time = datetime.datetime.combine(dateparse.parse_date(due_time), datetime.time())
 				else:
 					due_time = dateparse.parse_datetime(due_time)
 

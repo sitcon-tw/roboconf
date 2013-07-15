@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="large-10 columns issue-thread">
 		<div class="issue-main">
-			<img class="avatar medium" src="{{ issue.creator.email|get_avatar:'144' }}" alt="{{ issue.creator.username }}" />
+			<img class="avatar medium" src="{{ issue.creator.email|get_avatar:'#' }}" alt="{{ issue.creator.username }}" />
 			<div class="issue-meta"><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
 			<h4>{{ issue.title }}</h4>
 			<div class="issue-content">
@@ -21,7 +21,7 @@
 		{% for history in issue.histories %}
 		{% if history.mode == '.' %}
 		<div class="issue-main">
-			<img class="avatar medium" src="{{ history.user.email|get_avatar:'144' }}" alt="{{ history.user.username }}" />
+			<img class="avatar medium" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
 			<div class="issue-meta"><a href="#">{{ history.user.username }}</a> 發表評論<span class="right">於 {{ history.timestamp|timesince }}前</span></div>
 			<div class="issue-content">
 				{{ history.content|linebreaks }}
@@ -29,17 +29,17 @@
 		</div>
 		{% else %}
 		<div class="issue-history">
-			<img class="avatar small" src="{{ history.user.email|get_avatar:'144' }}" alt="{{ history.user.username }}" />
+			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
 			<div class="issue-meta">
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% elif history.mode == 'R' %}提出復議{% elif history.mode == 'M' %}將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>{% elif history.mode == 'I' %}將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題{% endif %}
 			</div>
 		</div>
-		{% endfor %}
+		{% endif %}{% endfor %}
 		{% if user.is_authenticated %}
 		<form class="issue-comment" id="comment-form" action="{% url 'issues:detail' issue.id %}" method="POST">
 		{% csrf_token %}
 			<div class="issue-main">
-				<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
+				<img class="avatar medium" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" />
 				<div class="row"><div class="large-12 columns">
 					<textarea name="content" id="issue-content" placeholder="寫下留言" cols="30" rows="40"></textarea>
 				</div></div>
