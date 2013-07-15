@@ -36,15 +36,17 @@
 					<textarea name="content" placeholder="寫下留言" cols="30" rows="40" required></textarea>
 				</div></div>
 			</div>
-			<div>
-				<input type="submit" class="button radius right" name="submit" value="提交新議題" />
+			<div class="button-row">
+				<div class="right">
+					<input type="submit" class="radius button" name="submit" value="提交新議題" />
+				</div>
 			</div>
 		</div>
 		<div class="large-3 columns">
 			<h5>新增標籤</h5>
 			<ul class="side-nav">
 			{% for label in labels %}
-				<li class="label-item"><label for="labels[]"><input type="checkbox" id="labels[]" style="display: none;" /><span class="color custom checkbox iconize" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
+				<li class="label-item"><label for="labels[]"><input type="checkbox" id="labels[]" value="{{ label.id }}" style="display: none;" /><span class="color custom checkbox iconize" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
 			{% endfor %}
 			</ul>
 		</div>
