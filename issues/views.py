@@ -94,27 +94,28 @@ def detail(request, issue_id):
 
 @login_required
 def create(request):
+	errors = []
 	if 'submit' in request.POST:
 		i = Issue()
 		i.title = request.POST['title']
 		i.content = request.POST['content']
 		i.creator = request.user
 
-		if 'due_time' in request.POST:
+		due_time = request.POST.get('due_time', '').strip()
+		if len(due_time) > 0:
 			try:
-				due_time = request.POST['due_time'].strip()
-				if due_time:
-					if len(due_time) <= 10:
-						due_time = datetime.datetime.combine(dateparse.parse_date(due_time), datetime.time())
-					else:
-						due_time = dateparse.parse_datetime(due_time)
-
-					if due_time:
-						i.due_time = due_time
-					else:
-						pass	# Do some warnings here
+				if len(due_time) <= 10:
+					due_time = dateparse.parse_date(due_time)
+					due_time = datetime.datetime.combine(due_time, datetime.time()) if due_time else None
+				else:
+					due_time = dateparse.parse_datetime(due_time)
 			except ValueError:
-				pass		# Do some warnings here
+				errors.append('date-invalid')
+
+			if due_time:
+				i.due_time = due_time
+			else:
+				errors.append('date-misformed')
 
 		if 'assignee' in request.POST:
 			try:
@@ -123,9 +124,9 @@ def create(request):
 			except User.DoesNotExist:
 				pass	# Just in case we're under attack...
 
-		for label_id in request.POST.getlist('labels[]'):
+		for label_id in request.POST.getlist('labels'):
 			try:
-				i.labels.add(Label(id=label_id))
+				i.labels.add(Label.objects.get(label_id))
 			except ValueError, Label.DoesNotExist:
 				pass	# Never mind...
 
