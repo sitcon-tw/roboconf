@@ -59,8 +59,8 @@ def detail(request, issue_id):
 		if action == 'assign':
 			if 'assignee' in request.POST:
 				try:
-					i.assignee = User.objects.get(id=request.POST.get('assignee'))
-					i.save()
+					issue.assignee = User.objects.get(id=request.POST.get('assignee'))
+					issue.save()
 				except User.DoesNotExist:
 					pass	# Just in case we're under attack...
 
