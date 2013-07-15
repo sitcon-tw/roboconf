@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+import django.contrib.auth
 
 def login(request):
 	if request.user.is_authenticated():
@@ -9,10 +9,10 @@ def login(request):
 	if 'submit' in request.POST:
 		username = request.POST['username']
 		password = request.POST['password']
-		user = authenticate(username=username, password=password)
+		user = auth.authenticate(username=username, password=password)
 		if user is not None:
 			if user.is_active:
-				login(request, user)
+				auth.login(request, user)
 				
 				# Do redirection if provided
 				url = request.POST.get('next')
@@ -27,5 +27,5 @@ def login(request):
 	return render(request, 'users_login.html', context)
 
 def logout(request):
-	logout(request)
+	auth.logout(request)
 	return redirect(reverse('users:login'))
