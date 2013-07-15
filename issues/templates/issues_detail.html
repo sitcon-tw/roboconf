@@ -1,6 +1,6 @@
 {% extends 'core_main.html' %}
 {% load users %}
-{% block title %}待辦事項{{ block.super }}{% endblock %}
+{% block title %}{{ issue.title }} ‧ #{{issue.id}}{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="large-12 columns issue-head">

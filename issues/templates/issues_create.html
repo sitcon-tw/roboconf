@@ -1,7 +1,7 @@
 {% extends 'core_main.html' %}
 {% load users %}
 {% load staticfiles %}
-{% block title %}待辦事項{{ block.super }}{% endblock %}
+{% block title %}提交議題{{ block.super }}{% endblock %}
 {% block content %}
 <form class="issue-edit custom" action="{% url 'issues:create' %}" method="POST">
 	{% csrf_token %}
