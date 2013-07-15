@@ -17,25 +17,27 @@
 			<div class="issue-actions">
 			{# TODO: Use permissions #}
 				<div class="row">
-					<div class="large-4 small-6 columns assignee-field">	
+					<div class="large-4 small-6 columns">	
 					{% if user.is_authenticated %}
 						<form class="issue-assign custom" id="assign-form" action="{% url 'issues:detail' issue.id %}" method="POST">
 						{% csrf_token %}
-							<input type="hidden" name="action" id="action-field" value="assign" />
-							<select id="assignee" name="assignee">
-								<option disabled>將此議題指派給</option>
-							{% if issue.assignee %}
-								{% for u in users %}
-								<option value="{{ u.id }}" {% ifequal u.id issue.assignee.id %}selected{% endifequal %}>{{ u.username }}</option>
-								{% endfor %}
-								<option value="">（未指派）</option>
-							{% else %}
-								{% for u in users %}
-								<option value="{{ u.id }}">{{ u.username }}</option>
-								{% endfor %}
-								<option value="" selected>（未指派）</option>
-							{% endif %}
-							</select>
+							<input type="hidden" name="action" value="assign" />
+							<div class="assignee-field">
+								<select id="assignee" name="assignee">
+									<option disabled>將此議題指派給</option>
+								{% if issue.assignee %}
+									{% for u in users %}
+									<option value="{{ u.id }}" {% ifequal u.id issue.assignee.id %}selected{% endifequal %}>{{ u.username }}</option>
+									{% endfor %}
+									<option value="">（未指派）</option>
+								{% else %}
+									{% for u in users %}
+									<option value="{{ u.id }}">{{ u.username }}</option>
+									{% endfor %}
+									<option value="" selected>（未指派）</option>
+								{% endif %}
+								</select>
+							</div>
 						</form>
 					{% endif %}
 					</div>
@@ -62,12 +64,23 @@
 				{{ history.content|linebreaks }}
 			</div>
 		</div>
+		{% elif history.mode == 'C' or history.mode == 'R' %}
+		<div class="issue-history state-change">
+			<span class="issue-state">
+				{% if history.mode == 'C' %}<div class="closed">已結案</div>{% else %}
+				<div class="open">提出復議</div>
+			</span>
+			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
+			<span class="issue-meta">
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% else %}對此議題提出復議{% endif %}
+			</span>
+		</div>
 		{% else %}
 		<div class="issue-history">
 			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
-			<div class="issue-meta">
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% elif history.mode == 'R' %}提出復議{% elif history.mode == 'M' %}將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>{% elif history.mode == 'I' %}將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題{% endif %}
-			</div>
+			<span class="issue-meta">
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'M' %}將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>{% elif history.mode == 'I' %}將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題{% endif %}
+			</span>
 		</div>
 		{% endif %}{% endfor %}
 		{% if user.is_authenticated %}
