@@ -52,7 +52,7 @@ class DetailView(generic.DetailView):
 #@login_required
 def create(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('issues:list'))
+		return HttpResponseRedirect(reverse('users:login'))
 
 	if 'submit' in request.POST:
 		i = Issue()

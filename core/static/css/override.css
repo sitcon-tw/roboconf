@@ -48,7 +48,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-head h4 strong { color: #666; }
 .issue-state>div { text-align: center; padding: 0.75em 1em; color: #fff; border-radius: 3px; }
 .issue-state .open { background: #3b9900; }
-.issue-state .expired { background: ##24a1c7; }
+.issue-state .expired { background: #24a1c7; }
 .issue-state .closed { background: #e9e9e9; color: #333; }
 .issue-thread .issue-main { margin-left: 4em; }
 .issue-thread>* { margin-bottom: 1em; }
@@ -58,3 +58,5 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin-bottom: 1em; }
 .issue-labels div.label { width: 100%; }
+.users-login { display: block; padding: 1em; border: solid #e5e5e5; border-width: 0 1px 1px 1px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
+.users-login h3 { margin: -1em -1em 1em -1em; background: #24a1c7; border: solid #1c7e9c; border-top-left-radius: 3px; border-top-right-radius: 3px; }

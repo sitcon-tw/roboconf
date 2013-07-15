@@ -1,4 +1,5 @@
 # Django settings for sitconstaff project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -83,7 +84,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '94tr6a-s1%1&4((=hq$3le5zr*q+8k-#s%a&7ga#(8t8#4&5-='
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -158,8 +159,10 @@ LOGGING = {
     }
 }
 
+# Auth model settings
+LOGIN_URL = 'users:login'
+
 # Heroku-specific settings
-import os
 if 'HEROKU' in os.environ:
     # Parse database configuration from $DATABASE_URL
     import dj_database_url

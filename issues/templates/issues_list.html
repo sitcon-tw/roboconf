@@ -5,9 +5,11 @@
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
 			<li{% if mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a></li>
+			{% if user.is_authenticated %}
 			<li{% if mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a></li>
 			<li{% if mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a></li>
 			<li{% if mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號</a></li>
+			{% endif %}
 		</ul>
 		<div class="divider"></div>
 		<h5>標籤</h5>
