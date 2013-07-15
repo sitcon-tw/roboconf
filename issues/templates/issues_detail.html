@@ -1,6 +1,6 @@
 {% extends 'core_main.html' %}
 {% load users %}
-{% block title %}{{ issue.title }} ‧ #{{issue.id}}{{ block.super }}{% endblock %}
+{% block title %}{{ issue.title }} ‧ 議題 #{{issue.id}}{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="large-12 columns issue-head">
@@ -20,16 +20,17 @@
 		</div>
 		{% if user.is_authenticated %}
 		<form class="issue-comment" action="#" method="POST">
+		{% csrf_token %}
 			<div class="issue-main">
 				<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
 				<div class="row"><div class="large-12 columns">
-					<textarea name="content" placeholder="寫下留言" cols="30" rows="40" required></textarea>
+					<textarea name="content" id="issue-content" placeholder="寫下留言" cols="30" rows="40"></textarea>
 				</div></div>
 			</div>
 			<div class="button-row">
 				<div class="right">
 					<input type="submit" class="secondary radius button" name="close_issue" value="{{ issue.is_open|yesno:'結案,復議' }}" />
-					<input type="submit" class="radius button" name="comment_issue" value="留言" />
+					<input type="submit" class="radius button" name="comment_issue" id="comment-button" value="留言" />
 				</div>
 			</div>
 		</form>
@@ -50,4 +51,11 @@
 		{% endfor %}
 	</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#issue-content').on('focus keyup change', function() {
+       $('#comment-button').prop('disabled', ($(this).val().length <= 0));
+    });
+})
+</script>
 {% endblock %}

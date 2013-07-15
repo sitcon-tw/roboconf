@@ -38,7 +38,7 @@ form.issue-edit textarea { height: 18.5em; }
 form.custom .custom.dropdown { border-radius: 3px; }
 form.custom .label-item label { font-size: 0.6em; line-height: 200%; }
 form.custom .label-item .custom.checkbox { border-radius: 3px; border: 0; }
-form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shadow: #222 0 0 3px; }
+form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shadow: rgba(255, 255, 255, .3) 0 0 5px; }
 @media only screen and (min-width: 768px) { .avatars.columns { padding-right: 0; text-align: right; } }
 .iconize+.description { display: none; }
 .iconize.with-text { padding: 0 0.25em; }
@@ -53,7 +53,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-thread .issue-main { margin-left: 4em; }
 .issue-thread>* { margin-bottom: 1em; }
 .issue-thread .issue-main .avatar { float: left; margin: -1em auto auto -5em; }
-.issue-thread .button-row { margin-top: 1em; }
+.issue-main+.button-row { margin-top: 1em; }
 .issue-meta { font-size: 0.6em; color: #666; }
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin-bottom: 1em; }
