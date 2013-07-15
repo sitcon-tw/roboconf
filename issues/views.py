@@ -59,7 +59,8 @@ def detail(request, issue_id):
 		if action == 'assign':
 			if 'assignee' in request.POST:
 				try:
-					issue.assignee = User.objects.get(id=request.POST.get('assignee')) if assignee else None
+					assignee = request.POST.get('assignee')
+					issue.assignee = User.objects.get(id=assignee) if assignee else None
 					issue.save()
 				except User.DoesNotExist:
 					pass	# Just in case we're under attack...
@@ -102,21 +103,23 @@ def create(request):
 		if 'due_time' in request.POST:
 			try:
 				due_time = request.POST['due_time'].strip()
-				if len(due_time) <= 10:
-					due_time = datetime.datetime.combine(dateparse.parse_date(due_time), datetime.time())
-				else:
-					due_time = dateparse.parse_datetime(due_time)
-
 				if due_time:
-					i.due_time = due_time
-				else:
-					pass	# Do some warnings here
+					if len(due_time) <= 10:
+						due_time = datetime.datetime.combine(dateparse.parse_date(due_time), datetime.time())
+					else:
+						due_time = dateparse.parse_datetime(due_time)
+
+					if due_time:
+						i.due_time = due_time
+					else:
+						pass	# Do some warnings here
 			except ValueError:
 				pass		# Do some warnings here
 
 		if 'assignee' in request.POST:
 			try:
-				i.assignee = User.objects.get(id=request.POST.get('assignee')) if assignee else None
+				assignee = request.POST.get('assignee')
+				i.assignee = User.objects.get(id=assignee) if assignee else None
 			except User.DoesNotExist:
 				pass	# Just in case we're under attack...
 
