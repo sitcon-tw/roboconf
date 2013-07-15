@@ -14,6 +14,33 @@
 			<img class="avatar medium" src="{{ issue.creator.email|get_avatar:'#' }}" alt="{{ issue.creator.username }}" />
 			<div class="issue-meta"><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
 			<h4>{{ issue.title }}</h4>
+			<div class="issue-actions">
+			{# TODO: Use permissions #}
+				<div class="row">
+					<div class="large-4 small-6 columns assignee-field">	
+					{% if user.is_authenticated %}
+						<form class="issue-assign" id="assign-form" action="{% url 'issues:detail' issue.id %}" method="POST">
+						{% csrf_token %}
+							<input type="hidden" name="action" id="action-field" value="assign" />
+							<select id="assignee" name="assignee" value="{% if issue.assignee %}{{ issue.assignee.id }}{% endif %}">
+								<option disabled>將此議題指派給</option>
+								{% for u in users %}
+								<option value="{{ u.id }}">{{ u.username }}</option>
+								{% endfor %}
+								<option value="">（未指派）</option>
+							</select>
+						</form>
+					{% endif %}
+					</div>
+					<div class="large-4 small-2 columns"></div>
+					<div class="small-4 columns">
+					{% if issue.due_time %}
+						期限：{{ issue.due_time|date:"Y-m-d H:i" }}
+					{% endif %}
+					</div>
+				</div>
+			{# % endif % #}
+			</div>
 			<div class="issue-content">
 				{{ issue.content|linebreaks }}
 			</div>

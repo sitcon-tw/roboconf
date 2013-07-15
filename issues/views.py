@@ -81,6 +81,7 @@ def detail(request, issue_id):
 
 	return render(request, 'issues_detail.html', {
 		'issue': issue,
+		'users': User.objects.all(),
 		'mode': mode,
 	})
 

@@ -23,8 +23,8 @@ img.avatar.large { border-radius: 6px; }
 .issue-list>li { border: solid #e5e5e5; border-width: 0 1px 1px 1px; padding: 0.25em 0.5em; }
 .issue-list>li:first-child { border-top-left-radius: 3px; border-top-right-radius: 3px; border-top-width: 1px; }
 .issue-list>li:last-child { border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
-.issue-list .issue-actions { background: #f6f6f6; }
-.issue-actions .button { margin: 0 0.1em 0 0; }
+.issue-list .issue-actions, .issue-main .issue-actions { background: #f6f6f6; }
+.issue-list .issue-actions .button { margin: 0 0.1em 0 0; }
 .issue-list .issue-entry { padding: 0.25em 1em 0.75em 3em; color: #666; }
 .issue-list .issue-entry:hover, .issue-list .issue-entry:focus { background-color: #f9f9f9; }
 .issue-list .issue-id { float: right; color: #aaa; }
