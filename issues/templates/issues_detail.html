@@ -23,7 +23,7 @@
 						{% csrf_token %}
 							<input type="hidden" name="action" value="assign" />
 							<div class="assignee-field">
-								<select id="assignee" name="assignee">
+								<select id="issue-assignee" name="assignee">
 									<option disabled>將此議題指派給</option>
 								{% if issue.assignee %}
 									{% for u in users %}
@@ -132,6 +132,10 @@ $(document).ready(function() {
 	$('#toggle-button').click(function() {
 		$('#action-field').val('toggle-state');
 		$('#comment-form').submit();
+	});
+
+	$('#issue-assignee').on('change', function() {
+		$('#assign-form').submit();
 	});
 });
 </script>

@@ -57,7 +57,13 @@ def detail(request, issue_id):
 	if 'action' in request.POST:
 		action = request.POST['action']
 		if action == 'assign':
-			pass
+			if 'assignee' in request.POST:
+				try:
+					i.assignee = User.objects.get(id=request.POST.get('assignee'))
+					i.save()
+				except User.DoesNotExist:
+					pass	# Just in case we're under attack...
+
 		elif action == 'set-label':
 			pass
 		else:
