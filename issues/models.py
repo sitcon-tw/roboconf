@@ -34,16 +34,14 @@ class Issue(models.Model):
 
 class IssueHistory(models.Model):
 	COMMENT = '.'
-	ASSIGN = 'A'
-	CHANGE_STATE = 'S'
-	SET_DUE = 'D'
+	CLOSE = 'C'
+	REOPEN = 'R'
 	MERGE_TO = 'M'
 	MERGE_IN = 'I'
 	MODE_CHOICES = (
 			(COMMENT, 'Commented'),
-			(ASSIGN, 'Assigned to'),
-			(CHANGE_STATE, 'Changed state'),
-			(SET_DUE, 'Set due time'),
+			(CLOSE, 'Closed'),
+			(REOPEN, 'Reopened'),
 			(MERGE_TO, 'Merged to'),
 			(MERGE_IN, 'Merged in')
 		)

@@ -18,8 +18,25 @@
 				{{ issue.content|linebreaks }}
 			</div>
 		</div>
+		{% for history in issue.histories %}
+		{% if history.mode == '.' %}
+		<div class="issue-main">
+			<img class="avatar medium" src="{{ history.user.email|get_avatar:'144' }}" alt="{{ history.user.username }}" />
+			<div class="issue-meta"><a href="#">{{ history.user.username }}</a> 發表評論<span class="right">於 {{ history.timestamp|timesince }}前</span></div>
+			<div class="issue-content">
+				{{ history.content|linebreaks }}
+			</div>
+		</div>
+		{% else %}
+		<div class="issue-history">
+			<img class="avatar small" src="{{ history.user.email|get_avatar:'144' }}" alt="{{ history.user.username }}" />
+			<div class="issue-meta">
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% elif history.mode == 'R' %}提出復議{% elif history.mode == 'M' %}將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>{% elif history.mode == 'I' %}將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題{% endif %}
+			</div>
+		</div>
+		{% endfor %}
 		{% if user.is_authenticated %}
-		<form class="issue-comment" action="#" method="POST">
+		<form class="issue-comment" id="comment-form" action="{% url 'issues:detail' issue.id %}" method="POST">
 		{% csrf_token %}
 			<div class="issue-main">
 				<img class="avatar medium" src="{{ user.email|get_avatar:'144' }}" alt="{{ user.username }}" />
@@ -29,8 +46,9 @@
 			</div>
 			<div class="button-row">
 				<div class="right">
-					<input type="submit" class="secondary radius button" name="close_issue" value="{{ issue.is_open|yesno:'結案,復議' }}" />
-					<input type="submit" class="radius button" name="comment_issue" id="comment-button" value="留言" />
+					<input type="hidden" name="action" id="action-field" value="comment" />
+					<input type="button" class="secondary radius button" id="toggle-button" data-action="{{ issue.is_open|yesno:'結案,復議' }}" data-action-with-comment="{{ issue.is_open|yesno:'留言並結案,留言並復議' }}" value="{{ issue.is_open|yesno:'結案,復議' }}" />
+					<input type="submit" class="radius button" id="comment-button" value="留言" disabled />
 				</div>
 			</div>
 		</form>
@@ -54,8 +72,17 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#issue-content').on('focus keyup change', function() {
-       $('#comment-button').prop('disabled', ($(this).val().length <= 0));
-    });
-})
+		var has_value = ($(this).val().length > 0);
+		var toggle_button = $('#toggle-button');
+
+		$('#comment-button').prop('disabled', !has_value);
+		toggle_button.val(toggle_button.data(has_value ? 'action-with-comment' : 'action'));
+	});
+
+	$('#toggle-button').click(function() {
+		$('#toggle-field').val('toggle-state');
+		$('#comment-form').submit();
+	});
+});
 </script>
 {% endblock %}
