@@ -1,8 +1,9 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from issues.models import Issue, Label
 
