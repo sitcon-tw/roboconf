@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-import django.contrib.auth
+import django.contrib.auth as auth
 
 def login(request):
 	if request.user.is_authenticated():
