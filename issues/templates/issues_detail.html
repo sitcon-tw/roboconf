@@ -66,9 +66,9 @@
 		</div>
 		{% elif history.mode == 'C' or history.mode == 'R' %}
 		<div class="issue-history state-change">
-			<span class="issue-state">
-				{% if history.mode == 'C' %}<div class="closed">已結案</div>{% else %}
-				<div class="open">提出復議</div>
+			<span class="issue-state">{% if history.mode == 'C' %}
+				<div class="closed">已結案</div>{% else %}
+				<div class="open">提出復議</div>{% endif %}
 			</span>
 			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
 			<span class="issue-meta">
