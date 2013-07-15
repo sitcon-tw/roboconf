@@ -54,6 +54,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-thread .issue-main .avatar { float: left; margin: -1em auto auto -5em; }
 .issue-main+.button-row { margin-top: 1em; }
 .issue-main .issue-actions { margin: auto -1em 1em -1em; padding: 0.5em; color: #333; }
+.issue-main .issue-actions .issue-due { line-height: 200%; }
 .issue-main .issue-actions form, .issue-main .issue-actions form.custom .custom.dropdown { margin: 0; }
 .issue-meta { font-size: 0.6em; color: #666; }
 .issue-content { font-size: 0.8em; }

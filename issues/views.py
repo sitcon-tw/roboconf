@@ -120,7 +120,7 @@ def create(request):
 			except User.DoesNotExist:
 				pass	# Just in case we're under attack...
 
-		for label_id in request.POST.getlist('labels'):
+		for label_id in request.POST.getlist('labels[]'):
 			try:
 				i.labels.add(Label(id=label_id))
 			except Label.DoesNotExist:
