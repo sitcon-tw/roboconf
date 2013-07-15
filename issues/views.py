@@ -47,7 +47,7 @@ def starred(request, user_id):
 	return redirect(reverse('issues:list'))
 
 @login_required
-def detail(request, issue_id):
+def detail(request, pk):
 	issue = get_object_or_404(Issue, issue_id)
 	mode = ''
 
@@ -55,9 +55,9 @@ def detail(request, issue_id):
 	if 'action' in request.POST:
 		action = request.POST['action']
 		if action == 'assign':
-			# TODO
+			pass
 		elif action == 'set-label':
-			# TODO
+			pass
 		else:
 			# Comment on this issue
 			content = request.POST['content']
