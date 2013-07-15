@@ -43,8 +43,8 @@
 					</div>
 					<div class="large-4 small-2 columns"></div>
 					<div class="small-4 columns">
-						<span class="icon-clock iconize"></span>
 					{% if issue.due_time %}
+						<span class="icon-clock iconize"></span>
 						期限：{{ issue.due_time|date:"Y-m-d H:i" }}
 					{% endif %}
 					</div>
