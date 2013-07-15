@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 import django.contrib.auth as auth
 
 def login(request):
