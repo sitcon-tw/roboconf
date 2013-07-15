@@ -18,7 +18,7 @@
 				{{ issue.content|linebreaks }}
 			</div>
 		</div>
-		{% for history in issue.histories %}
+		{% for history in issue.histories.all %}
 		{% if history.mode == '.' %}
 		<div class="issue-main">
 			<img class="avatar medium" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
