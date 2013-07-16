@@ -71,8 +71,11 @@ def detail(request, issue_id):
 				IssueHistory.objects.create(issue=issue, user=request.user,
 											mode=IssueHistory.UNASSIGN)
 
-	elif action == 'set-label':
-		pass
+	#elif action == 'set-label':
+	#	pass
+
+	#elif action == 'set-due':
+	#	pass
 
 	elif action:
 		# Comment on this issue
@@ -133,7 +136,7 @@ def create(request):
 											mode=IssueHistory.ASSIGN, content=assignee)
 			if due_time:
 				IssueHistory.objects.create(issue=issue, user=request.user, 
-											mode=IssueHistory.SET_DUE, content=due_time.isoformat())
+											mode=IssueHistory.SET_DUE, content=due_time)
 
 			for label_id in request.POST.getlist('labels'):
 				try:
