@@ -65,3 +65,16 @@ class IssueHistory(models.Model):
 	def __unicode__(self):
 		return '%s: %s' % (self.mode, unicode(self.timestamp))
 
+	def content_as_user(self):	# TODO: Add mode control
+		try:
+			return User.objects.get(id=self.content)
+		except User.DoesNotExist:
+			pass
+		return None
+
+	def content_as_label(self):
+		try:
+			return Label.objects.get(id=self.content)
+		except Label.DoesNotExist:
+			return None
+

@@ -73,7 +73,13 @@ def detail(request, issue_id):
 
 	elif action == 'set-label':
 		old_labels = [l.id for l in issue.labels.all()]
-		new_labels = request.POST.getlist('labels')
+		new_labels = []
+
+		for label_str in request.POST.getlist('labels'):
+			try:
+				new_labels.append(int(label_str))
+			except ValueError:
+				pass
 
 		# Remove unused labels
 		for label_id in [l for l in old_labels if l not in new_labels]:
@@ -90,6 +96,8 @@ def detail(request, issue_id):
 											mode=IssueHistory.LABEL, content=label_id)
 			except Label.DoesNotExist:
 				pass
+
+		issue.save()
 
 	#elif action == 'set-due':
 	#	pass

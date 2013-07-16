@@ -80,15 +80,15 @@
 			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
 			<span class="issue-meta">
 			{% if history.mode == 'A' %}
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前將此議題指派給 <a href="#">{{ history.content|get_username }}</a>
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前將此議題指派給 <a href="#">{{ history.content_as_user.username }}</a>
 			{% elif history.mode == 'a' %}
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前撤銷此議題指派的人員
 			{% elif history.mode == 'D' %}
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.content %}為此議題設定了期限：{{ history.content }}{% else %}撤銷此議題的期限{% endif %}
 			{% elif history.mode == '+' %}
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 #{{ history.content }}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 {{ history.content_as_label.name }}
 			{% elif history.mode == '-' %}
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前從此議題移除標籤 #{{ history.content }}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前從此議題移除標籤 {{ history.content_as_label.name }}
 			{% elif history.mode == 'M' %}
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>
 			{% elif history.mode == 'I' %}
