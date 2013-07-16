@@ -72,7 +72,7 @@ def detail(request, issue_id):
 											mode=IssueHistory.UNASSIGN)
 
 	elif action == 'set-label':
-		old_labels = issue.labels.all
+		old_labels = issue.labels.all()
 		new_labels = request.POST.getlist('labels')
 
 		# Remove unused labels
