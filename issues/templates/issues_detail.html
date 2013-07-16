@@ -124,8 +124,13 @@
 		</div>
 		<div class="divider"></div>
 		<div class="issue-labels">
-			<div class="button-holder">
-				<a class="tiny secondary radius dropdown button right" href="#"><span class="icon-tags iconize"></span></a>
+			<div class="button-holder right">
+				<a class="tiny secondary radius dropdown button" data-dropdown="tags-dropdown" href="#"><span class="icon-tags iconize"></span></a>
+				<ul id="tags-dropdown" class="f-dropdown" data-dropdown-content>
+				{% for label in labels %}
+					<li>{% if label in issue.labels.all %}<span class="icon-check iconize"></span>{% endif %} {{ label.name }}</li>
+				{% endfor %}
+				</ul>
 			</div>
 			<h6>標籤</h6>
 			{% for label in issue.labels.all %}

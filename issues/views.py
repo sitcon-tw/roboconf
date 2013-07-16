@@ -92,6 +92,7 @@ def detail(request, issue_id):
 
 	return render(request, 'issues_detail.html', {
 		'issue': issue,
+		'labels': Label.objects.all(),
 		'users': User.objects.all(),
 	})
 
