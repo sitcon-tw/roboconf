@@ -11,7 +11,7 @@ from issues.models import Issue, Label, IssueHistory
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
 @login_required
-def list_common(request, dataset, mode):
+def __list(request, dataset, mode):
 	# Filter
 	is_open = not (request.GET.get('state') == 'closed')
 	dataset = dataset.filter(is_open=is_open)
@@ -36,13 +36,13 @@ def list_common(request, dataset, mode):
 	})
 
 def list(request):
-	return list_common(request, dataset=Issue.objects.all(), mode='list')
+	return __list(request, dataset=Issue.objects.all(), mode='list')
 
 def assigned(request, user_id):
-	return list_common(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
+	return __list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
 
 def created(request, user_id):
-	return list_common(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
+	return __list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
 
 def starred(request, user_id):
 	# TODO: Implement "starring" (a.k.a watch issue)
@@ -51,55 +51,55 @@ def starred(request, user_id):
 @login_required
 def detail(request, issue_id):
 	issue = get_object_or_404(Issue, pk=issue_id)
-	mode = ''
 
 	# Check if postback
-	if 'action' in request.POST:
-		action = request.POST['action']
-		if action == 'assign':
-			if 'assignee' in request.POST:
+	action = request.POST.get('action')
+	if action == 'assign':
+		assignee = request.POST.get('assignee')
+		if assignee is not None:	# empty string => unassign
+			if len(assignee) > 0:
 				try:
-					assignee = request.POST.get('assignee')
-					issue.assignee = User.objects.get(id=assignee) if assignee else None
+					issue.assignee = User.objects.get(id=assignee)
 					issue.save()
+					IssueHistory.objects.create(issue=issue, user=request.user,
+												mode=IssueHistory.ASSIGN, content=assignee)
 				except User.DoesNotExist:
-					pass	# Just in case we're under attack...
-
-		elif action == 'set-label':
-			pass
-		else:
-			# Comment on this issue
-			content = request.POST['content']
-			if not content:
-				mode = 'error-no-content'
+					pass			# Just in case we're under attack...
 			else:
-				entry = IssueHistory(issue=issue, user=request.user)
-				entry.content = content
-				entry.save()
-
-			# Check if also change state
-			if action == 'toggle-state':
-				entry = IssueHistory(issue=issue, user=request.user)
-				entry.mode = IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN
-				entry.save()
-
-				issue.is_open = not issue.is_open
+				issue.assignee = None
 				issue.save()
+				IssueHistory.objects.create(issue=issue, user=request.user,
+											mode=IssueHistory.UNASSIGN)
+
+	elif action == 'set-label':
+		pass
+
+	elif action:
+		# Comment on this issue
+		content = request.POST.get('content')
+		if content:
+			IssueHistory.objects.create(issue=issue, user=request.user, content=content)
+
+		# Check if also change state
+		if action == 'toggle-state':
+			IssueHistory.objects.create(issue=issue, user=request.user, 
+										mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
+			issue.is_open = not issue.is_open
+			issue.save()
 
 	return render(request, 'issues_detail.html', {
 		'issue': issue,
 		'users': User.objects.all(),
-		'mode': mode,
 	})
 
 @login_required
 def create(request):
 	errors = []
 	if 'submit' in request.POST:
-		i = Issue()
-		i.title = request.POST['title']
-		i.content = request.POST['content']
-		i.creator = request.user
+		issue = Issue()
+		issue.title = request.POST['title']
+		issue.content = request.POST['content']
+		issue.creator = request.user
 
 		due_time = request.POST.get('due_time', '').strip()
 		if len(due_time) > 0:
@@ -113,28 +113,37 @@ def create(request):
 				errors.append('date-invalid')
 
 			if due_time:
-				i.due_time = due_time
+				issue.due_time = due_time
 			else:
 				errors.append('date-misformed')
 
-		if 'assignee' in request.POST:
+		assignee = request.POST.get('assignee')
+		if assignee:	# Empty value => not assigned, no need to set
 			try:
 				assignee = request.POST.get('assignee')
-				i.assignee = User.objects.get(id=assignee) if assignee else None
+				issue.assignee = User.objects.get(id=assignee)
 			except User.DoesNotExist:
-				pass	# Just in case we're under attack...
+				assignee = None		# Just in case we're under attack...
 
 		if len(errors) < 1:
-			i.save()	# Need to save before we can enforce N to N relationship
+			issue.save()	# Need to save before we can enforce N to N relationship
+
+			if assignee:
+				IssueHistory.objects.create(issue=issue, user=request.user,
+											mode=IssueHistory.ASSIGN, content=assignee)
+			if due_time:
+				IssueHistory.objects.create(issue=issue, user=request.user, 
+											mode=IssueHistory.SET_DUE, content=due_time.isoformat())
 
 			for label_id in request.POST.getlist('labels'):
 				try:
-					i.labels.add(Label.objects.get(id=label_id))
+					issue.labels.add(Label.objects.get(id=label_id))
+					# Add or remove labels has history so we don't worry on history creation
 				except Label.DoesNotExist:
 					pass
 
-			i.save()	# Now save the labels
-			return redirect(reverse('issues:detail', args=(i.id,)))
+			issue.save()	# Now save the labels
+			return redirect(reverse('issues:detail', args=(issue.id,)))
 
 	return render(request, 'issues_create.html', {
 		'labels': Label.objects.all(),

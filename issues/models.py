@@ -38,12 +38,22 @@ class IssueHistory(models.Model):
 	REOPEN = 'R'
 	MERGE_TO = 'M'
 	MERGE_IN = 'I'
+	ASSIGN = 'A'
+	UNASSIGN = 'a'
+	LABEL = '+'
+	UNLABEL = '-'
+	SET_DUE = 'D'
 	MODE_CHOICES = (
 			(COMMENT, 'Commented'),
 			(CLOSE, 'Closed'),
 			(REOPEN, 'Reopened'),
 			(MERGE_TO, 'Merged to'),
-			(MERGE_IN, 'Merged in')
+			(MERGE_IN, 'Merged in'),
+			(ASSIGN, 'Assigned to'),
+			(UNASSIGN, 'Unassigned'),
+			(LABEL, 'Labeled'),
+			(UNLABEL, 'Unlabeled'),
+			(SET_DUE, 'Set due time to'),
 		)
 
 	issue = models.ForeignKey(Issue, editable=False, related_name='histories')
