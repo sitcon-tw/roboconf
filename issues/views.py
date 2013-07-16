@@ -71,8 +71,25 @@ def detail(request, issue_id):
 				IssueHistory.objects.create(issue=issue, user=request.user,
 											mode=IssueHistory.UNASSIGN)
 
-	#elif action == 'set-label':
-	#	pass
+	elif action == 'set-label':
+		old_labels = issue.labels.all
+		new_labels = request.POST.getlist('labels')
+
+		# Remove unused labels
+		for label_id in [l for l in old_labels if l not in new_labels]:
+			# Old labels won't have integrity issues so eliminate try block
+			issue.labels.remove(Label.objects.get(id=label_id))
+			IssueHistory.objects.create(issue=issue, user=request.user,
+										mode=IssueHistory.UNLABEL, content=label_id)
+
+		# Add new
+		for label_id in [l for l in new_labels if l not in old_labels]:
+			try:
+				issue.labels.add(Label.objects.get(id=label_id))
+				IssueHistory.objects.create(issue=issue, user=request.user,
+											mode=IssueHistory.LABEL, content=label_id)
+			except Label.DoesNotExist:
+				pass
 
 	#elif action == 'set-due':
 	#	pass
