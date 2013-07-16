@@ -75,25 +75,27 @@
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% else %}對此議題提出復議{% endif %}
 			</span>
 		</div>
-		{% elif history.mode == 'A' or history.mode == 'a' %}
-		<div class="issue-history">
-			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
-			<span class="issue-meta">
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'A' %}將此議題指派給 <a href="#">{{ history.content|get_username }}</a>{% else %}撤銷此議題指派的人員{% endif %}
-			</span>
-		</div>
-		{% elif history.mode == 'D' %}
-		<div class="issue-history">
-			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
-			<span class="issue-meta">
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.content %}為此議題設定了期限：{{ history.content }}{% else %}撤銷此議題的期限{% endif %}
-			</span>
-		</div>
 		{% else %}
 		<div class="issue-history">
 			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
 			<span class="issue-meta">
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'M' %}將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>{% elif history.mode == 'I' %}將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題{% endif %}
+			{% if history.mode == 'A' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前將此議題指派給 <a href="#">{{ history.content|get_username }}</a>
+			{% elif history.mode == 'a' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前撤銷此議題指派的人員
+			{% elif history.mode == 'D' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.content %}為此議題設定了期限：{{ history.content }}{% else %}撤銷此議題的期限{% endif %}
+			{% elif history.mode == '+' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 #{{ history.content }}
+			{% elif history.mode == '-' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前從此議題移除標籤 #{{ history.content }}
+			{% elif history.mode == 'M' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>
+			{% elif history.mode == 'I' %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題
+			{% else %}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前對此議題進行了系統無法理解的操作
+			{% endif %}
 			</span>
 		</div>
 		{% endif %}{% endfor %}
