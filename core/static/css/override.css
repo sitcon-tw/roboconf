@@ -59,6 +59,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin-bottom: 1em; }
 .issue-content p:last-child { margin-bottom: 0; }
+.issue-labels .button { margin-top: -0.05em; }
 .issue-labels div.label { width: 100%; margin-bottom: 1px; line-height: 150%; font-weight: normal; text-align: left; }
 .issue-thread .issue-history .issue-state { float: left; margin: 0 1em auto -5.25em; font-size: 0.6em; }
 .login-panel form { padding: 1em 1.5em 0 1.5em; border: solid #e5e5e5; border-width: 0 1px 1px 1px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }

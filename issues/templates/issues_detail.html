@@ -123,12 +123,15 @@
 			<div class="closed">已結案</div>{% endif %}
 		</div>
 		<div class="divider"></div>
-		<h6>標籤</h6>
-		{% for label in issue.labels.all %}
 		<div class="issue-labels">
+			<div class="button-holder">
+				<a class="tiny secondary radius dropdown button right" href="#"><span class="icon-tags iconize"></span></a>
+			</div>
+			<h6>標籤</h6>
+			{% for label in issue.labels.all %}
 			<div class="radius label" style="background: #{{ label.color }};">{{ label.name }}</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
 	</div>
 </div>
 {% endblock %}
