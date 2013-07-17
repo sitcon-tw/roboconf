@@ -2,43 +2,45 @@
 {% load users %}
 {% load staticfiles %}
 {% block content_block %}
-<nav class="top-bar">
-	<ul class="title-area">
-		<li class="name"><h1><a href="/"><img src="{% static 'img/SITCON.png' %}" class="logo" alt="SITCON" /></a></h1></li>
-		<li class="toggle-topbar menu-icon"><a href="#"><span>功能表</span></a></li>
-	</ul>
-	<section class="top-bar-section">
-		<ul class="left">
-			{% if user.is_authenticated %}
-			<li><a href="#">文件</a></li>
-			<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
-			<li><a href="#">聚會</a></li>
-			<li><a href="#">時間表</a></li>
-			<li><a href="#">人員</a></li>
-			{% endif %}
+<div class="fixed">
+	<nav class="top-bar">
+		<ul class="title-area">
+			<li class="name"><h1><a href="/"><img src="{% static 'img/SITCON.png' %}" class="logo" alt="SITCON" /></a></h1></li>
+			<li class="toggle-topbar menu-icon"><a href="#"><span>功能表</span></a></li>
 		</ul>
-		<ul class="right">
-			{% if user.is_authenticated %}
-			<li class="has-dropdown">
-				<a href="#">
-					<img class="avatar small" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" />
-					{{ user.username }}
-				</a>
-				<ul class="dropdown">
-					<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>
-					<li><a href="#">帳號設定</a></li>
-					<li><a href="/backend/">系統設定</a></li>
-					<li class="divider"></li>
-					<li><a href="{% url 'issues:create' %}">回報問題</a></li>
-					<li><a href="{% url 'users:logout' %}">登出</a></li>
-				</ul>
-			</li>
-			{% else %}
-			<li><a href="{% url 'users:login' %}">登入</a></li>
-			{% endif %}
-		</ul>
-	</section>
-</nav>
+		<section class="top-bar-section">
+			<ul class="left">
+				{% if user.is_authenticated %}
+				<li><a href="#">文件</a></li>
+				<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
+				<li><a href="#">聚會</a></li>
+				<li><a href="#">時間表</a></li>
+				<li><a href="#">人員</a></li>
+				{% endif %}
+			</ul>
+			<ul class="right">
+				{% if user.is_authenticated %}
+				<li class="has-dropdown">
+					<a href="#">
+						<img class="avatar small" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" />
+						{{ user.username }}
+					</a>
+					<ul class="dropdown">
+						<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>
+						<li><a href="#">帳號設定</a></li>
+						<li><a href="/backend/">系統設定</a></li>
+						<li class="divider"></li>
+						<li><a href="{% url 'issues:create' %}">回報問題</a></li>
+						<li><a href="{% url 'users:logout' %}">登出</a></li>
+					</ul>
+				</li>
+				{% else %}
+				<li><a href="{% url 'users:login' %}">登入</a></li>
+				{% endif %}
+			</ul>
+		</section>
+	</nav>
+</div>
 <div class="container row">
 	<div class="large-12 columns">
 {% block content %}{% endblock %}
