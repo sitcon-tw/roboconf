@@ -1,5 +1,6 @@
 {% extends 'core_main.html' %}
 {% load users %}
+{% load markdown %}
 {% block title %}{{ issue.title }} ‧ 議題 #{{issue.id}}{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -52,7 +53,7 @@
 			{# % endif % #}
 			</div>
 			<div class="issue-content">
-				{{ issue.content|linebreaks }}
+				{{ issue.content|markdown }}
 			</div>
 		</div>
 		{% for history in issue.histories.all %}
@@ -61,7 +62,7 @@
 			<img class="avatar medium" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user.username }}" />
 			<div class="issue-meta"><a href="#">{{ history.user.username }}</a> 發表評論<span class="right">於 {{ history.timestamp|timesince }}前</span></div>
 			<div class="issue-content">
-				{{ history.content|linebreaks }}
+				{{ history.content|markdown }}
 			</div>
 		</div>
 		{% elif history.mode == 'C' or history.mode == 'R' %}
@@ -86,7 +87,7 @@
 			{% elif history.mode == 'D' %}
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前{% if history.content %}為此議題設定了期限：{{ history.content }}{% else %}撤銷此議題的期限{% endif %}
 			{% elif history.mode == '+' %}
-				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 {{ history.content_as_label.name }}
+				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 {% with label=history.content_as_label %}<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>{% endwith %}
 			{% elif history.mode == '-' %}
 				<a href="#">{{ history.user.username }}</a> 於 {{ history.timestamp|timesince }}前從此議題移除標籤 {{ history.content_as_label.name }}
 			{% elif history.mode == 'M' %}
