@@ -59,6 +59,12 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin-bottom: 1em; }
 .issue-content p:last-child { margin-bottom: 0; }
+.issue-content ol, .issue-content ul { padding-left: 3em; }
+.issue-content h1 { font-size: 2.25em }
+.issue-content h2 { font-size: 1.8125em }
+.issue-content h3 { font-size: 1.1875em }
+.issue-content h4 { font-size: 0.9375em }
+.issue-content h5, .issue-content h6 { font-size: 0.8em }
 form.issue-set-label { margin: 0; }
 form.issue-set-label h6 { line-height: 1; font-size: 0.8em; }
 form.issue-set-label .side-nav { padding: 0; }
