@@ -46,7 +46,7 @@
 			<h5>新增標籤</h5>
 			<ul class="side-nav">
 			{% for label in labels %}
-				<li class="label-item"><label for="labels-{{ label.id }}"><input type="checkbox" id="labels-{{ label.id }}" name="labels" value="{{ label.id }}" style="display: none;" /><span class="color custom checkbox iconize" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
+				<li class="label-item"><label for="labels_{{ label.id }}"><input type="checkbox" id="labels_{{ label.id }}" name="labels" value="{{ label.id }}" style="display: none;" /><span class="color custom checkbox iconize" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
 			{% endfor %}
 			</ul>
 		</div>

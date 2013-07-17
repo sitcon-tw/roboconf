@@ -68,7 +68,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-content h5, .issue-content h6 { font-size: 0.8em }
 form.issue-set-label { margin: 0; }
 form.issue-set-label h6 { line-height: 1; font-size: 0.8em; }
-form.issue-set-label .side-nav { padding: 0; }
+form.issue-set-label .side-nav { padding: 0 0 0.25em 0; }
 form.issue-set-label>*:last-child { margin-bottom: 0; }
 .issue-labels .dropdown.button { margin-top: -0.05em; }
 .issue-labels div.label { width: 100%; margin-bottom: 1px; line-height: 150%; font-weight: normal; text-align: left; }
