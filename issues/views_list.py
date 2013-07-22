@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from issues.models import Label
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
