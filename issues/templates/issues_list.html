@@ -4,11 +4,11 @@
 <div class="row">
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
-			<li{% if filters.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a><span class="right">{{ counts.all }}</span></li>
+			<li{% if filters.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題 <span class="right">{{ counts.all }}</span></a></li>
 			{% if user.is_authenticated %}
-			<li{% if filters.mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a><span class="right">{{ counts.assigned }}</span></li>
-			<li{% if filters.mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a><span class="right">{{ counts.created }}</span></li>
-			<li{% if filters.mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號</a><span class="right">{{ counts.starred }}</span></li>
+			<li{% if filters.mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我 <span class="right">{{ counts.assigned }}</span></a></li>
+			<li{% if filters.mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ counts.created }}</span></a></li>
+			<li{% if filters.mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ counts.starred }}</span></a></li>
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
@@ -24,8 +24,8 @@
 			<div class="left">
 				<div>
 					<ul class="radius button-group">
-						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理</a><span class="count"> ({{ counts.open }})</span></li>
-						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案</a><span class="count"> ({{ counts.closed }})</span></li>
+						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理 ({{ counts.open }})</a></li>
+						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案 ({{ counts.closed }})</a></li>
 					</ul>
 				</div>
 				<div>
