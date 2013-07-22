@@ -19,7 +19,7 @@ class Issue(models.Model):
 	is_open = models.BooleanField(default=True)
 	assignee = models.ForeignKey(User, blank=True, null=True, related_name='assigned_issues')
 	due_time = models.DateTimeField(blank=True, null=True)
-	last_updated = models.DateTimeField(default=timezone.now)
+	#last_updated = models.DateTimeField(default=timezone.now)
 	labels = models.ManyToManyField(Label, blank=True, null=True, related_name='issues')
 	# depends_on = models.ManyToManyField('self', symmetrical=False, related_name='required_by')
 	content = models.TextField()
