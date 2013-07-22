@@ -128,8 +128,6 @@ INSTALLED_APPS = (
     'users',
     'issues',
     'core',
-    # Data migration
-    'south',
 )
 
 # A sample logging configuration. The only tangible logging
