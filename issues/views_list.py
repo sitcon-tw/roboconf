@@ -19,7 +19,7 @@ def datasets(mode, user_id):
 	return (counts, dataset)
 
 def list(request, mode, user_id=None):
-	(counts, dataset) = datasets(user_id)
+	(counts, dataset) = datasets(mode, user_id)
 
 	is_open = not (request.GET.get('state') == 'closed')
 	counts['open'] = dataset.filter(is_open=True).count()
