@@ -4,11 +4,11 @@
 <div class="row">
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
-			<li{% if mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a></li>
+			<li{% if filters.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題</a><span class="right">{{ counts.all }}</span></li>
 			{% if user.is_authenticated %}
-			<li{% if mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a></li>
-			<li{% if mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a></li>
-			<li{% if mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號</a></li>
+			<li{% if filters.mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我</a><span class="right">{{ counts.assigned }}</span></li>
+			<li{% if filters.mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立</a><span class="right">{{ counts.created }}</span></li>
+			<li{% if filters.mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號</a><span class="right">{{ counts.starred }}</span></li>
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
@@ -24,14 +24,14 @@
 			<div class="left">
 				<div>
 					<ul class="radius button-group">
-						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ is_open|yesno:'active,' }}">待處理</a></li>
-						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ is_open|yesno:',active' }}">已結案</a></li>
+						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理</a><span class="count"> ({{ counts.open }})</span></li>
+						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案</a><span class="count"> ({{ counts.closed }})</span></li>
 					</ul>
 				</div>
 				<div>
 					<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" href="#">
 						<span>排序：</span>
-						{% if sorting == 'created' %}{% if is_asc %}最舊{% else %}最新{% endif %}{% elif sorting == 'due' %}{% if is_asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
+						{% if sorting.order == 'created' %}{% if sorting.asc %}最舊{% else %}最新{% endif %}{% elif sorting.order == 'due' %}{% if sorting.asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
 					</a>
 					<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
 						<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
