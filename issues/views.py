@@ -60,16 +60,12 @@ def detail(request, issue_id):
 			if len(assignee) > 0:
 				try:
 					issue.assignee = User.objects.get(id=assignee)
-					issue.save()
-					IssueHistory.objects.create(issue=issue, user=request.user,
-												mode=IssueHistory.ASSIGN, content=assignee)
+					issue.save_with_history(user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
 				except User.DoesNotExist:
 					pass			# Just in case we're under attack...
 			else:
 				issue.assignee = None
-				issue.save()
-				IssueHistory.objects.create(issue=issue, user=request.user,
-											mode=IssueHistory.UNASSIGN)
+				issue.save_with_history(user=request.user, mode=IssueHistory.UNASSIGN)
 
 	elif action == 'set-label':
 		old_labels = [l.id for l in issue.labels.all()]
@@ -85,15 +81,13 @@ def detail(request, issue_id):
 		for label_id in [l for l in old_labels if l not in new_labels]:
 			# Old labels won't have integrity issues so eliminate try block
 			issue.labels.remove(Label.objects.get(id=label_id))
-			IssueHistory.objects.create(issue=issue, user=request.user,
-										mode=IssueHistory.UNLABEL, content=label_id)
+			issue.save_with_history(user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
 
 		# Add new
 		for label_id in [l for l in new_labels if l not in old_labels]:
 			try:
 				issue.labels.add(Label.objects.get(id=label_id))
-				IssueHistory.objects.create(issue=issue, user=request.user,
-											mode=IssueHistory.LABEL, content=label_id)
+				issue.save_with_history(user=request.user, mode=IssueHistory.LABEL, content=label_id)
 			except Label.DoesNotExist:
 				pass
 
@@ -106,14 +100,12 @@ def detail(request, issue_id):
 		# Comment on this issue
 		content = request.POST.get('content')
 		if content:
-			IssueHistory.objects.create(issue=issue, user=request.user, content=content)
+			issue.save_with_history(user=request.user, content=content)
 
 		# Check if also change state
 		if action == 'toggle-state':
-			IssueHistory.objects.create(issue=issue, user=request.user, 
-										mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
 			issue.is_open = not issue.is_open
-			issue.save()
+			issue.save_with_history(user=request.user, mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
 
 	return render(request, 'issues_detail.html', {
 		'issue': issue,

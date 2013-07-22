@@ -19,6 +19,7 @@ class Issue(models.Model):
 	is_open = models.BooleanField(default=True)
 	assignee = models.ForeignKey(User, blank=True, null=True, related_name='assigned_issues')
 	due_time = models.DateTimeField(blank=True, null=True)
+	last_updated = models.DateTimeField(default=timezone.now)
 	labels = models.ManyToManyField(Label, blank=True, null=True, related_name='issues')
 	# depends_on = models.ManyToManyField('self', symmetrical=False, related_name='required_by')
 	content = models.TextField()
@@ -30,6 +31,11 @@ class Issue(models.Model):
 		if (not self.is_open) or (not self.due_time):
 			return False
 		return self.due_time < timezone.now()
+
+	def save_with_history(self, user, content=None, mode=IssueHistory.COMMENT):
+		self.last_updated = timezone.now
+		self.save()
+		IssueHistory.objects.create(issue=self, user=user, mode=mode, content=content)
 
 
 class IssueHistory(models.Model):
