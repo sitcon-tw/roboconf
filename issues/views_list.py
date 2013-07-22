@@ -3,17 +3,23 @@ from issues.models import *
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
-def datasets():
-	return {
-			'all': Issue.objects,
-			'assigned': Issue.objects.filter(assignee__pk=user_id),
-			'created': Issue.objects.filter(creator__pk=user_id),
-			#'starred': ,
+def datasets(mode, user_id):
+	counts = {
+			'all': Issue.objects.count(),
+			'assigned': Issue.objects.filter(assignee__pk=request.user.id).count(),
+			'created': Issue.objects.filter(creator__pk=request.user.id).count(),
+			#'starred': '',
 		}
 
-def list(request, mode):
-	dataset = datasets()[mode]
-	counts = [s.count() for s in dataset]
+	dataset = None
+	if mode == 'list': dataset = Issue.objects,
+	elif mode == 'assigned': dataset = Issue.objects.filter(assignee__pk=user_id)
+	elif mode == 'created': dataset = Issue.objects.filter(creator__pk=user_id)
+	#elif mode == 'starred':
+	return (counts, dataset)
+
+def list(request, mode, user_id=None):
+	(counts, dataset) = datasets(user_id)
 
 	is_open = not (request.GET.get('state') == 'closed')
 	counts['open'] = dataset.filter(is_open=True).count()

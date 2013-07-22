@@ -14,11 +14,11 @@ def list(request):
 
 @login_required
 def assigned(request, user_id):
-	return _list.list(request, 'assigned')
+	return _list.list(request, 'assigned', user_id=user_id)
 
 @login_required
 def created(request, user_id):
-	return _list.list(request, 'created')
+	return _list.list(request, 'created', user_id=user_id)
 
 @login_required
 def starred(request, user_id):
