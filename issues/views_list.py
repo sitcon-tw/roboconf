@@ -32,7 +32,7 @@ def list(request, mode, user_id=None):
 	dataset = dataset.order_by(('' if is_asc else '-') + order_mapping[sort_order])
 
 	filters = { 'is_open': is_open, 'mode': mode }
-	sorting = { 'asc': is_asc, 'desc': not is_asc, 'order': sorting }
+	sorting = { 'asc': is_asc, 'desc': not is_asc, 'order': sort_order }
 
 	return render(request, 'issues_list.html', {
 		'current_url': request.path,
