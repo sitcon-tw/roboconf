@@ -59,7 +59,7 @@ def starred(request, user_id):
 # Issue details =========================================================================
 
 def __update(issue, user, content=None, mode=IssueHistory.COMMENT):
-	issue.last_updated = timezone.now
+	issue.last_updated = timezone.now()
 	issue.save()
 	IssueHistory.objects.create(issue=issue, user=user, mode=mode, content=content)
 
