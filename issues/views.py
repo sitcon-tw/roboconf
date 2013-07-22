@@ -8,9 +8,12 @@ import datetime
 
 from issues.models import Issue, Label, IssueHistory
 
+
+
+# Issue list ============================================================================
+
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
-@login_required
 def __list(request, dataset, mode):
 	# Filter
 	is_open = not (request.GET.get('state') == 'closed')
@@ -38,80 +41,96 @@ def __list(request, dataset, mode):
 def list(request):
 	return __list(request, dataset=Issue.objects.all(), mode='list')
 
+@login_required
 def assigned(request, user_id):
 	return __list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
 
+@login_required
 def created(request, user_id):
 	return __list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
 
+@login_required
 def starred(request, user_id):
 	# TODO: Implement "starring" (a.k.a watch issue)
 	return redirect(reverse('issues:list'))
+
+
+
+# Issue details =========================================================================
+
+def __update(issue, user, content=None, mode=IssueHistory.COMMENT):
+	issue.last_updated = timezone.now
+	issue.save()
+	IssueHistory.objects.create(issue=issue, user=user, mode=mode, content=content)
+
+def __assign(issue, request):
+	assignee = request.POST.get('assignee')
+	if assignee is not None:					# empty string => unassign
+		if len(assignee) > 0:
+			try:
+				issue.assignee = User.objects.get(id=assignee)
+				__update(issue=issue, user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
+			except User.DoesNotExist: pass		# Just in case we're under attack...
+		else:
+			issue.assignee = None
+			__update(issue=issue, user=request.user, mode=IssueHistory.UNASSIGN)
+
+def __set_label(issue, request):
+	old_labels = [l.id for l in issue.labels.all()]
+	new_labels = []
+
+	for label_str in request.POST.getlist('labels'):
+		try:
+			new_labels.append(int(label_str))
+		except ValueError: pass
+
+	# Remove unused labels
+	# * Old labels won't have integrity issues so eliminate try block
+	for label_id in [l for l in old_labels if l not in new_labels]:
+		issue.labels.remove(Label.objects.get(id=label_id))
+		__update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
+
+	# Add new labels
+	for label_id in [l for l in new_labels if l not in old_labels]:
+		try:
+			issue.labels.add(Label.objects.get(id=label_id))
+			__update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
+		except Label.DoesNotExist:
+			pass
+
+	issue.save()
+
+def __toggle_state(issue, request):
+	issue.is_open = not issue.is_open
+	__update(issue=issue, user=request.user, mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
 
 @login_required
 def detail(request, issue_id):
 	issue = get_object_or_404(Issue, pk=issue_id)
 
-	# Check if postback
-	action = request.POST.get('action')
+	action = request.POST.get('action')		# Check if postback
 	if action == 'assign':
-		assignee = request.POST.get('assignee')
-		if assignee is not None:	# empty string => unassign
-			if len(assignee) > 0:
-				try:
-					issue.assignee = User.objects.get(id=assignee)
-					issue.save_with_history(user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
-				except User.DoesNotExist:
-					pass			# Just in case we're under attack...
-			else:
-				issue.assignee = None
-				issue.save_with_history(user=request.user, mode=IssueHistory.UNASSIGN)
-
+		__assign(issue, request)
 	elif action == 'set-label':
-		old_labels = [l.id for l in issue.labels.all()]
-		new_labels = []
-
-		for label_str in request.POST.getlist('labels'):
-			try:
-				new_labels.append(int(label_str))
-			except ValueError:
-				pass
-
-		# Remove unused labels
-		for label_id in [l for l in old_labels if l not in new_labels]:
-			# Old labels won't have integrity issues so eliminate try block
-			issue.labels.remove(Label.objects.get(id=label_id))
-			issue.save_with_history(user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
-
-		# Add new
-		for label_id in [l for l in new_labels if l not in old_labels]:
-			try:
-				issue.labels.add(Label.objects.get(id=label_id))
-				issue.save_with_history(user=request.user, mode=IssueHistory.LABEL, content=label_id)
-			except Label.DoesNotExist:
-				pass
-
-		issue.save()
-
+		__set_label(issue, request)
 	#elif action == 'set-due':
-	#	pass
-
+		#pass
 	elif action:
-		# Comment on this issue
 		content = request.POST.get('content')
 		if content:
-			issue.save_with_history(user=request.user, content=content)
-
-		# Check if also change state
+			__update(issue=issue, user=request.user, content=content)	# Comment on this issue
 		if action == 'toggle-state':
-			issue.is_open = not issue.is_open
-			issue.save_with_history(user=request.user, mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
+			__toggle_state(issue, request)								# Toggling state
 
 	return render(request, 'issues_detail.html', {
 		'issue': issue,
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
 	})
+
+
+
+# Issue creation ========================================================================
 
 @login_required
 def create(request):
@@ -133,8 +152,7 @@ def create(request):
 			except ValueError:
 				errors.append('date-invalid')
 
-			if due_time:
-				issue.due_time = due_time
+			if due_time: issue.due_time = due_time
 			else:
 				errors.append('date-misformed')
 
@@ -156,12 +174,12 @@ def create(request):
 				IssueHistory.objects.create(issue=issue, user=request.user, 
 											mode=IssueHistory.SET_DUE, content=due_time)
 
+
+			# Add or remove labels has history so we don't worry on history creation
 			for label_id in request.POST.getlist('labels'):
 				try:
 					issue.labels.add(Label.objects.get(id=label_id))
-					# Add or remove labels has history so we don't worry on history creation
-				except Label.DoesNotExist:
-					pass
+				except Label.DoesNotExist: pass
 
 			issue.save()	# Now save the labels
 			return redirect(reverse('issues:detail', args=(issue.id,)))

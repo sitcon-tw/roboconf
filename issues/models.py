@@ -32,11 +32,6 @@ class Issue(models.Model):
 			return False
 		return self.due_time < timezone.now()
 
-	def save_with_history(self, user, content=None, mode=IssueHistory.COMMENT):
-		self.last_updated = timezone.now
-		self.save()
-		IssueHistory.objects.create(issue=self, user=user, mode=mode, content=content)
-
 
 class IssueHistory(models.Model):
 	COMMENT = '.'
