@@ -2,7 +2,7 @@ from issues.models import Label
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
-def __list(request, dataset, mode):
+def list(request, dataset, mode):
 	# Filter
 	is_open = not (request.GET.get('state') == 'closed')
 	dataset = dataset.filter(is_open=is_open)

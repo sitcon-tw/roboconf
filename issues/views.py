@@ -3,22 +3,22 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from views_list import *
-from views_detail import *
-from views_create import *
+import views_list as _list
+import views_detail as _detail
+import views_create as _create
 from issues.models import *
 
 @login_required
 def list(request):
-	return __list(request, dataset=Issue.objects.all(), mode='list')
+	return _list.list(request, dataset=Issue.objects.all(), mode='list')
 
 @login_required
 def assigned(request, user_id):
-	return __list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
+	return _list.list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
 
 @login_required
 def created(request, user_id):
-	return __list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
+	return _list.list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
 
 @login_required
 def starred(request, user_id):
@@ -31,16 +31,16 @@ def detail(request, issue_id):
 
 	action = request.POST.get('action')		# Check if postback
 	if action == 'assign':
-		__assign(issue, request)
+		_detail.assign(issue, request)
 	elif action == 'set-label':
-		__set_label(issue, request)
+		_detail.set_label(issue, request)
 	#elif action == 'set-due':
 		#pass
 	elif action:
 		content = request.POST.get('content')
-		if content: __comment(issue, request)
+		if content: _detail.comment(issue, request)
 		if action == 'toggle-state':
-			__toggle_state(issue, request)
+			_detail.toggle_state(issue, request)
 
 	return render(request, 'issues_detail.html', {
 		'issue': issue,
@@ -53,7 +53,7 @@ def create(request):
 	errors = []
 
 	if 'submit' in request.POST:
-		(issue, errors) = __create(request)
+		(issue, errors) = _create.create(request)
 		if issue: return redirect(reverse('issues:detail', args=(issue.id,)))
 
 	return render(request, 'issues_create.html', {

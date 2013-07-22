@@ -2,25 +2,25 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from issues.models import *
 
-def __update(issue, user, content=None, mode=IssueHistory.COMMENT):
+def update(issue, user, content=None, mode=IssueHistory.COMMENT):
 	issue.last_updated = timezone.now()
 	issue.save()
 	IssueHistory.objects.create(issue=issue, user=user, mode=mode, content=content)
 
 
-def __assign(issue, request):
+def assign(issue, request):
 	assignee = request.POST.get('assignee')
 	if assignee is not None:					# empty string => unassign
 		if len(assignee) > 0:
 			try:
 				issue.assignee = User.objects.get(id=assignee)
-				__update(issue=issue, user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
+				update(issue=issue, user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
 			except User.DoesNotExist: pass		# Just in case we're under attack...
 		else:
 			issue.assignee = None
-			__update(issue=issue, user=request.user, mode=IssueHistory.UNASSIGN)
+			update(issue=issue, user=request.user, mode=IssueHistory.UNASSIGN)
 
-def __set_label(issue, request):
+def set_label(issue, request):
 	old_labels = [l.id for l in issue.labels.all()]
 	new_labels = []
 
@@ -33,22 +33,22 @@ def __set_label(issue, request):
 	# * Old labels won't have integrity issues so eliminate try block
 	for label_id in [l for l in old_labels if l not in new_labels]:
 		issue.labels.remove(Label.objects.get(id=label_id))
-		__update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
+		update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
 
 	# Add new labels
 	for label_id in [l for l in new_labels if l not in old_labels]:
 		try:
 			issue.labels.add(Label.objects.get(id=label_id))
-			__update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
+			update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
 		except Label.DoesNotExist:
 			pass
 
 	issue.save()
 
-def __comment(issue, request):
+def comment(issue, request):
 	content = request.POST.get('content')
-	if content: __update(issue=issue, user=request.user, content=content)
+	if content: update(issue=issue, user=request.user, content=content)
 
-def __toggle_state(issue, request):
+def toggle_state(issue, request):
 	issue.is_open = not issue.is_open
-	__update(issue=issue, user=request.user, mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
+	update(issue=issue, user=request.user, mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))

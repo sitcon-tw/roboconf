@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.utils import dateparse
 import datetime
 
-def __create(request):
+def create(request):
 	errors = []
 	
 	issue = Issue()
