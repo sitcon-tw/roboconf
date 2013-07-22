@@ -10,15 +10,15 @@ from issues.models import *
 
 @login_required
 def list(request):
-	return _list.list(request, dataset=Issue.objects.all(), mode='list')
+	return _list.list(request, 'list')
 
 @login_required
 def assigned(request, user_id):
-	return _list.list(request, dataset=Issue.objects.filter(assignee__pk=user_id), mode='assigned')
+	return _list.list(request, 'assigned')
 
 @login_required
 def created(request, user_id):
-	return _list.list(request, dataset=Issue.objects.filter(creator__pk=user_id), mode='created')
+	return _list.list(request, 'created')
 
 @login_required
 def starred(request, user_id):
