@@ -12,7 +12,7 @@ def list(request, mode, user_id=None):
 		}
 
 	dataset = None
-	if mode == 'list': dataset = Issue.objects,
+	if mode == 'list': dataset = Issue.objects
 	elif mode == 'assigned': dataset = Issue.objects.filter(assignee__pk=user_id)
 	elif mode == 'created': dataset = Issue.objects.filter(creator__pk=user_id)
 	#elif mode == 'starred':
@@ -36,7 +36,7 @@ def list(request, mode, user_id=None):
 
 	return render(request, 'issues_list.html', {
 		'current_url': request.path,
-		'issues': dataset,
+		'issues': dataset.all(),
 		'labels': Label.objects.all(),
 		'filters': filters,
 		'sorting': sorting,
