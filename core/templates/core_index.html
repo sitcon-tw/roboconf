@@ -13,7 +13,7 @@
 		<h5><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
 		<hr/>
 		<ul class="issue-list">
-		{% for issue in user.assigned_issues.all %}
+		{% for issue in issues %}
 			<li class="issue-entry">
 				<div class="issue-id">#{{ issue.id }}</div>
 				<h4>
