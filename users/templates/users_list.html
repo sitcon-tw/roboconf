@@ -9,7 +9,7 @@
 			<li class="user-item">
 				<h4>
 					<img class="avatar medium" src="{{ u.email|get_avatar:'#' }}" alt="{{ u.username }}" />
-					<a href="#">{{ u.username }}</a>
+					<a href="{% url 'users:profile' u.id %}">{{ u.username }}</a>
 					<span class="title">{{ u.profile.title }}</span>
 				</h4>
 			</li>
@@ -18,9 +18,9 @@
 	</div>
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav users-actions">
-			<li><span class="icon-add iconize"></span> <a href="#">新增人員</a></li>
-			<li><span class="icon-email iconize"></span> <a href=""#>寄送通知</a></li>
-			<li><span class="icon-profile iconize"></span> <a href="{% url 'users:profile' user.id %}">編輯個人檔案</a></li>
+			<li><a href="#"><span class="icon-add iconize"></span> 新增人員</a></li>
+			<li><a href=""#><span class="icon-email iconize"></span> 寄送通知</a></li>
+			<li><a href="{% url 'users:profile' user.id %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
 		</ul>
 		<div class="divider"></div>
 		<h5>篩選組別</h5>
