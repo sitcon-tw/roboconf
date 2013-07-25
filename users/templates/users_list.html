@@ -20,7 +20,7 @@
 		<ul class="side-nav users-actions">
 			<li><span class="icon-add iconize"></span> <a href="#">新增人員</a></li>
 			<li><span class="icon-email iconize"></span> <a href=""#>寄送通知</a></li>
-			<li><span class="icon-profile iconize"></span> <a href="{% url 'users:profile' %}">編輯個人檔案</a></li>
+			<li><span class="icon-profile iconize"></span> <a href="{% url 'users:profile' user.id %}">編輯個人檔案</a></li>
 		</ul>
 		<div class="divider"></div>
 		<h5>篩選組別</h5>

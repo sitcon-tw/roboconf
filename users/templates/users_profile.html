@@ -1,43 +1,43 @@
 {% extends 'core_main.html' %}
-{% block title %}{{ user.username }}{{ block.super }}{% endblock %}
+{% block title %}{{ u.username }}{{ block.super }}{% endblock %}
 {% load users %}
 {% block content %}
 <div class="row">
 	<div class="large-1 avatars columns">
-		<img class="avatar medium has-tip" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" title="請至 Gravatar 替換你的大頭照" />
+		<img class="avatar medium has-tip" src="{{ u.email|get_avatar:'#' }}" alt="{{ u.username }}" title="請至 Gravatar 替換你的大頭照" />
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">
 		<form action="#" method="POST" class="profile-main row">
 			<div class="row">
 				<div class="small-6 columns">
-					<input name="last_name" maxlength="30" placeholder="姓" value="{{ user.first_name }}" />
+					<input name="last_name" maxlength="30" placeholder="姓" value="{{ u.first_name }}" />
 				</div>
 				<div class="small-6 columns">
-					<input name="first_name" maxlength="30" placeholder="名" value="{{ user.first_name }}" />
+					<input name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input name="school" maxlength="30" placeholder="學校" value="{{ user.profile.school }}" />
+					<input name="school" maxlength="30" placeholder="學校" value="{{ u.profile.school }}" />
 				</div>
 				<div class="small-6 columns">
-					<input name="grade" maxlength="30" placeholder="系所" value="{{ user.profile.grade }}" />
+					<input name="grade" maxlength="30" placeholder="系所" value="{{ u.profile.grade }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input name="email" placeholder="電子郵件信箱" value="{{ user.email }}" />
+					<input name="email" placeholder="電子郵件信箱" value="{{ u.email }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input name="phone" placeholder="電話號碼" value="{{ user.profile.phone }}" />
+					<input name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<textarea name="comment" placeholder="備註">{{ user.profile.comment }}</textarea>
+					<textarea name="comment" placeholder="備註">{{ u.profile.comment }}</textarea>
 				</div>
 			</div>
 		</form>
