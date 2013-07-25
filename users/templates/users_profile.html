@@ -8,31 +8,32 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="#" method="POST" class="profile-main row">
+		<form action="#" method="POST" class="profile-main">
+		{% csrf_token %}
 			<div class="row">
 				<div class="small-6 columns">
-					<input name="last_name" maxlength="30" placeholder="姓" value="{{ u.first_name }}" />
+					<input type="text" name="last_name" maxlength="30" placeholder="姓" value="{{ u.last_name }}" />
 				</div>
 				<div class="small-6 columns">
-					<input name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
+					<input type="text" name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input name="school" maxlength="30" placeholder="學校" value="{{ u.profile.school }}" />
+					<input type="text" name="school" maxlength="30" placeholder="學校" value="{{ u.profile.school }}" />
 				</div>
 				<div class="small-6 columns">
-					<input name="grade" maxlength="30" placeholder="系所" value="{{ u.profile.grade }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<input name="email" placeholder="電子郵件信箱" value="{{ u.email }}" />
+					<input type="text" name="grade" maxlength="30" placeholder="系所" value="{{ u.profile.grade }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
+					<input type="text" name="email" placeholder="電子郵件信箱" value="{{ u.email }}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
 				</div>
 			</div>
 			<div class="row">
