@@ -1,0 +1,34 @@
+{% extends 'core_main.html' %}
+{% block title %}人員{{ block.super }}{% endblock %}
+{% load users %}
+{% block content %}
+<div class="row">
+	<div class="large-9 columns">
+		<ul class="user-list">
+		{% for u in users %}
+			<li class="user-item">
+				<h4>
+					<img class="avatar medium" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" />
+					<a href="#">{{ u.username }}</a>
+					<span class="title">{{ u.profile.title }}</span>
+				</h4>
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+	<div class="large-3 columns main-side-nav">
+		<ul class="side-nav users-actions">
+			<li><span class="icon-add iconize"></span> 新增人員</li>
+			<li><span class="icon-email iconize"></span> 寄送通知</li>
+			<li><span class="icon-profile iconize"></span> 編輯個人檔案</li>
+		</ul>
+		<div class="divider"></div>
+		<h5>篩選組別</h5>
+		<ul class="side-nav">
+		{% for g in groups %}
+			<li>{{ g.name }}</li>
+		{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

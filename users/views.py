@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 import django.contrib.auth as auth
+
+import views_list as _list
+import views_profile as _profile
 
 def login(request):
 	if request.user.is_authenticated():
@@ -30,3 +34,11 @@ def login(request):
 def logout(request):
 	auth.logout(request)
 	return redirect(reverse('users:login'))
+
+@login_required
+def list(request):
+	return _list.list(request)
+
+@login_required
+def profile(request, id):
+	return _profile.profile(request, id)

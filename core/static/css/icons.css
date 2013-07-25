@@ -30,6 +30,9 @@
 .icon-tags:before { content: '\7c64'; }
 .icon-clock:before { content: '\6642'; }
 .icon-check:before { content: '\2705'; }
+.icon-add:before { content: '\002b'; }
+.icon-email:before { content: '\4fe1'; }
+.icon-profile:before { content: '\7c3f'; }
 .issue-actions .button .iconize { font-size: 16px; vertical-align: middle; }
 form.custom .label-item .custom.checkbox.checked:before { content: '\2705'; margin-top: 8px; margin-left: -7px; }
 form.custom .assignee-field .custom.dropdown .current:before { content: '\4eba'; font-family: 'IcoMoon'; speak: none; font-weight: normal; padding-right: 0.5em; }
