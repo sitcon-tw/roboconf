@@ -51,4 +51,4 @@ def comment(issue, request):
 
 def toggle_state(issue, request):
 	issue.is_open = not issue.is_open
-	update(issue=issue, user=request.user, mode=(IssueHistory.CLOSE if issue.is_open else IssueHistory.REOPEN))
+	update(issue=issue, user=request.user, mode=(IssueHistory.REOPEN if issue.is_open else IssueHistory.CLOSE))
