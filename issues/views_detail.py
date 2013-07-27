@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from issues.models import *
 
-def update(issue, user, content=None, mode=IssueHistory.COMMENT):
+def update(issue, user, content='', mode=IssueHistory.COMMENT):
 	issue.last_updated = timezone.now()
 	issue.save()
 	IssueHistory.objects.create(issue=issue, user=user, mode=mode, content=content)
