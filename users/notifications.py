@@ -4,6 +4,7 @@ import os
 
 def send_mail(user, subject, content):
 	message = email.mime.text.MIMEText(content, 'html')
+	message['Subject'] = subject
 
 	client = smtplib.SMTP(os.environ['EMAIL_SERVER'], os.environ['EMAIL_PORT'])
 	client.login(os.environ['EMAIL_USER'], os.environ['EMAIL_PASSWORD'])
