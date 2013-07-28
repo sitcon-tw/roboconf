@@ -126,6 +126,20 @@
 			<div class="closed">已結案</div>{% endif %}
 		</div>
 		<div class="divider"></div>
+		<div class="issue-actions">
+			<form class="issue-star row collapse" id="star-form" action="{% url 'issues:detail' issue.id %}" method="POST">
+				{% csrf_token %}
+				<input type="hidden" name="action" value="toggle-star" />
+				<div class="small-9 columns">
+					<a id="star-button" class="radius secondary small prefix button has-tip" title="{{ has_starred|yesno:'取消,接收' }}來自此議題的通知">
+						<span class="iconize icon-star {{ has_starred|yesno:'active,' }}"></span> 星號標記
+					</a>
+				</div>
+				<div class="small-3 columns">
+					<span class="radius postfix with-button">{% issue.starring.count %}</span>
+				</div>
+			</div>
+		</div>
 		<div class="issue-labels">
 			{% if user.is_authenticated %}
 			<div class="button-holder right">
@@ -170,6 +184,10 @@ $(document).ready(function() {
 
 	$('#issue-assignee').on('change', function() {
 		$('#assign-form').submit();
+	});
+
+	$('#star-button').click(function() {
+		$('#star-form').submit();
 	});
 });
 </script>

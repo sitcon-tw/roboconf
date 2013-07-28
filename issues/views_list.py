@@ -8,14 +8,14 @@ def list(request, mode, user_id=None):
 			'all': Issue.objects.count(),
 			'assigned': Issue.objects.filter(assignee__pk=request.user.id).count(),
 			'created': Issue.objects.filter(creator__pk=request.user.id).count(),
-			#'starred': '',
+			'starred': Issue.objects.filter(starring__pk=request.user.id).count(),
 		}
 
 	dataset = None
 	if mode == 'list': dataset = Issue.objects
 	elif mode == 'assigned': dataset = Issue.objects.filter(assignee__pk=user_id)
 	elif mode == 'created': dataset = Issue.objects.filter(creator__pk=user_id)
-	#elif mode == 'starred':
+	elif mode == 'starred': dataset = Issue.objects.filter(starring__pk=user_id)
 
 	is_open = not (request.GET.get('state') == 'closed')
 	counts['open'] = dataset.filter(is_open=True).count()

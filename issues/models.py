@@ -18,6 +18,7 @@ class Issue(models.Model):
 	creation_time = models.DateTimeField(editable=False, default=timezone.now)
 	is_open = models.BooleanField(default=True)
 	assignee = models.ForeignKey(User, blank=True, null=True, related_name='assigned_issues')
+	starring = models.ManyToManyField(User, blank=True, null=True, related_name='starred_issues')
 	due_time = models.DateTimeField(blank=True, null=True)
 	last_updated = models.DateTimeField(default=timezone.now)
 	labels = models.ManyToManyField(Label, blank=True, null=True, related_name='issues')

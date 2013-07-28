@@ -22,8 +22,7 @@ def created(request, user_id):
 
 @login_required
 def starred(request, user_id):
-	# TODO: Implement "starring" (a.k.a watch issue)
-	return redirect(reverse('issues:list'))
+	return _list.list(request, 'starred', user_id=user_id)
 
 @login_required
 def detail(request, issue_id):
@@ -36,6 +35,8 @@ def detail(request, issue_id):
 		_detail.set_label(issue, request)
 	#elif action == 'set-due':
 		#pass
+	elif action == 'toggle-star':
+		_detail.toggle_star(issue, request)
 	elif action:
 		content = request.POST.get('content')
 		if content: _detail.comment(issue, request)
@@ -46,6 +47,7 @@ def detail(request, issue_id):
 		'issue': issue,
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
+		'has_starred': issue.starring.filter(user=request.user).count() > 0,
 	})
 
 @login_required
