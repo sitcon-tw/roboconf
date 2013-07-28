@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Django settings for sitconstaff project.
 import os
 
@@ -128,6 +129,7 @@ INSTALLED_APPS = (
     'users',
     'issues',
     'core',
+    'notifications',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -161,6 +163,13 @@ LOGGING = {
 
 # Auth model settings
 LOGIN_URL = 'users:login'
+
+NOTIFICATIONS = {
+    'sender': {
+        'default': 'SITCON 行政系統:staff@sitcon.org',
+        'filter': '"%s" <staff+%s@sitcon.org>'
+    },
+}
 
 # Heroku-specific settings
 if 'HEROKU' in os.environ:
