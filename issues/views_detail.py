@@ -60,7 +60,7 @@ def toggle_state(issue, request):
 	update(issue=issue, user=request.user, mode=(IssueHistory.REOPEN if issue.is_open else IssueHistory.CLOSE))
 
 def toggle_star(issue, request):
-	if issue.starring.filter(user=request.user).count():
+	if issue.starring.filter(id=request.user.id).count():
 		issue.starring.remove(request.user)
 	else:
 		issue.starring.add(request.user)

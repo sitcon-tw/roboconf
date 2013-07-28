@@ -47,7 +47,7 @@ def detail(request, issue_id):
 		'issue': issue,
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
-		'has_starred': issue.starring.filter(user=request.user).count() > 0,
+		'has_starred': issue.starring.filter(id=request.user.id).count() > 0,
 	})
 
 @login_required

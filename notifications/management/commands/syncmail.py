@@ -15,7 +15,6 @@ class Command(NoArgsCommand):
 	help = "Checks and sends messages from notification queue."
 
 	def handle_noargs(self, **options):
-		config = settings.NOTIFICATIONS
 		emails = Message.objects.filter(method=Message.EMAIL, is_sent=False)
 		if emails.count():
 			client = SMTP(os.environ['EMAIL_SERVER'], os.environ['EMAIL_PORT'])
