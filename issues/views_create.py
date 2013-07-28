@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.utils import dateparse
+from notifications.models import Message
 import datetime
 
 def create(request):
@@ -35,10 +36,18 @@ def create(request):
 
 	if len(errors) < 1:
 		issue.save()	# Need to save before we can enforce N to N relationship
+		issue.starring.add(request.user)	# Auto watch
 
 		if assignee:
 			IssueHistory.objects.create(issue=issue, user=request.user,
 										mode=IssueHistory.ASSIGN, content=assignee)
+
+			issue.starring.add(issue.assignee)	# Auto watch
+			Message.create_from_user(request.user, issue.assignee, 
+				'[#%s] %s' % (issue.id, issue.title), 
+				'* %s 已將此議題指派給你 *\n\n%s' % (request.user.username, issue.content)
+			)
+
 		if due_time:
 			IssueHistory.objects.create(issue=issue, user=request.user, 
 										mode=IssueHistory.SET_DUE, content=due_time)
