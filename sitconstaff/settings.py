@@ -167,7 +167,7 @@ LOGIN_URL = 'users:login'
 NOTIFICATIONS = {
     'sender': {
         'default': 'SITCON 行政系統:staff@sitcon.org',
-        'filter': '"%s" <staff+%s@sitcon.org>'
+        'filter': 'staff+%s@sitcon.org',
     },
 }
 
