@@ -34,8 +34,8 @@ class Command(NoArgsCommand):
 				part['From'] = formataddr((str(format_unicode(s_name)), s_email))
 				part['To'] = formataddr((str(format_unicode(r_name)), r_email))
 
-				part.attach(MIMEText(content.encode('utf-8'), 'text', 'UTF-8'))
-				part.attach(MIMEText(get_markdown(content).encode('utf-8'), 'html', 'UTF-8'))
+				part.attach(MIMEText(email.content.encode('utf-8'), 'text', 'UTF-8'))
+				part.attach(MIMEText(get_markdown(email.content).encode('utf-8'), 'html', 'UTF-8'))
 
 				client.sendmail(s_email, r_email, part.as_string())
 
