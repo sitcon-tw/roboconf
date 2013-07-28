@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.management.base import NoArgsCommand
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
