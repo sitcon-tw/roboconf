@@ -26,4 +26,3 @@ This project (#Roboconf) is temporarily licensed under [GNU AGPL-3.0](http://www
 > the conference organizer would need to either 
 > (a) help promote SITCON by putting SITCON logo on the conference website, or 
 > (b) support SITCON by either donation or becoming one of SITCON's sponsor.
-
