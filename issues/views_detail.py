@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.utils import timezone
 from issues.models import *
+from notifications.models import Message
 
 def update(issue, user, content='', mode=IssueHistory.COMMENT):
 	issue.last_updated = timezone.now()
@@ -47,7 +48,12 @@ def set_label(issue, request):
 
 def comment(issue, request):
 	content = request.POST.get('content')
-	if content: update(issue=issue, user=request.user, content=content)
+	if content:
+		update(issue=issue, user=request.user, content=content)
+
+		message_subject = 'Re: [#%s] %s' % (issue.id, issue.title)
+		for watcher in issue.starring.all():
+			Message.create_from_user(request.user, watcher, message_subject, content)
 
 def toggle_state(issue, request):
 	issue.is_open = not issue.is_open
