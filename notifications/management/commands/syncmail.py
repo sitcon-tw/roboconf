@@ -11,6 +11,9 @@ import os
 
 from notifications.models import *
 
+def format_unicode(text):
+	return Header(text.encode('utf-8'), 'UTF-8')
+
 class Command(NoArgsCommand):
 	help = "Checks and sends messages from notification queue."
 
@@ -41,5 +44,3 @@ class Command(NoArgsCommand):
 
 			client.quit()
 
-	def format_unicode(self, text):
-		return Header(text.encode('utf-8'), 'UTF-8')
