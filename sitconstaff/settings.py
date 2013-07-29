@@ -167,7 +167,11 @@ LOGIN_URL = 'users:login'
 NOTIFICATIONS = {
     'sender': {
         'default': 'SITCON 行政系統:staff@sitcon.org',
-        'filter': 'staff+%s@sitcon.org',
+        'filter': '%s@staff.sitcon.org',
+    },
+    'template': {
+        'text': '%s\n\n<本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。>',
+        'html': '%s<br/><br/><hr/><p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>',
     },
 }
 
