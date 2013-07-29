@@ -33,10 +33,10 @@ class Command(NoArgsCommand):
 				part['From'] = formataddr((str(format_unicode(s_name)), s_email))
 				part['To'] = formataddr((str(format_unicode(r_name)), r_email))
 
-				text_content = get_setting('template', 'text', '%s') % email.content
-				html_content = get_setting('template', 'html', '%s') % get_markdown(email.content)
-				part.attach(MIMEText(text_content.encode('utf-8'), 'text', 'UTF-8'))
-				part.attach(MIMEText(html_content.encode('utf-8'), 'html', 'UTF-8'))
+				text_content = get_setting('template', 'text', '%s') % email.content.encode('utf-8')
+				html_content = get_setting('template', 'html', '%s') % get_markdown(email.content).encode('utf-8')
+				part.attach(MIMEText(text_content, 'text', 'UTF-8'))
+				part.attach(MIMEText(html_content, 'html', 'UTF-8'))
 
 				client.sendmail(s_email, r_email, part.as_string())
 
