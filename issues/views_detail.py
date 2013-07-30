@@ -60,7 +60,7 @@ def set_label(issue, request):
 
 	issue.save()
 
-	body = [u' %s 已為此議題')]
+	body = [u' %s 已為此議題']
 	if len(labels_to_remove) > 0:
 		body.append(u'移除標籤* ')
 		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_remove]))
