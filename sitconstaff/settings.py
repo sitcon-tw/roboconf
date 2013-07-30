@@ -2,7 +2,7 @@
 # Django settings for sitconstaff project.
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

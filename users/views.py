@@ -6,6 +6,7 @@ import django.contrib.auth as auth
 import views_list as _list
 import views_profile as _profile
 
+@django.views.decorators.debug.sensitive_post_parameters('password')
 def login(request):
 	if request.user.is_authenticated():
 		return redirect(reverse('index'))
