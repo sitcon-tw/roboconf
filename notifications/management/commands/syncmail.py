@@ -32,8 +32,10 @@ class Command(NoArgsCommand):
 				html_content = get_setting('template', 'html', '%s') % get_markdown(item.content)
 
 				email.body = text_content
-				email.attach_alternative(html_content)
+				email.attach_alternative(html_content, 'text/html')
 				email.send()
 
 				item.is_sent = True
 				item.save()
+
+			conn.close()
