@@ -25,12 +25,12 @@ def assign(issue, request):
 				issue.assignee = u
 				issue.starring.add(u)			# Automatic starring
 				update(issue=issue, user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
-				notify(issue, request.user, U('* %s 已將此議題指派給 %s *') % (request.user.username, u.username))
+				notify(issue, request.user, u'* %s 已將此議題指派給 %s *' % (request.user.username, u.username))
 			except User.DoesNotExist: pass		# Just in case we're under attack...
 		else:
 			issue.assignee = None
 			update(issue=issue, user=request.user, mode=IssueHistory.UNASSIGN)
-			notify(issue, request.user, U('* %s 已撤銷此議題指派的人員*') % (request.user.username))
+			notify(issue, request.user, u'* %s 已撤銷此議題指派的人員*' % (request.user.username))
 
 def set_label(issue, request):
 	old_labels = [l.id for l in issue.labels.all()]
@@ -60,16 +60,16 @@ def set_label(issue, request):
 
 	issue.save()
 
-	body = [U('* %s 已為此議題')]
+	body = [u' %s 已為此議題')]
 	if len(labels_to_remove) > 0:
-		body.append(U('移除標籤* '))
-		body.append(U('、').join([(U('「%s」') % l.name) for l in labels_to_remove]))
+		body.append(u'移除標籤* ')
+		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_remove]))
 		if len(labels_to_add) > 0:
-			body.append(U(' *，同時'))
+			body.append(u' *，同時')
 
 	if len(labels_to_add) > 0:
-		body.append(U('套用標籤* '))
-		body.append(U('、').join([(U('「%s」') % l.name) for l in labels_to_add]))
+		body.append(u'套用標籤* ')
+		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_add]))
 
 	notify(issue, request.user, ''.join(body))
 
@@ -82,7 +82,7 @@ def comment(issue, request):
 def toggle_state(issue, request):
 	issue.is_open = not issue.is_open
 	update(issue=issue, user=request.user, mode=(IssueHistory.REOPEN if issue.is_open else IssueHistory.CLOSE))
-	notify(issue, request.user, U('* %s 已將此議題結案 *' if issue.is_open else '* %s 已對此議題提出復議 *') % (request.user.username))
+	notify(issue, request.user, (u'* %s 已將此議題結案 *' if issue.is_open else u'* %s 已對此議題提出復議 *') % (request.user.username))
 
 def toggle_star(issue, request):
 	if issue.starring.filter(id=request.user.id).count():
