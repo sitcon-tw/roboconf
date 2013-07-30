@@ -166,14 +166,20 @@ LOGIN_URL = 'users:login'
 
 NOTIFICATIONS = {
     'sender': {
-        'default': 'SITCON 行政系統:staff@sitcon.org',
+        'default': u'SITCON 行政系統:staff@sitcon.org',
         'filter': '%s@staff.sitcon.org',
     },
     'template': {
-        'text': '%s\n\n<本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。>',
-        'html': '%s<br/><br/><hr/><p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>',
+        'text': u'%s\n\n<本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。>',
+        'html': u'%s<br/><br/><hr/><p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>',
     },
 }
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = u'"SITCON 行政系統" <admin@staff.sitcon.org>'
 
 # Heroku-specific settings
 if 'HEROKU' in os.environ:

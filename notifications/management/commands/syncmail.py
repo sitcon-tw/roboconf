@@ -1,17 +1,15 @@
 from django.core.management.base import NoArgsCommand
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.header import Header
+from django.core import mail
 from email.utils import formataddr
-from smtplib import SMTP
-from core.markdown import get_markdown
 from notifications.utils import get_setting
+from core.markdown import get_markdown
 import os
 
 from notifications.models import *
 
-def format_unicode(text):
-	return Header(text.encode('utf-8'), 'UTF-8')
+def _parseaddr(nsaddr):
+	(name, _, addr) = nsaddr.rpartition(':')
+	return formataddr(name, addr)
 
 class Command(NoArgsCommand):
 	help = "Checks and sends messages from notification queue."
@@ -19,29 +17,23 @@ class Command(NoArgsCommand):
 	def handle_noargs(self, **options):
 		emails = Message.objects.filter(method=Message.EMAIL, is_sent=False)
 		if emails.count():
-			client = SMTP(os.environ['EMAIL_SERVER'], os.environ['EMAIL_PORT'])
-			client.login(os.environ['EMAIL_USER'], os.environ['EMAIL_PASSWORD'])
+			conn = mail.get_connection()
+			conn.open()
 
 			default_sender = get_setting('sender', 'default')
+			for item in emails.all():
+				email = mail.EmailMultiAlternatives(item.subject, connection=conn)
+				email.to = [_parseaddr(item.receiver)]
 
-			for email in emails.all():
-				s_name, _, s_email = (email.sender if email.sender else default_sender).rpartition(':')
-				r_name, _, r_email = (email.receiver).rpartition(':')
+				if item.sender:
+					email.from_email = _parseaddr(item.sender)
 
-				part = MIMEMultipart('alternative')
-				part['Subject'] = format_unicode(email.subject)
-				part['From'] = formataddr((str(format_unicode(s_name)), s_email))
-				part['To'] = formataddr((str(format_unicode(r_name)), r_email))
+				text_content = get_setting('template', 'text', '%s') % item.content
+				html_content = get_setting('template', 'html', '%s') % get_markdown(item.content)
 
-				text_content = get_setting('template', 'text', '%s') % email.content.encode('utf-8')
-				html_content = get_setting('template', 'html', '%s') % get_markdown(email.content).encode('utf-8')
-				part.attach(MIMEText(text_content, 'text', 'UTF-8'))
-				part.attach(MIMEText(html_content, 'html', 'UTF-8'))
+				email.body = text_content
+				email.attach_alternative(html_content)
+				email.send()
 
-				client.sendmail(s_email, r_email, part.as_string())
-
-				email.is_sent = True
-				email.save()
-
-			client.quit()
-
+				item.is_sent = True
+				item.save()
