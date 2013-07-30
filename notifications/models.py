@@ -21,6 +21,10 @@ class Message(models.Model):
 	def __unicode__(self):
 		return "%s[%s] %s" % (method, receiver, subject)
 
+	'''
+	Create message from a specific set of sender, receiver, subject and content.
+	Accepts unicode string.
+	'''
 	@staticmethod
 	def create_from_user(sender, receiver, subject, content):
 		message = Message()

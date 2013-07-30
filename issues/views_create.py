@@ -47,7 +47,7 @@ def create(request):
 			issue.starring.add(issue.assignee)	# Auto watch
 			Message.create_from_user(request.user, issue.assignee, 
 				'[#%s] %s' % (issue.id, issue.title), 
-				'* %s 已將此議題指派給你 *\n\n%s' % (request.user.username, issue.content)
+				unicode('* %s 已將此議題指派給你 *\n\n%s') % (request.user.username, issue.content)
 			)
 
 		if due_time:
