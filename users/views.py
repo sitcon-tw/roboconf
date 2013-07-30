@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.debug import sensitive_post_parameters
 import django.contrib.auth as auth
 
 import views_list as _list
 import views_profile as _profile
 
-@django.views.decorators.debug.sensitive_post_parameters('password')
+@sensitive_post_parameters('password')
 def login(request):
 	if request.user.is_authenticated():
 		return redirect(reverse('index'))
