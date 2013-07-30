@@ -180,6 +180,7 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = u'"SITCON 行政系統" <admin@staff.sitcon.org>'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Heroku-specific settings
 if 'HEROKU' in os.environ:
@@ -191,7 +192,7 @@ if 'HEROKU' in os.environ:
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
