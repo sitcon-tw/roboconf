@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.utils import timezone
-from core.utils import *
 from issues.models import *
 from notifications.models import Message
 
