@@ -9,7 +9,7 @@ from notifications.models import *
 
 def _parseaddr(nsaddr):
 	(name, _, addr) = nsaddr.rpartition(':')
-	return formataddr(name, addr)
+	return formataddr((name, addr))
 
 class Command(NoArgsCommand):
 	help = "Checks and sends messages from notification queue."
