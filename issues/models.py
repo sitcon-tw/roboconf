@@ -35,6 +35,9 @@ class Issue(models.Model):
 
 
 class IssueHistory(models.Model):
+	class Meta:
+		ordering = ['timestamp']
+		
 	COMMENT = '.'
 	CLOSE = 'C'
 	REOPEN = 'R'
