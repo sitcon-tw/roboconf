@@ -44,3 +44,8 @@ def list(request):
 @login_required
 def profile(request, id):
 	return _profile.profile(request, id)
+
+@login_required
+@sensitive_post_parameters()
+def change_password(request):
+	return render(request, 'users_change_password.html')
