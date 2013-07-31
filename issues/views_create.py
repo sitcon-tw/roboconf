@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django.utils import dateparse
 from issues.models import *
-from notifications.models import Message
+from issues.utils import send_mail
 import datetime
 
 def create(request):
@@ -45,9 +45,9 @@ def create(request):
 										mode=IssueHistory.ASSIGN, content=assignee)
 
 			issue.starring.add(issue.assignee)	# Auto watch
-			Message.create_from_user(request.user, issue.assignee, 
-				'[#%s] %s' % (issue.id, issue.title), 
-				u'* %s 已將此議題指派給你 *\n\n%s' % (request.user.username, issue.content)
+			send_mail(request.user, issue.assignee, 
+					  '[#%s] %s' % (issue.id, issue.title), 
+					 u'* %s 已將此議題指派給你 *\n\n%s' % (request.user.username, issue.content)
 			)
 
 		if due_time:

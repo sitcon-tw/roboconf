@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django.utils import timezone
 from issues.models import *
-from notifications.models import Message
+from issues.utils import send_mail
 
 def update(issue, user, content='', mode=IssueHistory.COMMENT):
 	issue.last_updated = timezone.now()
@@ -13,7 +13,7 @@ def notify(issue, user, content):
 	message_subject = 'Re: [#%s] %s' % (issue.id, issue.title)
 	for watcher in issue.starring.all():
 		if user == watcher: continue
-		Message.create_from_user(user, watcher, message_subject, content)
+		send_mail(user, watcher, message_subject, content)
 
 def assign(issue, request):
 	assignee = request.POST.get('assignee')

@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from notifications.utils import get_setting
 
 class Message(models.Model):
 	EMAIL = '@'
@@ -20,17 +19,3 @@ class Message(models.Model):
 
 	def __unicode__(self):
 		return "%s[%s] %s" % (method, receiver, subject)
-
-	'''
-	Create message from a specific set of sender, receiver, subject and content.
-	Accepts unicode string.
-	'''
-	@staticmethod
-	def create_from_user(sender, receiver, subject, content):
-		message = Message()
-		message.sender = '%s %s:%s' % (sender.last_name, sender.first_name, get_setting('sender', 'filter', '%s') % sender.username)
-		message.receiver = '%s %s:%s' % (receiver.last_name, receiver.first_name, receiver.email)
-		message.subject = subject
-		message.content = content
-		message.save()
-		return message
