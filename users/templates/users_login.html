@@ -1,6 +1,5 @@
 {% extends 'core_main.html' %}
-{% block title %}登入{{ block.super }}{% endblock %}
-{% load users %}
+{% block title %}登入{{ block.super }}{% endblock %}\
 {% block content %}
 {% if error %}
 <div class="radius {% if error == 'invalid_login' %}alert{% else %}secondary{% endif %} alert-box" data-alert>
