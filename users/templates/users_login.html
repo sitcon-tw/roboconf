@@ -17,11 +17,11 @@
 			{% csrf_token %}
 				<div class="row"><div class="large-12 columns">
 					<label for="username">使用者名稱</label>
-					<input type="text" name="username" size="30" maxlength="30" required />
+					<input type="text" id="username" name="username" size="30" maxlength="30" required />
 				</div></div>
 				<div class="row"><div class="large-12 columns">
 					<label for="password">密碼</label>
-					<input type="password" name="password" size="30" required />
+					<input type="password" id="password" name="password" size="30" required />
 				</div></div>
 				<div class="row"><div class="large-12 columns">
 					<input type="submit" name="submit" value="登入" class="right secondary radius button" />
