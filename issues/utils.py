@@ -2,7 +2,7 @@ from notifications.models import *
 from notifications.utils import get_setting
 
 def get_realname(user):
-	return '%s %s' % (sender.last_name, sender.first_name)
+	return '%s %s' % (user.last_name, user.first_name)
 
 '''
 Create message from a specific set of sender, receiver, subject and content.
