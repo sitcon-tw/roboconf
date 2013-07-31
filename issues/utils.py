@@ -10,7 +10,7 @@ Accepts unicode string.
 '''
 def send_mail(sender, receiver, subject, content):
 	message = Message()
-	message.sender = get_setting('sender', 'filter') % get_realname(sender)
+	message.sender = get_setting('sender', 'issues') % get_realname(sender)
 	message.receiver = '%s:%s' % (get_realname(receiver), receiver.email)
 	message.subject = subject
 	message.content = content
