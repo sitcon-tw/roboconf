@@ -13,6 +13,14 @@ class Label(models.Model):
 
 
 class Issue(models.Model):
+	class Meta:
+		permissions = (
+			('assign_issue', 'Assign issues to others'),
+			('label_issue', 'Label issues'),
+			('toggle_issue', 'Close or reopen issues'),
+			('comment_issue', 'Comment on issues'),
+		)
+		
 	title = models.CharField(max_length=128)
 	creator = models.ForeignKey(User, editable=False, related_name='created_issues')
 	creation_time = models.DateTimeField(editable=False, default=timezone.now)
