@@ -16,10 +16,9 @@
 			<div class="issue-meta"><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
 			<h4>{{ issue.title }}</h4>
 			<div class="issue-actions">
-			{# TODO: Use permissions #}
 				<div class="row">
 					<div class="large-4 small-6 columns">
-					{% if user.is_authenticated %}
+					{% if perms.issues.assign_issue %}
 						<form class="issue-assign custom" id="assign-form" action="{% url 'issues:detail' issue.id %}" method="POST">
 						{% csrf_token %}
 							<input type="hidden" name="action" value="assign" />
@@ -50,7 +49,6 @@
 					{% endif %}
 					</div>
 				</div>
-			{# % endif % #}
 			</div>
 			<div class="issue-content">
 				{{ issue.content|markdown }}
@@ -100,20 +98,26 @@
 			</span>
 		</div>
 		{% endif %}{% endfor %}
-		{% if user.is_authenticated %}
+		{% if perms.issues.comment_issue or perms.issues.toggle_issue %}
 		<form class="issue-comment" id="comment-form" action="{% url 'issues:detail' issue.id %}" method="POST">
 		{% csrf_token %}
+			{% if perms.issues.comment_issue %}
 			<div class="issue-main">
 				<img class="avatar medium" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" />
 				<div class="row"><div class="large-12 columns">
 					<textarea name="content" id="issue-content" placeholder="寫下留言" cols="30" rows="40"></textarea>
 				</div></div>
 			</div>
+			{% endif %}
 			<div class="button-row">
 				<div class="right">
 					<input type="hidden" name="action" id="action-field" value="comment" />
+					{% if perms.issues.toggle_issue %}
 					<input type="button" class="secondary radius button" id="toggle-button" data-action="{{ issue.is_open|yesno:'結案,復議' }}" data-action-with-comment="{{ issue.is_open|yesno:'留言並結案,留言並復議' }}" value="{{ issue.is_open|yesno:'結案,復議' }}" />
+					{% endif %}
+					{% if perms.issues.comment_issue %}
 					<input type="submit" class="radius button" id="comment-button" value="留言" />
+					{% endif %}
 				</div>
 			</div>
 		</form>
@@ -141,7 +145,7 @@
 			</form>
 		</div>
 		<div class="issue-labels">
-			{% if user.is_authenticated %}
+			{% if perms.issues.label_issue %}
 			<div class="button-holder right">
 				<a class="tiny secondary radius dropdown button" data-dropdown="tags-dropdown" href="#"><span class="icon-tags iconize"></span></a>
 				<div id="tags-dropdown" class="f-dropdown content" data-dropdown-content>

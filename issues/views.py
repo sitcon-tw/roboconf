@@ -57,6 +57,7 @@ def create(request):
 	if 'submit' in request.POST:
 		(issue, errors) = _create.create(request)
 		if issue: return redirect(reverse('issues:detail', args=(issue.id,)))
+		elif not errors: return redirect(reverse('issues:list'))	# Audit error
 
 	return render(request, 'issues_create.html', {
 		'labels': Label.objects.all(),

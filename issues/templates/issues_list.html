@@ -42,7 +42,9 @@
 				</div>
 			</div>
 			<div class="right">
+			{% if perms.issues.add_issue %}
 				<a class="small radius button" href="{% url 'issues:create' %}">提交議題</a>
+			{% endif %}
 			</div>
 		</div></div>
 		<ul class="issue-list">

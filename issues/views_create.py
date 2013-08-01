@@ -6,6 +6,9 @@ from issues.utils import send_mail
 import datetime
 
 def create(request):
+	if not request.user.has_perm('issues.create_issue'):
+		return (None, None)	# Audit fail
+
 	errors = []
 	
 	issue = Issue()

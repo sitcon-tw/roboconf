@@ -16,6 +16,9 @@ def notify(issue, user, content):
 		send_mail(user, watcher, message_subject, content)
 
 def assign(issue, request):
+	if not request.user.has_perm('issues.assign_issue'):
+		return	# Audit fail
+		
 	assignee = request.POST.get('assignee')
 	if assignee is not None:					# empty string => unassign
 		if len(assignee) > 0:
@@ -32,6 +35,9 @@ def assign(issue, request):
 			notify(issue, request.user, u'* %s 已撤銷此議題指派的人員*' % (request.user.username))
 
 def set_label(issue, request):
+	if not request.user.has_perm('issues.label_issue'):
+		return	# Audit fail
+		
 	old_labels = [l.id for l in issue.labels.all()]
 	new_labels = []
 
@@ -73,12 +79,18 @@ def set_label(issue, request):
 	notify(issue, request.user, ''.join(body))
 
 def comment(issue, request):
+	if not request.user.has_perm('issues.comment_issue'):
+		return	# Audit fail
+
 	content = request.POST.get('content')
 	if content:
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, content)
 
 def toggle_state(issue, request):
+	if not request.user.has_perm('issues.toggle_issue'):
+		return	# Audit fail
+
 	issue.is_open = not issue.is_open
 	update(issue=issue, user=request.user, mode=(IssueHistory.REOPEN if issue.is_open else IssueHistory.CLOSE))
 	notify(issue, request.user, (u'* %s 已將此議題結案 *' if issue.is_open else u'* %s 已對此議題提出復議 *') % (request.user.username))
@@ -88,3 +100,9 @@ def toggle_star(issue, request):
 		issue.starring.remove(request.user)
 	else:
 		issue.starring.add(request.user)
+
+def edit(issue, request):
+	if request.user.id == issue.creator.id or request.user.has_perm('issues.change_issue'):
+		pass	# Audit success
+	else:
+		pass	# Audit fail
