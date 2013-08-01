@@ -145,7 +145,7 @@
 			</form>
 		</div>
 		<div class="issue-labels">
-			{% if perms.issues.label_issue %}
+			{% if user == issue.assignee or perms.issues.label_issue %}
 			<div class="button-holder right">
 				<a class="tiny secondary radius dropdown button" data-dropdown="tags-dropdown" href="#"><span class="icon-tags iconize"></span></a>
 				<div id="tags-dropdown" class="f-dropdown content" data-dropdown-content>

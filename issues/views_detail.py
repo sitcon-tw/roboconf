@@ -35,7 +35,7 @@ def assign(issue, request):
 			notify(issue, request.user, u'* %s 已撤銷此議題指派的人員*' % (request.user.username))
 
 def set_label(issue, request):
-	if not request.user.has_perm('issues.label_issue'):
+	if not (issue.assignee == request.user or request.user.has_perm('issues.label_issue')):
 		return	# Audit fail
 		
 	old_labels = [l.id for l in issue.labels.all()]
@@ -102,7 +102,7 @@ def toggle_star(issue, request):
 		issue.starring.add(request.user)
 
 def edit(issue, request):
-	if request.user.id == issue.creator.id or request.user.has_perm('issues.change_issue'):
+	if request.user == issue.creator or request.user.has_perm('issues.change_issue'):
 		pass	# Audit success
 	else:
 		pass	# Audit fail
