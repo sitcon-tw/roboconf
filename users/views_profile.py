@@ -56,6 +56,8 @@ def edit_profile(request, user):
 			user.save()
 			profile.save()
 			status = 'success'
+		else:
+			status = 'error'
 
 	return render(request, 'users_edit_profile.html', {
 		'u': user,

@@ -2,9 +2,10 @@
 {% load usermeta %}
 {% block title %}編輯 ‧ {{ u|get_name }}{{ block.super }}{% endblock %}
 {% block content %}
-{% if status == 'success' %}
-<div class="radius secondary alert-box" data-alert>
-	{% if user == u %}你的{% endif %}個人檔案已經儲存。
+{% if status %}
+<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
+	{% if status == 'success' %}{% if user == u %}你的{% endif %}個人檔案已經儲存。
+	{% else %}儲存個人檔案時發生錯誤，請修正下列欄位。{% endif %}
 	<a href="#" class="close">&times;</a>
 </div>
 {% endif %}
