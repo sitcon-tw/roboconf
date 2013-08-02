@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.debug import sensitive_post_parameters, sensitive_variables
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 import django.contrib.auth as auth
 
 import views_list as _list
