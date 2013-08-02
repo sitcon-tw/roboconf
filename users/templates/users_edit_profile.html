@@ -24,7 +24,7 @@
 					{% if 'invalid_username' in errors %}<small>無效的帳號名稱。</small>
 					{% elif 'username_already_taken' in errors %}<small>帳號名稱已被使用。</small>{% endif %}
 				{% else %}
-					<h4 class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</h4>
+					<h4><span class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</span></h4>
 				{% endif %}
 				</div>
 			</div>
