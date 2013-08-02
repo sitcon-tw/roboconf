@@ -22,13 +22,14 @@ def edit_profile(request, user):
 
 		if request.user.has_perm('auth.change_user'):
 			username = request.POST.get('username')
-			if username:
-				if User.objects.filter(username=username).count() < 1:
-					user.username = username
+			if username != user.username:
+				if username:
+					if User.objects.filter(username=username).count() < 1:
+						user.username = username
+					else:
+						errors += ['username', 'username_already_taken']
 				else:
-					errors += ['username', 'username_already_taken']
-			else:
-				errors += ['username', 'invalid_username']
+					errors += ['username', 'invalid_username']
 
 			profile.title = request.POST.get('title')
 		
@@ -36,13 +37,14 @@ def edit_profile(request, user):
 		user.last_name = request.POST.get('last_name')
 
 		email = request.POST.get('email', '')
-		if validate_email(email):
-			if User.objects.filter(email=email).count() < 1:
-				user.email = email
+		if email != user.email:
+			if validate_email(email):
+				if User.objects.filter(email=email).count() < 1:
+					user.email = email
+				else:
+					errors += ['email', 'email_already_taken']
 			else:
-				errors += ['email', 'email_already_taken']
-		else:
-			errors += ['email', 'invalid_email']
+				errors += ['email', 'invalid_email']
 
 		profile.display_name = request.POST.get('display_name')
 		profile.school = request.POST.get('school')
