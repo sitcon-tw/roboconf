@@ -46,6 +46,10 @@ def profile(request, id):
 	return _profile.profile(request, id)
 
 @login_required
+def edit_profile(request, id):
+	return _profile.edit_profile(request, id)
+
+@login_required
 @sensitive_variables()
 @sensitive_post_parameters()
 def change_password(request):

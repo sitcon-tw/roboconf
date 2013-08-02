@@ -3,52 +3,28 @@
 {% load users %}
 {% block content %}
 <div class="row">
-	<div class="large-1 avatars columns">
-		<img class="avatar medium has-tip" src="{{ u.email|get_avatar:'#' }}" alt="{{ u.username }}" title="請至 Gravatar 替換你的大頭照" />
-		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
-	</div>
-	<div class="large-8 columns">
-		<form action="#" method="POST" class="profile-main">
-		{% csrf_token %}
-			<div class="row">
-				<div class="small-6 columns">
-					<input type="text" name="last_name" maxlength="30" placeholder="姓" value="{{ u.last_name }}" />
-				</div>
-				<div class="small-6 columns">
-					<input type="text" name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
-					<input type="text" name="school" maxlength="30" placeholder="學校" value="{{ u.profile.school }}" />
-				</div>
-				<div class="small-6 columns">
-					<input type="text" name="grade" maxlength="30" placeholder="系所" value="{{ u.profile.grade }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="email" placeholder="電子郵件信箱" value="{{ u.email }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<textarea name="comment" placeholder="備註">{{ u.profile.comment }}</textarea>
-				</div>
-			</div>
-		</form>
-		<div class="button-row">
-			<div class="right">
-				<input type="submit" class="radius button" name="submit" value="更新" />
-			</div>
+	<div class="large-3 columns">
+		<img class="avatar large" src="{{ u.email|get_avatar:400 }}" alt="{{ u.username }}" />
+		<h4>{{ u.username }}</h4>
+		<h5 class="subheader">{{ u.profile.title }}</h5>
+		<ul class="profile_meta">
+			{% if u.profile.school %}<li><span class="icon-school iconize"></span> {{ u.profile.school }} {{ u.profile.grade }}</li>{% endif %}
+			{% if u.profile.phone %}<li><span class="icon-phone iconize"></span> {{ u.profile.phone }}</li>{% endif %}
+		</ul>
+		<div class="profile_actions">
+			<a href="{% url 'users:edit_profile' u.id %}" class="small secondary radius button">編輯</a>
 		</div>
 	</div>
-	<div class="large-3 columns">
+	<div class="large-5 columns">
+		<h5><a href="{% url 'issues:assigned' u.id %}">待辦事項</a></h5>
+		<hr/>
+		<ul class="issue-list">
+		</ul>
+	</div>
+	<div class="large-4 columns">
+		<h5>參加的聚會</h5>
+		<hr/>
+		<p></p>
 	</div>
 </div>
 {% endblock %}
