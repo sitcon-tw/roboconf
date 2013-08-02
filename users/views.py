@@ -47,7 +47,12 @@ def profile(request, id):
 
 @login_required
 def edit_profile(request, id):
-	return _profile.edit_profile(request, id)
+	user = get_object_or_404(User, pk=id)
+	
+	if not (user == request.user or request.user.has_perm('auth.change_user')):
+		return redirect(reverse('users:list'))
+
+	return _profile.edit_profile(request, user)
 
 @login_required
 @sensitive_variables()

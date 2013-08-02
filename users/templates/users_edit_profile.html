@@ -2,6 +2,12 @@
 {% load users %}
 {% block title %}編輯 ‧ {{ u|get_name }}{{ block.super }}{% endblock %}
 {% block content %}
+{% if status == 'success' %}
+<div class="radius secondary alert-box" data-alert>
+	{% if user == u %}你的{% endif %}個人檔案已經儲存。
+	<a href="#" class="close">&times;</a>
+</div>
+{% endif %}
 <div class="row">
 	<div class="large-1 avatars columns">
 		<img class="avatar medium has-tip" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" title="請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照" />
@@ -11,8 +17,19 @@
 		<form action="{% url 'users:edit_profile' u.id %}" method="POST" class="profile-main">
 		{% csrf_token %}
 			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="username" maxlength="30" placeholder="帳號" value="{{ u.username }}" />
+				<div class="small-8 columns">
+				{% if perms.auth.change_user %}
+					<input type="text" name="username" id="username" maxlength="30" placeholder="帳號" value="{{ u.username }}" {% if 'username' in errors %}class="error"{% endif %} required />
+					{% if 'invalid_username' in errors %}<small class="error">無效的帳號名稱。</small>
+					{% elif 'username_already_taken' in errors %}<small class="error">帳號名稱已被使用。</small>{% endif %}
+				{% else %}
+					<h4 class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</h4>
+				{% endif %}
+				</div>
+				<div class="small-4 columns">
+				{% if user == u %}
+					<a href="{% url 'users:change_password' %}" class="expand small secondary radius button">變更密碼</a>
+				{% endif %}
 				</div>
 			</div>
 			<div class="row">
@@ -38,7 +55,9 @@
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input type="text" name="email" placeholder="電子郵件信箱" value="{{ u.email }}" />
+					<input type="text" name="email" placeholder="電子郵件信箱" value="{{ u.email }}" {% if 'email' in errors %}class="error"{% endif %} required />
+					{% if 'invalid_email' in errors %}<small class="error">無效的電子郵件地址。</small>
+					{% elif 'email_already_taken' in errors %}<small>電子郵件信箱已被使用。如須協助，請聯繫行政組。</small>{% endif %}
 				</div>
 			</div>
 			<div class="row">
