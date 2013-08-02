@@ -64,7 +64,7 @@
 					{% endfor %}</span>
 				</h4>
 				<div>
-					<span><a href="#">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</span>
+					<span><a href="{% url 'users:profile' issue.creator.id %}">{{ issue.creator.username }}</a> 於 {{ issue.creation_time|timesince }}前建立</span>
 					<span class="right">{% if issue.last_updated > issue.creation_time  %}{{ issue.last_updated|timesince }}前更新{% endif %}</span>
 				</div>
 			</li>
