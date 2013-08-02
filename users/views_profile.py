@@ -11,6 +11,7 @@ def profile(request, id):
 
 def edit_profile(request, user):
 	errors = []
+	status = ''
 
 	if request.POST.get('submit'):
 		profile = None
@@ -52,9 +53,10 @@ def edit_profile(request, user):
 		if len(errors) < 1:
 			user.save()
 			profile.save()
+			status = 'success'
 
 	return render(request, 'users_edit_profile.html', {
 		'u': user,
 		'errors': errors,
-		'status': None if len(errors) > 0 else 'success',
+		'status': status,
 	})
