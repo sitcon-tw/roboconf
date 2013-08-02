@@ -8,8 +8,8 @@
 		{% for u in users %}
 			<li class="user-item">
 				<h4>
-					<img class="avatar medium" src="{{ u.email|get_avatar:'#' }}" alt="{{ u.username }}" />
-					<a href="{% url 'users:profile' u.id %}">{{ u.username }}</a>
+					<img class="avatar medium" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" />
+					<a href="{% url 'users:profile' u.id %}">{{ u|get_name }}</a>
 					<span class="title">{{ u.profile.title }}</span>
 				</h4>
 			</li>

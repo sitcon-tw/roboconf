@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import dateparse
 from issues.models import *
 from issues.utils import send_mail
+from users.utils import get_user_name
 import datetime
 
 def create(request):
@@ -50,7 +51,7 @@ def create(request):
 			issue.starring.add(issue.assignee)	# Auto watch
 			send_mail(request.user, issue.assignee, 
 					  '[#%s] %s' % (issue.id, issue.title), 
-					 u'* %s 已將此議題指派給你 *\n\n%s' % (request.user.username, issue.content)
+					 u'* %s 已將此議題指派給你 *\n\n%s' % (get_user_name(request.user), issue.content)
 			)
 
 		if due_time:

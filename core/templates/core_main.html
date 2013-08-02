@@ -22,8 +22,8 @@
 				{% if user.is_authenticated %}
 				<li class="has-dropdown">
 					<a href="#">
-						<img class="avatar small" src="{{ user.email|get_avatar:'#' }}" alt="{{ user.username }}" />
-						{{ user.username }}
+						<img class="avatar small" src="{{ user.email|get_avatar:'#' }}" alt="{{ user|get_name }}" />
+						{{ user|get_name }}
 					</a>
 					<ul class="dropdown">
 						<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>

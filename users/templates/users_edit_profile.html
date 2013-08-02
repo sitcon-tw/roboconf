@@ -1,10 +1,10 @@
 {% extends 'core_main.html' %}
-{% block title %}編輯 ‧ {{ u.username }}{{ block.super }}{% endblock %}
+{% block title %}編輯 ‧ {{ u|get_name }}{{ block.super }}{% endblock %}
 {% load users %}
 {% block content %}
 <div class="row">
 	<div class="large-1 avatars columns">
-		<img class="avatar medium has-tip" src="{{ u.email|get_avatar:'#' }}" alt="{{ u.username }}" title="請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照" />
+		<img class="avatar medium has-tip" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" title="請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照" />
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">

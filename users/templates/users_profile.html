@@ -1,11 +1,11 @@
 {% extends 'core_main.html' %}
-{% block title %}{{ u.username }}{{ block.super }}{% endblock %}
+{% block title %}{{ u|get_name }}{{ block.super }}{% endblock %}
 {% load users %}
 {% block content %}
 <div class="row">
 	<div class="large-3 columns">
-		<img class="avatar large" src="{{ u.email|get_avatar:400 }}" alt="{{ u.username }}" />
-		<h4>{{ u.username }}</h4>
+		<img class="avatar large" src="{{ u.email|get_avatar:400 }}" alt="{{ u|get_name }}" />
+		<h4>{{ u|get_name }}</h4>
 		<h5 class="subheader">{{ u.profile.title }}</h5>
 		<ul class="profile_meta">
 			{% if u.profile.school %}<li><span class="icon-school iconize"></span> {{ u.profile.school }} {{ u.profile.grade }}</li>{% endif %}
