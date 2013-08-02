@@ -13,6 +13,12 @@ def edit_profile(request, user):
 	errors = []
 
 	if request.POST.get('submit'):
+		profile = None
+		try:
+			profile = user.profile
+		except UserProfile.DoesNotExist:
+			profile = UserProfile(user=user)
+
 		if request.user.has_perm('auth.change_user'):
 			username = request.POST.get('username')
 			if username:
@@ -22,6 +28,8 @@ def edit_profile(request, user):
 					errors += ['username', 'username_already_taken']
 			else:
 				errors += ['username', 'invalid_username']
+
+			profile.title = request.POST.get('title')
 		
 		user.first_name = request.POST.get('first_name')
 		user.last_name = request.POST.get('last_name')
@@ -34,12 +42,6 @@ def edit_profile(request, user):
 				errors += ['email', 'email_already_taken']
 		else:
 			errors += ['email', 'invalid_email']
-
-		profile = None
-		try:
-			profile = user.profile
-		except UserProfile.DoesNotExist:
-			profile = UserProfile(user=user)
 
 		profile.display_name = request.POST.get('display_name')
 		profile.school = request.POST.get('school')
