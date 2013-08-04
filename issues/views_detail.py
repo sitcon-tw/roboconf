@@ -28,12 +28,12 @@ def assign(issue, request):
 				issue.assignee = u
 				issue.starring.add(u)			# Automatic starring
 				update(issue=issue, user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
-				notify(issue, request.user, u'* %s 已將此議題指派給 %s *' % (get_user_name(request.user), get_user_name(u)))
+				notify(issue, request.user, u'*%s 已將此議題指派給 %s*' % (get_user_name(request.user), get_user_name(u)))
 			except User.DoesNotExist: pass		# Just in case we're under attack...
 		else:
 			issue.assignee = None
 			update(issue=issue, user=request.user, mode=IssueHistory.UNASSIGN)
-			notify(issue, request.user, u'* %s 已撤銷此議題指派的人員*' % (get_user_name(request.user)))
+			notify(issue, request.user, u'*%s 已撤銷此議題指派的人員*' % (get_user_name(request.user)))
 
 def set_label(issue, request):
 	if not (issue.assignee == request.user or request.user.has_perm('issues.label_issue')):
@@ -94,7 +94,7 @@ def toggle_state(issue, request):
 
 	issue.is_open = not issue.is_open
 	update(issue=issue, user=request.user, mode=(IssueHistory.REOPEN if issue.is_open else IssueHistory.CLOSE))
-	notify(issue, request.user, (u'* %s 已將此議題結案 *' if issue.is_open else u'* %s 已對此議題提出復議 *') % (get_user_name(request.user)))
+	notify(issue, request.user, (u'*%s 已對此議題提出復議*' if issue.is_open else u'*%s 已將此議題結案*') % (get_user_name(request.user)))
 
 def toggle_star(issue, request):
 	if issue.starring.filter(id=request.user.id).count():
