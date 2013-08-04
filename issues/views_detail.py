@@ -39,42 +39,41 @@ def set_label(issue, request):
 	if not (issue.assignee == request.user or request.user.has_perm('issues.label_issue')):
 		return	# Audit fail
 		
-	old_labels = [l.id for l in issue.labels.all()]
+	old_labels = issue.labels.all()
 	new_labels = []
 
 	for label_str in request.POST.getlist('labels'):
 		try:
-			new_labels.append(int(label_str))
-		except ValueError: pass
+			label_id = int(label_str)
+			new_labels.append(Label.objects.get(id=label_id))
+		except ValueError, Label.DoesNotExist:
+			pass
 
 	# Remove unused labels
 	labels_to_remove = [l for l in old_labels if l not in new_labels]
 	labels_to_add = [l for l in new_labels if l not in old_labels]
 
 	# * Old labels won't have integrity issues so eliminate try block
-	for label_id in labels_to_remove:
-		issue.labels.remove(Label.objects.get(id=label_id))
-		update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
+	for label in labels_to_remove:
+		issue.labels.remove(label)
+		update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label.id)
 
 	# Add new labels
-	for label_id in labels_to_add:
-		try:
-			issue.labels.add(Label.objects.get(id=label_id))
-			update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
-		except Label.DoesNotExist:
-			pass
+	for label in labels_to_add:
+		issue.labels.add(label)
+		update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label.id)
 
 	issue.save()
 
 	body = [u' %s 已為此議題']
 	if len(labels_to_remove) > 0:
-		body.append(u'移除標籤* ')
+		body.append(u'移除標籤 ')
 		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_remove]))
 		if len(labels_to_add) > 0:
-			body.append(u' *，同時')
+			body.append(u' ，同時')
 
 	if len(labels_to_add) > 0:
-		body.append(u'套用標籤* ')
+		body.append(u'套用標籤 ')
 		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_add]))
 
 	notify(issue, request.user, ''.join(body))
