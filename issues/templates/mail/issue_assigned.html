@@ -12,7 +12,7 @@
 	<a href="{% url 'issues:detail' issue.id %}">檢視</a>
 </div>
 <div style="margin: 0.5em auto;">
-	{{ issue.content|get_markdown }}
+	{{ issue.content|markdown }}
 </div>
 <hr/>
 <p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>

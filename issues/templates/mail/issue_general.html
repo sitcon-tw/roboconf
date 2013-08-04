@@ -15,9 +15,9 @@
 </div>
 <div style="margin: 0.5em auto;">
 	{% if comment %}
-	{{ comment|get_markdown }}
+	{{ comment|markdown }}
 	{% else %}
-	{{ issue.content|get_markdown }}
+	{{ issue.content|markdown }}
 	{% endif %}
 </div>
 <hr/>
