@@ -1,5 +1,6 @@
 from django.core.management.base import NoArgsCommand
 from django.core import mail
+from django.utils.html import strip_tags
 from email.utils import formataddr
 from notifications.utils import get_setting
 from core.markdown import get_markdown
@@ -28,11 +29,8 @@ class Command(NoArgsCommand):
 				if item.sender:
 					email.from_email = _parseaddr(item.sender)
 
-				text_content = get_setting('template', 'text', '%s') % item.content
-				html_content = get_setting('template', 'html', '%s') % get_markdown(item.content)
-
-				email.body = text_content
-				email.attach_alternative(html_content, 'text/html')
+				email.body = strip_tags(item.content)
+				email.attach_alternative(item.content, 'text/html')
 				email.send()
 
 				item.is_sent = True

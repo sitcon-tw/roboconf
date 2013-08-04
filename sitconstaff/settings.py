@@ -169,10 +169,6 @@ NOTIFICATIONS = {
         'default': u'SITCON 行政系統:notifications@staff.sitcon.org',
         'issues': '%s:issues@staff.sitcon.org',
     },
-    'template': {
-        'text': u'%s\n\n<本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。>',
-        'html': u'%s<br/><br/><hr/><p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>',
-    },
 }
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST')

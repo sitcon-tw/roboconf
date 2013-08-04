@@ -1,0 +1,24 @@
+{% load usermeta %}
+{% load markdown %}
+{{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
+=====
+<div style="font-size: 0.8em; padding: 0.5em; border: 1px solid #f0f0f0; border-radius: 3px;">
+	<a href="{% url 'users:profile' issue.creator.id %}">{{ issue.creator|get_name }}</a>
+	{% if comment and notoggle %}
+		已對此議題留言。
+	{% elif issue.is_open %}
+		已對此議題提出復議。
+	{% else %}
+		已將此議題結案。
+	{% endif %}
+	<a href="{% url 'issues:detail' issue.id %}">檢視</a>
+</div>
+<div style="margin: 0.5em auto;">
+	{% if comment %}
+	{{ comment|get_markdown }}
+	{% else %}
+	{{ issue.content|get_markdown }}
+	{% endif %}
+</div>
+<hr/>
+<p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>

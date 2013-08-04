@@ -10,11 +10,10 @@ def update(issue, user, content='', mode=IssueHistory.COMMENT):
 	issue.save()
 	IssueHistory.objects.create(issue=issue, user=user, mode=mode, content=content)
 
-def notify(issue, user, content):
-	message_subject = 'Re: [#%s] %s' % (issue.id, issue.title)
+def notify(issue, user, template_name, context):
 	for watcher in issue.starring.all():
 		if user == watcher: continue
-		send_mail(user, watcher, message_subject, content)
+		send_mail(user, watcher, template_name, context)
 
 def assign(issue, request):
 	if not request.user.has_perm('issues.assign_issue'):
@@ -28,12 +27,12 @@ def assign(issue, request):
 				issue.assignee = u
 				issue.starring.add(u)			# Automatic starring
 				update(issue=issue, user=request.user, mode=IssueHistory.ASSIGN, content=assignee)
-				notify(issue, request.user, u'* %s 已將此議題指派給 %s *' % (get_user_name(request.user), get_user_name(u)))
+				notify(issue, request.user, 'mail/issue_assigned.html', { 'issue': issue })
 			except User.DoesNotExist: pass		# Just in case we're under attack...
 		else:
 			issue.assignee = None
 			update(issue=issue, user=request.user, mode=IssueHistory.UNASSIGN)
-			notify(issue, request.user, u'* %s 已撤銷此議題指派的人員*' % (get_user_name(request.user)))
+			notify(issue, request.user, 'mail/issue_assigned.html', { 'issue': issue })
 
 def set_label(issue, request):
 	if not (issue.assignee == request.user or request.user.has_perm('issues.label_issue')):
@@ -65,19 +64,7 @@ def set_label(issue, request):
 			pass
 
 	issue.save()
-
-	body = [u' %s 已為此議題']
-	if len(labels_to_remove) > 0:
-		body.append(u'移除標籤* ')
-		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_remove]))
-		if len(labels_to_add) > 0:
-			body.append(u' *，同時')
-
-	if len(labels_to_add) > 0:
-		body.append(u'套用標籤* ')
-		body.append(u'、'.join([(u'「%s」' % l.name) for l in labels_to_add]))
-
-	notify(issue, request.user, ''.join(body))
+	notify(issue, request.user, 'mail/issue_labeled.html', {'issue': issue, 'old_labels': old_labels, 'new_labels': new_labels})
 
 def comment(issue, request):
 	if not request.user.has_perm('issues.comment_issue'):
@@ -86,7 +73,7 @@ def comment(issue, request):
 	content = request.POST.get('content')
 	if content:
 		update(issue=issue, user=request.user, content=content)
-		notify(issue, request.user, content)
+		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue})
 
 def toggle_state(issue, request):
 	if not request.user.has_perm('issues.toggle_issue'):
@@ -94,7 +81,7 @@ def toggle_state(issue, request):
 
 	issue.is_open = not issue.is_open
 	update(issue=issue, user=request.user, mode=(IssueHistory.REOPEN if issue.is_open else IssueHistory.CLOSE))
-	notify(issue, request.user, (u'* %s 已將此議題結案 *' if issue.is_open else u'* %s 已對此議題提出復議 *') % (get_user_name(request.user)))
+	notify(issue, request.user, 'mail/issue_general.html', {'issue': issue})
 
 def toggle_star(issue, request):
 	if issue.starring.filter(id=request.user.id).count():
