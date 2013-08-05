@@ -9,18 +9,33 @@
 	</div>
 	<div class="large-8 columns">
 		{% csrf_token %}
-			<div class="row collapse">
-				<label>寄件者</label>
-				<div class="small-12 columns">
-					<input type="text" name="sender" placeholder="SITCON 行政系統:notifications@staff.sitcon.org" />
+			<div class="row">
+				<div class="small-4 columns">
+					<label>寄件者</label>
+					<input type="text" name="sender_name" placeholder="顯示名稱" />
+				</div>
+				<div class="small-8 columns">
+					<input type="text" name="sender_email" placeholder="寄件地址" />
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-4 columns">
+				<div class="small-3 columns">
 					<label>收件者</label>
 				</div>
-				<div class="small-8 columns">
-					<a href="#panel2">選取收件者</a>
+				<div class="small-9 columns">
+					<div class="row">
+						<div class="small-6 columns">
+							<label for="staff_checkbox"><input type="checkbox" id="staff_checkbox" name="receiver" value="staff" /><span>全體工作人員</span></label>
+						</div>
+						<div class="small-6 columns">
+							<label for="mailing_list_checkbox"><input type="checkbox" id="mailing_list_checkbox" name="receiver" value="mailing_list" /><span>公開郵件清單</span></label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="small-12 columns">
+							<textarea name="receivers" placeholder="填入其他收件者（每人一行）"></textarea>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -48,25 +63,8 @@
 	<div class="large-3 columns main-side-nav">
 		<div>
 			<h5>寄送方式</h5>
-			<div><input type="radio" name="method" value="email" id="method_email_radio" selected /><label for="method_email_radio">電子郵件</label></div>
-			<div><input type="radio" name="method" value="sms" id="method_sms_radio" /><label for="method_sms_radio">簡訊</label></div>
-		</div>
-		<div class="divider"></div>
-		<div>
-			<h5>收件者</h5>
-			<a href="#" data-dropdown="receiver_dropdown">選取</a>
-			<div id="receiver_dropdown" class="f-dropdown content" data-dropdown-content>
-				<div class="row">
-					<div class="small-12 columns">
-						<input type="checkbox" id="staff_checkbox" name="receiver" value="staff" /><label for="staff_checkbox">工作人員</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="small-12 columns">
-						<textarea name="receivers" placeholder="填入其他收件者（每人一行）"></textarea>
-					</div>
-				</div>
-			</div>
+			<label for="method_email_radio"><input type="radio" name="method" value="email" id="method_email_radio" selected /><span>電子郵件</span></label>
+			<label for="method_sms_radio"><input type="radio" name="method" value="sms" id="method_sms_radio" /><span>簡訊</span></label>
 		</div>
 	</div>
 </div>
