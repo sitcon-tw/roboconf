@@ -22,11 +22,11 @@ def create(request):
 	if request.POST.get('submit'):
 		# TODO: Send SMS
 
-		sender = (format_address(request.POST.get('sender_name'), 
-								request.POST.get('sender_email')) 
-					if 'sender_email' in request.POST
-					else get_setting('sender', 'default'))
+		sender = ''
 		receivers = {}
+
+		if request.POST.get('sender_email'):
+			sender = format_address(request.POST.get('sender_name'), request.POST.get('sender_email'))
 		
 		receiver_target = request.POST.get('receiver', '').split(',')
 		if 'staff' in receiver_target:
@@ -56,7 +56,7 @@ def create(request):
 				{
 					'subject': request.POST.get('subject'),
 					'content': request.POST.get('content'),
-					'reply_to': request.POST.get('reply_to'),
+					'reply_to': request.POST.get('reply_address'),
 				},
 				autosave=False,
 			)
