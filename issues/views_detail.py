@@ -73,7 +73,7 @@ def comment(issue, request):
 	content = request.POST.get('content')
 	if content:
 		update(issue=issue, user=request.user, content=content)
-		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue})
+		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': comment})
 
 def toggle_state(issue, request):
 	if not request.user.has_perm('issues.toggle_issue'):

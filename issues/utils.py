@@ -13,6 +13,7 @@ def send_mail(sender, receiver, template_name, context):
 
 	context['sender'] = sender
 	context['receiver'] = receiver
+	context['site_url'] = 'http://staff.sitcon.org'
 	raw_content = render_to_string(template_name, context).strip()
 
 	subject, _, content = raw_content.partition('\n=====\n')
