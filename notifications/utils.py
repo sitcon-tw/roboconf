@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 from notifications.models import *
 
 def format_address(name, addr):
-	return '%s:%s' % (name.trim().replace(':', '-'), addr.trim())
+	return '%s:%s' % (name.strip().replace(':', '-'), addr.strip())
 
 def parse_address(nsaddr):
 	(name, _, addr) = nsaddr.rpartition(':')

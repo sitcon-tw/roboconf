@@ -21,7 +21,7 @@ def create(request):
 
 	if request.POST.get('submit'):
 		# TODO: Send SMS
-		
+
 		sender = (format_address(request.POST.get('sender_name'), 
 								request.POST.get('sender_email')) 
 					if 'sender_email' in request.POST
@@ -38,7 +38,7 @@ def create(request):
 				receivers[addr] = ''
 
 		if request.POST.get('receivers'):
-			additional_receivers = request.POST.get('receivers').trim().split('\n')
+			additional_receivers = request.POST.get('receivers').strip().split('\n')
 			for entry in additional_receivers:
 				if ':' in entry:
 					name, addr = parse_address(entry)
