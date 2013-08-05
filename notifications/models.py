@@ -18,4 +18,4 @@ class Message(models.Model):
 	is_sent = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return "%s[%s] %s" % (method, receiver, subject)
+		return "%s[%s] %s" % (self.method, self.receiver, self.subject)
