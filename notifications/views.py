@@ -48,7 +48,7 @@ def create(request):
 
 		messages = []
 
-		for email, name in receivers:
+		for email, name in receivers.iteritems():
 			message = send_template_mail(
 				sender, 
 				format_address(name, email), 
