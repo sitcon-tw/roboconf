@@ -1,0 +1,17 @@
+{% extends 'core_main.html' %}
+{% load usermeta %}
+{% block title %}通知{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="large-9 columns">
+		<div>
+			<h3>{{ messages.count }} <small>封通知尚未寄出</small></h3>
+		</div>
+	</div>
+	<div class="large-3 columns main-side-nav">
+		<ul class="side-nav users-actions">
+			{% if perms.notifications.add_message %}<li><a href="{% url 'notifications:create' %}"><span class="icon-email iconize"></span> 寄送通知</a></li>{% endif %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

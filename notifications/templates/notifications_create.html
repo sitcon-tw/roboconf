@@ -1,0 +1,74 @@
+{% extends 'core_main.html' %}
+{% load usermeta %}
+{% block title %}寄送通知{{ block.super }}{% endblock %}
+{% block content %}
+<form action="{% url 'notifications:create' %}" method="POST" class="message-main">
+<div class="row">
+	<div class="large-1 avatars columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'notifications:list' %}" title="回到人員列表"></a>
+	</div>
+	<div class="large-8 columns">
+		{% csrf_token %}
+			<div class="row collapse">
+				<label>寄件者</label>
+				<div class="small-12 columns">
+					<input type="text" name="sender" placeholder="SITCON 行政系統:notifications@staff.sitcon.org" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<label>收件者</label>
+				</div>
+				<div class="small-8 columns">
+					<a href="#panel2">選取收件者</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="subject" placeholder="主旨" required />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<textarea name="content" placeholder="內容" required></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="reply_address" placeholder="回覆至（選填）" required />
+				</div>
+			</div>
+			<div class="button-row">
+				<div class="right">
+					<input type="submit" class="radius button" name="submit" value="傳送" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="large-3 columns main-side-nav">
+		<div>
+			<h5>寄送方式</h5>
+			<div><input type="radio" name="method" value="email" id="method_email_radio" selected /><label for="method_email_radio">電子郵件</label></div>
+			<div><input type="radio" name="method" value="sms" id="method_sms_radio" /><label for="method_sms_radio">簡訊</label></div>
+		</div>
+		<div class="divider"></div>
+		<div>
+			<h5>收件者</h5>
+			<a href="#" data-dropdown="receiver_dropdown">選取</a>
+			<div id="receiver_dropdown" class="f-dropdown content" data-dropdown-content>
+				<div class="row">
+					<div class="small-12 columns">
+						<input type="checkbox" id="staff_checkbox" name="receiver" value="staff" /><label for="staff_checkbox">工作人員</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<textarea name="receivers" placeholder="填入其他收件者（每人一行）"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+{% endblock %}
