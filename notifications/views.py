@@ -28,7 +28,7 @@ def create(request):
 					else get_setting('sender', 'default'))
 		receivers = {}
 		
-		receiver_target = request.POST.get('receiver').split(',')
+		receiver_target = request.POST.get('receiver', '').split(',')
 		if 'staff' in receiver_target:
 			for user in User.objects.exclude(email=''):
 				receivers[user.email] = get_user_name(user)
