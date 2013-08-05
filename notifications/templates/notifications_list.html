@@ -5,7 +5,15 @@
 <div class="row">
 	<div class="large-9 columns">
 		<div>
-			<h3>{{ messages.count }} <small>封通知尚未寄出</small></h3>
+			{% with c=messages.count %}
+			<h3>
+				{% if c > 0 %}
+				{{ messages.count }} <small>封通知尚未寄出</small>
+				{% else %}
+				<small>沒有未寄出的通知</small>
+				{% endif %}
+			</h3>
+			{% endwith %}
 		</div>
 	</div>
 	<div class="large-3 columns main-side-nav">
