@@ -2,15 +2,14 @@ from django.core.management.base import NoArgsCommand
 from django.core import mail
 from django.utils.html import strip_tags
 from email.utils import formataddr
-from notifications.utils import get_setting
+from notifications.utils import get_setting, parse_address
 from core.markdown import get_markdown
 import os
 
 from notifications.models import *
 
 def _parseaddr(nsaddr):
-	(name, _, addr) = nsaddr.rpartition(':')
-	return formataddr((name, addr))
+	return formataddr(parse_address(nsaddr))
 
 class Command(NoArgsCommand):
 	help = "Checks and sends messages from notification queue."

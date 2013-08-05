@@ -6,6 +6,10 @@ def get_user_name(user):
 		if display_name: return display_name
 	except UserProfile.DoesNotExist:
 		pass
+
+	if user.first_name and user.last_name:
+		return '%s %s' % (user.last_name, user.first_name)
+		
 	return user.username
 
 def validate_email(email):

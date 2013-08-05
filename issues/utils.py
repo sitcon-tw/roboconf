@@ -1,23 +1,8 @@
 from notifications.models import *
-from notifications.utils import get_setting, get_realname
-from django.template.loader import render_to_string
+from notifications.utils import get_setting, send_template_mail, format_address
+from users.utils import get_user_name
 
-'''
-Create message from a specific set of context.
-Accepts unicode string.
-'''
 def send_mail(sender, receiver, template_name, context):
-	message = Message()
-	message.sender = get_setting('sender', 'issues') % get_realname(sender)
-	message.receiver = '%s:%s' % (get_realname(receiver), receiver.email)
-
-	context['sender'] = sender
-	context['receiver'] = receiver
-	context['site_url'] = 'http://staff.sitcon.org'
-	raw_content = render_to_string(template_name, context).strip()
-
-	subject, _, content = raw_content.partition('\n=====\n')
-	message.subject = subject
-	message.content = content
-	message.save()
-	return message
+	sender = get_setting('sender', 'issues') % get_user_name(sender)
+	receiver = format_address(get_user_name(receiver), receiver.email)
+	return send_template_mail(sender, receiver, template_name, context)

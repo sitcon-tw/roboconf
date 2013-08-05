@@ -169,6 +169,9 @@ NOTIFICATIONS = {
         'default': u'SITCON 行政系統:notifications@staff.sitcon.org',
         'issues': '%s:issues@staff.sitcon.org',
     },
+    'receiver': {
+        'mailing_lists': ['sitcon-general@googlegroups.com'],
+    },
 }
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
