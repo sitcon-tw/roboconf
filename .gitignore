@@ -4,4 +4,6 @@
 local_settings.py
 venv/
 .sass-cache/
-.DS-Store/
+*/.DS_Store
+.DS_Store
+.DS_Store?
