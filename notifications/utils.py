@@ -24,8 +24,8 @@ def send_template_mail(sender, receiver, template_name, context, autosave=True):
 	message.sender = sender
 	message.receiver = receiver
 
-	context['sender'] = sender
-	context['receiver'] = receiver
+	context['sender_address'] = sender
+	context['receiver_address'] = receiver
 	context['site_url'] = 'http://staff.sitcon.org'
 	raw_content = render_to_string(template_name, context).strip()
 

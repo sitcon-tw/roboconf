@@ -1,6 +1,6 @@
 {% load usermeta %}
 {% load markdown %}
-[#{{ issue.id }}] {{ issue.title }}
+{{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="font-size: 0.8em; padding: 0.5em; border: 1px solid #f0f0f0; border-radius: 3px;">
 	<a href="{{ site_url }}{% url 'users:profile' sender.id %}">{{ sender|get_name }}</a>
