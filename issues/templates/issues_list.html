@@ -102,8 +102,8 @@ $(document).ready(function() {
 	$('.issue-entry').on('click', function() {
 		var d = !$(this).hasClass('selected');
 		$(this).toggleClass('selected');
-		$('.issue-actions .button').toggleClass("disabled", $('.issue-select-control:checked').length <= 0);
 		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').prop('checked', d);
+		$('.issue-actions .button').toggleClass("disabled", $('.issue-select-control:checked').length <= 0);
 	});
 });
 </script>
