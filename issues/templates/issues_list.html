@@ -99,13 +99,11 @@
 {% block scripts %}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.issue-select-control').on('click', function() {
-		var d = $('.issue-select-control:checked').length <= 0;
-		$('.issue-actions .button').toggleClass("disabled", d);
-		$('.issue-entry[data-id="' + $(this).data('id') + '"]').toggleClass('selected', !d);
-	});
 	$('.issue-entry').on('click', function() {
-		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').click();
+		var d = !$(this).hasClass('selected');
+		$(this).toggleClass('selected');
+		$('.issue-actions .button').toggleClass("disabled", $('.issue-select-control:checked').length <= 0);
+		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').val(d);
 	});
 });
 </script>
