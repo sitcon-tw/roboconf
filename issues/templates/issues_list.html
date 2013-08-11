@@ -57,6 +57,11 @@
 		{% for issue in issues %}
 			<li class="issue-entry">
 				<div class="issue-id">#{{ issue.id }}</div>
+				{% if issue.assignee %}
+				<div class-"issue-assignee">
+					<img class="avatar small has-tip" src="{{ issue.assignee.email|get_avatar:'#' }}" alt="{{ issue.assignee|get_name }}" title="已指派給 {{ issue.assignee|get_name }}" />
+				</div>
+				{% endif %}
 				<h4>
 					<span class="issue-icon iconize icon-{% if issue.is_open %}{{ issue.is_expired|yesno:'issue-expired,issue-open' }}{% else %}issue-closed{% endif %}"></span>
 					<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
@@ -66,7 +71,7 @@
 				</h4>
 				<div>
 					<span><a href="{% url 'users:profile' issue.creator.id %}">{{ issue.creator|get_name }}</a> 於 {{ issue.creation_time|timesince }}前建立</span>
-					<span class="right">{% if issue.last_updated > issue.creation_time  %}{{ issue.last_updated|timesince }}前更新{% endif %}</span>
+					<span class="right">{% if issue.last_updated > issue.creation_time %}{{ issue.last_updated|timesince }}前更新{% endif %}</span>
 				</div>
 			</li>
 		{% empty %}

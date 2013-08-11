@@ -29,6 +29,7 @@ img.avatar.large { border-radius: 6px; }
 .issue-list .issue-entry, .user-list li { padding: 0.25em 1em 0.75em 3em; color: #666; }
 .issue-list .issue-entry:hover, .issue-list .issue-entry:focus { background-color: #f9f9f9; }
 .issue-list .issue-id { float: right; color: #aaa; }
+.issue-list .issue-assignee { float: right; margin: 0.2em; }
 .issue-list h4, .user-list h4 { font-size: 166.66%; margin: 0.2em auto; }
 .issue-list .issue-icon { float: left; margin: 0.25em auto auto -1.5em; }
 .issue-list .labels, .user-list .title { margin: auto 0.25em; font-size: 60%; }
