@@ -64,7 +64,7 @@
 		{% endif %}
 		{% for issue in issues %}
 			<li class="issue-entry">
-				<input type="checkbox" class="issue-select-control" />
+				<input type="checkbox" class="issue-select-control" data-id="{{ issue.id }}" />
 				<div class="issue-id">#{{ issue.id }}</div>
 				{% if issue.assignee %}
 				<div class-"issue-assignee">
@@ -87,6 +87,20 @@
 			<p>尚無議題。</p>
 		{% endfor %}
 		</ul>
+		<form id="bulk-action-form" action="{% url 'issues:list' %}" method="POST">
+		{% csrf_token %}
+			<input type="hidden" name="issues" />
+			<input type="hidden" name="action" />
+			<input type="hidden" name="params" />
+		</form>
 	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.issue-select-control').on('change', function() {
+		$('.issue-actions .button').toggleClass("disabled", !$('.issue-select-control:checked').length);
+	});
+</script>
 {% endblock %}
