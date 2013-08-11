@@ -49,13 +49,22 @@
 			</div>
 		</div></div>
 		<ul class="issue-list">
+		{% if perms.issues.toggle_issue or perms.issues.label_issue or perms.issues.assign_issue %}
 			<li class="issue-actions">
-				<a class="small radius secondary button disabled" href="#"><span class="iconize icon-archive"></span><span class="description">結案</span></a>
-				<a class="small radius secondary dropdown button disabled" href="#"><span class="iconize with-text icon-tags"></span>標籤</a>
+				{% if perms.issues.toggle_issue %}
+				<a id="archive-button" class="small radius secondary button disabled" href="#"><span class="iconize icon-archive"></span><span class="description">結案</span></a>
+				{% endif %}
+				{% if perms.issues.label_issue %}
+				<a id="label-button" class="small radius secondary dropdown button disabled" href="#"><span class="iconize with-text icon-tags"></span>標籤</a>
+				{% endif %}
+				{% if perms.issues.assign_issue %}
 				<a class="small radius secondary dropdown button disabled" href="#"><span class="iconize with-text icon-user"></span>指派給</a>
+				{% endif %}
 			</li>
+		{% endif %}
 		{% for issue in issues %}
 			<li class="issue-entry">
+				<input type="checkbox" class="issue-select-control" />
 				<div class="issue-id">#{{ issue.id }}</div>
 				{% if issue.assignee %}
 				<div class-"issue-assignee">
