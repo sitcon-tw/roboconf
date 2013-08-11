@@ -27,7 +27,7 @@ img.avatar.large { border-radius: 6px; }
 .issue-list .issue-actions, .issue-main .issue-actions { background: #f6f6f6; }
 .issue-list .issue-actions .button { margin: 0 0.1em 0 0; }
 .issue-list .issue-entry, .user-list li { padding: 0.25em 1em 0.75em 3em; color: #666; position: relative; }
-.issue-list .issue-entry.allow-edit { padding-left: 4.5em; }
+.issue-list.allow-edit .issue-entry { padding-left: 4.5em; }
 .issue-list .issue-entry:hover, .issue-list .issue-entry:focus { background-color: #f9f9f9; }
 .issue-list .issue-entry.selected { background-color: #f0f0f0; }
 .issue-list .issue-entry.selected:hover, .issue-list .issue-entry.selected:focus { background-color: #e9e9e9; }
