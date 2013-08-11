@@ -48,8 +48,8 @@
 			{% endif %}
 			</div>
 		</div></div>
-		<ul class="issue-list">
-		{% if perms.issues.toggle_issue or perms.issues.label_issue or perms.issues.assign_issue %}
+		<ul class="issue-list {{ user.is_authenticated|yesno:'allow-edit,' }}">
+		{% if user.is_authenticated %}
 			<li class="issue-actions">
 				{% if perms.issues.toggle_issue %}
 				<a id="archive-button" class="small radius secondary button disabled" href="#"><span class="iconize icon-archive"></span><span class="description">結案</span></a>
@@ -67,7 +67,7 @@
 				<input type="checkbox" class="issue-select-control" data-id="{{ issue.id }}" />
 				<div class="issue-id">#{{ issue.id }}</div>
 				{% if issue.assignee %}
-				<div class-"issue-assignee">
+				<div class="issue-assignee">
 					<img class="avatar small has-tip" src="{{ issue.assignee.email|get_avatar:'#' }}" alt="{{ issue.assignee|get_name }}" title="已指派給 {{ issue.assignee|get_name }}" />
 				</div>
 				{% endif %}
@@ -102,10 +102,10 @@ $(document).ready(function() {
 	$('.issue-select-control').on('change', function() {
 		var d = !$('.issue-select-control:checked').length;
 		$('.issue-actions .button').toggleClass("disabled", d);
-		$('.issue-entry[data-id=' + $(this).data('id') + ']').toggleClass('selected', d);
+		$('.issue-entry[data-id="' + $(this).data('id') + '"]').toggleClass('selected', d);
 	});
 	$('.issue-entry').on('click', function() {
-		$('.issue-select-control[data-id=' + $(this).data('id') + ']').click();
+		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').click();
 	});
 </script>
 {% endblock %}
