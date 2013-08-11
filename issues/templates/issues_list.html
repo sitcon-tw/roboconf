@@ -103,7 +103,7 @@ $(document).ready(function() {
 		var d = !$(this).hasClass('selected');
 		$(this).toggleClass('selected');
 		$('.issue-actions .button').toggleClass("disabled", $('.issue-select-control:checked').length <= 0);
-		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').val(d);
+		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').prop('checked', d);
 	});
 });
 </script>
