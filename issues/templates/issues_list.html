@@ -63,7 +63,7 @@
 			</li>
 		{% endif %}
 		{% for issue in issues %}
-			<li class="issue-entry">
+			<li class="issue-entry" data-id="{{ issue.id }}">
 				<input type="checkbox" class="issue-select-control" data-id="{{ issue.id }}" />
 				<div class="issue-id">#{{ issue.id }}</div>
 				{% if issue.assignee %}
@@ -100,7 +100,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.issue-select-control').on('change', function() {
-		$('.issue-actions .button').toggleClass("disabled", !$('.issue-select-control:checked').length);
+		var d = !$('.issue-select-control:checked').length;
+		$('.issue-actions .button').toggleClass("disabled", d);
+		$('.issue-entry[data-id=' + $(this).data('id') + ']').toggleClass('selected', d);
+	});
+	$('.issue-entry').on('click', function() {
+		$('.issue-select-control[data-id=' + $(this).data('id') + ']').click();
 	});
 </script>
 {% endblock %}
