@@ -114,6 +114,7 @@ $(document).ready(function() {
 		$('#bulk-action-form').submit();
 	}
 	$('#archive-button').on('click', function() { _postback('archive', ''); });
+	$('.issue-entry h4 a').on('click', function(e) { e.stopPropagation(); });
 });
 </script>
 {% endblock %}
