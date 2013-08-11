@@ -9,11 +9,11 @@ def list(request, mode, user_id=None):
 	# We'll need to move these into separate model
 	if 'issues' in request.POST:
 		issue_objs = []
-		for issue_id in request.POST.getlist('issues'):
+		for issue_id in request.POST.get('issues').split(','):
 			try:
 				i = Issue.objects.get(id=issue_id)
 				issue_objs.append(i)
-			except Issue.DoesNotExist: pass
+			except ValueError, Issue.DoesNotExist: pass
 
 		action = request.POST.get('action')
 		if action == 'archive':
