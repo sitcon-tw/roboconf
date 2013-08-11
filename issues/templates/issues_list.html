@@ -99,13 +99,14 @@
 {% block scripts %}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.issue-select-control').on('change', function() {
-		var d = !$('.issue-select-control:checked').length;
+	$('.issue-select-control').on('click', function() {
+		var d = $('.issue-select-control:checked').length <= 0;
 		$('.issue-actions .button').toggleClass("disabled", d);
-		$('.issue-entry[data-id="' + $(this).data('id') + '"]').toggleClass('selected', d);
+		$('.issue-entry[data-id="' + $(this).data('id') + '"]').toggleClass('selected', !d);
 	});
 	$('.issue-entry').on('click', function() {
 		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').click();
 	});
+});
 </script>
 {% endblock %}
