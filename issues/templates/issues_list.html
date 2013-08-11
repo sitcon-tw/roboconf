@@ -89,9 +89,9 @@
 		</ul>
 		<form id="bulk-action-form" action="{% url 'issues:list' %}" method="POST">
 		{% csrf_token %}
-			<input type="hidden" name="issues" />
-			<input type="hidden" name="action" />
-			<input type="hidden" name="params" />
+			<input type="hidden" name="issues" id="bulk-issues-field" />
+			<input type="hidden" name="action" id="bulk-action-field" />
+			<input type="hidden" name="params" id="bulk-params-field" />
 		</form>
 	</div>
 </div>
@@ -104,6 +104,13 @@ $(document).ready(function() {
 		$(this).toggleClass('selected');
 		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').prop('checked', d);
 		$('.issue-actions .button').toggleClass("disabled", $('.issue-select-control:checked').length <= 0);
+	});
+	$('#archive-button').on('click', function() {
+		var l = [];
+		$('.issue-select-control:checked').each(function(i, item) { l.append($(item).data('id')); });
+		$('#bulk-issues-field').val(l.join());
+		$('#bulk-action-field').val('archive');
+		$('#bulk-action-form').submit();
 	});
 });
 </script>
