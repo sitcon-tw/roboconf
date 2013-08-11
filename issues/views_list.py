@@ -1,9 +1,27 @@
 from django.shortcuts import render
 from issues.models import *
+from django.utils import timezone
 
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
 def list(request, mode, user_id=None):
+	# Code here is just for demonstration purpose!
+	# We'll need to move these into separate model
+	if 'issues' in request.POST:
+		issue_objs = []
+		for issue_id in request.POST.getlist('issues'):
+			try:
+				i = Issue.objects.get(id=issue_id)
+				issue_objs.append(i)
+			except Issue.DoesNotExist: pass
+
+		action = request.POST.get('action')
+		if action == 'archive':
+			# Do some archive
+			for i in issue_objs:
+				i.last_updated = timezone.now()
+				i.save()
+
 	counts = {
 			'all': Issue.objects.count(),
 			'assigned': Issue.objects.filter(assignee__pk=request.user.id).count(),

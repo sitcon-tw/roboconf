@@ -105,13 +105,15 @@ $(document).ready(function() {
 		$('.issue-select-control[data-id="' + $(this).data('id') + '"]').prop('checked', d);
 		$('.issue-actions .button').toggleClass("disabled", $('.issue-select-control:checked').length <= 0);
 	});
-	$('#archive-button').on('click', function() {
+	function _postback(action, params) {
 		var l = [];
-		$('.issue-select-control:checked').each(function(i, item) { l.append($(item).data('id')); });
+		$('.issue-select-control:checked').each(function(i, item) { l.push($(item).data('id')); });
 		$('#bulk-issues-field').val(l.join());
-		$('#bulk-action-field').val('archive');
+		$('#bulk-action-field').val(action);
+		$('#bulk-params-field').val(params);
 		$('#bulk-action-form').submit();
-	});
+	}
+	$('#archive-button').on('click', function() { _postback('archive', ''); });
 });
 </script>
 {% endblock %}
