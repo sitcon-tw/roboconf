@@ -13,7 +13,10 @@
 	<div class="large-10 columns issue-thread">
 		<div class="issue-main">
 			<img class="avatar medium" src="{{ issue.creator.email|get_avatar:'#' }}" alt="{{ issue.creator|get_name }}" />
-			<div class="issue-meta"><a href="{% url 'users:profile' issue.creator.id %}">{{ issue.creator|get_name }}</a> 於 {{ issue.creation_time|timesince }}前建立</div>
+			<div class="issue-meta">
+				<a href="{% url 'users:profile' issue.creator.id %}">{{ issue.creator|get_name }}</a> 於 {{ issue.creation_time|timesince }}前建立
+				{% if issue.creator == user or perms.issues.change_issue %}<div class="right action-button"><a class="small radius secondary button" href="#">編輯</a></div>{% endif %}
+			</div>
 			<h4>{{ issue.title }}</h4>
 			<div class="issue-actions">
 				<div class="row">
@@ -58,7 +61,12 @@
 		{% if history.mode == '.' %}
 		<div class="issue-main">
 			<img class="avatar medium" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user|get_name }}" />
-			<div class="issue-meta"><a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 發表評論<span class="right">於 {{ history.timestamp|timesince }}前</span></div>
+			<div class="issue-meta">
+				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 發表評論
+				{% if history.user == user %}<div class="right action-button"><a href="#" class="icon-edit iconize has-tip" title="編輯評論"></a></div>{% endif %}
+				{% if history.user == user %}<div class="right action-button"><a href="#" class="icon-delete iconize has-tip" title="刪除評論"></a></div>{% endif %}
+				<div class="right">於 {{ history.timestamp|timesince }}前</div>
+			</div>
 			<div class="issue-content">
 				{{ history.content|markdown }}
 			</div>
