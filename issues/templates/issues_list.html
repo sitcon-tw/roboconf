@@ -25,8 +25,8 @@
 			<div class="left">
 				<div>
 					<ul class="radius button-group">
-						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理 ({{ counts.open }})</a></li>
-						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案 ({{ counts.closed }})</a></li>
+						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理 <span>({{ counts.open }})</span></a></li>
+						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案 <span>({{ counts.closed }})</span></a></li>
 					</ul>
 				</div>
 				<div>
