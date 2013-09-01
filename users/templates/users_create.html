@@ -1,0 +1,104 @@
+{% extends 'core_main.html' %}
+{% load usermeta %}
+{% block title %}新增人員{{ block.super }}{% endblock %}
+{% block content %}
+{% if status %}
+<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
+	{% if status == 'success' %}人員新增成功。
+	{% else %}儲存個人檔案時發生錯誤，請修正下列欄位。{% endif %}
+	<a href="#" class="close">&times;</a>
+</div>
+{% endif %}
+<div class="row">
+	<div class="large-1 avatars columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
+	</div>
+	<div class="large-8 columns">
+		<form action="{% url 'users:create' %}" method="POST" class="profile-main">
+		{% csrf_token %}
+			<div class="row field-header">
+				<div class="small-12 columns">
+					<h6>帳號資訊</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns {% if 'username' in errors %}error{% endif %}">
+					<input type="text" name="username" id="username" maxlength="30" placeholder="帳號" required />
+					{% if 'invalid_username' in errors %}<small>無效的帳號名稱。</small>
+					{% elif 'username_already_taken' in errors %}<small>帳號名稱已被使用。</small>{% endif %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<input type="text" name="title" maxlength="16" placeholder="職稱" />
+				</div>
+				<div class="small-6 columns">
+					<select id="groups" name="groups">
+						<option disabled>選取組別</option>
+						{% for g in groups %}
+						<option value="{{ g.id }}">{{ g.name }}</option>
+						{% endfor %}
+						<option value="" selected>（未指派）</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns {% if 'email' in errors %}error{% endif %}">
+					<input type="text" name="email" placeholder="電子郵件信箱" required />
+					{% if 'invalid_email' in errors %}<small>無效的電子郵件地址。</small>
+					{% elif 'email_already_taken' in errors %}<small>電子郵件信箱已被使用。</small>{% endif %}
+				</div>
+			</div>
+			<div class="row field-header">
+				<div class="small-12 columns">
+					<h6>個人檔案資訊</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<input type="text" name="last_name" maxlength="30" placeholder="姓" />
+				</div>
+				<div class="small-6 columns">
+					<input type="text" name="first_name" maxlength="30" placeholder="名" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<input type="text" name="school" maxlength="30" placeholder="學校" />
+				</div>
+				<div class="small-6 columns">
+					<input type="text" name="grade" maxlength="30" placeholder="系所" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="phone" placeholder="電話號碼" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<textarea name="comment" placeholder="備註">{{ u.profile.comment }}</textarea>
+				</div>
+			</div>
+			<div class="button-row">
+				<div class="right">
+					<input type="submit" class="radius button" name="submit" value="新增人員" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="large-3 columns">
+		<h5>登記流程</h5>
+		<ol>
+			<li>組長要求行政組登記工作人員。</li>
+			<li>透過行政系統建立帳號並賦予該組權限。</li>
+			<li>系統將自動寄送歡迎信，邀請加入郵件清單並設定新密碼。</li>
+		</ol>
+	</div>
+</div>
+{% endblock %}
