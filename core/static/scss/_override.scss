@@ -39,7 +39,8 @@ img.avatar.large { border-radius: 6px; }
 .issue-main { padding: 1em; border: 1px solid #e5e5e5; border-radius: 3px; }
 .user-list { color: #666; }
 .user-list>li { text-align: center; }
-.user-list h4 { font-size: 1em; }
+.user-list .avatar { margin-bottom: 0.5em; }
+.user-list h4 { font-size: 1em; margin: auto; }
 .user-list h4.subheader { font-size: 0.8em; }
 form textarea { transition: height 0.2s,box-shadow 0.45s,border-color 0.45s ease-in-out; }
 form .issue-main { background: #f6f6f6; }
