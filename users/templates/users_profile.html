@@ -12,7 +12,7 @@
 			{% if u.profile.phone %}<li><span class="icon-phone iconize"></span> {{ u.profile.phone }}</li>{% endif %}
 		</ul>
 		<div class="profile_actions">
-			<a href="{% url 'users:edit_profile' u.id %}" class="small secondary radius button">編輯</a>
+			<a href="{% url 'users:edit' u.id %}" class="small secondary radius button">編輯</a>
 		</div>
 	</div>
 	<div class="large-5 columns">

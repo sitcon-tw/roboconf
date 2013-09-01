@@ -7,5 +7,5 @@ urlpatterns = patterns('',
 		url(r'^logout$', views.logout, name='logout'),
 		url(r'^password/change$', views.change_password, name='change_password'),
 		url(r'^(?P<id>\d+)$', views.profile, name='profile'),
-		url(r'^(?P<id>\d+)/edit$', views.edit_profile, name='edit_profile'),
+		url(r'^(?P<id>\d+)/edit$', views.edit, name='edit'),
 	)
