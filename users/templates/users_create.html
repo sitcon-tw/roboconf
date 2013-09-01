@@ -34,10 +34,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-6 columns">
+				<div class="small-8 columns">
 					<input type="text" name="title" maxlength="16" placeholder="職稱" />
 				</div>
-				<div class="small-6 columns">
+				<div class="small-4 columns">
 					<select id="groups" name="groups">
 						<option disabled>選取組別</option>
 						{% for g in groups %}
@@ -82,7 +82,12 @@
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<textarea name="comment" placeholder="備註">{{ u.profile.comment }}</textarea>
+					<textarea name="comment" placeholder="備註"></textarea>
+				</div>
+			</div>
+			<div class="row field-header">
+				<div class="small-12 columns">
+					<label for="welcome_letter_checkbox"><input type="checkbox" id="welcome_letter_checkbox" name="send_welcome_letter" checked /> 寄送歡迎信給使用者</label>
 				</div>
 			</div>
 			<div class="button-row">
