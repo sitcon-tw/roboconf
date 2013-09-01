@@ -14,7 +14,7 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'users:create' %}" method="POST" class="profile-main">
+		<form action="{% url 'users:create' %}" method="POST" class="profile-main custom">
 		{% csrf_token %}
 			<div class="row field-header">
 				<div class="small-12 columns">
@@ -97,7 +97,7 @@
 			</div>
 		</form>
 	</div>
-	<div class="large-3 columns">
+	<div class="large-3 columns text">
 		<h5>登記流程</h5>
 		<ol>
 			<li>組長要求行政組登記工作人員。</li>
