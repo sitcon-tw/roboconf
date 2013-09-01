@@ -34,11 +34,13 @@ img.avatar.large { border-radius: 6px; }
 .issue-list .issue-id { float: right; color: #aaa; }
 .issue-list .issue-assignee { float: right; margin: 0.2em; }
 .issue-list .issue-select-control { position: absolute; top: 0.75em; left: 0.75em; }
-.issue-list h4, .user-list h4 { font-size: 166.66%; margin: 0.2em auto; }
+.issue-list h4 { font-size: 166.66%; margin: 0.2em auto; }
 .issue-list .issue-icon { float: left; margin: 0.25em auto auto -1.5em; }
 .issue-main { padding: 1em; border: 1px solid #e5e5e5; border-radius: 3px; }
-.user-list { color: #666; font-size: 0.6em; }
+.user-list { color: #666; }
 .user-list>li { text-align: center; }
+.user-list h4 { font-size: 1em; }
+.user-list h4.subheader { font-size: 0.8em; }
 form textarea { transition: height 0.2s,box-shadow 0.45s,border-color 0.45s ease-in-out; }
 form .issue-main { background: #f6f6f6; }
 form.issue-edit>*>.columns, form.issue-edit .form-main { margin-bottom: 1em; }
