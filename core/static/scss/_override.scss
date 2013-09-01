@@ -65,6 +65,7 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-main .issue-actions .issue-due { line-height: 200%; }
 .issue-main .issue-actions form, .issue-main .issue-actions form.custom .custom.dropdown { margin: 0; }
 .issue-meta { font-size: 0.6em; color: #666; }
+.issue-meta > .right { margin-left: 0.5em; }
 .issue-content { font-size: 0.8em; }
 .issue-content p { margin: 0.5em auto; }
 .issue-content p:last-child { margin-bottom: 0; }
