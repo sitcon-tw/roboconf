@@ -5,7 +5,7 @@ from users.models import *
 from users.utils import validate_email
 
 @login_required
-def edit(request, user):
+def edit(request, id):
 	user = get_object_or_404(User, pk=id)
 	
 	if not (user == request.user or request.user.has_perm('auth.change_user')):
