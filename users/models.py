@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 # Create your models here.
 
@@ -14,3 +14,8 @@ class UserProfile(models.Model):
 
 	def __unicode__(self):
 		return self.title
+
+class GroupCategory(models.Model):
+	name = models.CharField(max_length=30)
+	is_visible = models.BooleanField(default=True)
+	groups = models.ManyToManyField(Group, related_name='categories')
