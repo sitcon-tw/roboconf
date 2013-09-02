@@ -19,3 +19,6 @@ class GroupCategory(models.Model):
 	name = models.CharField(max_length=30)
 	is_visible = models.BooleanField(default=True)
 	groups = models.ManyToManyField(Group, related_name='categories')
+
+	def __unicode__(self):
+		return self.name
