@@ -5,7 +5,13 @@ from users.models import *
 
 @login_required
 def list(request):
+	users = User.objects.order_by('username').filter(is_active=True)
+	filter = request.GET.get('g', '')
+	if filter.isdigit():
+		users = users.filter(group__pk=filter)
+
 	return render(request, 'users_list.html', {
-		'users': User.objects.order_by('username').filter(is_active=True).all(),
-		'groups': Group.objects.order_by('name').all(),
+		'users': users.all(),
+		'categories': GroupCategory.objects.all(),
+		'filter': filter,
 	})

@@ -23,12 +23,16 @@
 			<li><a href="{% url 'users:edit' user.id %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
 		</ul>
 		<div class="divider"></div>
-		<h5>篩選組別</h5>
+		{% for c in categories %}
+		{% if c.is_visible or user.is_staff %}
+		<h5>篩選{{ c.name }}</h5>
 		<ul class="side-nav">
-		{% for g in groups %}
-			<li><a href="#">{{ g.name }}</a></li>
+		{% for g in c.groups %}
+			<li{% if filter == g.id %} class="active"{% endif %}><a href="{% url 'users:list' %}?g={{ g.id }}">{{ g.name }}</a></li>
 		{% endfor %}
 		</ul>
+		{% endif %}
+		{% endfor %}
 	</div>
 </div>
 {% endblock %}
