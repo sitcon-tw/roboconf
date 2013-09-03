@@ -13,7 +13,11 @@ img.avatar.large { border-radius: 6px; }
 .button-row>.left>*, .button-row>.right>* { margin: auto 0.25em; float: left; }
 .button-row>.left>*:first-child { margin-left: 0em; }
 .button-row>.right>*:last-child { margin-right: 0em; }
-.f-dropdown li a { line-height: 166.66%; }
+.f-dropdown li { line-height: 166.66%; }
+.f-dropdown h6 { line-height: 1; font-size: 0.8em; }
+.f-dropdown input { margin: 0 0.5em 0 0; }
+.f-dropdown label { font-size: 1em; }
+.f-dropdown.with-ticks label { padding: 0.3125em 0.625em; }
 .main-side-nav>.side-nav, h5+.side-nav { padding: 0; }
 .main-side-nav .divider, .page-side-nav .divider { border: solid #ddd; border-width: 1px 0 0; margin: 0.5em auto 0.75em; }
 .side-nav.filter { line-height: 225%; }
@@ -81,7 +85,6 @@ form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shad
 .issue-content h5, .issue-content h6 { font-size: 0.8em }
 .issue-content img { box-shadow: rgba(0,0,0,.6) 0 0 6px; margin: 1em 0.25em; max-width: 95%; }
 form.issue-set-label { margin: 0; }
-form.issue-set-label h6 { line-height: 1; font-size: 0.8em; }
 form.issue-set-label .side-nav { padding: 0 0 0.25em 0; }
 form.issue-set-label>*:last-child { margin-bottom: 0; }
 .issue-labels .dropdown.button { margin-top: -0.05em; }
