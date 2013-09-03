@@ -24,14 +24,14 @@
 		</ul>
 		<div class="divider"></div>
 		{% for c in categories %}
-		{% if c.is_visible or user.is_staff %}
-		<h5>篩選{{ c.name }}</h5>
-		<ul class="side-nav">
-		{% for g in c.groups.all %}
-			<li{% if filter == g.id %} class="active"{% endif %}><a href="{% url 'users:list' %}?g={{ g.id }}">{{ g.name }}</a></li>
-		{% endfor %}
-		</ul>
-		{% endif %}
+			{% if c.is_visible or user.is_staff %}
+			<h5>篩選{{ c.name }}</h5>
+			<ul class="side-nav">
+			{% for g in c.groups.all %}
+				<li{% if filter == g.id %} class="active"{% endif %}><a href="{% url 'users:list' %}?g={{ g.id }}">{{ g.name }}</a></li>
+			{% endfor %}
+			</ul>
+			{% endif %}
 		{% endfor %}
 	</div>
 </div>
