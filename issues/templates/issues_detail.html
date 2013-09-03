@@ -166,7 +166,7 @@
 							<li class="label-item"><label for="labels-{{ label.id }}"><input type="checkbox" id="labels-{{ label.id }}" name="labels" value="{{ label.id }}" style="display: none;" {% if label in issue.labels.all %}checked{% endif %} /><span class="color custom checkbox iconize" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</li>
 						{% endfor %}
 						</ul>
-						<input type="submit" class="tiny secondary radius button expand" id="set-label-button" value="更新標籤" />
+						<input type="submit" class="small secondary radius button expand" id="set-label-button" value="更新標籤" />
 					</form>
 				</div>
 			</div>

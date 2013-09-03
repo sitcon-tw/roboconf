@@ -14,7 +14,8 @@ img.avatar.large { border-radius: 6px; }
 .button-row>.left>*:first-child { margin-left: 0em; }
 .button-row>.right>*:last-child { margin-right: 0em; }
 .f-dropdown li { line-height: 166.66%; }
-.f-dropdown h6 { line-height: 1; font-size: 0.8em; }
+.f-dropdown h6 { line-height: 1; font-size: 0.875em; }
+ul.f-dropdown h6 { line-height: 2; margin: 0; padding: 0.125em 0.5em; color: #555; }
 .f-dropdown input { margin: 0 0.5em 0 0; }
 .f-dropdown label { font-size: 1em; }
 .f-dropdown.with-ticks label { padding: 0.3125em 0.625em; }

@@ -112,9 +112,9 @@
 {% block scripts %}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.group_checkbox').on('change', function() {
+	$('.group_checkbox').change(function() {
 		var sel = [];
-		$('.group_checkbox[checked]').each(function (index,e) {
+		$('.group_checkbox:checked').each(function (index,e) {
 			sel.push($.trim($(e).text()));
 		});
 		$('#groups_label').text(sel.length ? sel.join() : $('#groups_label').data('default-content'));
