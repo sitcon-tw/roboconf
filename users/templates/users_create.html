@@ -43,7 +43,7 @@
 					{% for c in categories %}
 						<h6>{{ c.name }}</h6>
 						{% for g in c.groups.all %}
-						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" />{{ g.name }}</label></li>
+						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" data-label="{{ g.name }}" />{{ g.name }}</label></li>
 						{% endfor %}
 					{% endfor %}
 					</ul>
@@ -115,9 +115,9 @@ $(document).ready(function() {
 	$('.group_checkbox').change(function() {
 		var sel = [];
 		$('.group_checkbox:checked').each(function (index,e) {
-			sel.push($.trim($(e).text()));
+			sel.push($.trim($(e).data('label')));
 		});
-		$('#groups_label').text(sel.length ? sel.join() : $('#groups_label').data('default-content'));
+		$('#groups_label').text(sel.length ? sel.join('、') : $('#groups_label').data('default-content'));
 	});
 });
 </script>
