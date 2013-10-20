@@ -63,6 +63,7 @@ def create(request):
 					'sender': request.user,
 					'receiver': user,
 					'password': password,
+					'groups': [g.name for g in user.groups.all],
 				}
 
 				sender_address = format_address(get_user_name(request.user), request.user.email)
