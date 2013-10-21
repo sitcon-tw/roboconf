@@ -167,6 +167,7 @@ LOGIN_URL = 'users:login'
 NOTIFICATIONS = {
     'sender': {
         'default': u'SITCON 行政系統:notifications@staff.sitcon.org',
+        'account': u'SITCON 行政系統:accounts@staff.sitcon.org',
         'issues': '%s:issues@staff.sitcon.org',
     },
     'receiver': {

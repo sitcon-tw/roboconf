@@ -39,6 +39,8 @@
 				<div class="small-4 columns">
 				{% if user == u %}
 					<a href="{% url 'users:change_password' %}" class="expand small secondary radius button">變更密碼</a>
+				{% elif perms.auth.change_user %}
+					<a href="{% url 'users:reset_password' %}?id={{ u.id }}" class="expand small secondary radius button">重設密碼</a>
 				{% endif %}
 				</div>
 			</div>
