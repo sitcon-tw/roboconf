@@ -13,7 +13,7 @@ def parse_address(nsaddr):
 	(name, _, addr) = nsaddr.rpartition(':')
 	return (name, addr)
 
-def get_setting(category, value, default=None):
+def get_mail_setting(category, value, default=None):
 	return settings.NOTIFICATIONS[category].get(value, default)
 
 '''

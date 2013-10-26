@@ -34,7 +34,7 @@ def create(request):
 				receivers[user.email] = get_user_name(user)
 
 		if 'mailing_list' in receiver_target:
-			for addr in get_setting('receiver', 'mailing_lists', []):
+			for addr in get_mail_setting('receiver', 'mailing_lists', []):
 				receivers[addr] = ''
 
 		if request.POST.get('receivers'):

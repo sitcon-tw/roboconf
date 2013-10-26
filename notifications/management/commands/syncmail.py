@@ -2,7 +2,7 @@ from django.core.management.base import NoArgsCommand
 from django.core import mail
 from django.utils.html import strip_tags
 from email.utils import formataddr
-from notifications.utils import get_setting, parse_address
+from notifications.utils import get_mail_setting, parse_address
 from core.markdown import get_markdown
 import os
 
@@ -20,7 +20,7 @@ class Command(NoArgsCommand):
 			conn = mail.get_connection()
 			conn.open()
 
-			default_sender = get_setting('sender', 'default')
+			default_sender = get_mail_setting('sender', 'default')
 			for item in emails.all():
 				email = mail.EmailMultiAlternatives(item.subject, connection=conn)
 				email.to = [_parseaddr(item.receiver)]
