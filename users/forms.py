@@ -25,10 +25,12 @@ class PasswordResetForm(DjangoPasswordResetForm):
             if not user.has_usable_password():
                 continue
 
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+
             context = {
                 'receiver': user,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': default_token_generator.make_token(user),
+                'token': '_'.join((uid, token)),
             }
 
 			sender_address = get_mail_setting('sender', 'account')
