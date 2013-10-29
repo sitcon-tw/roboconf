@@ -25,18 +25,18 @@ def urlsafe_base64_decode(s):
         raise ValueError(e)
 # == end snippet ==
 
-def generate_token(user):
-	uid = urlsafe_base64_encode(force_bytes(user.pk))
-	token = default_token_generator.make_token(user)
-	return '_'.join((uid, token))
+def generate_uid(user):
+    return urlsafe_base64_encode(force_bytes(user.pk))
 
-def parse_token(token):
+def parse_uid(uidb64):
 	try:
-		token_uid, token_state = str(token).split('-', 1)
-		uid = urlsafe_base64_decode(token_uid)
-		return (User.objects.get(pk=uid), token_state)
+		uid = urlsafe_base64_decode(uidb64)
+		return User.objects.get(pk=uid)
 	except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-		return (None, None)
+		return None
 
+def generate_token(user):
+    return default_token_generator.make_token(user)
+    
 def check_token(user, token):
 	return default_token_generator.check_token(user, token)

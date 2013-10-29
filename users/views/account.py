@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
 from users.forms import PasswordResetForm
-from users.token import parse_token, check_token
+from users.token import parse_uid, check_token
 
 @login_required
 @sensitive_variables()
@@ -47,11 +47,11 @@ def reset_password(request, user=None):
 
 	return render(request, 'users_reset_password.html', {'form': form, 'status': status})
 
-@sensitive_variables
-@sensitive_post_parameters
-def reset_password_confirm(request, token):
-	user, token_state = parse_token(token)
-	if user is not None and check_token(user, token_state):
+@sensitive_variables()
+@sensitive_post_parameters()
+def reset_password_confirm(request, uidb64, token):
+	user = parse_uid(uidb64)
+	if user is not None and check_token(user, token):
 		if request.method == 'POST':
 			form = SetPasswordForm(user, request.POST)
 			if form.is_valid():

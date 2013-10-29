@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 from notifications.utils import get_mail_setting, format_address, send_template_mail
 from users.utils import get_user_name
-from users.token import generate_token
+from users.token import generate_uid, generate_token
 
 class PasswordResetForm(DjangoPasswordResetForm):
 	def clean_email(self):
@@ -25,6 +25,7 @@ class PasswordResetForm(DjangoPasswordResetForm):
 
 			context = {
 				'receiver': user,
+				'uidb64': generate_uid(user),
 				'token': generate_token(user),
 			}
 
