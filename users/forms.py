@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
-from notifications.utils import get_mail_setting, format_address, send_template_email
+from notifications.utils import get_mail_setting, format_address, send_template_mail
 from users.utils import get_user_name
 from users.token import generate_token
 
@@ -29,4 +29,4 @@ class PasswordResetForm(DjangoPasswordResetForm):
 
 			sender_address = get_mail_setting('sender', 'account')
 			receiver_address = format_address(get_user_name(user), user.email)
-			send_template_email(sender_address, receiver_address, 'mail/user_reset_password.html', context)
+			send_template_mail(sender_address, receiver_address, 'mail/user_reset_password.html', context)
