@@ -27,6 +27,7 @@ def change_password(request):
 
 def reset_password(request, user=None):
 	form = PasswordResetForm()
+	success = None
 
 	if request.method == 'POST':
 		form = PasswordResetForm(request.POST)
