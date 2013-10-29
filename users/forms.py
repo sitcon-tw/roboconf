@@ -6,14 +6,14 @@ from users.token import generate_token
 
 class PasswordResetForm(DjangoPasswordResetForm):
 	def clean_email(self):
-		data = self.cleaned_data['email']
+		email = self.cleaned_data['email']
 		try:
 			user = User.objects.get(email__iexact=email)
 			if not user.has_usable_password():
 				raise forms.ValidationError("Reset unavailable", code='reset_unavailable')
 		except User.DoesNotExist:
 			raise forms.ValidationError("Invalid email", code='invalid_email')
-		return data
+		return email
 
 	def save(self):
 		email = self.cleaned_data['email']
