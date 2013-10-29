@@ -27,7 +27,7 @@ def change_password(request):
 
 def reset_password(request, user=None):
 	form = PasswordResetForm()
-	success = None
+	status = request.GET.get('status')
 
 	if request.method == 'POST':
 		form = PasswordResetForm(request.POST)
@@ -37,12 +37,15 @@ def reset_password(request, user=None):
 			form = PasswordResetForm({'email': user.email})
 		except User.DoesNotExist:
 			pass
+	
+	if not status == 'invalid_token':
+		status = None
 
 	if form.is_valid():
 		form.save()
-		success = True
+		status = 'success'
 
-	return render(request, 'users_reset_password.html', {'form': form, 'success': success})
+	return render(request, 'users_reset_password.html', {'form': form, 'status': status})
 
 @sensitive_variables
 @sensitive_post_parameters
@@ -57,6 +60,6 @@ def reset_password_confirm(request, token):
 		else:
 			form = SetPasswordForm(user)
 	else:
-		form = None
+		return redirect(reverse('users:reset_password') + '?status=invalid_token')
 
 	return render(request, 'users_set_password.html', {'form': form})
