@@ -13,13 +13,13 @@ class PasswordResetForm(DjangoPasswordResetForm):
 		try:
 			user = User.objects.get(email__iexact=email)
 			if not user.has_usable_password():
-				raise forms.ValidationError(code='reset_unavailable')
+				raise forms.ValidationError("Reset unavailable", code='reset_unavailable')
 		except User.DoesNotExist:
-			raise forms.ValidationError(code='invalid_email')
+			raise forms.ValidationError("Invalid email", code='invalid_email')
 		return data
 
 	def save(self):
-        email = self.cleaned_data["email"]
+        email = self.cleaned_data['email']
         active_users = User.objects.filter(email__iexact=email, is_active=True)
         for user in active_users:
             if not user.has_usable_password():

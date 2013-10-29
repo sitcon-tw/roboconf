@@ -24,6 +24,8 @@ def login(request):
 			context['error'] = 'account_disabled'
 		else:
 			context['error'] = 'invalid_login'
+	else:
+		context['error'] = request.GET.get('status')
 
 	url = request.REQUEST.get('next')
 	context['redirect_url'] = url

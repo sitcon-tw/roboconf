@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.views.decorators.debug import sensitive_post_parameters, sensitive_variables
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_decode
 from users.forms import PasswordResetForm
 
 @login_required
@@ -23,19 +27,42 @@ def change_password(request):
 	return render(request, 'users_change_password.html', {'status': status})
 
 def reset_password(request, user=None):
-	form = PasswordResetForm(request.GET)	# Able to fill in using GET params
+	form = PasswordResetForm()
+
 	if request.method == 'POST':
 		form = PasswordResetForm(request.POST)
-		if form.is_valid():
-			form.save()
-			status = ['success']
-		else:
-			status = form.errors	
-	return render(request, 'users_reset_password.html', {'form': form})
+	elif request.user.has_perm('auth.change_user'):		# Prefill user email
+		try:
+			user = User.objects.get(id=request.GET.get('id'))
+			form = PasswordResetForm({'email': user.email})
+		except User.DoesNotExist:
+			pass
+
+	if form.is_valid():
+		form.save()
+		success = True
+
+	return render(request, 'users_reset_password.html', {'form': form, 'success': success})
 
 @sensitive_variables
 @sensitive_post_parameters
 def reset_password_confirm(request, token):
-	status = ''
+	try:
+		token_uid, token_state = str(token).split('-')
+		uid = urlsafe_base64_decode(token_uid)
+		user = User.objects.get(pk=uid)
+	except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
 
-	return render(request, 'users_change_password.html', {'status': status})
+	if user is not None and default_token_generator.check_token(user, token_state):
+		if request.method == 'POST':
+			form = SetPasswordForm(user, request.POST)
+			if form.is_valid():
+				form.save()
+				return redirect(reverse('users:login') + '?status=reset_successful')
+		else:
+			form = SetPasswordForm(user)
+	else:
+		form = None
+
+	return render(request, 'users_set_password.html', {'form': form})
