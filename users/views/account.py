@@ -47,7 +47,6 @@ def reset_password(request):
 
 	return render(request, 'users_reset_password.html', {'form': form, 'status': status})
 
-@sensitive_variables()
 @sensitive_post_parameters()
 def reset_password_confirm(request, uidb64, token):
 	user = parse_uid(uidb64)
