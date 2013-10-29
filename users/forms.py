@@ -26,7 +26,7 @@ class PasswordResetForm(DjangoPasswordResetForm):
 
 			context = {
 				'receiver': user,
-				'reset_link': reverse('users:reset_password_confirm', {
+				'reset_link': reverse('users:reset_password_confirm', kwargs={
 					'uidb64': generate_uid(user), 
 					'token': generate_token(user),
 				}),
