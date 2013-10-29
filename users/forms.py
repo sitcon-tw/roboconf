@@ -29,7 +29,7 @@ class PasswordResetForm(DjangoPasswordResetForm):
 				'reset_link': reverse('users:reset_password_confirm', {
 					'uidb64': generate_uid(user), 
 					'token': generate_token(user),
-				},
+				}),
 			}
 
 			sender_address = get_mail_setting('sender', 'account')
