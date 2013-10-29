@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 from notifications.utils import get_mail_setting, format_address, send_template_mail
@@ -10,9 +11,9 @@ class PasswordResetForm(DjangoPasswordResetForm):
 		try:
 			user = User.objects.get(email__iexact=email)
 			if not user.has_usable_password():
-				raise forms.ValidationError("Reset unavailable", code='reset_unavailable')
+				raise ValidationError("Reset unavailable", code='reset_unavailable')
 		except User.DoesNotExist:
-			raise forms.ValidationError("Invalid email", code='invalid_email')
+			raise ValidationError("Invalid email", code='invalid_email')
 		return email
 
 	def save(self):
