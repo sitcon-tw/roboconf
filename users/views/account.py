@@ -25,7 +25,7 @@ def change_password(request):
 		else: status = 'invalid_login'
 	return render(request, 'users_change_password.html', {'status': status})
 
-def reset_password(request, user=None):
+def reset_password(request):
 	form = PasswordResetForm()
 	status = request.GET.get('status')
 
@@ -49,7 +49,7 @@ def reset_password(request, user=None):
 
 @sensitive_variables()
 @sensitive_post_parameters()
-def reset_password_confirm(request, uidb64, token):
+def reset_password_confirm(request, uidb64=None, token=None):
 	user = parse_uid(uidb64)
 	if user is not None and check_token(user, token):
 		if request.method == 'POST':
