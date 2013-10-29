@@ -49,7 +49,7 @@ def reset_password(request):
 
 @sensitive_variables()
 @sensitive_post_parameters()
-def reset_password_confirm(request, uidb64=None, token=None):
+def reset_password_confirm(request, uidb64, token):
 	user = parse_uid(uidb64)
 	if user is not None and check_token(user, token):
 		if request.method == 'POST':
