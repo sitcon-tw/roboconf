@@ -32,7 +32,7 @@ def generate_token(user):
 
 def parse_token(token):
 	try:
-		token_uid, token_state = str(token).split('-')
+		token_uid, token_state = str(token).split('-', 1)
 		uid = urlsafe_base64_decode(token_uid)
 		return (User.objects.get(pk=uid), token_state)
 	except (TypeError, ValueError, OverflowError, User.DoesNotExist):
