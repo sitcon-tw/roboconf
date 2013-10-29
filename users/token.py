@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 # == snippet from Django 1.6 dev snapshot ==
 # ** remove when 1.6 offically came out **
+import base64
+
 def urlsafe_base64_encode(s):
     """
     Encodes a bytestring in base64 for use in URLs, stripping any trailing
