@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
@@ -25,8 +26,10 @@ class PasswordResetForm(DjangoPasswordResetForm):
 
 			context = {
 				'receiver': user,
-				'uidb64': generate_uid(user),
-				'token': generate_token(user),
+				'reset_link': reverse('users:reset_password_confirm', {
+					'uidb64': generate_uid(user), 
+					'token': generate_token(user),
+				},
 			}
 
 			sender_address = get_mail_setting('sender', 'account')
