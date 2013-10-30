@@ -11,7 +11,7 @@
 		<section class="top-bar-section">
 			<ul class="left">
 				{% if user.is_authenticated %}
-				<li><a href="#">文件</a></li>
+				<li><a href="{% url 'docs:main' %}">文件</a></li>
 				<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
 				<li><a href="#">聚會</a></li>
 				<li><a href="#">時間表</a></li>

@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^$', 'core.views.index', name='index'),
     url(r'^favicon.ico$', redirect_static('img/SITCON.ico'), name='favicon'),
     url(r'^users/', include('users.urls', namespace='users')),
+    url(r'^docs/', include('docs.urls', namespace='docs')),
     url(r'^issues/', include('issues.urls', namespace='issues')),
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),
     
