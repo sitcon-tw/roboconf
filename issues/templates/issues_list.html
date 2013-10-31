@@ -7,16 +7,16 @@
 		<ul class="side-nav filter">
 			<li{% if filters.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題 <span class="right">{{ counts.all }}</span></a></li>
 			{% if user.is_authenticated %}
-			<li{% if filters.mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我 <span class="right">{{ counts.assigned }}</span></a></li>
-			<li{% if filters.mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ counts.created }}</span></a></li>
-			<li{% if filters.mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ counts.starred }}</span></a></li>
+			<li{% if filters.mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我 <span class="right">{{ user.assigned_issues.count }}</span></a></li>
+			<li{% if filters.mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ user.created_issues.count }}</span></a></li>
+			<li{% if filters.mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ user.starred_issues.count }}</span></a></li>
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
 		<h5>標籤</h5>
 		<ul class="side-nav">
 		{% for label in labels %}
-			<li class="label-item"><a href="{{ current_url }}?label={{ label.id }}"><span class="color" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
+			<li class="label-item"><a href="{{ request.path }}?label={{ label.id }}"><span class="color" style="background: #{{ label.color }};">&nbsp;</span> {{ label.name }}</a></li>
 		{% endfor %}
 		</ul>
 	</div>
@@ -25,20 +25,20 @@
 			<div class="left">
 				<div>
 					<ul class="radius button-group">
-						<li><a href="{{ current_url }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理 <span>({{ counts.open }})</span></a></li>
-						<li><a href="{{ current_url }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案 <span>({{ counts.closed }})</span></a></li>
+						<li><a href="{{ request.path }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理 <span>({{ counts.open }})</span></a></li>
+						<li><a href="{{ request.path }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案 <span>({{ counts.closed }})</span></a></li>
 					</ul>
 				</div>
 				<div>
 					<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" href="#">
 						<span>排序：</span>
-						{% if sorting.order == 'created' %}{% if sorting.asc %}最舊{% else %}最新{% endif %}{% elif sorting.order == 'due' %}{% if sorting.asc %}最先到期{% else %}最晚到期{% endif %}{% endif %}
+						{% if filter.creation_time == '+' %}最舊{% else %}最新{% endif %}{% if filter.creation_time == '+' %}最先到期{% else %}最晚到期{% endif %}
 					</a>
 					<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
-						<li><a href="{{ current_url }}?sort=created&amp;direction=desc">最新</a></li>
-						<li><a href="{{ current_url }}?sort=created&amp;direction=asc">最舊</a></li>
-						<li><a href="{{ current_url }}?sort=due&amp;direction=asc">最先到期</a></li>
-						<li><a href="{{ current_url }}?sort=due&amp;direction=desc">最晚到期</a></li>
+						<li><a href="{{ request.path }}?sort=created&amp;direction=desc">最新</a></li>
+						<li><a href="{{ request.path }}?sort=created&amp;direction=asc">最舊</a></li>
+						<li><a href="{{ request.path }}?sort=due&amp;direction=asc">最先到期</a></li>
+						<li><a href="{{ request.path }}?sort=due&amp;direction=desc">最晚到期</a></li>
 					</ul>
 				</div>
 			</div>
