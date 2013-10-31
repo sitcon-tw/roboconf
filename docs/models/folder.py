@@ -3,7 +3,7 @@ from django.utils.timezone import now
 
 class Folder(models.Model):
 	name = models.CharField(max_length=256)
-	parent = models.ForeignKey('self', related_name='folders')
+	parent = models.ForeignKey('self', null=True, related_name='folders')
 	last_modified = models.DateTimeField(editable=False, default=now)
 	permissions = models.ManyToManyField('Permission', related_name='perm+')
 	
