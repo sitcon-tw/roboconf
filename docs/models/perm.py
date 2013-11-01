@@ -4,22 +4,22 @@ from django.contrib.auth.models import User, Group
 class Permission(models.Model):
 
 	VIEW = 'V'
+	COMMENT = 'M'
 	EDIT = 'E'
-	COMMENT = '.'
 
 	ALLOW = 'A'
 	DENY = 'D'
 
-	PUBLIC = '*'
-	INTERNAL = 'I'
-	PROTECTED = 'P'
-	PER_USER = 'U'
+	PUBLIC = '0'
+	INTERNAL = '1'
+	PROTECTED = '2'
 	PER_GROUP = 'G'
+	PER_USER = 'U'
 
 	TYPE_CHOICES = (
 			(VIEW, 'View document'), 
-			(EDIT, 'Edit document'),
 			(COMMENT, 'Comment on document'), 
+			(EDIT, 'Edit document'),
 		)
 
 	EFFECT_CHOICES = (
@@ -31,8 +31,8 @@ class Permission(models.Model):
 			(PUBLIC, 'Public'),
 			(INTERNAL, 'Staff'),
 			(PROTECTED, 'Administrators'),
-			(PER_USER, 'Specify user'),
 			(PER_GROUP, 'Specify group'),
+			(PER_USER, 'Specify user'),
 		)
 
 	type = models.CharField(max_length=1, choices=TYPE_CHOICES)

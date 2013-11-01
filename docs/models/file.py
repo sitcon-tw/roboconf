@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 class File(models.Model):
@@ -17,10 +18,10 @@ class File(models.Model):
 	# == Version control ==
 	is_archived = models.BooleanField(default=False)
 	current_revision = models.ForeignKey('Revision', related_name='currev+', on_delete=models.PROTECT)
+	starring = models.ManyToManyField(User, related_name='starred_files')
 
 	# == Linkbacks from other models ==
 	# revisions (OneToManyField to Revision)
-	# watchers (ManyToManyField to User)
 
 	def __unicode__(self):
 		return self.name

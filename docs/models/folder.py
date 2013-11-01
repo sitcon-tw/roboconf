@@ -9,11 +9,11 @@ class Folder(models.Model):
 	
 	# == Version control ==
 	is_archived = models.BooleanField(default=False)
+	starring = models.ManyToManyField(User, related_name='starred_files')
 
 	# == Linkbacks from other models ==
 	# folders (OneToManyField to self)
 	# files (OneToManyField to File)
-	# watchers (ManyToManyField to User)
 
 	def __unicode__(self):
 		return self.name
