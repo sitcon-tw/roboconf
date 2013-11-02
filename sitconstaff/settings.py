@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'users',
     'docs',
     'issues',
+    'agenda',
     'notifications',
 )
 
