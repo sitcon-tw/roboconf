@@ -133,7 +133,11 @@ $success-color: #5da423;
 
 // Control header font styles
 
-$header-font-family: Roboto, "Droid Sans", "Microsoft Jhenghei", Helvetica, Arial, sans-serif;
+$header-font-family: Roboto, "Droid Sans", "Droid Sans Fallback", /* Android */
+					"Helvetica Neue", /* OS X */
+					"Microsoft Jhenghei", /* Windows */
+					Helvetica, Arial, sans-serif;
+
 // $header-font-weight: bold;
 // $header-font-style: normal;
 // $header-font-color: #222;
@@ -1235,7 +1239,7 @@ $topbar-bg-color: #2d7500;
 
 // Style the top bar dropdown elements
 
-// $topbar-dropdown-bg: #222;
+$topbar-dropdown-bg: #222;
 // $topbar-dropdown-link-color: #fff;
 // // $topbar-dropdown-link-bg: lighten($topbar-bg-color, 5%);
 // $topbar-dropdown-toggle-size: 5px;
@@ -1249,7 +1253,7 @@ $topbar-bg-color: #2d7500;
 // $topbar-link-color-active: #fff;
 // $topbar-link-weight: bold;
 // $topbar-link-font-size: em-calc(13);
-// $topbar-link-hover-lightness: -30%; // Darken by 30%
+$topbar-link-hover-lightness: -10%; // Darken by 30%
 // $topbar-link-bg-hover: darken($topbar-bg-color, 3%);
 // $topbar-link-bg-active: darken($topbar-bg-color, 3%);
 
