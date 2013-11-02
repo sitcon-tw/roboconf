@@ -1253,15 +1253,15 @@ $topbar-dropdown-bg: #222;
 // $topbar-link-color-active: #fff;
 // $topbar-link-weight: bold;
 // $topbar-link-font-size: em-calc(13);
-$topbar-link-hover-lightness: -10%; // Darken by 30%
-$topbar-link-bg-hover: darken($topbar-bg-color, 10%);
-$topbar-link-bg-active: darken($topbar-bg-color, 10%);
+// $topbar-link-hover-lightness: -30%; // Darken by 30%
+$topbar-link-bg-hover: #245E00;
+$topbar-link-bg-active: #245E00;
 
 $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
 // $topbar-dropdown-label-font-weight: bold;
 // $topbar-dropdown-label-font-size: em-calc(10);
-// $topbar-dropdown-label-bg: darken($topbar-bg-color, 5%);
+$topbar-dropdown-label-bg: darken(#111, 5%);
 
 // Top menu icon styles
 
