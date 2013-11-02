@@ -1,5 +1,16 @@
 from models import Permission
-from django.contrib.auth.models import User, Group
+
+def is_in_scope(user, perm):
+	if perm.scope == Permission.INTERNAL:
+		return user.is_authenticated()
+	elif perm.scope == Permission.PROTECTED:
+		return user.is_staff
+	elif perm.scope == Permission.PER_GROUP:
+		return user.groups.filter(id=perm.target).exists()
+	elif perm.scope == Permission.PER_USER:
+		return user.id == perm.target
+	# Permission.PUBLIC
+	return True
 
 def get_perms(user, fileobj):
 	perms = {
@@ -19,34 +30,22 @@ def get_perms(user, fileobj):
 			acl = sorted(node.permissions.all(), key=Permission.__key__)
 			node = node.parent
 
-		# Retrieve entry with highest granularity
-		perm = acl.pop()
+		perm = acl.pop()		# Retrieve entry with highest granularity
 
-		# First, check if rights has been set
-		if perms[perm.type] is not None:
-			continue
+		if perms[perm.type] is not None: continue	# First, check if rights has been set
+		if not is_in_scope(user, perm): continue	# Then, check if the permission is on right scope
 
-		# Then, check if the permission is on right scope
-		if perm.scope == Permission.INTERNAL:
-			if not user.is_authenticated(): continue
-		elif perm.scope == Permission.PROTECTED:
-			if not user.is_staff: continue
-		elif perm.scope == Permission.PER_GROUP:
-			if not user.groups.filter(id=perm.target).exists(): continue
-		elif perm.scope == Permission.PER_USER:
-			if user.id != perm.target: continue
-
-		# Validated permission applicability.
-		# Let's fill in the rights
-
+		# Validated permission applicability. Let's fill in the rights
 		if perm.effect == Permission.ALLOW:
 			perms[perm.type] = True
+			
 			# Cascading apply permissions
 			if perm.type == Permission.EDIT:
 				perms[Permission.VIEW] = True
 				perms[Permission.COMMENT] = True
 			elif perm.type == Permission.COMMENT:
 				perms[Permission.VIEW] = True
+
 		elif perm.effect == Permission.DENY:
 			perms[perm.type] = False
 			# Do not cascade apply denial since user might be granted lower rights
@@ -57,3 +56,30 @@ def get_perms(user, fileobj):
 
 	# Return a dict consists of permission mapping
 	return perms
+
+def has_perm(user, fileobj, perm_type):
+	# Define priority
+	priority = dict(enumerate((Permission.VIEW, Permission.COMMENT, Permission.EDIT)))
+	perm_priority = priority.get(perm_type, -1)
+
+	# Propagate through file nodes
+	acl = sorted(fileobj.permissions.all(), key=Permission.__key__)
+	node = fileobj.parent
+
+	while node:
+		while len(acl):
+			perm = acl.pop()
+			if not is_in_scope(user, perm): continue
+
+			if perm.effect == Permission.ALLOW:
+				if perm_priority <= priority.get(perm.type, -1):
+					return True
+			elif perm.effect == Permission.DENY:
+				if perm_priority >= priority.get(perm.type, -1):
+					return False
+
+		acl = sorted(node.permissions.all(), key=Permission.__key__)
+		node = node.parent
+
+	# Not granted in any permission
+	return False
