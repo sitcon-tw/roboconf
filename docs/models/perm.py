@@ -3,9 +3,9 @@ from django.contrib.auth.models import User, Group
 
 class Permission(models.Model):
 
-	VIEW = 'V'
-	COMMENT = 'M'
-	EDIT = 'E'
+	VIEW = '1'
+	COMMENT = '2'
+	EDIT = '3'
 
 	ALLOW = 'A'
 	DENY = 'D'
@@ -49,3 +49,36 @@ class Permission(models.Model):
 		if not self.scope == PER_GROUP:
 			return None
 		return Group.objects.get(id=self.target)
+
+	def __key__(self):
+		# Returns the sorting key for comparision functions
+		# Permissions with lower priority (granularity) goes first
+		return '%s%s%s' % (self.scope, self.type, self.effect)
+
+	TYPE_NAMES = {
+		VIEW: 'VIEW',
+		COMMENT: 'COMMENT',
+		EDIT: 'EDIT',
+	}
+
+	EFFECT_NAMES = {
+		ALLOW: 'ALLOW',
+		DENY: 'DENY',
+	}
+
+	SCOPE_NAMES = {
+		PUBLIC: '*',
+		INTERNAL: 'STAFF',
+		PROTECTED: 'ADMIN',
+		PER_GROUP: 'GROUP',
+		PER_USER: 'USER',
+	}
+
+	def __unicde__(self):
+		return '%s:%s %s%s %s' % (
+				__key__(self), 
+				EFFECT_NAMES.get(self.effect, '?'),
+				SCOPE_NAMES.get(self.scope, '?'),
+				(' %s' % self.target) if self.target else '',
+				TYPE_NAMES.get(self.type, '?'),
+			)
