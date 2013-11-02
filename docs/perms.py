@@ -20,54 +20,43 @@ def is_in_scope(user, perm):
 	# Permission.PUBLIC
 	return True
 
+def iter_perms(fileobj):
+	acl, node = [], fileobj
+	while node:
+		for i in acl: yield i
+		acl = sorted(node.permissions.all(), key=Permission.__key__)
+		node = node.parent
+
 def get_perms(user, fileobj):
 	max_perm = len(PRIORITY)
 
 	# Propagate through file nodes
-	acl = sorted(fileobj.permissions.all(), key=Permission.__key__)
-	node = fileobj.parent
+	for perm in iter_perms(fileobj):
+		priority = PRIORITY_MAPPING.get(perm.type)
+		if not priority: continue
+		if not is_in_scope(user, perm): continue
 
-	while node:
-		while len(acl):
-			perm = acl.pop()		# Retrieve entry with highest granularity
-			priority = PRIORITY_MAPPING.get(perm.type)
+		if perm.effect == Permission.ALLOW:
+			index = max(priority+1, max_perm)
+			return PRIORITY[:index]					# Return all permissions beneath
+		elif perm.effect == Permission.DENY:
+			max_perm = priority 					# Restrict max permission
 
-			if not is_in_scope(user, perm): continue	# Check permission applicability
-			if not priority: continue
-
-			if perm.effect == Permission.ALLOW:
-				index = max(priority+1, max_perm)
-				return PRIORITY[:index]					# Return all permissions beneath
-			elif perm.effect == Permission.DENY:
-				max_perm = priority 					# Restrict max permission
-
-		acl = sorted(node.permissions.all(), key=Permission.__key__)
-		node = node.parent
-
-	return []
+	return ()
 
 def has_perm(user, fileobj, perm_type):
-	# Define priority
-	perm_priority = PRIORITY_MAPPING.get(perm_type, -1)
+	perm_priority = PRIORITY_MAPPING.get(perm_type)
+	if not perm_priority: return False		# Support builtin permissions only
 
 	# Propagate through file nodes
-	acl = sorted(fileobj.permissions.all(), key=Permission.__key__)
-	node = fileobj.parent
+	for perm in iter_perms(fileobj):
+		if not is_in_scope(user, perm): continue
 
-	while node:
-		while len(acl):
-			perm = acl.pop()
-			if not is_in_scope(user, perm): continue
+		if perm.effect == Permission.ALLOW:
+			if perm_priority <= PRIORITY_MAPPING.get(perm.type, -1):
+				return True
+		elif perm.effect == Permission.DENY:
+			if perm_priority >= PRIORITY_MAPPING.get(perm.type, PRIORITY_COUNT):
+				return False
 
-			if perm.effect == Permission.ALLOW:
-				if perm_priority <= PRIORITY_MAPPING.get(perm.type, -1):
-					return True
-			elif perm.effect == Permission.DENY:
-				if perm_priority >= PRIORITY_MAPPING.get(perm.type, PRIORITY_COUNT):
-					return False
-
-		acl = sorted(node.permissions.all(), key=Permission.__key__)
-		node = node.parent
-
-	# Not granted in any permission
 	return False
