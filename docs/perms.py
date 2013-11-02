@@ -1,5 +1,13 @@
 from models import Permission
 
+PRIORITY = (
+		Permission.VIEW, 
+		Permission.COMMENT, 
+		Permission.EDIT,
+	)
+PRIORITY_COUNT = len(PRIORITY)
+PRIORITY_MAPPING = dict(zip(PRIORITY, range(PRIORITY_COUNT)))
+
 def is_in_scope(user, perm):
 	if perm.scope == Permission.INTERNAL:
 		return user.is_authenticated()
@@ -13,11 +21,7 @@ def is_in_scope(user, perm):
 	return True
 
 def get_perms(user, fileobj):
-	perms = {
-		Permission.VIEW: None,
-		Permission.COMMENT: None,
-		Permission.EDIT: None,
-	}
+	perms = dict(zip(PRIORITY, [None] * PRIORITY_COUNT))
 
 	acl = sorted(fileobj.permissions.all(), key=Permission.__key__)
 	node = fileobj.parent
@@ -38,29 +42,22 @@ def get_perms(user, fileobj):
 		# Validated permission applicability. Let's fill in the rights
 		if perm.effect == Permission.ALLOW:
 			perms[perm.type] = True
-			
-			# Cascading apply permissions
-			if perm.type == Permission.EDIT:
-				perms[Permission.VIEW] = True
-				perms[Permission.COMMENT] = True
-			elif perm.type == Permission.COMMENT:
-				perms[Permission.VIEW] = True
+			priority = PRIORITY_MAPPING.get(perm.type, 0)
+			for p in PRIORITY[:priority]:	# Cascading apply permissions
+				perms[p] = True
 
 		elif perm.effect == Permission.DENY:
 			perms[perm.type] = False
-			# Do not cascade apply denial since user might be granted lower rights
+			priority = PRIORITY_MAPPING.get(perm.type, PRIORITY_COUNT)
+			for p in PRIORITY[priority+1:]:	# Cascading apply permissions
+				perms[p] = False
 
-	# Any rights hasn't been granted is set to False
-	for k in perms:
-		if perms[k] is None: perms[k] = False
-
-	# Return a dict consists of permission mapping
-	return perms
+	# Return a list consists of available permissions
+	return [p for p in perms if perms[p]]
 
 def has_perm(user, fileobj, perm_type):
 	# Define priority
-	priority = dict(enumerate((Permission.VIEW, Permission.COMMENT, Permission.EDIT)))
-	perm_priority = priority.get(perm_type, -1)
+	perm_priority = PRIORITY_MAPPING.get(perm_type, -1)
 
 	# Propagate through file nodes
 	acl = sorted(fileobj.permissions.all(), key=Permission.__key__)
@@ -72,10 +69,10 @@ def has_perm(user, fileobj, perm_type):
 			if not is_in_scope(user, perm): continue
 
 			if perm.effect == Permission.ALLOW:
-				if perm_priority <= priority.get(perm.type, -1):
+				if perm_priority <= PRIORITY_MAPPING.get(perm.type, -1):
 					return True
 			elif perm.effect == Permission.DENY:
-				if perm_priority >= priority.get(perm.type, -1):
+				if perm_priority >= PRIORITY_MAPPING.get(perm.type, PRIORITY_COUNT):
 					return False
 
 		acl = sorted(node.permissions.all(), key=Permission.__key__)
