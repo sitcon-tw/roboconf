@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^docs/', include('docs.urls', namespace='docs')),
     url(r'^issues/', include('issues.urls', namespace='issues')),
+    url(r'^agenda/', include('agenda.urls', namespace='agenda')),
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),
     
     # Uncomment the next line to enable the admin:
