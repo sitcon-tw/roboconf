@@ -15,7 +15,7 @@
 				<tbody>
 				{% for m in messages %}
 					<tr>
-						<td>#</td>
+						<td>{{ m.id }}</td>
 						<td>{% if m.method == m.SMS %}簡訊{% else %}電子郵件{% endif %}</td>
 						<td>{{ m.receiver }}</td>
 						<td>{{ m.subject }}</td>
