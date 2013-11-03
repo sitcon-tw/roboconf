@@ -10,15 +10,24 @@
 				{% if c > 0 %}
 				{{ messages.count }} <small>封通知尚未寄出</small>
 				{% else %}
-				<small>沒有未寄出的通知</small>
+				<small>通知都寄出囉</small>
 				{% endif %}
 			</h3>
 			{% endwith %}
-			<ul>
-			{% for m in messages %}
-				<li>{{ m.subject }}</li>
-			{% endfor %}
-			</ul>
+			<table>
+				<thead>
+					<tr><th>類型</th><th>收件者</th><th>標題</th></tr>
+				</thead>
+				<tbody>
+				{% for m in messages %}
+					<tr>
+						<td>{% if m.method == m.SMS %}簡訊{% else %}電子郵件{% endif %}</td>
+						<td>{{ m.receiver|urlize }}</td>
+						<td>{{ m.subject }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div class="large-3 columns main-side-nav">
