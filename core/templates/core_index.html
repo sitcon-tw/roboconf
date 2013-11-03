@@ -10,8 +10,7 @@
 		<h5 class="subheader">{{ user.profile.title }}</h5>
 	</div>
 	<div class="large-5 columns">
-		<h5><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
-		<hr/>
+		<h5 class="section-header"><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
 		<ul class="issue-list">
 		{% for issue in issues %}
 			<li class="issue-entry">
@@ -28,8 +27,7 @@
 		</ul>
 	</div>
 	<div class="large-4 columns">
-		<h5>聚會概覽</h5>
-		<hr/>
+		<h5 class="section-header">聚會概覽</h5>
 		<p></p>
 	</div>
 	{% else %}
