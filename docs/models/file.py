@@ -14,7 +14,7 @@ class File(models.Model):
 	name = models.CharField(max_length=256)
 	parent = models.ForeignKey('Folder', related_name='files')
 	last_modified = models.DateTimeField(editable=False, default=now)
-	permissions = models.ManyToManyField('Permission', related_name='perm+')
+	permissions = models.ManyToManyField('Permission', related_name='fileperm+')
 	
 	# == Version control ==
 	is_archived = models.BooleanField(default=False)

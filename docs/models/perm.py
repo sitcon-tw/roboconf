@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 
 class Permission(models.Model):
-	
+
 	class Meta:
 		app_label = 'docs'
 
@@ -77,7 +77,7 @@ class Permission(models.Model):
 		PER_USER: 'USER',
 	}
 
-	def __unicde__(self):
+	def __unicode__(self):
 		return '%s:%s %s%s %s' % (
 				__key__(self), 
 				EFFECT_NAMES.get(self.effect, '?'),

@@ -3,18 +3,18 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 class Folder(models.Model):
-	
+
 	class Meta:
 		app_label = 'docs'
 
 	name = models.CharField(max_length=256)
 	parent = models.ForeignKey('self', null=True, related_name='folders')
 	last_modified = models.DateTimeField(editable=False, default=now)
-	permissions = models.ManyToManyField('Permission', related_name='perm+')
+	permissions = models.ManyToManyField('Permission', related_name='folderperm+')
 	
 	# == Version control ==
 	is_archived = models.BooleanField(default=False)
-	starring = models.ManyToManyField(User, related_name='starred_files')
+	starring = models.ManyToManyField(User, related_name='starred_folders')
 
 	# == Linkbacks from other models ==
 	# folders (OneToManyField to self)
