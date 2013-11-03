@@ -5,6 +5,9 @@ from django.utils import timezone
 # Create your models here.
 
 class Label(models.Model):
+	class Meta:
+		ordering = ['id']
+
 	name = models.CharField(max_length=32)
 	color = models.CharField(max_length=6)
 
