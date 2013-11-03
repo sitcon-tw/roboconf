@@ -55,8 +55,8 @@ form.issue-edit>*>.columns, form.issue-edit .form-main { margin-bottom: 1em; }
 form.issue-edit textarea { height: 18.5em; }
 form.custom .custom.dropdown { border-radius: 3px; }
 form.custom .label-item label { font-size: 0.6em; line-height: 200%; }
-form.custom .label-item .custom.checkbox { border-radius: 3px; border: 0; }
-form.custom .label-item .custom.checkbox.checked:before { color: #fff; text-shadow: rgba(255, 255, 255, .3) 0 0 5px; }
+form.custom .label-item .custom.checkbox { border-radius: 3px; }
+form.custom .label-item .custom.checkbox.checked:before { content: '\2713'; margin: 0 -5px auto; }
 @media only screen and (min-width: 768px) { .avatars.columns { padding-right: 0; text-align: right; } }
 .iconize+.description { display: none; }
 .iconize.with-text { padding: 0 0.25em; }
