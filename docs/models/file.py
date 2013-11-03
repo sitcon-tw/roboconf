@@ -5,6 +5,7 @@ from django.utils.timezone import now
 class File(models.Model):
 
 	class Meta:
+		app_label = 'docs'
 		permissions = (
 			('archive', 'Archive files and folders'),
 		)

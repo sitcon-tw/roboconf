@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 
 class Permission(models.Model):
+	
+	class Meta:
+		app_label = 'docs'
 
 	VIEW = '1'
 	COMMENT = '2'

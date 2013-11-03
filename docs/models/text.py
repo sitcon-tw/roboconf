@@ -2,6 +2,9 @@ from django.db import models
 
 class BlobText(models.Model):
 
+	class Meta:
+		app_label = 'docs'
+
 	TEXT = ' '
 	MARKDOWN = 'M'
 	HTML = '<'

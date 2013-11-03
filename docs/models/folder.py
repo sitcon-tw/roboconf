@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 class Folder(models.Model):
+	
+	class Meta:
+		app_label = 'docs'
+
 	name = models.CharField(max_length=256)
 	parent = models.ForeignKey('self', null=True, related_name='folders')
 	last_modified = models.DateTimeField(editable=False, default=now)

@@ -4,6 +4,9 @@ from django.utils.timezone import now
 
 class Revision(models.Model):
 
+	class Meta:
+		app_label = 'docs'
+
 	LOCAL = '.'
 
 	TYPE_CHOICES = (
