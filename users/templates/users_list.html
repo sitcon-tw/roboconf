@@ -19,7 +19,6 @@
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav users-actions">
 			{% if perms.auth.add_user %}<li><a href="{% url 'users:create' %}"><span class="icon-add iconize"></span> 新增人員</a></li>{% endif %}
-			{% if perms.notifications.add_message %}<li><a href="{% url 'notifications:create' %}"><span class="icon-email iconize"></span> 寄送通知</a></li>{% endif %}
 			<li><a href="{% url 'users:edit' user.id %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
 		</ul>
 		<div class="divider"></div>
