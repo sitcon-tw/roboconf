@@ -85,7 +85,7 @@ form.issue-set-label { margin: 0; }
 form.issue-set-label .side-nav { padding: 0 0 0.25em 0; }
 form.issue-set-label>*:last-child { margin-bottom: 0; }
 .issue-labels .dropdown.button { margin-top: -0.05em; }
-.issue-labels div.label {
+.issue-labels .label {
 	width: 100%; line-height: 150%; font-weight: normal; text-align: left;
 	&:first-child { border-radius: 3px 3px 0 0; }
 	&:last-child { border-radius: 0 0 3px 3px; }
@@ -95,5 +95,5 @@ form.issue-set-label>*:last-child { margin-bottom: 0; }
 .login-panel h3 { background: #24a1c7; color: #fff; font-size: 1.125em; margin: 0; padding: 0.5em; border: solid #1c7e9c; border-width: 1px 1px 0 1px; border-top-left-radius: 3px; border-top-right-radius: 3px; }
 span.postfix.with-button { font-size: 0.8125em; }
 input[type="file"], input[type="checkbox"], input[type="radio"], select { margin-right: 0.25em; }
-.has_tip:not(span), .has_tip:not(span):hover { border: 0; }
+.has-tip:not(span), .has-tip:not(span):hover { border: 0; }
 .text ol, .text ul { padding-left: 1.5em; }

@@ -172,9 +172,11 @@
 			</div>
 			{% endif %}
 			<h6>標籤</h6>
+			<div class="label-thread">
 			{% for label in issue.labels.all %}
-			<div class="radius label" style="background: #{{ label.color }};">{{ label.name }}</div>
+				<div class="radius label" style="background: #{{ label.color }};">{{ label.name }}</div>
 			{% endfor %}
+			</div>
 		</div>
 	</div>
 </div>
