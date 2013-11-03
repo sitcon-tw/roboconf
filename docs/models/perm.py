@@ -79,7 +79,7 @@ class Permission(models.Model):
 
 	def __unicode__(self):
 		return '%s:%s %s%s %s' % (
-				__key__(self), 
+				self.__key__(), 
 				EFFECT_NAMES.get(self.effect, '?'),
 				SCOPE_NAMES.get(self.scope, '?'),
 				(' %s' % self.target) if self.target else '',
