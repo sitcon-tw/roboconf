@@ -23,7 +23,7 @@
 					{{ u|get_name }}
 				</td>
 				{% if show_details %}
-				<td><a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a></td>
+				<td>{% if u.profile.phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}
 				<td>{{ u.email|urlize }}</td>
 			</tr>
