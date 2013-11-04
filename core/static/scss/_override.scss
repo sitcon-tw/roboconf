@@ -50,6 +50,15 @@ ul.f-dropdown h6 { line-height: 2; margin: 0; padding: 0.125em 0.5em; color: #55
 .user-list .avatar { margin-bottom: 0.5em; }
 .user-list h4 { font-size: 1em; margin: auto; }
 .user-list h4.subheader { font-size: 0.8em; }
+.placeholder-message {
+	position: relative; height: 5em;
+	background: #f5f5f5; color: #999;
+	border-radius: 3px;
+	span {
+		display: block; position: absolute;
+		top: 2em; text-align: center;
+	}
+}
 form textarea { transition: height 0.2s,box-shadow 0.45s,border-color 0.45s ease-in-out; }
 form .issue-main { background: #f6f6f6; }
 form.issue-edit>*>.columns, form.issue-edit .form-main { margin-bottom: 1em; }

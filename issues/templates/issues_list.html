@@ -48,6 +48,7 @@
 			{% endif %}
 			</div>
 		</div></div>
+		{% if issues %}
 		<ul class="issue-list {{ user.is_authenticated|yesno:'allow-edit,' }}">
 		{% if user.is_authenticated %}
 			<li class="issue-actions">
@@ -83,16 +84,21 @@
 					<span class="right">{% if issue.last_updated > issue.creation_time %}{{ issue.last_updated|timesince }}前更新{% endif %}</span>
 				</div>
 			</li>
-		{% empty %}
-			<p>尚無議題。</p>
 		{% endfor %}
 		</ul>
+		{% else %}
+		<div class="placeholder-message">
+			<span>尚無議題。<a href="{% url 'issues:create' %}">提交新議題？</a></span>
+		</div>
+		{% endif %}
+		{% if user.is_authenticated %}
 		<form id="bulk-action-form" action="{% url 'issues:list' %}" method="POST">
 		{% csrf_token %}
 			<input type="hidden" name="issues" id="bulk-issues-field" />
 			<input type="hidden" name="action" id="bulk-action-field" />
 			<input type="hidden" name="params" id="bulk-params-field" />
 		</form>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
