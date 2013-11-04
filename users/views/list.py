@@ -23,7 +23,7 @@ def contacts(request):
 	def key(user):
 		groups = [g.id for g in user.groups.all()]
 		identity = ''.join([str(1 - groups.count(i)) for i in priority])	# Sort by identity first
-		return '%s%s' % (identity, user.profile.display_name)
+		return '%s%s' % (identity, user.profile.title.ljust(5), user.profile.display_name)
 	users = sorted(dataset, key=key)
 	return render(request, 'users_contacts.html', {
 		'users': users,
