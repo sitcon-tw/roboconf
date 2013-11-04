@@ -3,6 +3,9 @@
 {% block title %}通訊錄 ‧ 人員{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
+	<div class="large-1 columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
+	</div>
 	<div class="large-9 columns">
 		<h3>SITCON 工作人員通訊錄</h3>
 		<table class="user-contacts main">
@@ -16,23 +19,19 @@
 			{% for u in users %}
 			<tr>
 				<td>{{ u.profile.title }}</td>
-				<td>
-					<img class="avatar small" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" />
+				<td><img class="avatar small" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" />
 					{{ u|get_name }}
 				</td>
-				{% if show_details %}<td>{{ u.profile.phone }}</td>{% endif %}
+				{% if show_details %}
+				<td><a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a></td>
+				{% endif %}
 				<td>{{ u.email|urlize }}</td>
 			</tr>
 			{% endfor %}
 			</tbody>
 		</table>
 	</div>
-	<div class="large-3 columns main-side-nav">
-		<ul class="side-nav users-actions">
-			{% if perms.auth.add_user %}<li><a href="{% url 'users:create' %}"><span class="icon-add iconize"></span> 新增人員</a></li>{% endif %}
-			<li><a href="{% url 'users:edit' user.id %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
-			<li><a href="{% url 'users:contacts' %}"><span class="icon-contacts iconize"></span> 檢視通訊錄</a></li>
-		</ul>
+	<div class="large-2 columns">
 	</div>
 </div>
 {% endblock %}
