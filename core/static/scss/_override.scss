@@ -92,7 +92,11 @@ form.issue-set-label>*:last-child { margin-bottom: 0; }
 	&:first-child { border-radius: 3px 3px 0 0; }
 	&:last-child { border-radius: 0 0 3px 3px; }
 }
-ul.profile-meta { list-style: none; }
+ul.profile-meta {
+	list-style: none;
+	li { padding-left: 20px; text-indent: -20px; word-break: break-all; }
+	.iconize { color: #555; margin: 0 4px 0 0; }
+}
 .issue-thread .issue-history .issue-state { float: left; margin: 0 1em auto -5.25em; font-size: 0.6em; }
 .login-panel form { padding: 1em 1.5em 0 1.5em; border: solid #e5e5e5; border-width: 0 1px 1px 1px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 .login-panel h3 { background: #24a1c7; color: #fff; font-size: 1.125em; margin: 0; padding: 0.5em; border: solid #1c7e9c; border-width: 1px 1px 0 1px; border-top-left-radius: 3px; border-top-right-radius: 3px; }
