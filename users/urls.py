@@ -11,4 +11,5 @@ urlpatterns = patterns('',
 		url(r'^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z\-]+)$', views.reset_password_confirm, name='reset_password_confirm'),
 		url(r'^(?P<id>\d+)$', views.profile, name='profile'),
 		url(r'^(?P<id>\d+)/edit$', views.edit, name='edit'),
+		url(r'^contacts$', views.contacts, name='contacts'),
 	)
