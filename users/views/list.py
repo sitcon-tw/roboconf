@@ -13,8 +13,9 @@ def sorted_users(group_id=None):
 @login_required
 def list(request):
 	group = request.GET.get('g', '')
+	group = None if not group.isdigit() else int(group)
 	return render(request, 'users_list.html', {
-		'users': sorted_users(group_id=(None if not group.isdigit() else group)),
+		'users': sorted_users(group_id=group),
 		'categories': GroupCategory.objects.all(),
 		'filter': group,
 	})
