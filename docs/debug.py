@@ -13,6 +13,15 @@ def user(id=1):		# Admin account
 def folder(id=0):	# Root folder
 	return Folder.objects.get(id=id)
 
+def permobj(id):
+	return Permission.objects.get(id=id)
+
+def rev(id):
+	return Revision.objects.get(id=id)
+
+def btext(id):
+	return BlobText.objects.get(id=id)
+
 def sql(statement):
 	cursor = connection.cursor()
 	cursor.execute(statement)
