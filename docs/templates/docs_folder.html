@@ -6,7 +6,7 @@
 	<div class="large-3 columns main-side-nav">
 		<h3>文件</h3>
 		<div class="main-button">
-			<a class="small radius button" href="#" data-dropdown="dropdown-create">建立</a>
+			<button class="small radius button" href="#" data-dropdown="dropdown-create">建立</button>
 			<ul id="dropdown-create" class="f-dropdown" data-dropdown-content>
 				<li><a href="#">新文件</a></li>
 				<li><a href="#">從電腦上傳</a></li>
@@ -38,31 +38,33 @@
 			<div class="large-12 columns button-row">
 				<div class="left">
 					{% if can_edit %}
-					<a class="small radius secondary has-tip button" title="在「{{ folder.name }}」建立新資料夾"><span class="icon-folder iconize"></span></a>
+					<button class="small radius secondary button" title="在「{{ folder.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
 					{% endif %}
-					<a class="small radius secondary has-tip {{ can_edit|yesno:',disabled' }} button" title="共用"><span class="icon-share iconize"></span></a>
+					<button class="small radius secondary {{ can_edit|yesno:',disabled' }} button" title="共用"><span class="icon-share iconize"></span></button>
 					{% if perms.docs.archive %}
-					<a class="small radius secondary has-tip button" title="封存"><span class="icon-archive iconize"></span></a>
+					<button class="small radius secondary button" title="封存"><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-2 button-group">
-						<li><a class="small secondary has-tip button" title="移動"><span class="icon-move iconize"></span></a></li>
-						<li><a class="small secondary has-tip button" title="刪除"><span class="icon-delete iconize"></span></a></li>
+						<li><button class="small secondary button" title="移動"><span class="icon-move iconize"></span></button></li>
+						<li><button class="small secondary button" title="刪除"><span class="icon-delete iconize"></span></button></li>
 					</ul>
-					<a class="small radius secondary has-tip button" title="詳細資訊"><span class="icon-info iconize"></span></a>
+					<button class="small radius secondary button" title="詳細資訊"><span class="icon-info iconize"></span></button>
 				</div>
 				<div class="right">
-					<a class="small radius secondary dropdown button">
+					<button class="small radius secondary dropdown button">
 						<span>排序：</span>標題
 					</a>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<nav class="large-12 columns breadcrumbs">
-			{% for f in folder.path %}
-				<a href="{% url 'docs:folder' f|nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
-			{% endfor %}
-			</nav>
+			<div class="large-12 columns">
+				<nav class="breadcrumbs">
+				{% for f in folder.path %}
+					<a href="{% url 'docs:folder' f|nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
+				{% endfor %}
+				</nav>
+			</div>
 		</div>
 		<div class="row">
 			<div class="large-12 columns">

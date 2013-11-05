@@ -5,7 +5,7 @@
 {% block content %}
 <div class="row">
 	<div class="large-12 columns issue-head">
-		<a class="left iconize icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項"></a>
+		<a class="left iconize icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項" data-tooltip></a>
 		<h4 class="right">議題 <strong>#{{ issue.id }}</strong></h4>
 	</div>
 </div>
@@ -143,7 +143,7 @@
 				{% csrf_token %}
 				<input type="hidden" name="action" value="toggle-star" />
 				<div class="small-9 columns">
-					<a id="star-button" class="radius secondary small prefix button has-tip" title="{{ has_starred|yesno:'取消,接收' }}來自此議題的通知">
+					<a id="star-button" class="radius secondary small prefix button" title="{{ has_starred|yesno:'取消,接收' }}來自此議題的通知">
 						<span class="iconize {{ has_starred|yesno:'icon-unstar,icon-star' }}"></span> {{ has_starred|yesno:'取消星號,星號標記' }}
 					</a>
 				</div>

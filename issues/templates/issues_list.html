@@ -69,7 +69,7 @@
 				<div class="issue-id">#{{ issue.id }}</div>
 				{% if issue.assignee %}
 				<div class="issue-assignee">
-					<img class="avatar small has-tip" src="{{ issue.assignee.email|get_avatar:'#' }}" alt="{{ issue.assignee|get_name }}" title="已指派給 {{ issue.assignee|get_name }}" />
+					<img class="avatar small has-tip" src="{{ issue.assignee.email|get_avatar:'#' }}" alt="{{ issue.assignee|get_name }}" title="已指派給 {{ issue.assignee|get_name }}" data-tooltip />
 				</div>
 				{% endif %}
 				<h4>
