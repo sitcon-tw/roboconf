@@ -15,4 +15,4 @@ def folder(id=0):	# Root folder
 
 def sql(statement):
 	cursor = connection.cursor()
-	cursor.execute(self)
+	cursor.execute(statement)
