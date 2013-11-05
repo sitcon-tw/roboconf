@@ -9,7 +9,7 @@
 	font-style: normal;
 }
 
-.iconize {
+@mixin iconize {
 	font-family: 'IcoMoon' !important;
 	speak: none;
 	font-style: normal !important;
@@ -19,6 +19,8 @@
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 }
+
+.iconize { @include iconize; }
 
 .icon-back:before { content: '\21a9'; }
 .icon-issue-open:before { content: '\2191'; color: #3f3; }
@@ -50,6 +52,16 @@
 .icon-link:before { content: '\93c8'; }
 .button .iconize { font-size: 16px; vertical-align: middle; }
 .issue-meta .action-button .iconize { font-size: 14px; }
-.treeview .folder:before { content: '\9589'; color: #555; font-family: 'IcoMoon'; speak: none; font-size: 16px; font-weight: normal; padding-right: 4px; }
-.treeview .folder.active:before { content: '\958b'; }
+.treeview .folder {
+	&:before {
+		content: '\9589'; color: #555;
+		font-size: 16px;
+		padding-right: 4px;
+		@include iconize;
+	}
+	&.active:before { content: '\958b'; }
+}
+.docs-list .iconize {
+	font-size: 16px; color: #555;
+}
 form.custom .assignee-field .custom.dropdown .current:before { content: '\4eba'; font-family: 'IcoMoon'; speak: none; font-weight: normal; padding-right: 0.5em; }
