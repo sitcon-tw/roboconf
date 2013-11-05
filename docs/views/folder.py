@@ -17,7 +17,7 @@ def folder(request, nidb64):
 
 	perms = get_perms(request.user, f)
 	if Permission.VIEW not in perms:
-		if user.is_authenticated():
+		if request.user.is_authenticated():
 			raise Http404 	# Access forbidden
 		else:
 			return redirect(reverse('users:login') + ('?next=%s' % reverse('docs:folder', args=(nidb64,))))
