@@ -10,14 +10,14 @@
 			<li><a href="#">垃圾桶</a></li>
 		</ul>
 		<div class="divider"></div>
-		{% if folder.parent %}
+		{% if meta.ancestry %}
 		<div class="treeview">
 			<ul>
 				<li>
-					<a href="{% url 'docs:folder' folder.parent|nid %}" class="folder active">{{ folder.parent.name }}</a>
+					<a href="{% url 'docs:folder' meta.ancestry|nid %}" class="folder">{{ meta.ancestry.name }}</a>
 					<ul>
-					{% for f in folder.parent.folders.all %}
-						<li><a href="{% url 'docs:folder' f|nid %}" class="folder">{{ f.name }}</a></li>
+					{% for f in meta.siblings.all %}
+						<li><a href="{% url 'docs:folder' f|nid %}" class="folder {% if f.id == folder.id %}active{% endif %}">{{ f.name }}</a></li>
 					{% endfor %}
 					</ul>
 				</li>
@@ -49,8 +49,8 @@
 						</button>
 						<ul id="dropdown-sort" class="f-dropdown" data-dropdown-content>
 							<li><a href="#">標題</a></li>
-							<li><a href="#">最近更新</a></li>
-							<li><a href="#">最早更新</a></li>
+							<li><a href="#">最先更新</a></li>
+							<li><a href="#">最晚更新</a></li>
 						</ul>
 					</div>
 					<div>
@@ -75,7 +75,7 @@
 		</div>
 		<div class="row">
 			<div class="large-12 columns">
-				{% if folder.folders.count or folder.files.count %}
+				{% if not meta.empty %}
 				<table class="docs-list">
 					<thead>
 						<tr>
@@ -86,7 +86,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					{% for f in folder.folders.all %}
+					{% for f in meta.subfolders.all %}
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
@@ -94,7 +94,7 @@
 							<td class="detail-column">{{ f.last_modified|timesince }}</td>
 						</tr>
 					{% endfor %}
-					{% for f in folder.files.all %}
+					{% for f in meta.files.all %}
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>

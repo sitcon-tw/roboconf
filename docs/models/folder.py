@@ -6,6 +6,7 @@ class Folder(models.Model):
 
 	class Meta:
 		app_label = 'docs'
+		ordering = ['name']
 
 	name = models.CharField(max_length=256)
 	parent = models.ForeignKey('self', null=True, related_name='folders')

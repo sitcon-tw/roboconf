@@ -24,5 +24,12 @@ def folder(request, nidb64):
 
 	return render(request, 'docs_folder.html', {
 		'folder': f,
+		'meta': {
+			'ancestry': f.parent,
+			'siblings': f.parent.folders,
+			'empty': f.folders.exists() or f.files.exists(),
+			'subfolders': f.folders,
+			'files': f.files,
+		},
 		'can_edit': Permission.EDIT in perms,
 	})
