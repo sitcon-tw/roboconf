@@ -24,7 +24,10 @@ def urlsafe_base64_decode(s):
 # == end snippet ==
 
 def generate_nid(node):
-    nid = node.id if node.id else node
+    try:
+        nid = node.id
+    except AttributeError:
+        nid = node
     return urlsafe_base64_encode(force_bytes(nid))
 
 def parse_nid(model, nidb64):
