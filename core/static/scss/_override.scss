@@ -1,13 +1,13 @@
 body { padding-top: 2.8125em; /* JavaScript will override this */ }
-.top-bar .logo-holder {
+.top-bar .logo {
 	display: block;
 	width: 80px; height: 45px;
-	position: relative;
-	.logo {
-		width: 80px; height: auto;
-		position: absolute;
-		top: 9px;
-	}
+	text-indent: -200000px;
+	text-align: left;
+	overflow: hidden;
+	background: url('/static/img/SITCON.svg') center no-repeat;
+	@import "compass/css3/background-size";
+	@include background-size(contain);
 }
 img.avatar { border-radius: 3px; }
 img.avatar.small { width: 1.6em; height: 1.6em; }
