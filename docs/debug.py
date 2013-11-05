@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group
+from django.db import connection
 from docs.models import *
 from docs.perms import *
 from docs.utils import *
@@ -11,3 +12,7 @@ def user(id=1):		# Admin account
 
 def folder(id=0):	# Root folder
 	return Folder.objects.get(id=id)
+
+def sql(statement):
+	cursor = connection.cursor()
+	cursor.execute(self)

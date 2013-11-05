@@ -21,4 +21,4 @@ class BlobText(models.Model):
 	format = models.CharField(max_length=1, choices=FORMAT_CHOICES, default=TEXT)
 
 	def __unicode__(self):
-		return '%s (%d)' % (format, len(self.text))
+		return '%s (%d)' % (self.format, len(self.text))
