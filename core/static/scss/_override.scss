@@ -113,3 +113,27 @@ span.postfix.with-button { font-size: 0.8125em; }
 input[type="file"], input[type="checkbox"], input[type="radio"], select { margin-right: 0.25em; }
 .has-tip:not(span), .has-tip:not(span):hover { border: 0; }
 .text ol, .text ul { padding-left: 1.5em; }
+
+.treeview {
+	ul { list-style: none; }
+	li {
+		display: block;
+		a { padding: 0.2em 0; }
+		& > ul { margin-left: 20px; }
+	}
+}
+
+table {
+	&.docs-list {
+		font-size: 0.8em;
+		tr { background: #fff; border-bottom: #e5e5e5; }
+		thead { color: #2d7500; }
+		tbody {
+			tr:hover { background: #f9f9f9; }
+			tr.selected { background: #f0f0f0; }
+			tr.selected:hover { background: #e9e9e9; }
+		}
+	}
+	.icon-column { width: 24px; text-align: center; vertical-align: middle; }
+	.detail-column { max-width: 25%; }
+}

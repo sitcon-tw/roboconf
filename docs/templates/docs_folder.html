@@ -1,0 +1,90 @@
+{% extends 'core_main.html' %}
+{% load docs %}
+{% block title %}文件{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="large-3 columns main-side-nav">
+		<h3>文件</h3>
+		<div class="main-button">
+			<button class="small radius button" href="#" data-dropdown="dropdown-create">建立</button>
+			<ul id="dropdown-create" class="f-dropdown" data-dropdown-content>
+				<li><a href="#">新文件</a></li>
+				<li><a href="#">從電腦上傳</a></li>
+				<li><a href="#">外部連結</a></li>
+			</ul>
+		</div>
+		<div class="divider"></div>
+		<div class="treeview">
+			<ul>
+				<li>
+					<a href="{% url 'docs:folder' folder.parent|nid %}" class="folder active">{{ folder.parent.name }}</a>
+					<ul>
+					{% for f in folder.parent.folders %}
+						<li><a href="{% url 'docs:folder' f|nid %}" class="folder">{{ f.name }}</a></li>
+					{% endfor %}
+					</ul>
+				</li>
+				<li><a href="#">星號標記</a></li>
+				<li><a href="#">垃圾桶</a></li>
+				<li><a href="#">封存的項目</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="large-9 columns">
+		<div class="button-row">
+			<div class="left">
+				{% if can_edit %}
+				<button class="small radius secondary has-tip button" title="在「{{ folder.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
+				{% endif %}
+				<button class="small radius secondary has-tip {{ can_edit|yesno:',disabled' }} button" title="共用"><span class="icon-share iconize"></span></button>
+				{% if perms.docs.archive %}
+				<button class="small radius secondary has-tip button" title="封存"><span class="icon-archive iconize"></span></button>
+				{% endif %}
+				<ul class="radius even-2 button-group">
+					<li><button class="small secondary has-tip button" title="移動"><span class="icon-move iconize"></span></button></li>
+					<li><button class="small secondary has-tip button" title="刪除"><span class="icon-delete iconize"></span></button></li>
+				</ul>
+				<button class="small radius secondary has-tip button" title="詳細資訊"><span class="icon-info iconize"></span></button>
+			</div>
+			<div class="right">
+				<button class="small radius secondary dropdown button">
+					<span>排序：</span>標題
+				</button>
+			</div>
+		</div>
+		<nav class="breadcrumbs">
+		{% for f in folder.path %}
+			<a href="{% url 'docs:folder' f|nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
+		{% endfor %}
+		</nav>
+		<table class="docs-list">
+			<thead>
+				<tr>
+					<th class="icon-column"><input type="checkbox" data-list-checkbox data-select-all></th>
+					<th class="icon-column"></th>
+					<th>名稱</th>
+					<th class="detail-column">上次修改日期</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for f in folder.folders %}
+				<tr>
+					<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
+					<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
+					<td><a href="{% url 'docs:folder' f|nid %}"><span class="icon-folder iconize"></span> {{ f.name }}</a></td>
+					<td class="detail-column">{{ f.last_modified|timesince }}</td>
+				</tr>
+			{% endfor %}
+			{% for f in folder.files %}
+				<tr>
+					<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
+					<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
+					<td><a href="#"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
+					<td class="detail-column">{{ f.last_modified|timesince }} {{ f.current_revision.user }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -20,5 +20,14 @@ class Folder(models.Model):
 	# folders (OneToManyField to self)
 	# files (OneToManyField to File)
 
+	def path(self):
+		node = self
+		path = [self]
+		while node.parent:
+			node = node.parent
+			path.append(node)
+		path.reverse()
+		return path
+
 	def __unicode__(self):
 		return self.name
