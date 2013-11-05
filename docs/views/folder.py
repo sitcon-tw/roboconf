@@ -27,7 +27,7 @@ def folder(request, nidb64):
 		'meta': {
 			'ancestry': f.parent,
 			'siblings': f.parent.folders.all() if f.parent else None,
-			'empty': f.folders.exists() or f.files.exists(),
+			'empty': not f.folders.exists() or f.files.exists(),
 			'subfolders': f.folders.all(),
 			'files': f.files.all(),
 		},
