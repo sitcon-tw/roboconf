@@ -13,7 +13,6 @@
 		{% if folder.parent %}
 		<div class="treeview">
 			<ul>
-				
 				<li>
 					<a href="{% url 'docs:folder' folder.parent|nid %}" class="folder active">{{ folder.parent.name }}</a>
 					<ul>
