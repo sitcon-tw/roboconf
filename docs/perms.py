@@ -33,7 +33,7 @@ def get_perms(user, fileobj):
 	# Propagate through file nodes
 	for perm in iter_perms(fileobj):
 		priority = PRIORITY_MAPPING.get(perm.type)
-		if not priority: continue
+		if priority is None: continue
 		if not is_in_scope(user, perm): continue
 
 		if perm.effect == Permission.ALLOW:
@@ -46,7 +46,7 @@ def get_perms(user, fileobj):
 
 def has_perm(user, fileobj, perm_type):
 	perm_priority = PRIORITY_MAPPING.get(perm_type)
-	if not perm_priority: return False		# Support builtin permissions only
+	if perm_priority is None: return False		# Support builtin permissions only
 
 	# Propagate through file nodes
 	for perm in iter_perms(fileobj):
