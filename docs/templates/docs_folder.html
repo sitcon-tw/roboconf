@@ -19,7 +19,7 @@
 				<li>
 					<a href="{% url 'docs:folder' folder.parent|nid %}" class="folder active">{{ folder.parent.name }}</a>
 					<ul>
-					{% for f in folder.parent.folders %}
+					{% for f in folder.parent.folders.all %}
 						<li><a href="{% url 'docs:folder' f|nid %}" class="folder">{{ f.name }}</a></li>
 					{% endfor %}
 					</ul>
@@ -67,7 +67,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			{% for f in folder.folders %}
+			{% for f in folder.folders.all %}
 				<tr>
 					<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
 					<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
@@ -75,7 +75,7 @@
 					<td class="detail-column">{{ f.last_modified|timesince }}</td>
 				</tr>
 			{% endfor %}
-			{% for f in folder.files %}
+			{% for f in folder.files.all %}
 				<tr>
 					<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
 					<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
