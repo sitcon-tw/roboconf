@@ -26,10 +26,10 @@ def folder(request, nidb64):
 		'folder': f,
 		'meta': {
 			'ancestry': f.parent,
-			'siblings': f.parent.folders,
+			'siblings': f.parent.folders.all() if f.parent else None,
 			'empty': f.folders.exists() or f.files.exists(),
-			'subfolders': f.folders,
-			'files': f.files,
+			'subfolders': f.folders.all(),
+			'files': f.files.all(),
 		},
 		'can_edit': Permission.EDIT in perms,
 	})
