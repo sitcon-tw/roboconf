@@ -1,6 +1,7 @@
 {% extends 'core_main.html' %}
 {% load usermeta %}
 {% load docmeta %}
+{% load dateutils %}
 {% block title %}文件{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -98,7 +99,7 @@
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
 							<td><a href="{% url 'docs:folder' f|nid %}"><span class="icon-folder iconize"></span> {{ f.name }}</a></td>
-							<td class="detail-column">{{ f.last_modified|timesince }}</td>
+							<td class="detail-column">{{ f.last_modified|smartdate }}</td>
 						</tr>
 					{% endfor %}
 					{% for f in meta.files %}
@@ -106,7 +107,7 @@
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
 							<td><a href="#"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
-							<td class="detail-column">{{ f.last_modified|timesince }} {{ f.current_revision.user|get_name }}</td>
+							<td class="detail-column">{{ f.last_modified|smartdate }} {{ f.current_revision.user|get_name }}</td>
 						</tr>
 					{% endfor %}
 					</tbody>
