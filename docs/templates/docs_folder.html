@@ -19,7 +19,7 @@
 				<li>
 					<a href="{% url 'docs:folder' meta.ancestry|nid %}" class="folder">{{ meta.ancestry.name }}</a>
 					<ul>
-					{% for f in meta.siblings.all %}
+					{% for f in meta.siblings %}
 						<li><a href="{% url 'docs:folder' f|nid %}" class="folder {% if f.id == folder.id %}active{% endif %}">{{ f.name }}</a></li>
 					{% endfor %}
 					</ul>
@@ -93,7 +93,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					{% for f in meta.subfolders.all %}
+					{% for f in meta.subfolders %}
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
@@ -101,7 +101,7 @@
 							<td class="detail-column">{{ f.last_modified|timesince }}</td>
 						</tr>
 					{% endfor %}
-					{% for f in meta.files.all %}
+					{% for f in meta.files %}
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
