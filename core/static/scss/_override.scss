@@ -168,3 +168,20 @@ table {
 	.icon-column { width: 24px; text-align: center; vertical-align: middle; }
 	.detail-column { width: 33%; }
 }
+
+.has-quote {
+	text-align: center;
+	.situation {
+		display: block;
+		margin: 1em auto;
+		border-radius: 6px;
+	}
+	.quote {
+		q {
+			display: block;
+			color: #6f6f6f;
+			&:before { content: '\300c'; }
+			&:after { content: '\300d'; }
+		}
+	}
+}
