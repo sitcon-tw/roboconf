@@ -24,7 +24,7 @@ def view(request, nidb64):
 	elif text.format == BlobText.HTML:
 		rendered_text = text
 	else: # text.format == BlobText.TEXT:
-		rendered_text = r'<pre>%s</pre>' % text.text
+		rendered_text = r'<blockquote>%s</blockquote>' % text.text
 
 	return render(request, 'docs_view.html', {
 		'file': f,

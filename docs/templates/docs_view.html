@@ -11,8 +11,8 @@
 	</div>
 	<div class="large-3 columns">
 		<ul class="side-nav users-actions">
-			{% if docperm.can_edit %}<li><a href="#"><span class="icon-edit iconize"></span> 編輯文件</a></li>{% endif %}
-			{% if docperm.can_comment %}<li><a href="#"><span class="icon-comment iconize"></span> 附加評論</a></li>{% endif %}
+			{% if docperms.can_edit %}<li><a href="#"><span class="icon-edit iconize"></span> 編輯文件</a></li>{% endif %}
+			{% if docperms.can_comment %}<li><a href="#"><span class="icon-comment iconize"></span> 附加評論</a></li>{% endif %}
 			<li><a href="#"><span class="icon-info iconize"></span> 檢視詳細資訊</a></li>
 		</ul>
 	</div>
