@@ -1,14 +1,18 @@
-import misaka as m
+import markdown as m
 
-BASE_EXTENSIONS = m.EXT_FENCED_CODE | m.EXT_AUTOLINK | m.EXT_STRIKETHROUGH | m.EXT_SPACE_HEADERS
+inline = m.Markdown(
+	extensions=['fenced_code', 'nl2br'],
+	safe_mode='escape',
+	smart_emphasis=False,	# Prevent problems on Chinese characters
+)
+
+docs = m.Markdown(
+	extensions=['abbr', 'def_list', 'fenced_code', 'footnotes', 'tables', 'toc', 'nl2br'],
+	smart_emphasis=False,	# Prevent problems on Chinese characters
+)
 
 def render_inline(text, autoescape=True):
-	return m.html(text, 
-		extensions=BASE_EXTENSIONS,
-		render_flags=(m.HTML_ESCAPE if autoescape else 0) | m.HTML_HARD_WRAP,
-	)
+	return inline.convert(text)
 
 def render_document(text):
-	return m.html(text,
-		extensions=m.EXT_TABLES | BASE_EXTENSIONS,
-	)
+	return docs.convert(text)
