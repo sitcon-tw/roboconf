@@ -18,12 +18,12 @@
 		{% csrf_token %}
 			<div class="row">
 				<div class="large-12 columns">
-					<input type="text" name="name" placeholder="名稱" required />
+					<input type="text" name="name" placeholder="名稱" value="{{ file.name }}" required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="large-6 columns">
-					<input type="checkbox" name="is_markdown" placeholder="名稱" {% if file.current_revision.text.format == 'M' %}checked{% endif %} />
+					<label for="is_markdown_checkbox"><input type="checkbox" id="is_markdown_checkbox" name="is_markdown" placeholder="名稱" {% if file.current_revision.text.format == 'M' %}checked{% endif %} /> <span>標記為 Markdown 格式</span></label>
 				</div>
 				<div class="large-6 columns">
 				</div>
