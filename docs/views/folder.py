@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from docs.models import Folder, Permission
@@ -18,7 +19,7 @@ def folder(request, nidb64):
 	perms = get_perms(request.user, f)
 	if Permission.VIEW not in perms:
 		if request.user.is_authenticated():
-			raise Http404 	# Access forbidden
+			raise PermissionDenied 	# Access forbidden
 		else:
 			return redirect(reverse('users:login') + ('?next=%s' % reverse('docs:folder', args=(nidb64,))))
 
