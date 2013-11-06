@@ -18,7 +18,7 @@ def view(request, nidb64):
 		else:
 			return redirect(reverse('users:login') + ('?next=%s' % reverse('docs:view', args=(nidb64,))))
 
-	text = file.current_revision.text
+	text = f.current_revision.text
 	if text.format == BlobText.MARKDOWN:
 		rendered_text = get_markdown(text.text)
 	elif text.format == BlobText.HTML:
@@ -29,5 +29,8 @@ def view(request, nidb64):
 	return render(request, 'docs_view.html', {
 		'file': f,
 		'text': rendered_text,
-		'can_edit': Permission.EDIT in perms,
+		'docperms': {
+			'can_edit': Permission.EDIT in perms,
+			'can_comment': Permission.COMMENT in perms,
+		},
 	})
