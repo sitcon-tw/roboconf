@@ -20,6 +20,9 @@ urlpatterns = patterns('',
     url(r'^issues/', include('issues.urls', namespace='issues')),
     url(r'^agenda/', include('agenda.urls', namespace='agenda')),
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),
+    url(r'^403$', 'django.views.defaults.permission_denied'),
+    url(r'^404$', 'django.views.defaults.page_not_found'),
+    url(r'^500$', 'django.views.defaults.server_error'),
     
     # Uncomment the next line to enable the admin:
     url(r'^backend/', include(admin.site.urls)),
