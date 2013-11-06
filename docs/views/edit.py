@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.timezone import now
 from django.http import Http404
 from docs.models import File, Permission, Revision, BlobText
-from docs.perms import get_perms
+from docs.perms import has_perm
 from docs.utils import parse_nid
 
 def edit(request, nidb64):
@@ -37,7 +37,7 @@ def edit(request, nidb64):
 
 			status = 'success'
 		else: status = 'invalid_name'
-		
+
 	else: status = ''
 
 	return render(request, 'docs_edit.html', {
