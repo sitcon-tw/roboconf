@@ -138,7 +138,7 @@ img.has-tip, img.has-tip:hover, img.has-tip:focus {
 	ul { list-style: none; }
 	li {
 		display: block;
-		line-height: 150%;
+		line-height: 200%;
 		a { padding: 0.2em 0; }
 		& > ul { margin-left: 20px; }
 	}
@@ -166,8 +166,8 @@ table {
 		}
 		input[type="checkbox"] { margin: 0; }
 		a[data-list-star] {
-			color: #e5e5e5;
-			&[data-checked="checked"] { color: #ffbb33; }
+			.iconize { color: #ddd; }
+			&[data-checked="checked"] .iconize { color: #ffbb33; }
 		}
 	}
 	.icon-column { width: 24px; text-align: center; vertical-align: middle; }
