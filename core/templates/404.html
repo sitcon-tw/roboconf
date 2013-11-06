@@ -1,6 +1,6 @@
 {% extends 'core_main.html' %}
 {% load staticfiles %}
-{% block title %}找不到頁面{% endblock %}
+{% block title %}找不到頁面{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="large-6 small-9 small-centered has-quote columns">
