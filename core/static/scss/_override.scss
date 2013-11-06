@@ -138,6 +138,7 @@ img.has-tip, img.has-tip:hover, img.has-tip:focus {
 	ul { list-style: none; }
 	li {
 		display: block;
+		line-height: 150%;
 		a { padding: 0.2em 0; }
 		& > ul { margin-left: 20px; }
 	}
