@@ -3,7 +3,6 @@ from django.core import mail
 from django.utils.html import strip_tags
 from email.utils import formataddr
 from notifications.utils import get_mail_setting, parse_address
-from core.markdown import get_markdown
 import os
 
 from notifications.models import *

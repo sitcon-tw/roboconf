@@ -5,7 +5,7 @@ from django.http import Http404
 from docs.models import File, Permission, BlobText
 from docs.perms import get_perms
 from docs.utils import parse_nid
-from core.markdown import get_markdown
+from core.markdown import render_document
 
 def view(request, nidb64):
 	f = parse_nid(File, nidb64)
@@ -20,7 +20,7 @@ def view(request, nidb64):
 
 	text = f.current_revision.text
 	if text.format == BlobText.MARKDOWN:
-		rendered_text = get_markdown(text.text)
+		rendered_text = render_document(text.text)
 	elif text.format == BlobText.HTML:
 		rendered_text = text
 	else: # text.format == BlobText.TEXT:
