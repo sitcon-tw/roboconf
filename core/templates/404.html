@@ -9,12 +9,10 @@
 		<p class="quote">
 			{% spaceless %}
 			{% with i='1111122234'|make_list|random %}
-			<q>
-				{% ifequal i '1' %}完全沒有網頁啊，完全沒有網頁！{% endifequal %}
-				{% ifequal i '2' %}看我把網頁變不見！{% endifequal %}
-				{% ifequal i '3' %}◢▆▅▄▃ 就跟你說過了╰(〒皿〒)╯沒有網頁啦 ▃▄▅▆◣{% endifequal %}
-				{% ifequal i '4' %}丹丹愛吃水煎包，404啥全是毛；工作人員添口福，吃了以後起泡泡！{% endifequal %}
-			</q>
+				{% ifequal i '1' %}<q>完全沒有網頁啊，完全沒有網頁！</q>{% endifequal %}
+				{% ifequal i '2' %}<q>看我把網頁變不見！</q>{% endifequal %}
+				{% ifequal i '3' %}<q>◢▆▅▄▃ 就跟你說過了╰(〒皿〒)╯沒有網頁啦 ▃▄▅▆◣</q>{% endifequal %}
+				{% ifequal i '4' %}<q>丹丹愛吃水煎包，404啥全是毛；工作人員添口福，吃了以後起泡泡！</q>{% endifequal %}
 			{% endwith %}
 			{% endspaceless %}
 			如果這是誤會，何不<a href="https://github.com/sitcon-tw/staff.sitcon.org/issues/new">回報問題</a>給行政組？
