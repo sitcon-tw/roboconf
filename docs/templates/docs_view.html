@@ -1,0 +1,19 @@
+{% extends 'core_main.html' %}
+{% load docmeta %}
+{% block title %}{{ f.name }} ‧ 文件{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="large-1 columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'docs:folder' f.parent|nid %}" title="回到「{{ f.parent.name }}」" data-tooltip></a>
+	</div>
+	<div class="large-8 columns">
+		{{ text|safe }}
+	</div>
+	<div class="large-3 columns">
+		<ul class="side-nav users-actions">
+			{% if docperm.can_edit %}<li><a href="#"><span class="icon-edit iconize"></span> 編輯文件</a></li>{% endif %}
+			<li><a href="#"><span class="icon-info iconize"></span> 檢視詳細資訊</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}

@@ -106,7 +106,7 @@
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
-							<td><a href="#"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
+							<td><a href="{% url 'docs:view' f|nid %}"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
 							<td class="detail-column">{{ f.last_modified|smartdate }} {{ f.current_revision.user|get_name }}</td>
 						</tr>
 					{% endfor %}
