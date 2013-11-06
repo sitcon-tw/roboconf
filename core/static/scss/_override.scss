@@ -164,6 +164,10 @@ table {
 			tr.selected:hover { background: #e9e9e9; }
 		}
 		input[type="checkbox"] { margin: 0; }
+		a[data-list-star] {
+			color: #e5e5e5;
+			&[data-checked="checked"] { color: #ffbb33; }
+		}
 	}
 	.icon-column { width: 24px; text-align: center; vertical-align: middle; }
 	.detail-column { width: 33%; }

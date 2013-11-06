@@ -61,7 +61,10 @@
 	}
 	&.active:before { content: '\958b'; }
 }
-.docs-list .iconize {
-	font-size: 16px; color: #555;
+.docs-list {
+	.iconize {
+		font-size: 16px; color: #555;
+	}
+	a[data-checked="checked"] .icon-star:before { content: '\2605'; }
 }
 form.custom .assignee-field .custom.dropdown .current:before { content: '\4eba'; font-family: 'IcoMoon'; speak: none; font-weight: normal; padding-right: 0.5em; }
