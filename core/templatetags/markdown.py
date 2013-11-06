@@ -1,6 +1,6 @@
 from django import template
 from django.utils.safestring import mark_safe
-from core.markdown import render_inline
+from core.formatting import render_inline
 
 register = template.Library()
 

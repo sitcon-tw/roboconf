@@ -5,7 +5,7 @@ from django.http import Http404
 from docs.models import File, Permission, BlobText
 from docs.perms import get_perms
 from docs.utils import parse_nid
-from core.markdown import render_document
+from core.formatting import render_document
 
 def view(request, nidb64):
 	f = parse_nid(File, nidb64)
