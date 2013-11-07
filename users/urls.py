@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 		url(r'^(?P<id>\d+)$', views.profile, name='profile'),
 		url(r'^(?P<id>\d+)/edit$', views.edit, name='edit'),
 		url(r'^contacts$', views.contacts, name='contacts'),
+		url(r'^api$', views.api, name='api'),
 	)

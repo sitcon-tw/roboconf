@@ -1,6 +1,4 @@
 from users.models import *
-from base64 import urlsafe_b64encode
-from os import urandom
 
 def get_user_name(user):
 	try:
@@ -19,7 +17,14 @@ def validate_email(email):
 	i = email.find('@')
 	return i and (i == email.rfind('@')) and (i < email.rfind('.')) and (email.find(' ') < 0)
 
+def get_avatar_url(value):
+	import md5
+	hash_value = md5.new(value.strip().lower()).hexdigest()
+	return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+
 def generate_password():
+	from os import urandom
+	from base64 import urlsafe_b64encode
 	# Generate a password with length 12
 	return urlsafe_b64encode(urandom(8))[:-1]
 
