@@ -26,6 +26,7 @@ def list():
 			"title": u.profile.title,
 			"avatar": get_avatar_url(u.email),
 		}
+	return result
 
 USERS_API_PATTERN = (
 	('get', get, ['name']),
