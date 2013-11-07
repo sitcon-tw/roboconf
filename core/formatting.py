@@ -15,4 +15,5 @@ def render_inline(text, autoescape=True):
 	return inline.convert(text)
 
 def render_document(text):
+	docs.reset()
 	return docs.convert(text)
