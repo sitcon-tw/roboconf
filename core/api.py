@@ -24,8 +24,11 @@ def route(request, actions):
 		req_params = {}
 		try:
 			for p in params:
-				p_name = p[:-1] if p[-1:] == '*' else p
-				req_params[p_name] = request.POST.get(p_name)
+				if p[-1:] == '*':
+					p_name = p[:-1] if p[-1:] == '*' else p
+					req_params[p_name] = request.POST.get(p_name)
+				else:
+					req_params[p] = request.POST[p]
 		except KeyError:
 			continue	# Parameter mismatch
 
