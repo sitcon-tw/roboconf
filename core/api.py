@@ -21,17 +21,15 @@ def route(request, actions):
 	for action, method, params in actions:
 		if not req_action == action: continue
 
-		req_params = []
-		for p in params:
-			if p[-1:] == '*':
-				value = request.POST.get(p[:-1])
-			else:
-				value = request.POST.get(p)
-				if not value: continue
-		
-			req_params.append(value)
+		req_params = {}
+		try:
+			for p in params:
+				p_name = p[:-1] if p[-1:] == '*' else p
+				req_params[p_name] = request.POST.get(p_name)
+		except KeyError:
+			continue	# Parameter mismatch
 
-		result = method(*req_params)
+		result = method(**req_params)
 		return HttpResponse(json.dumps(result), content_type='application/json')
 
 	from views import bad_request
