@@ -1,0 +1,22 @@
+{% extends 'core_main.html' %}
+{% load staticfiles %}
+{% block title %}要求無效{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="large-6 small-9 small-centered has-quote columns">
+		<img class="situation" src="{% static 'img/situations/handler_400.jpg' %}" alt="400 Bad Request">
+		<h3 class="text-center">噢噢，我們收到了奇怪的資料</h3>
+		<p class="quote">
+			{% spaceless %}
+			{% with i='1111222334'|make_list|random %}
+				{% ifequal i '1' %}<q>對於 server request，我有自己一套的堅持。</q>{% endifequal %}
+				{% ifequal i '2' %}<q>spec 上有說，腰至少要這麼細⋯⋯</q>{% endifequal %}
+				{% ifequal i '3' %}<q>API call 就像相親配對，條件不符可是會被打槍的。</q>{% endifequal %}
+				{% ifequal i '4' %}<q>與其費心於這些把戲，何不把時間花在端正自己的品格？</q>{% endifequal %}
+			{% endwith %}
+			{% endspaceless %}
+			送進來的要求有點奇怪，或許是瀏覽器的問題？<br>如果使用行政系統的 API，何不<a href="https://github.com/sitcon-tw/staff.sitcon.org">讀了文件</a>再試試？
+		</p>
+	</div>
+</div>
+{% endblock %}
