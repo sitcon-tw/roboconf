@@ -31,6 +31,7 @@ USERS_API_PATTERN = (
 	('get', get, ['name']),
 	('list', list, []),
 )
-
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def api(request):
 	return route(request, USERS_API_PATTERN)
