@@ -15,7 +15,7 @@ staff.sitcon.org API
 端點：/users/api
 
 * `get`
-  - 參數：`username`
+  - 參數：`name`
   - 當使用者不存在或無效，傳回 `{"status": "invalid"}`
   - 當使用者存在，傳回：
     ```
