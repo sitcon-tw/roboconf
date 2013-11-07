@@ -63,8 +63,8 @@
 			<img class="avatar medium" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user|get_name }}" />
 			<div class="issue-meta">
 				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 發表評論
-				{% if history.user == user %}<div class="right action-button"><a href="#" class="icon-edit iconize has-tip" title="編輯評論"></a></div>{% endif %}
-				{% if history.user == user %}<div class="right action-button"><a href="#" class="icon-delete iconize has-tip" title="刪除評論"></a></div>{% endif %}
+				{% if history.user == user %}<div class="right action-button"><a href="#" title="編輯評論">編輯</a></div>{% endif %}
+				{% if history.user == user %}<div class="right action-button"><a href="#" title="刪除評論">刪除</a></div>{% endif %}
 				<div class="right">於 {{ history.timestamp|timesince }}前</div>
 			</div>
 			<div class="issue-content">
