@@ -21,7 +21,7 @@ def get(name):
 
 def list():
 	result = {}
-	for u in User.objects.filter(is_active=True, group__id=11):
+	for u in User.objects.filter(is_active=True, groups__id=11):
 		result[u.username] = {
 			"title": u.profile.title,
 			"avatar": get_avatar_url(user.email),
