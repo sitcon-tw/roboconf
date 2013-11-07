@@ -24,7 +24,7 @@ def list():
 	for u in User.objects.filter(is_active=True, groups__id=11):
 		result[u.username] = {
 			"title": u.profile.title,
-			"avatar": get_avatar_url(user.email),
+			"avatar": get_avatar_url(u.email),
 		}
 
 USERS_API_PATTERN = (
