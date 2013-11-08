@@ -36,7 +36,7 @@ staff.sitcon.org API
       "avatar": "https://secure.gravatar.com/..."
   }
   ```
-當使用者不存在或無效，傳回 `{"status": "invalid"}`
+當使用者不存在或無效，傳回 **HTTP 400** `{"status": "invalid"}`
 
 議題追蹤系統 (issue tracker)
 ---
