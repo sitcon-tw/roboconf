@@ -1,5 +1,5 @@
 import json
-import django.http
+from django import http
 
 def render(request, obj):
 	result = json.dumps(obj)
