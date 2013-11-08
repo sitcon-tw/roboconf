@@ -1,4 +1,4 @@
-from api.utils import *
+from core.api import *
 from users.utils import get_avatar_url
 from django.contrib.auth.models import User
 
