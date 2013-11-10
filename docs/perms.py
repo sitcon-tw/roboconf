@@ -38,9 +38,9 @@ def get_perms(user, fileobj):
 		if not is_in_scope(user, perm): continue
 
 		if perm.effect == Permission.ALLOW:
-			cur_perm = min(priority, max_perm)		# Enable all permissions beneath
+			cur_perm = min(max(priority, cur_perm), max_perm)	# Grant highest permission underneath max (denied) perms
 		elif perm.effect == Permission.DENY:
-			max_perm = min(priority, max_perm)-1 	# Restrict max permission
+			max_perm = min(priority, max_perm)-1 				# Restrict max permission
 
 	return PRIORITY[:cur_perm+1]
 
