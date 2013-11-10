@@ -28,7 +28,8 @@ def iter_perms(fileobj):
 		node = node.parent
 
 def get_perms(user, fileobj):
-	max_perm = len(PRIORITY)
+	max_perm = len(PRIORITY)-1
+	cur_perm = -1
 
 	# Propagate through file nodes
 	for perm in iter_perms(fileobj):
@@ -37,12 +38,11 @@ def get_perms(user, fileobj):
 		if not is_in_scope(user, perm): continue
 
 		if perm.effect == Permission.ALLOW:
-			index = min(priority+1, max_perm)
-			return PRIORITY[:index]					# Return all permissions beneath
+			cur_perm = min(priority, max_perm)		# Enable all permissions beneath
 		elif perm.effect == Permission.DENY:
-			max_perm = priority 					# Restrict max permission
+			max_perm = min(priority, max_perm)-1 	# Restrict max permission
 
-	return ()
+	return PRIORITY[:cur_perm+1]
 
 def has_perm(user, fileobj, perm_type):
 	perm_priority = PRIORITY_MAPPING.get(perm_type)

@@ -2,15 +2,14 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from docs.models import File, Folder, Permission, BlobText
-from docs.perms import get_perms
+from docs.perms import has_perm
 from docs.utils import parse_nid
 
 def create(request):
 	f = parse_nid(Folder, request.GET.get('folder'))
 	if not f: return redirect(reverse('docs:main'))
 
-	perms = get_perms(request.user, f)
-	if Permission.EDIT not in perms:
+	if not has_perm(request.user, f, Permission.EDIT):
 		if request.user.is_authenticated():
 			raise PermissionDenied 	# Access forbidden
 		else:
