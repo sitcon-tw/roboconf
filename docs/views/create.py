@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from docs.models import File, Permission, BlobText
+from docs.models import File, Folder, Permission, BlobText
 from docs.perms import get_perms
 from docs.utils import parse_nid
 
