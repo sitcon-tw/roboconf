@@ -27,14 +27,13 @@ def create(request):
 			t.save()
 
 			r = Revision(user=request.user)
-			r.base_revision = f.current_revision
 			r.text = t
 			r.save()
 
 			fil = File(parent=f)
 			fil.name = name
 			fil.current_revision = r
-			f.save()
+			fil.save()
 
 			status = 'success'
 		else:
