@@ -7,7 +7,7 @@ from docs.utils import parse_nid
 
 def create(request):
 	f = parse_nid(File, request.GET.get('folder'))
-	if not f: raise Http404
+	if not f: return redirect(reverse('docs:main'))
 
 	perms = get_perms(request.user, f)
 	if Permission.EDIT not in perms:
