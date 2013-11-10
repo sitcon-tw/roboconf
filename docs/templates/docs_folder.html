@@ -114,7 +114,7 @@
 				</table>
 				{% else %}
 				<div class="placeholder-message">
-					<span>尚無文件。{% if user.is_authenticated %}<a href="#">建立新文件？</a>{% endif %}</span>
+					<span>尚無文件。{% if user.is_authenticated %}<a href="{% url 'docs:create' %}?folder={{ folder|nid }}">建立新文件？</a>{% endif %}</span>
 				</div>
 				{% endif %}
 			</div>

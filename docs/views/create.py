@@ -6,7 +6,7 @@ from docs.perms import get_perms
 from docs.utils import parse_nid
 
 def create(request):
-	f = parse_nid(File, request.GET.get('folder'))
+	f = parse_nid(Folder, request.GET.get('folder'))
 	if not f: return redirect(reverse('docs:main'))
 
 	perms = get_perms(request.user, f)
