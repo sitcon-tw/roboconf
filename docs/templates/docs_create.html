@@ -11,7 +11,7 @@
 {% endif %}
 <div class="row">
 	<div class="large-1 columns">
-		<a class="right iconize icon-back has-tip" href="{% url 'docs:folder' folder|nid %}" title="回到「{{ file.parent.name }}」" data-tooltip></a>
+		<a class="right iconize icon-back has-tip" href="{% url 'docs:folder' folder|nid %}" title="回到「{{ folder.name }}」" data-tooltip></a>
 	</div>
 	<div class="large-8 columns">
 		<form action="{% url 'docs:create' %}?folder={{ folder|nid }}" method="POST">
