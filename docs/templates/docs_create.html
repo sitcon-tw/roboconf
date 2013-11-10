@@ -1,0 +1,46 @@
+{% extends 'core_main.html' %}
+{% load docmeta %}
+{% block title %}建立文件{{ block.super }}{% endblock %}
+{% block content %}
+{% if status %}
+<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
+	{% if status == 'success' %}文件已儲存。
+	{% else %}請輸入檔案名稱。{% endif %}
+	<a href="#" class="close">&times;</a>
+</div>
+{% endif %}
+<div class="row">
+	<div class="large-1 columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'docs:folder' folder|nid %}" title="回到「{{ file.parent.name }}」" data-tooltip></a>
+	</div>
+	<div class="large-8 columns">
+		<form action="{% url 'docs:create' %}?folder={{ folder|nid }}" method="POST">
+		{% csrf_token %}
+			<div class="row">
+				<div class="large-12 columns">
+					<input type="text" name="name" placeholder="名稱" required />
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 columns">
+					<label for="is_markdown_checkbox"><input type="checkbox" id="is_markdown_checkbox" name="is_markdown" placeholder="名稱" checked /> <span>標記為 Markdown 格式</span></label>
+				</div>
+				<div class="large-6 columns">
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-12 columns">
+					<textarea name="text" style="min-height: 23em;"></textarea>
+				</div>
+			</div>
+			<div class="button-row">
+				<div class="right">
+					<input type="submit" class="radius button" name="submit" value="儲存" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="large-3 columns">
+	</div>
+</div>
+{% endblock %}

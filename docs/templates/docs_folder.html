@@ -63,7 +63,7 @@
 					<div>
 						<button class="small radius button" href="#" data-dropdown="dropdown-create">建立文件</button>
 						<ul id="dropdown-create" class="f-dropdown" data-dropdown-content>
-							<li><a href="#"><span class="icon-new iconize"></span> 新文件</a></li>
+							<li><a href="{% url 'docs:create' %}?folder={{ folder|nid }}"><span class="icon-new iconize"></span> 新文件</a></li>
 							<li><a href="#"><span class="icon-upload iconize"></span> 從電腦上傳</a></li>
 							<li><a href="#"><span class="icon-link iconize"></span> 外部連結</a></li>
 						</ul>
