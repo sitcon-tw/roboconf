@@ -1,47 +1,73 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied
-from docs.models import File, Folder, Revision, Permission, BlobText
+from core.api import *
+from docs.models import *
 from docs.perms import has_perm
 from docs.utils import parse_nid
 
 def create(request):
-	f = parse_nid(request.GET.get('folder'), Folder)
-	if not f: return redirect(reverse('docs:main'))
-
-	if not has_perm(request.user, f, Permission.EDIT):
-		if request.user.is_authenticated():
-			raise PermissionDenied 	# Access forbidden
-		else:
-			return redirect(reverse('users:login'))
-
 	if request.method == 'POST':
+		kind = request.POST.get('type')
 		name = request.POST.get('name')
-		text = request.POST.get('text')
-		is_markdown = request.POST.get('is_markdown')
+		at = request.POST.get('at')
 
-		if name:
-			t = BlobText(text=text)
-			if is_markdown:
-				t.format = BlobText.MARKDOWN
-			t.save()
+		if not (kind and name and at):
+			return bad_request(request, {'error': 'invalid_args'})
 
-			r = Revision(user=request.user)
-			r.text = t
-			r.save()
+		parent = parse_nid(at)
+		if not (parent and isinstance(parent, Folder)):
+			return bad_request(request, {'error': 'invalid_node'})
 
-			fil = File(parent=f)
-			fil.name = name
-			fil.current_revision = r
-			fil.save()
+		if not has_perm(request.user, parent, Permission.EDIT):
+			from django.core.exceptions import PermissionDenied
+			raise PermissionDenied
 
-			status = 'success'
+		if kind == 'file':
+			r = create_revision(request)
+			if not r:
+				return bad_request(request, {'error': 'content_required'})		
+			f = File()
+			f.current_revision = r
+		elif kind == 'folder':
+			f = Folder()
 		else:
-			status = 'invalid_name'
-	else:
-		status = ''
+			return bad_request(request, {'error': 'invalid_type'})
 
-	return render(request, 'docs_create.html', {
-		'folder': f,
-		'status': status,
-	})
+		f.parent = parent
+		f.name = name
+		f.save()
+
+		if request.is_ajax():
+			return render(request, {
+				'status': 'success',
+				'nid': f.nid(),
+				'timestamp': f.last_modified,
+				'revision': f.current_revision.id if isinstance(f, File) else None,
+			})
+		else:
+			return redirect(reverse('docs:node'), args=(f.nid(),))
+
+	return render(request, 'docs_create.html', {})
+
+TEXT_FORMATS = {'text': BlobText.TEXT, 'markdown': BlobText.MARKDOWN, 'html': BlobText.HTML}
+
+def create_revision(request):
+	content = request.POST.get('content')
+	format = request.POST.get('format')
+
+	if content:
+		text = BlobText()
+		text.text = content
+		text.format = TEXT_FORMATS.get('format', BlobText.TEXT)
+		text.save()
+
+		r = Revision()
+		r.text = text
+		r.user = request.user
+		r.type = Revision.EXTERNAL if text.format == 'link' else Revision.LOCAL
+		r.comment = request.POST.get('comment', '')
+		r.save()
+
+		return r
+	
+	return None

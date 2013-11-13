@@ -8,9 +8,11 @@ class Revision(models.Model):
 		app_label = 'docs'
 
 	LOCAL = '.'
+	EXTERNAL = '+'
 
 	TYPE_CHOICES = (
 			(LOCAL, 'Local revision'),
+			(EXTERNAL, 'External linked file'),
 		)
 
 	file = models.ForeignKey('File', null=True, related_name='revisions')

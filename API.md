@@ -57,7 +57,7 @@ staff.sitcon.org API
 ---
 物件皆以節點ID (nid) 識別。
 
-### /docs/create
+### /docs/new
 
 #### POST
 
@@ -66,7 +66,7 @@ staff.sitcon.org API
 * `type`: `file` 或是 `folder`。
 * `name`: 節點名稱。
 * `at`: 上層資料夾的節點ID。
-* 如果為檔案，接受所有針對檔案內容更新之操作。見 /docs/`nid`/ (PUT)。
+* 如果為檔案，接受所有針對檔案內容更新之操作。見 /docs/`nid`/ (POST)。
 
 回傳如下結果：
 ```
@@ -128,9 +128,9 @@ staff.sitcon.org API
 接受以下參數：
 
 * `content`: 檔案內容。
-* `type`: 內容類型。預設為純文字，接受 `markdown`, `text`, `html`。
+* `format`: 內容類型。預設為純文字，接受 `markdown`, `text`, `html`。
 * `comment`: 修訂版本的敘述。
-* 將 `type` 指定為 `link`，可以更新外部連結文件的網址，或是將伺服器本地文件轉換為外部文件。反之亦然。
+* 將 `format` 指定為 `link`，可以更新外部連結文件的網址，或是將伺服器本地文件轉換為外部文件。反之亦然。
 
 傳回如下結果：
 ```
@@ -179,7 +179,7 @@ staff.sitcon.org API
 * `assigned`: 指派給特定使用者。
 * `starred`: 目前的使用者已標記星號。
 
-### /issues/create
+### /issues/new
 
 #### POST
 

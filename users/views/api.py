@@ -14,7 +14,7 @@ def get(request):
 		try:
 			user = User.objects.get(username=name)
 			if user.is_active:
-				return render(request, {
+				return render_json(request, {
 					'status': 'success',
 					'name': user.username,
 					'avatar': get_avatar_url(user.email),
@@ -29,4 +29,4 @@ def get(request):
 				"title": u.profile.title,
 				"avatar": get_avatar_url(u.email),
 			}
-		return render(request, result)
+		return render_json(request, result)

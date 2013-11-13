@@ -1,7 +1,7 @@
 import json
 from django import http
 
-def render(request, obj):
+def render_json(request, obj):
 	result = json.dumps(obj)
 	return http.HttpResponse(result, content_type='application/json')
 
