@@ -12,7 +12,10 @@ staff.sitcon.org API
 
 工作人員資訊
 ---
-### /users/ (GET)
+### /users/
+
+#### GET
+
 列出工作人員，回傳如下結果：
 ```
 {
@@ -33,7 +36,10 @@ staff.sitcon.org API
 }
 ```
 
-### /users/\[username\] (GET) 
+### /users/\[username\]
+
+#### GET
+
 取得特定工作人員資訊。  
 當使用者不存在或無效，傳回 **HTTP 400** `{"status": "invalid"}`。
 
@@ -51,7 +57,9 @@ staff.sitcon.org API
 ---
 物件皆以節點ID (nid) 識別。
 
-### /docs/create (POST)
+### /docs/create
+
+#### POST
 
 建立新文件或資料夾。
 
@@ -80,7 +88,7 @@ staff.sitcon.org API
 
 ### /docs/\[nid\]
 
-#### (GET)
+#### GET
 
 接受額外參數 `details`，可以以 JSON 陣列指定要取得的各部分資訊：
 
@@ -113,7 +121,7 @@ staff.sitcon.org API
 }
 ```
 
-#### (POST)
+#### POST
 
 更新文件檔案，建立新修訂版本。
 
@@ -134,7 +142,7 @@ staff.sitcon.org API
 }
 ```
 
-#### (PUT)
+#### PUT
 
 對文件或資料夾節點進行操作，接受以下任一參數：
 
@@ -153,13 +161,15 @@ staff.sitcon.org API
 * `type`: 權限種類，接受 `view`, `comment`, `edit`。
 * `effect`: 權限效果，可以是允許 (`allow`) 或是拒絕 (`deny`)。
 
-#### (DELETE)
+#### DELETE
 
 將文件或資料夾移至垃圾桶。
 
 議題追蹤系統 (issue tracker)
 ---
-### /issues/ (GET)
+### /issues/
+
+#### GET
 
 傳回議題列表。接受以下篩選參數：
 
@@ -169,17 +179,19 @@ staff.sitcon.org API
 * `assigned`: 指派給特定使用者。
 * `starred`: 目前的使用者已標記星號。
 
-### /issues/create (POST)
+### /issues/create
+
+#### POST
 
 建立新議題。
 
 ### /issues/\[id\]
 
-#### (GET)
+#### GET
 
 取得議題資訊。
 
-#### (POST)
+#### POST
 
 對議題進行操作，接受以下任一參數：
 
