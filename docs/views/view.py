@@ -8,7 +8,7 @@ from docs.utils import parse_nid
 from core.formatting import render_document
 
 def view(request, nidb64):
-	f = parse_nid(File, nidb64)
+	f = parse_nid(nidb64, File)
 	if not f: raise Http404
 
 	perms = get_perms(request.user, f)

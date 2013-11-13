@@ -13,7 +13,7 @@ def main(request):
 	return redirect(reverse('docs:folder', args=(generate_nid(0),)))
 
 def folder(request, nidb64):
-	f = parse_nid(Folder, nidb64)
+	f = parse_nid(nidb64, Folder)
 	if not f: raise Http404
 
 	perms = get_perms(request.user, f)

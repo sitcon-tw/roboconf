@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import force_bytes
 
 # == snippet from Django 1.6 dev snapshot ==
@@ -25,14 +26,22 @@ def urlsafe_base64_decode(s):
 
 def generate_nid(node):
     try:
-        nid = node.id
+        nid = node.id + getattr(node.model._meta, 'nid_namespace', '')
     except AttributeError:
         nid = node
     return urlsafe_base64_encode(force_bytes(nid))
 
-def parse_nid(model, nidb64):
-	try:
-		nid = urlsafe_base64_decode(nidb64)
-		return model.objects.get(id=nid)
-	except (TypeError, ValueError, OverflowError, model.DoesNotExist):
-		return None
+def parse_nid(nidb64, model=None):
+    try:
+        nid = urlsafe_base64_decode(nidb64)
+        if nid[-1:] == 'F':
+            from docs.models import File
+            return File.objects.get(id=nid[:-1])
+        elif nid[-1:] == 'D':
+            from docs.models import Folder
+            return Folder.objects.get(id=nid[:-1])
+        else:
+            if not model: return None
+            return model.objects.get(id=nid)
+    except (TypeError, ValueError, OverflowError, ObjectDoesNotExist):
+          return None

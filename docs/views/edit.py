@@ -8,7 +8,7 @@ from docs.perms import has_perm
 from docs.utils import parse_nid
 
 def edit(request, nidb64):
-	f = parse_nid(File, nidb64)
+	f = parse_nid(nidb64, File)
 	if not f: raise Http404
 
 	if not has_perm(request.user, f, Permission.EDIT):

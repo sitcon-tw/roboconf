@@ -6,6 +6,7 @@ class File(models.Model):
 
 	class Meta:
 		app_label = 'docs'
+		nid_namespace = 'F'
 		ordering = ['name']
 		permissions = (
 			('archive', 'Archive files and folders'),

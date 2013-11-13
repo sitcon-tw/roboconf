@@ -6,6 +6,7 @@ class Folder(models.Model):
 
 	class Meta:
 		app_label = 'docs'
+		nid_namespace = 'D'
 		ordering = ['name']
 
 	name = models.CharField(max_length=256)
