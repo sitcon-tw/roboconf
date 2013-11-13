@@ -36,12 +36,12 @@ staff.sitcon.org API
 }
 ```
 
-### /users/\[username\]
+### /users/`username`
 
 #### GET
 
 取得特定工作人員資訊。  
-當使用者不存在或無效，傳回 **HTTP 400** `{"status": "invalid"}`。
+當使用者帳號無法使用，傳回 **HTTP 400** `{"status": "invalid"}`。
 
 回傳如下結果：
 ```
@@ -66,7 +66,7 @@ staff.sitcon.org API
 * `type`: `file` 或是 `folder`。
 * `name`: 節點名稱。
 * `at`: 上層資料夾的節點ID。
-* 如果為檔案，接受所有針對檔案內容更新之操作。見 /docs/\[nid\]/ (PUT)。
+* 如果為檔案，接受所有針對檔案內容更新之操作。見 /docs/`nid`/ (PUT)。
 
 回傳如下結果：
 ```
@@ -86,7 +86,7 @@ staff.sitcon.org API
 }
 ```
 
-### /docs/\[nid\]
+### /docs/`nid`
 
 #### GET
 
@@ -185,7 +185,7 @@ staff.sitcon.org API
 
 建立新議題。
 
-### /issues/\[id\]
+### /issues/`id`
 
 #### GET
 
