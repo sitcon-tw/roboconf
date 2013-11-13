@@ -15,6 +15,13 @@ def bad_request(request, obj=None):
 def not_authorized(request, obj=None):
 	return http.HttpResponse(json.dumps(obj), content_type='application/json', status=401)
 
+def permission_denied(request, obj=None):
+	if request.is_ajax():
+		return http.HttpResponseForbidden(json.dumps(obj), content_type='application/json')
+	else:
+		from django.core.exceptions import PermissionDenied
+		raise PermissionDenied
+
 def not_allowed(request, permitted_methods):
 	return http.HttpResponseNotAllowed(permitted_methods)
 

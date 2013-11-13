@@ -6,7 +6,7 @@ staff.sitcon.org API
 端點：/users/api
 
 ### GET
-列出工作人員。範例：
+列出工作人員，回傳如下結果：
 ```
 {
   "denny0223": {
@@ -26,8 +26,11 @@ staff.sitcon.org API
 }
 ```
 
-### GET(`name`)
-取得個別工作人員資訊。範例：
+#### (`name`)
+取得特定工作人員資訊。  
+當使用者不存在或無效，傳回 **HTTP 400** `{"status": "invalid"}`。
+
+回傳如下結果：
 ```
 {
     "status": "success",
@@ -36,20 +39,19 @@ staff.sitcon.org API
     "avatar": "https://secure.gravatar.com/..."
 }
 ```
-當使用者不存在或無效，傳回 **HTTP 400** `{"status": "invalid"}`
-
-議題追蹤系統 (issue tracker)
----
-（建構中）
 
 文件系統
 ---
 端點：/docs/api
 
-文件系統的物件皆以節點ID (nid) 識別。
+### GET
 
-### GET(`nid`)
-取得文件或資料夾節點資訊。範例：
+#### (`nid`)
+取得文件或資料夾節點資訊，物件皆以節點ID (nid) 識別。  
+當物件不存在，傳回 **HTTP 400** `{"status": "invalid_property"}`。  
+當不具物件的檢視權限，傳回 **HTTP 403** `{"status": "permission_denied"}`。  
+
+資料夾回傳如下結果：
 ```
 {
   "status": "success",
@@ -61,6 +63,8 @@ staff.sitcon.org API
   "starred": false,
 }
 ```
+
+檔案傳回如下結果：
 ```
 {
   "status": "success",
@@ -75,3 +79,8 @@ staff.sitcon.org API
   "starred": false,
 }
 ```
+
+
+議題追蹤系統 (issue tracker)
+---
+（建構中）

@@ -15,7 +15,11 @@ def api(request):
 
 def get(request):
 	f = parse_nid(request.GET.get('nid'))
-	if f and has_perm(request.user, f, Permission.VIEW):
+
+	if not f:
+		return bad_request(request, {'status': 'invalid_property'})
+
+	if has_perm(request.user, f, Permission.VIEW):
 		result = {
 			'status': 'success',
 			'name': f.name,
@@ -37,8 +41,9 @@ def get(request):
 			result['content'] = children
 
 		return render(request, result)
+		
 	else:
-		return bad_request(request, {'status': 'invalid_property'})
+		return permission_denied(request, {'status': 'permission_denied'})
 
 def post(request):
 	return not_implemented(request, {'status': 'not_implemented'})
