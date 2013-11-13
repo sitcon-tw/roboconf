@@ -90,7 +90,7 @@ staff.sitcon.org API
 
 #### GET
 
-接受額外參數 `details`，可以以 JSON 陣列指定要取得的各部分資訊：
+接受額外參數 `details`，可以指定要取得的各部分資訊：
 
 * `node`: 預設。名稱、上次修改時間等節點資訊。
 * `content`: 檔案或資料夾內容。

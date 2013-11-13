@@ -1,6 +1,12 @@
 import json
 from django import http
 
+def parse_json(strbuf):
+	try:
+		return json.loads(strbuf)
+	except ValueError:
+		return None
+
 def render_json(request, obj):
 	result = json.dumps(obj)
 	return http.HttpResponse(result, content_type='application/json')

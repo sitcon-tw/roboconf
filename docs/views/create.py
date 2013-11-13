@@ -38,12 +38,14 @@ def create(request):
 		f.save()
 
 		if request.is_ajax():
-			return render(request, {
+			result = {
 				'status': 'success',
 				'nid': f.nid(),
 				'timestamp': f.last_modified,
-				'revision': f.current_revision.id if isinstance(f, File) else None,
-			})
+			}
+			if isinstance(f, File):
+				result['revision'] = r.id
+			return render(request, result)
 		else:
 			return redirect(reverse('docs:node'), args=(f.nid(),))
 
