@@ -1,5 +1,5 @@
-from folder import main, folder
+from main import main, node
 from create import create
-from view import view
+from render import render
 from edit import edit
 from api import api

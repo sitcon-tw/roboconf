@@ -31,5 +31,9 @@ class Folder(models.Model):
 		path.reverse()
 		return path
 
+	def nid(self):
+		from docs.utils import get_uid
+		return get_uid(Folder, self.id)
+
 	def __unicode__(self):
 		return self.name

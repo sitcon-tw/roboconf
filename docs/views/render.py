@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from docs.models import File, Permission, BlobText
@@ -7,7 +6,7 @@ from docs.perms import get_perms
 from docs.utils import parse_nid
 from core.formatting import render_document
 
-def view(request, nidb64):
+def render(request, permalink):
 	f = parse_nid(nidb64, File)
 	if not f: raise Http404
 
@@ -16,7 +15,7 @@ def view(request, nidb64):
 		if request.user.is_authenticated():
 			raise PermissionDenied 	# Access forbidden
 		else:
-			return redirect(reverse('users:login') + ('?next=%s' % reverse('docs:view', args=(nidb64,))))
+			return redirect(reverse('users:login') + ('?next=%s' % request.path))
 
 	text = f.current_revision.text
 	if text.format == BlobText.MARKDOWN:

@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import force_bytes
+from docs.models import File, Folder
 
 # == snippet from Django 1.6 dev snapshot ==
 # ** remove when 1.6 offically came out **
@@ -24,24 +25,18 @@ def urlsafe_base64_decode(s):
         raise ValueError(e)
 # == end snippet ==
 
-def generate_nid(node):
-    try:
-        nid = node.id + getattr(node.model._meta, 'nid_namespace', '')
-    except AttributeError:
-        nid = node
-    return urlsafe_base64_encode(force_bytes(nid))
+NID_NAMESPACES = {'F': File, 'D': Folder}
 
-def parse_nid(nidb64, model=None):
+def generate_nid(text):
+    return urlsafe_base64_encode(force_bytes(text))
+
+def parse_nid(nidb64):
     try:
         nid = urlsafe_base64_decode(nidb64)
-        if nid[-1:] == 'F':
-            from docs.models import File
-            return File.objects.get(id=nid[:-1])
-        elif nid[-1:] == 'D':
-            from docs.models import Folder
-            return Folder.objects.get(id=nid[:-1])
-        else:
-            if not model: return None
-            return model.objects.get(id=nid)
-    except (TypeError, ValueError, OverflowError, ObjectDoesNotExist):
-          return None
+        model = NID_NAMESPACES[nid[-1:]]
+        return model.objects.get(id=nid[:-1])
+    except (TypeError, ValueError, OverflowError, KeyError, ObjectDoesNotExist):
+        return None
+
+def get_uid(model, id):
+    return generate_nid(force_bytes(id) + model.Meta.nid_namespace)
