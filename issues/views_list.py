@@ -5,6 +5,10 @@ from django.utils import timezone
 order_mapping = { 'created': 'creation_time', 'due': 'due_time' }
 
 def list(request, mode, user_id=None):
+	if request.is_ajax():
+		from core.api import not_implemented
+		return not_implemented(request, {'error': 'not_implemented'})
+		
 	# Code here is just for demonstration purpose!
 	# We'll need to move these into separate model
 	if 'issues' in request.POST:

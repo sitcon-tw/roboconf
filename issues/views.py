@@ -27,7 +27,11 @@ def starred(request, user_id):
 @login_required
 def detail(request, issue_id):
 	issue = get_object_or_404(Issue, pk=issue_id)
-
+	
+	if request.is_ajax():
+		from core.api import not_implemented
+		return not_implemented(request, {'error': 'not_implemented'})
+	
 	action = request.POST.get('action')		# Check if postback
 	if action == 'assign':
 		_detail.assign(issue, request)
@@ -53,7 +57,11 @@ def detail(request, issue_id):
 @login_required
 def create(request):
 	errors = []
-
+	
+	if request.is_ajax():
+		from core.api import not_implemented
+		return not_implemented(request, {'error': 'not_implemented'})
+	
 	if 'submit' in request.POST:
 		(issue, errors) = _create.create(request)
 		if issue: return redirect(reverse('issues:detail', args=(issue.id,)))
