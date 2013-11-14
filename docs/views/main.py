@@ -48,7 +48,7 @@ def get(request, f):
 		if isinstance(f, File):
 			rev = f.current_revision
 			result['revision'] = rev.id
-			result['author'] = rev.user.username
+			result['author'] = rev.user.username if rev.user else None
 			result['content'] = rev.text.text
 			result['format'] = dict(BlobText.FORMAT_ENUMERATION).get(rev.text.format)
 		elif isinstance(f, Folder):
@@ -88,9 +88,6 @@ def get(request, f):
 def post(request, f):
 	if not has_perm(request.user, f, Permission.EDIT):
 		raise PermissionDenied
-	
-	if not request.user.is_authenticated():
-		return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
 
 	if f.is_archived:
 		return bad_request(request, {'error': 'node_archived'})
@@ -124,17 +121,20 @@ def put(request, f):
 	if not PUT:
 		return bad_request(request, {'error': 'invalid_json'})
 
-	if not request.user.is_authenticated():
-		return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
-
 	perms = get_perms(request.user, f)
 
 	if 'star' in PUT:
 		if not Permission.VIEW in perms: raise PermissionDenied
+		if not request.user.is_authenticated():
+			return bad_request(request, {'error': 'login_required'})
+
 		f.starring.add(request.user)
 
 	elif 'unstar' in PUT:
 		if not Permission.VIEW in perms: raise PermissionDenied
+		if not request.user.is_authenticated():
+			return bad_request(request, {'error': 'login_required'})
+
 		f.starring.remove(request.user)
 
 	elif 'rename' in PUT:
@@ -152,6 +152,8 @@ def put(request, f):
 		parent = parse_nid(PUT.get('at'))
 		if not (parent and isinstance(parent, Folder)):
 			return bad_request(request, {'error': 'invalid_node'})
+		if not has_perm(request.user, parent, Permission.EDIT):
+			raise PermissionDenied
 		if parent.is_archived:
 			return bad_request(request, {'error': 'node_archived'})
 
@@ -170,6 +172,8 @@ def put(request, f):
 
 	elif 'permissions' in PUT:
 		if not Permission.EDIT in perms: raise PermissionDenied
+		if not request.user.is_authenticated():
+			return bad_request(request, {'error': 'login_required'})
 		try:
 			effects = dict((y, x) for x, y in Permission.EFFECT_ENUMERATION)
 			kinds = dict((y, x) for x, y in Permission.TYPE_ENUMERATION)
@@ -206,9 +210,6 @@ def put(request, f):
 def delete(request, f):
 	if not has_perm(request.user, f, Permission.EDIT):
 		raise PermissionDenied
-
-	if not request.user.is_authenticated():
-		return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
 
 	# Remove any possible viewing permission, move to trash can
 	f.permissions.clear()

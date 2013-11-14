@@ -21,10 +21,8 @@ def create(request):
 		if not has_perm(request.user, parent, Permission.EDIT):
 			from django.core.exceptions import PermissionDenied
 			raise PermissionDenied
+		# Warning: removed creation restrictions on <ALLOW * EDIT> folder. Careful.
 		
-		if not request.user.is_authenticated():
-			return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
-
 		if parent.is_archived:
 			return bad_request(request, {'error': 'node_archived'})
 
@@ -69,7 +67,7 @@ def create_revision(request):
 
 		r = Revision()
 		r.text = text
-		r.user = request.user
+		r.user = request.user if request.user.is_authenticated() else None
 		r.type = Revision.EXTERNAL if text.format == 'link' else Revision.LOCAL
 		r.comment = request.POST.get('comment', '')
 		r.save()
