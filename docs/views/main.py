@@ -69,6 +69,9 @@ def post(request, f):
 	if not request.user.is_authenticated():
 		return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
 
+	if f.is_archived:
+		return bad_request(request, {'error': 'node_archived'})
+
 	from docs.views.create import create_revision
 	r = create_revision(request)
 
@@ -107,8 +110,13 @@ def put(request, f):
 		if not Permission.VIEW in perms: raise PermissionDenied
 		f.starring.add(request.user)
 
+	elif 'unstar' in PUT:
+		if not Permission.VIEW in perms: raise PermissionDenied
+		f.starring.remove(request.user)
+
 	elif 'rename' in PUT:
 		if not Permission.EDIT in perms: raise PermissionDenied
+		
 		name = PUT.get('name')
 		if not name:
 			return bad_request(request, {'error': 'invalid_name'})
@@ -117,9 +125,13 @@ def put(request, f):
 
 	elif 'move' in PUT:
 		if not Permission.EDIT in perms: raise PermissionDenied
+		
 		parent = parse_nid(PUT.get('at'))
 		if not (parent and isinstance(parent, Folder)):
 			return bad_request(request, {'error': 'invalid_node'})
+		if parent.is_archived:
+			return bad_request(request, {'error': 'node_archived'})
+
 		f.parent = parent
 		f.save()
 
@@ -135,7 +147,6 @@ def put(request, f):
 
 	elif 'permissions' in PUT:
 		if not Permission.EDIT in perms: raise PermissionDenied
-
 		return not_implemented(request, {'error': 'not_implemented'})
 
 	return render_json(request, {'status': 'success'})

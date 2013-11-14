@@ -21,6 +21,12 @@ def create(request):
 		if not has_perm(request.user, parent, Permission.EDIT):
 			from django.core.exceptions import PermissionDenied
 			raise PermissionDenied
+		
+		if not request.user.is_authenticated():
+			return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
+
+		if parent.is_archived:
+			return bad_request(request, {'error': 'node_archived'})
 
 		if kind == 'file':
 			r = create_revision(request)
