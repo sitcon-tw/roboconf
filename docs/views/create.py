@@ -51,8 +51,6 @@ def create(request):
 
 	return render(request, 'docs_create.html', {})
 
-TEXT_FORMATS = {'text': BlobText.TEXT, 'markdown': BlobText.MARKDOWN, 'html': BlobText.HTML}
-
 def create_revision(request):
 	content = request.POST.get('content')
 	format = request.POST.get('format')
@@ -60,7 +58,7 @@ def create_revision(request):
 	if content:
 		text = BlobText()
 		text.text = content
-		text.format = TEXT_FORMATS.get('format', BlobText.TEXT)
+		text.format = dict((y, x) for x, y in BlobText.FORMAT_ENUMERATION).get('format', BlobText.TEXT)
 		text.save()
 
 		r = Revision()

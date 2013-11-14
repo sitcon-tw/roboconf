@@ -1,9 +1,9 @@
 import json
 from django import http
 
-def parse_json(strbuf):
+def parse_json(request):
 	try:
-		return json.loads(strbuf)
+		return json.load(request)
 	except ValueError:
 		return None
 

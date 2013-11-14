@@ -96,7 +96,7 @@ staff.sitcon.org API
 * `content`: 檔案或資料夾內容。
 * `revisions`: 檔案修訂記錄。
 
-回傳如下結果：
+資料夾回傳如下結果：
 ```
 {
   "status": "success",

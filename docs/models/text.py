@@ -17,6 +17,13 @@ class BlobText(models.Model):
 			(BLOB, 'Binary content'),
 		)
 
+	FORMAT_ENUMERATION = (
+			(TEXT, 'text'),
+			(MARKDOWN, 'markdown'),
+			(HTML, 'html'),
+			(BLOB, 'blob'),
+		)
+
 	text = models.TextField()
 	format = models.CharField(max_length=1, choices=FORMAT_CHOICES, default=TEXT)
 
