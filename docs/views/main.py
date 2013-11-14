@@ -60,6 +60,29 @@ def get(request, f):
 		if isinstance(f, File):
 			result['revisions'] = [r.id for r in f.revisions.all()]
 
+	if 'permissions' in details:
+		effects = dict(Permission.EFFECT_ENUMERATION)
+		kinds = dict(Permission.TYPE_ENUMERATION)
+		scopes = dict(Permission.SCOPE_ENUMERATION)
+
+		perms = []
+		for p in f.permissions.all():
+			obj = {
+				'effect': effects.get(p.effect),
+				'type': kinds.get(p.type),
+			}
+
+			if p.scope == Permission.PER_GROUP:
+				obj['group'] = p.target
+			elif p.scope == Permission.PER_USER:
+				obj['user'] = p.target
+			else:
+				obj['scope'] = scopes.get(p.scope)
+
+			perms.append(obj)
+			
+		result['permissions'] = perms
+
 	return render_json(request, result)
 
 def post(request, f):

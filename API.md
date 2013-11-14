@@ -95,6 +95,7 @@ staff.sitcon.org API
 * `node`: 預設。名稱、上次修改時間等節點資訊。
 * `content`: 檔案或資料夾內容。
 * `revisions`: 檔案修訂記錄。
+* `permissions`: 節點權限。見 /docs/`nid`/ (PUT) 關於權限物件之敘述。
 
 資料夾回傳如下結果：
 ```

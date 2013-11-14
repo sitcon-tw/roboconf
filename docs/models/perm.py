@@ -85,3 +85,22 @@ class Permission(models.Model):
 				(' %s' % self.target) if self.target else '',
 				Permission.TYPE_NAMES.get(self.type, '?'),
 			)
+
+	TYPE_ENUMERATION = (
+			(VIEW, 'view'),
+			(COMMENT, 'comment'),
+			(EDIT, 'edit'),
+		)
+
+	EFFECT_ENUMERATION = (
+			(ALLOW, 'allow'),
+			(DENY, 'deny'),
+		)
+
+	SCOPE_ENUMERATION = (
+			(PUBLIC, '*'),
+			(INTERNAL, 'staff'),
+			(PROTECTED, 'admin'),
+			(PER_GROUP, 'group'),
+			(PER_USER, 'user'),
+		)
