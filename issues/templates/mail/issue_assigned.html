@@ -3,7 +3,7 @@
 {{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="font-size: 0.8em; padding: 0.5em; border: 1px solid #f0f0f0; border-radius: 3px;">
-	<a href="{{ site_url }}{% url 'users:profile' sender.id %}">{{ sender|get_name }}</a>
+	<a href="{{ site_url }}{% url 'users:profile' sender.username %}">{{ sender|get_name }}</a>
 	{% if issue.assignee %}
 		已將此議題指派給 {% if issue.assignee == receiver %}你{% else %}<a href="{{ site_url }}{% url 'users:profile' issue.assignee.id %}">{{ issue.assignee|get_name }}</a>{% endif %}。
 	{% else %}

@@ -14,7 +14,7 @@
 		</ul>
 		<div class="profile-actions">
 		{% if user == u or perms.auth.change_user %}
-			<a href="{% url 'users:edit' u.id %}" class="small secondary radius button">編輯</a>
+			<a href="{% url 'users:edit' u.username %}" class="small secondary radius button">編輯</a>
 		{% endif %}
 		</div>
 	</div>

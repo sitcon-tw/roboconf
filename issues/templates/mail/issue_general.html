@@ -3,7 +3,7 @@
 {{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="font-size: 0.8em; padding: 0.5em; border: 1px solid #f0f0f0; border-radius: 3px;">
-	<a href="{{ site_url }}{% url 'users:profile' issue.creator.id %}">{{ sender|get_name }}</a>
+	<a href="{{ site_url }}{% url 'users:profile' issue.creator.username %}">{{ sender|get_name }}</a>
 	{% if comment %}
 		已對此議題留言。
 	{% elif issue.is_open %}

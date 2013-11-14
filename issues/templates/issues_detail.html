@@ -14,7 +14,7 @@
 		<div class="issue-main">
 			<img class="avatar medium" src="{{ issue.creator.email|get_avatar:'#' }}" alt="{{ issue.creator|get_name }}" />
 			<div class="issue-meta">
-				<a href="{% url 'users:profile' issue.creator.id %}">{{ issue.creator|get_name }}</a> 於 {{ issue.creation_time|timesince }}前建立
+				<a href="{% url 'users:profile' issue.creator.username %}">{{ issue.creator|get_name }}</a> 於 {{ issue.creation_time|timesince }}前建立
 				{% if issue.creator == user or perms.issues.change_issue %}<div class="right action-button"><a class="small radius secondary button" href="#">編輯</a></div>{% endif %}
 			</div>
 			<h4>{{ issue.title }}</h4>
@@ -62,7 +62,7 @@
 		<div class="issue-main">
 			<img class="avatar medium" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user|get_name }}" />
 			<div class="issue-meta">
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 發表評論
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 發表評論
 				{% if history.user == user %}<div class="right action-button"><a href="#" title="編輯評論">編輯</a></div>{% endif %}
 				{% if history.user == user %}<div class="right action-button"><a href="#" title="刪除評論">刪除</a></div>{% endif %}
 				<div class="right">於 {{ history.timestamp|timesince }}前</div>
@@ -79,7 +79,7 @@
 			</span>
 			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user|get_name }}" />
 			<span class="issue-meta">
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% else %}對此議題提出復議{% endif %}
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前{% if history.mode == 'C' %}將此議題結案{% else %}對此議題提出復議{% endif %}
 			</span>
 		</div>
 		{% else %}
@@ -87,21 +87,21 @@
 			<img class="avatar small" src="{{ history.user.email|get_avatar:'#' }}" alt="{{ history.user|get_name }}" />
 			<span class="issue-meta">
 			{% if history.mode == 'A' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前將此議題指派給 {% with assignee=history.content_as_user %}<a href="{% url 'users:profile' assignee.id %}">{{ assignee|get_name }}</a>{% endwith %}
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前將此議題指派給 {% with assignee=history.content_as_user %}<a href="{% url 'users:profile' assignee.username %}">{{ assignee|get_name }}</a>{% endwith %}
 			{% elif history.mode == 'a' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前撤銷此議題指派的人員
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前撤銷此議題指派的人員
 			{% elif history.mode == 'D' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前{% if history.content %}為此議題設定了期限：{{ history.content }}{% else %}撤銷此議題的期限{% endif %}
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前{% if history.content %}為此議題設定了期限：{{ history.content }}{% else %}撤銷此議題的期限{% endif %}
 			{% elif history.mode == '+' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 {% with label=history.content_as_label %}<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>{% endwith %}
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前為此議題套用標籤 {% with label=history.content_as_label %}<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>{% endwith %}
 			{% elif history.mode == '-' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前從此議題移除標籤 {% with label=history.content_as_label %}<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>{% endwith %}
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前從此議題移除標籤 {% with label=history.content_as_label %}<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>{% endwith %}
 			{% elif history.mode == 'M' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前將此議題合併至 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a>
 			{% elif history.mode == 'I' %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前將 <a href="{% url 'issues:detail' history.content %}">#{{ history.content }}</a> 合併至此議題
 			{% else %}
-				<a href="{% url 'users:profile' history.user.id %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前對此議題進行了系統無法理解的操作
+				<a href="{% url 'users:profile' history.user.username %}">{{ history.user|get_name }}</a> 於 {{ history.timestamp|timesince }}前對此議題進行了系統無法理解的操作
 			{% endif %}
 			</span>
 		</div>

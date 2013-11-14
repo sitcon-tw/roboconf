@@ -5,8 +5,8 @@ from users.models import *
 from users.utils import validate_email
 
 @login_required
-def edit(request, id):
-	user = get_object_or_404(User, pk=id)
+def edit(request, username):
+	user = get_object_or_404(User, username=username)
 	
 	if not (user == request.user or request.user.has_perm('auth.change_user')):
 		return redirect(reverse('users:list'))

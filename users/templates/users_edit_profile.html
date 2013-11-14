@@ -15,7 +15,7 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'users:edit' u.id %}" method="POST" class="profile-main">
+		<form action="{% url 'users:edit' u.username %}" method="POST" class="profile-main">
 		{% csrf_token %}
 			<div class="row">
 				<div class="small-12 columns {% if 'username' in errors %}error{% endif %}">

@@ -10,8 +10,23 @@ def sorted_users(group_id=None):
 		users = users.filter(groups__id=group_id) 
 	return sorted(users, key=get_user_sorting_key)
 
-@login_required
 def list(request):
+	if request.is_ajax():
+		from core.api import *
+
+		result = {}
+		for u in User.objects.filter(is_active=True, groups__id=11):
+			result[u.username] = {
+				"title": u.profile.title,
+				"avatar": get_avatar_url(u.email),
+			}
+		
+		return render_json(request, result)
+	
+	elif not request.user.is_authenticated():
+		from django.contrib.auth import redirect_to_login
+		redirect_to_login(request.path)
+
 	group = request.GET.get('g', '')
 	group = None if not group.isdigit() else int(group)
 	return render(request, 'users_list.html', {
