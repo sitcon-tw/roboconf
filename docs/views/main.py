@@ -80,7 +80,7 @@ def get(request, f):
 				obj['scope'] = scopes.get(p.scope)
 
 			perms.append(obj)
-			
+
 		result['permissions'] = perms
 
 	return render_json(request, result)
@@ -170,7 +170,36 @@ def put(request, f):
 
 	elif 'permissions' in PUT:
 		if not Permission.EDIT in perms: raise PermissionDenied
-		return not_implemented(request, {'error': 'not_implemented'})
+		try:
+			effects = dict((y, x) for x, y in Permission.EFFECT_ENUMERATION)
+			kinds = dict((y, x) for x, y in Permission.TYPE_ENUMERATION)
+			scopes = dict((y, x) for x, y in Permission.SCOPE_ENUMERATION)
+
+			perms = []
+			for obj in PUT.get('permissions'):
+				p = Permission()
+				p.effect = effects[obj['effect']]
+				p.type = kinds[obj['type']]
+
+				if 'group' in obj:
+					p.scope = Permission.PER_GROUP
+					p.target = obj['group']
+				elif 'user' in obj:
+					p.scope = Permission.PER_USER
+					p.target = obj['user']
+				else:
+					p.scope = scopes[obj['scope']]
+
+				perms.append(p)
+
+			f.permissions.clear()
+			f.permissions.bulk_create(perms)
+
+		except TypeError:
+			return bad_request(request, {'error': 'invalid_permissions'})
+
+		except (KeyError, ValueError):
+			return bad_request(request, {'error': 'invalid_entry'})
 
 	return render_json(request, {'status': 'success'})
 
@@ -181,4 +210,9 @@ def delete(request, f):
 	if not request.user.is_authenticated():
 		return not_authorized(request, {'error': 'anonymous_edit_not_implemented'})
 
-	return not_implemented(request, {'error': 'not_implemented'})
+	# Remove any possible viewing permission, move to trash can
+	f.permissions.clear()
+	f.parent = Folder.objects.get(id=-1)
+	f.save()
+
+	return render_json(request, {'status': 'success'})
