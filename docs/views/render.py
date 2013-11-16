@@ -1,13 +1,25 @@
 from django.shortcuts import render
-from docs.models import File, Permission, BlobText
+from docs.models import File, Permission, BlobText, Permalink
 from docs.perms import get_perms
 from docs.utils import parse_nid
 
-def render(request, permalink):
-	f = parse_nid(nidb64, File)
-	if not f:
-		from django.http import Http404
-		raise Http404
+def render(request, identifier):
+	f = parse_nid(identifier)
+
+	if not f or not isinstance(f, File):
+		try:
+			permalink = Permalink.objects.get(name=identifier)
+		except Permalink.DoesNotExist: pass
+
+		from django.utils.timezone import now
+		if not permalink or permalink.valid_since > now():
+			from django.http import Http404
+			raise Http404
+
+		f = permalink.file
+		rev = permalink.revision if permalink.revision else f.current_revision
+	else:
+		rev = f.current_revision
 
 	perms = get_perms(request.user, f)
 	if Permission.VIEW not in perms:
@@ -18,7 +30,7 @@ def render(request, permalink):
 			from django.contrib.auth.views import redirect_to_login
 			return redirect_to_login(request.path)
 
-	text = f.current_revision.text
+	text = rev.text
 	if text.format == BlobText.MARKDOWN:
 		from core.formatting import render_document
 		rendered_text = render_document(text.text)
