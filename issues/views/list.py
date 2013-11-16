@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from issues.models import Issue, Label
 
 @login_required
-def list(request, filter={}):
+def list(request, filter=None):
 	if request.is_ajax():
 		from core.api import not_implemented
 		return not_implemented(request, {'error': 'not_implemented'})
@@ -16,8 +16,9 @@ def list(request, filter={}):
 	}
 
 	# 1st phase filtering
+	if not filter: filter = {}
 	if 'assigned' in filter:
-		dataset = dataset.filter(assigned__id=filter['assigned'])
+		dataset = dataset.filter(assignee__id=filter['assignee'])
 	if 'creator' in filter:
 		dataset = dataset.filter(creator__id=filter['creator'])
 	if 'starring' in filter:

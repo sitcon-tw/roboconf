@@ -7,9 +7,9 @@
 		<ul class="side-nav filter">
 			<li{% if filters.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題 <span class="right">{{ counts.all }}</span></a></li>
 			{% if user.is_authenticated %}
-			<li{% if filters.mode == 'assigned' %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我 <span class="right">{{ user.assigned_issues.count }}</span></a></li>
-			<li{% if filters.mode == 'created' %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ user.created_issues.count }}</span></a></li>
-			<li{% if filters.mode == 'starred' %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ user.starred_issues.count }}</span></a></li>
+			<li{% if filter.assignee == user.id %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我 <span class="right">{{ user.assigned_issues.count }}</span></a></li>
+			<li{% if filters.creator == user.id %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ user.created_issues.count }}</span></a></li>
+			<li{% if filters.starring == user.id %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ user.starred_issues.count }}</span></a></li>
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
