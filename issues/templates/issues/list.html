@@ -32,7 +32,7 @@
 				<div>
 					<a class="small radius secondary dropdown button" data-dropdown="sort-dropdown" href="#">
 						<span>排序：</span>
-						{% if filter.creation_time == '+' %}最舊{% else %}最新{% endif %}{% if filter.due_time == '+' %}最先到期{% elif filter.due_time == '-' %}最晚到期{% endif %}
+						{% if filter.creation_time == '+' %}最舊{% elif filter.creation_time == '-' %}最新{% endif %}{% if filter.due_time == '+' %}最先到期{% elif filter.due_time == '-' %}最晚到期{% endif %}
 					</a>
 					<ul id="sort-dropdown" class="f-dropdown" data-dropdown-content>
 						<li><a href="{{ request.path }}?sort=created&amp;direction=desc">最新</a></li>
