@@ -9,7 +9,8 @@ def render(request, identifier):
 	if not f or not isinstance(f, File):
 		try:
 			permalink = Permalink.objects.get(name=identifier)
-		except Permalink.DoesNotExist: pass
+		except Permalink.DoesNotExist:
+			pass
 
 		from django.utils.timezone import now
 		if not permalink or permalink.valid_since > now():
@@ -18,8 +19,8 @@ def render(request, identifier):
 
 		f = permalink.file
 		rev = permalink.revision if permalink.revision else f.current_revision
-	else:
-		rev = f.current_revision
+
+	else: rev = f.current_revision
 
 	perms = get_perms(request.user, f)
 	if Permission.VIEW not in perms:
