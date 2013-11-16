@@ -28,7 +28,7 @@ def list(request, filter={}):
 	counts['closed'] = dataset.filter(is_open=False).count()
 
 	# 2nd phase parameter parsing
-	filter['is_open'] = (request.GET.get('state') == 'closed')
+	filter['is_open'] = not (request.GET.get('state') == 'closed')
 
 	label = request.GET.get('label')
 	if label and str(label).isdigit():
