@@ -15,7 +15,7 @@ def profile(request, username):
 		return bad_request(request, {'status': 'invalid'})
 
 	elif not request.user.is_authenticated():
-		from django.contrib.auth import redirect_to_login
+		from django.contrib.auth.views import redirect_to_login
 		return redirect_to_login(request.path)
 
 	return render(request, 'users_profile.html', {

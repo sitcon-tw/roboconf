@@ -19,21 +19,45 @@ def view(request, nidb64):
 		from django.http import Http404
 		raise Http404
 
-	if request.method == 'GET' and request.is_ajax():
-		return get(request, f)
-	elif request.method == 'POST':
+	if request.method == 'POST':
 		return post(request, f)
 	elif request.method == 'PUT':
 		return put(request, f)
 	elif request.method == 'DELETE':
 		return delete(request, f)
+	elif request.is_ajax():
+		return not_allowed(request, ['GET', 'POST', 'PUT', 'DELETE'])
 
-	return render(request, 'docs_view.html', {'node': f})
+
+	if not has_perm(request.user, f, Permission.VIEW):
+		if not request.user.is_authenticated():
+			from django.contrib.auth.views import redirect_to_login
+			redirect_to_login(request.path)
+		else:
+			raise PermissionDenied
+	
+	if request.is_ajax():
+		return get(request, f)
+	else:
+		perms = get_perms(request.user, f)
+		params = {
+			'node': f,
+			'docperms': {
+				'view': True,
+				'comment': Permission.COMMENT in perms,
+				'edit': Permission.EDIT in perms,
+			},
+		}
+
+		if isinstance(f, Folder):
+			return render(request, 'docs_folder.html', params)
+		else:
+			return render(request, 'docs_file.html', params)
 
 def get(request, f):
-	if not has_perm(request.user, f, Permission.VIEW):
-		raise PermissionDenied
-	
+	#if not has_perm(request.user, f, Permission.VIEW):
+	#	raise PermissionDenied
+
 	details = request.GET.getlist('details', ['node'])
 	result = {'status': 'success'}
 
@@ -114,7 +138,7 @@ def post(request, f):
 			}
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:node'), args=(f.nid(),))
+			return redirect(reverse('docs:view'), args=(f.nid(),))
 
 def put(request, f):
 	PUT = parse_json(request)

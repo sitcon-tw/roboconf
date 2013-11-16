@@ -1,0 +1,15 @@
+{% extends 'core_main_safe.html' %}
+{% block title %}{{ node.name }} ‧ 文件{{ block.super }}{% endblock %}
+{% block content %}
+<div class="left">
+	<a class="right iconize icon-back has-tip" href="{% url 'docs:view' node.parent.nid %}" title="回到「{{ node.parent.name }}」" data-tooltip></a>
+</div>
+<div class="row">
+	<div class="large-9 large-centered columns">
+		<article>{{ text|safe }}</article>
+		<footer>
+			<small>本文件由 <a href="http://staff.sitcon.org/">SITCON 行政系統</a>提供。</small>
+		</footer>
+	</div>
+</div>
+{% endblock %}

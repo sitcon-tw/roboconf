@@ -24,7 +24,7 @@ def list(request):
 		return render_json(request, result)
 	
 	elif not request.user.is_authenticated():
-		from django.contrib.auth import redirect_to_login
+		from django.contrib.auth.views import redirect_to_login
 		redirect_to_login(request.path)
 
 	group = request.GET.get('g', '')

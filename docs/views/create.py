@@ -51,9 +51,25 @@ def create(request):
 				result['revision'] = r.id
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:node'), args=(f.nid(),))
+			return redirect(reverse('docs:view'), args=(f.nid(),))
 
-	return render(request, 'docs_create.html', {})
+	elif request.is_ajax():
+		return not_allowed(request, ['POST'])
+
+	else:
+		parent = parse_nid(request.GET.get('at'))
+		if not (parent and isinstance(parent, Folder)):
+			return redirect(reverse('docs:main'))
+
+		if not has_perm(request.user, parent, Permission.EDIT):
+			if not request.user.is_authenticated():
+				from django.contrib.auth.views import redirect_to_login
+				return redirect_to_login(request.path)
+			else:
+				from django.core.exceptions import PermissionDenied
+				raise PermissionDenied
+
+		return render(request, 'docs_create.html', {'parent': parent})
 
 def create_revision(request):
 	content = request.POST.get('content')

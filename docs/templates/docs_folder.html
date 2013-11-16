@@ -1,27 +1,26 @@
 {% extends 'core_main.html' %}
 {% load usermeta %}
-{% load docmeta %}
 {% load dateutils %}
 {% block title %}文件{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
-			<li class="active"><a href="{% url 'docs:folder' 0|nid %}">文件</a></li>
+			<li class="active"><a href="{% url 'docs:main' %}">文件</a></li>
 			{% if user.is_authenticated %}
 			<li><a href="#">星號標記</a></li>
 			<li><a href="#">垃圾桶</a></li>
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
-		{% if meta.ancestry %}
+		{% if node.parent %}
 		<div class="treeview">
 			<ul>
 				<li>
-					<a href="{% url 'docs:folder' meta.ancestry|nid %}" class="folder">{{ meta.ancestry.name }}</a>
+					<a href="{% url 'docs:view' node.parent.nid %}" class="folder">{{ node.parent.name }}</a>
 					<ul>
-					{% for f in meta.siblings %}
-						<li><a href="{% url 'docs:folder' f|nid %}" class="folder {% if f.id == folder.id %}active{% endif %}">{{ f.name }}</a></li>
+					{% for f in node.parent.folders.all %}
+						<li><a href="{% url 'docs:view' f.nid %}" class="folder {% if f.id == node.id %}active{% endif %}">{{ f.name }}</a></li>
 					{% endfor %}
 					</ul>
 				</li>
@@ -34,10 +33,10 @@
 			<div class="large-12 columns button-row">
 				<div class="left">
 				{% if user.is_authenticated %}
-					{% if can_edit %}
-					<button class="small radius secondary button" title="在「{{ folder.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
+					{% if docperms.edit %}
+					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
 					{% endif %}
-					<button class="small radius secondary {{ can_edit|yesno:',disabled' }} button" title="共用"><span class="icon-share iconize"></span></button>
+					<button class="small radius secondary {{ docperms.edit|yesno:',disabled' }} button" title="共用"><span class="icon-share iconize"></span></button>
 					{% if perms.docs.archive %}
 					<button class="small radius secondary button" title="封存"><span class="icon-archive iconize"></span></button>
 					{% endif %}
@@ -63,7 +62,7 @@
 					<div>
 						<button class="small radius button" href="#" data-dropdown="dropdown-create">建立文件</button>
 						<ul id="dropdown-create" class="f-dropdown" data-dropdown-content>
-							<li><a href="{% url 'docs:create' %}?folder={{ folder|nid }}"><span class="icon-new iconize"></span> 新文件</a></li>
+							<li><a href="{% url 'docs:create' %}?at={{ node.nid }}"><span class="icon-new iconize"></span> 新文件</a></li>
 							<li><a href="#"><span class="icon-upload iconize"></span> 從電腦上傳</a></li>
 							<li><a href="#"><span class="icon-link iconize"></span> 外部連結</a></li>
 						</ul>
@@ -75,15 +74,15 @@
 		<div class="row">
 			<div class="large-12 columns">
 				<nav class="breadcrumbs">
-				{% for f in folder.path %}
-					<a href="{% url 'docs:folder' f|nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
+				{% for f in node.path %}
+					<a href="{% url 'docs:view' f.nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
 				{% endfor %}
 				</nav>
 			</div>
 		</div>
 		<div class="row">
 			<div class="large-12 columns">
-				{% if not meta.empty %}
+				{% if node.folders.exists or node.files.exists %}
 				<table class="docs-list main">
 					<thead>
 						<tr>
@@ -94,19 +93,19 @@
 						</tr>
 					</thead>
 					<tbody>
-					{% for f in meta.subfolders %}
+					{% for f in node.folders.all %}
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
-							<td><a href="{% url 'docs:folder' f|nid %}"><span class="icon-folder iconize"></span> {{ f.name }}</a></td>
+							<td><a href="{% url 'docs:view' f.nid %}"><span class="icon-folder iconize"></span> {{ f.name }}</a></td>
 							<td class="detail-column">{{ f.last_modified|smartdate }}</td>
 						</tr>
 					{% endfor %}
-					{% for f in meta.files %}
+					{% for f in node.files.all %}
 						<tr>
 							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
 							<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
-							<td><a href="{% url 'docs:view' f|nid %}"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
+							<td><a href="{% url 'docs:view' f.nid %}"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
 							<td class="detail-column">{{ f.last_modified|smartdate }} {{ f.current_revision.user|get_name }}</td>
 						</tr>
 					{% endfor %}
@@ -114,7 +113,7 @@
 				</table>
 				{% else %}
 				<div class="placeholder-message">
-					<span>尚無文件。{% if user.is_authenticated %}<a href="{% url 'docs:create' %}?folder={{ folder|nid }}">建立新文件？</a>{% endif %}</span>
+					<span>尚無文件。{% if user.is_authenticated and docperms.edit %}<a href="{% url 'docs:create' %}?at={{ node.nid }}">建立新文件？</a>{% endif %}</span>
 				</div>
 				{% endif %}
 			</div>

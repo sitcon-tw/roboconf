@@ -1,5 +1,4 @@
 {% extends 'core_main.html' %}
-{% load docmeta %}
 {% block title %}建立文件{{ block.super }}{% endblock %}
 {% block content %}
 {% if status %}
@@ -11,14 +10,15 @@
 {% endif %}
 <div class="row">
 	<div class="large-1 columns">
-		<a class="right iconize icon-back has-tip" href="{% url 'docs:folder' folder|nid %}" title="回到「{{ folder.name }}」" data-tooltip></a>
+		<a class="right iconize icon-back has-tip" href="{% url 'docs:view' parent.nid %}" title="回到「{{ parent.name }}」" data-tooltip></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'docs:create' %}?folder={{ folder|nid }}" method="POST">
+		<form action="{% url 'docs:create' %}" method="POST">
 		{% csrf_token %}
 			<div class="row">
 				<div class="large-12 columns">
 					<input type="text" name="name" placeholder="名稱" required />
+					<input type="hidden" name="at" value="{{ parent.nid }}" />
 				</div>
 			</div>
 			<div class="row">
