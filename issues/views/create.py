@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.utils import dateparse
 from issues.models import *
 from issues.utils import send_mail
