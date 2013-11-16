@@ -66,7 +66,7 @@ def create(request):
 			issue.save()	# Now save the labels
 			return redirect(reverse('issues:detail', args=(issue.id,)))
 		
-	return render(request, 'issues_create.html', {
+	return render(request, 'issues/create.html', {
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
 		'errors': errors,

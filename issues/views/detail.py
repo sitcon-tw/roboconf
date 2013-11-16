@@ -26,7 +26,7 @@ def detail(request, issue_id):
 		if action == 'toggle-state':
 			toggle_state(issue, request)
 
-	return render(request, 'issues_detail.html', {
+	return render(request, 'issues/detail.html', {
 		'issue': issue,
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),

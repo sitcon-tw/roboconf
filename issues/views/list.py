@@ -49,7 +49,7 @@ def list(request, filter={}):
 	if 'creation_time' in filter:
 		dataset = dataset.order_by('creation_time' if filter['creation_time'] == '+' else '-creation_time')
 
-	return render(request, 'issues_list.html', {
+	return render(request, 'issues/list.html', {
 		'issues': dataset.all(),
 		'labels': Label.objects.all(),
 		'filter': filter,
