@@ -1,0 +1,23 @@
+{% extends 'core_base.html' %}
+{% block content_block %}
+<div class="contain-to-grid fixed">
+	<nav class="top-bar">
+		{% spaceless %}
+		<ul class="title-area">
+			<li class="name"><h1><a href="/"><span class="logo">SITCON</span></a></h1></li>
+			<li class="toggle-topbar"><a href="#"><span></span></a></li>
+		</ul>
+		{# 移除所有元素，以免因 URLConf 炸掉而導致 500 無法顯示 #}
+		<section class="top-bar-section">
+			<ul class="left"></ul>
+			<ul class="right"></ul>
+		</section>
+		{% endspaceless %}
+	</nav>
+</div>
+<div class="container row page-content">
+	<div class="large-12 columns">
+{% block content %}{% endblock %}
+	</div>
+</div>
+{% endblock %}

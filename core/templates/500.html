@@ -1,23 +1,8 @@
-{% extends 'core_base.html' %}
+{% extends 'core_main_safe.html' %}
 {% load staticfiles %}
 {% block title %}伺服器錯誤{{ block.super }}{% endblock %}
-{% block content_block %}
-<div class="contain-to-grid fixed">
-	<nav class="top-bar">
-		{% spaceless %}
-		<ul class="title-area">
-			<li class="name"><h1><a href="/"><span class="logo">SITCON</span></a></h1></li>
-			<li class="toggle-topbar"><a href="#"><span></span></a></li>
-		</ul>
-		{# 移除所有元素，以免因 URLConf 炸掉而導致 500 無法顯示 #}
-		<section class="top-bar-section">
-			<ul class="left"></ul>
-			<ul class="right"></ul>
-		</section>
-		{% endspaceless %}
-	</nav>
-</div>
-<div class="container row page-content">
+{% block content %}
+<div class="row">
 	<div class="large-6 small-9 small-centered has-quote columns">
 		<img class="situation" src="{% static 'img/situations/handler_500.jpg' %}" alt="500 Internal Server Error">
 		<h3 class="text-center">嗚呃，發生問題了！</h3>
