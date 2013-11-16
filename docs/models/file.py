@@ -28,8 +28,8 @@ class File(models.Model):
 	# revisions (OneToManyField to Revision)
 
 	def nid(self):
-		from docs.utils import get_uid
-		return get_uid(File, self.id)
+		from docs.utils import get_nid
+		return get_nid(File, self.id)
 
 	def __unicode__(self):
 		return self.name

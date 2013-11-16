@@ -38,5 +38,5 @@ def parse_nid(nidb64):
     except (TypeError, ValueError, OverflowError, KeyError, ObjectDoesNotExist):
         return None
 
-def get_uid(model, id):
+def get_nid(model, id):
     return generate_nid(force_bytes(id) + model.nid_namespace)

@@ -33,8 +33,8 @@ class Folder(models.Model):
 		return path
 
 	def nid(self):
-		from docs.utils import get_uid
-		return get_uid(Folder, self.id)
+		from docs.utils import get_nid
+		return get_nid(Folder, self.id)
 
 	def __unicode__(self):
 		return self.name
