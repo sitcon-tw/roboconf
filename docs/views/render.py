@@ -13,7 +13,7 @@ def render(request, identifier):
 			permalink = None
 
 		from django.utils.timezone import now
-		if not permalink or permalink.valid_since > now():
+		if not permalink or (permalink.valid_since and permalink.valid_since > now()):
 			from django.http import Http404
 			raise Http404
 
