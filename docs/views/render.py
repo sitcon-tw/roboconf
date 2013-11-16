@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render as render_request
 from docs.models import File, Permission, BlobText, Permalink
 from docs.perms import get_perms
 from docs.utils import parse_nid
@@ -40,7 +40,7 @@ def render(request, identifier):
 	else: # text.format == BlobText.TEXT:
 		rendered_text = r'<blockquote>%s</blockquote>' % text.text
 
-	return render(request, 'docs_render.html', {
+	return render_request(request, 'docs_render.html', {
 		'node': f,
 		'text': rendered_text,
 		'docperms': {
