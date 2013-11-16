@@ -28,11 +28,10 @@ def view(request, nidb64):
 	elif request.is_ajax():
 		return not_allowed(request, ['GET', 'POST', 'PUT', 'DELETE'])
 
-
 	if not has_perm(request.user, f, Permission.VIEW):
 		if not request.user.is_authenticated():
 			from django.contrib.auth.views import redirect_to_login
-			redirect_to_login(request.path)
+			return redirect_to_login(request.path)
 		else:
 			raise PermissionDenied
 	

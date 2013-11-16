@@ -25,7 +25,7 @@ def list(request):
 	
 	elif not request.user.is_authenticated():
 		from django.contrib.auth.views import redirect_to_login
-		redirect_to_login(request.path)
+		return redirect_to_login(request.path)
 
 	group = request.GET.get('g', '')
 	group = None if not group.isdigit() else int(group)
