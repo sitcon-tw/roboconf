@@ -56,7 +56,7 @@ def list(request, mode, user_id=None):
 	filters = { 'is_open': is_open, 'mode': mode }
 	sorting = { 'asc': is_asc, 'desc': not is_asc, 'order': sort_order }
 
-	return render(request, 'issues_list.html', {
+	return render(request, 'issues/list.html', {
 		'current_url': request.path,
 		'issues': dataset.all(),
 		'labels': Label.objects.all(),

@@ -47,7 +47,7 @@ def detail(request, issue_id):
 		if action == 'toggle-state':
 			_detail.toggle_state(issue, request)
 
-	return render(request, 'issues_detail.html', {
+	return render(request, 'issues/detail.html', {
 		'issue': issue,
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
@@ -67,7 +67,7 @@ def create(request):
 		if issue: return redirect(reverse('issues:detail', args=(issue.id,)))
 		elif not errors: return redirect(reverse('issues:list'))	# Audit error
 
-	return render(request, 'issues_create.html', {
+	return render(request, 'issues/create.html', {
 		'labels': Label.objects.all(),
 		'users': User.objects.all(),
 		'errors': errors,
