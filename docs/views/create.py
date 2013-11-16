@@ -69,7 +69,7 @@ def create(request):
 				from django.core.exceptions import PermissionDenied
 				raise PermissionDenied
 
-		return render(request, 'docs_create.html', {'parent': parent})
+		return render(request, 'docs/create.html', {'parent': parent})
 
 def create_revision(request):
 	content = request.POST.get('content')

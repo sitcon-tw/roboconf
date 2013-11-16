@@ -40,7 +40,7 @@ def render(request, identifier):
 	else: # text.format == BlobText.TEXT:
 		rendered_text = r'<blockquote>%s</blockquote>' % text.text
 
-	return render_request(request, 'docs_render.html', {
+	return render_request(request, 'docs/render.html', {
 		'node': f,
 		'text': rendered_text,
 		'docperms': {

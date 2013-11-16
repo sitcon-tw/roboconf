@@ -51,9 +51,9 @@ def view(request, nidb64):
 		if isinstance(f, Folder):
 			if f.parent:
 				params['docperms']['view_parent'] = has_perm(request.user, f.parent, Permission.VIEW)
-			return render(request, 'docs_folder.html', params)
+			return render(request, 'docs/folder.html', params)
 		else:
-			return render(request, 'docs_file.html', params)
+			return render(request, 'docs/file.html', params)
 
 def get(request, f):
 	#if not has_perm(request.user, f, Permission.VIEW):
