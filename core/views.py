@@ -6,7 +6,7 @@ def index(request):
 	if request.user.is_authenticated():
 		context['issues'] = request.user.assigned_issues.filter(is_open=True).all()
 
-	return render(request, 'core_index.html', context)
+	return render(request, 'core/index.html', context)
 
 # since Django 1.5 hasn't include this...
 def bad_request(request):
