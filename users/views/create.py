@@ -74,7 +74,7 @@ def create(request):
 		else:
 			status = 'error'
 
-	return render(request, 'users_create.html', {
+	return render(request, 'users/create.html', {
 		'categories': GroupCategory.objects.all(),
 		'errors': errors,
 		'status': status,

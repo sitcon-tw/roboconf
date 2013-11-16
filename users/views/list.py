@@ -29,7 +29,7 @@ def list(request):
 
 	group = request.GET.get('g', '')
 	group = None if not group.isdigit() else int(group)
-	return render(request, 'users_list.html', {
+	return render(request, 'users/list.html', {
 		'users': sorted_users(group_id=group),
 		'categories': GroupCategory.objects.all(),
 		'filter': group,
@@ -38,7 +38,7 @@ def list(request):
 @login_required
 def contacts(request):
 	dataset = User.objects.filter(is_active=True)
-	return render(request, 'users_contacts.html', {
+	return render(request, 'users/contacts.html', {
 		'users': sorted_users(),
 		'show_details': request.user.groups.filter(id=11).exists(),	# Only show cellphone to staff
 	})

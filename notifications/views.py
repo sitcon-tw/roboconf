@@ -10,7 +10,7 @@ from users.utils import get_user_name
 def list(request):
 	if not request.user.has_perm('notifications.add_message'):
 		return redirect(reverse('core:index'))
-	return render(request, 'notifications_list.html', {'messages': Message.objects.filter(is_sent=False) })
+	return render(request, 'notifications/list.html', {'messages': Message.objects.filter(is_sent=False) })
 
 @login_required
 def create(request):
@@ -65,4 +65,4 @@ def create(request):
 		Message.objects.bulk_create(messages)
 		context['status'] = 'success'
 
-	return render(request, 'notifications_create.html', context)
+	return render(request, 'notifications/create.html', context)

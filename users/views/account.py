@@ -23,7 +23,7 @@ def change_password(request):
 				status = 'success'
 			else: status = 'password_mismatch'
 		else: status = 'invalid_login'
-	return render(request, 'users_change_password.html', {'status': status})
+	return render(request, 'users/change_password.html', {'status': status})
 
 def reset_password(request):
 	form = PasswordResetForm()
@@ -45,7 +45,7 @@ def reset_password(request):
 		form.save()
 		status = 'success'
 
-	return render(request, 'users_reset_password.html', {'form': form, 'status': status})
+	return render(request, 'users/reset_password.html', {'form': form, 'status': status})
 
 @sensitive_post_parameters()
 def reset_password_confirm(request, uidb64, token):
@@ -61,4 +61,4 @@ def reset_password_confirm(request, uidb64, token):
 	else:
 		return redirect(reverse('users:reset_password') + '?status=invalid_token')
 
-	return render(request, 'users_set_password.html', {'form': form})
+	return render(request, 'users/set_password.html', {'form': form})

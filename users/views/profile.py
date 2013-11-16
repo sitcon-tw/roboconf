@@ -18,6 +18,6 @@ def profile(request, username):
 		from django.contrib.auth.views import redirect_to_login
 		return redirect_to_login(request.path)
 
-	return render(request, 'users_profile.html', {
+	return render(request, 'users/profile.html', {
 		'u': user,
 	})

@@ -60,7 +60,7 @@ def edit(request, username):
 		else:
 			status = 'error'
 
-	return render(request, 'users_edit_profile.html', {
+	return render(request, 'users/edit_profile.html', {
 		'u': user,
 		'errors': errors,
 		'status': status,

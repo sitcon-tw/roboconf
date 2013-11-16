@@ -29,7 +29,7 @@ def login(request):
 
 	url = request.REQUEST.get('next')
 	context['redirect_url'] = url
-	return render(request, 'users_login.html', context)
+	return render(request, 'users/login.html', context)
 
 def logout(request):
 	auth.logout(request)
