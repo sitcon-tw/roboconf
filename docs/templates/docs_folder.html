@@ -13,9 +13,10 @@
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
-		{% if node.parent and docperms.view_parent %}
+		{% if node.parent %}
 		<div class="treeview">
 			<ul>
+				{% if docperms.view_parent %}
 				<li>
 					<a href="{% url 'docs:view' node.parent.nid %}" class="folder">{{ node.parent.name }}</a>
 					<ul>
@@ -24,6 +25,9 @@
 					{% endfor %}
 					</ul>
 				</li>
+				{% else %}
+				<li><a href="#" class="folder active">{{ node.name }}</a></li>
+				{% endif %}
 			</ul>
 		</div>
 		{% endif %}
@@ -74,9 +78,14 @@
 		<div class="row">
 			<div class="large-12 columns">
 				<nav class="breadcrumbs">
+				{% if docperms.view_parent %}
 				{% for f in node.path %}
 					<a href="{% url 'docs:view' f.nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
 				{% endfor %}
+				{% else %}
+					<a href="#" class="unavailable">文件</a>
+					<a href="#" class="current">{{ node.name }}</a>
+				{% endif %}
 				</nav>
 			</div>
 		</div>
