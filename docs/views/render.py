@@ -10,7 +10,7 @@ def render(request, identifier):
 		try:
 			permalink = Permalink.objects.get(name=identifier)
 		except Permalink.DoesNotExist:
-			pass
+			permalink = None
 
 		from django.utils.timezone import now
 		if not permalink or permalink.valid_since > now():
