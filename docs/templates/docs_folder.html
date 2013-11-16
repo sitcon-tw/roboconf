@@ -9,11 +9,11 @@
 			<li class="active"><a href="{% url 'docs:main' %}">文件</a></li>
 			{% if user.is_authenticated %}
 			<li><a href="#">星號標記</a></li>
-			<li><a href="#">垃圾桶</a></li>
+			{% if user.is_staff %}<li><a href="{% url 'docs:view' 'LTFE' %}">垃圾桶</a></li>{% endif %}
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
-		{% if node.parent %}
+		{% if node.parent and docperms.view_parent %}
 		<div class="treeview">
 			<ul>
 				<li>
@@ -41,10 +41,10 @@
 					<button class="small radius secondary button" title="封存"><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-2 button-group">
-						<li><button class="small secondary button" title="移動"><span class="icon-move iconize"></span></button></li>
-						<li><button class="small secondary button" title="刪除"><span class="icon-delete iconize"></span></button></li>
+						<li><button class="small secondary button" title="移動" disabled><span class="icon-move iconize"></span></button></li>
+						<li><button class="small secondary button" title="刪除" disabled><span class="icon-delete iconize"></span></button></li>
 					</ul>
-					<button class="small radius secondary button" title="詳細資訊"><span class="icon-info iconize"></span></button>
+					<button class="small radius secondary button" title="詳細資訊" disabled><span class="icon-info iconize"></span></button>
 				{% endif %}
 				</div>
 				<div class="right">
