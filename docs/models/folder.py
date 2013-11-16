@@ -4,9 +4,10 @@ from django.utils.timezone import now
 
 class Folder(models.Model):
 
+	nid_namespace = 'D'
+
 	class Meta:
 		app_label = 'docs'
-		nid_namespace = 'D'
 		ordering = ['name']
 
 	name = models.CharField(max_length=256)

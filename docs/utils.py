@@ -39,4 +39,4 @@ def parse_nid(nidb64):
         return None
 
 def get_uid(model, id):
-    return generate_nid(force_bytes(id) + model.Meta.nid_namespace)
+    return generate_nid(force_bytes(id) + model.nid_namespace)
