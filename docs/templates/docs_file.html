@@ -17,24 +17,24 @@
 		{% csrf_token %}
 			<div class="row">
 				<div class="large-12 columns">
-					<input type="text" name="name" placeholder="名稱" value="{{ node.name }}" required />
+					<input type="text" name="name" placeholder="名稱" value="{{ node.name }}" {{ docperms.edit|yesno:',disabled' }} required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="large-6 columns">
-					<label for="is_markdown_checkbox"><input type="checkbox" id="is_markdown_checkbox" name="is_markdown" placeholder="名稱" {% if node.current_revision.text.format == 'M' %}checked{% endif %} /> <span>標記為 Markdown 格式</span></label>
+					<label for="is_markdown_checkbox"><input type="checkbox" id="is_markdown_checkbox" name="is_markdown" placeholder="名稱" {% if node.current_revision.text.format == 'M' %}checked{% endif %} {{ docperms.edit|yesno:',disabled' }} /> <span>標記為 Markdown 格式</span></label>
 				</div>
 				<div class="large-6 columns">
 				</div>
 			</div>
 			<div class="row">
 				<div class="large-12 columns">
-					<textarea name="text" style="min-height: 23em;">{{ node.current_revision.text.text }}</textarea>
+					<textarea name="text" style="min-height: 23em;" {{ docperms.edit|yesno:',disabled' }}>{{ node.current_revision.text.text }}</textarea>
 				</div>
 			</div>
 			<div class="button-row">
 				<div class="right">
-					<input type="submit" class="radius button" name="submit" value="儲存" />
+					<input type="submit" class="radius button" name="submit" value="儲存" {{ docperms.edit|yesno:',disabled' }} />
 				</div>
 			</div>
 		</form>
