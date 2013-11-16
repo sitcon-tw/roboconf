@@ -1,9 +1,38 @@
-# -*- coding: utf-8 -*-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from issues.models import *
 from issues.utils import send_mail
 from users.utils import get_user_name
+
+@login_required
+def detail(request, issue_id):
+	issue = get_object_or_404(Issue, pk=issue_id)
+
+	action = request.POST.get('action')		# Check if postback
+	if action == 'assign':
+		assign(issue, request)
+	elif action == 'set-label':
+		set_label(issue, request)
+	#elif action == 'set-due':
+		#pass
+	elif action == 'toggle-star':
+		toggle_star(issue, request)
+	elif action:
+		content = request.POST.get('content')
+		if content: comment(issue, request)
+		if action == 'toggle-state':
+			toggle_state(issue, request)
+
+	return render(request, 'issues_detail.html', {
+		'issue': issue,
+		'labels': Label.objects.all(),
+		'users': User.objects.all(),
+		'has_starred': issue.starring.filter(id=request.user.id).count() > 0,
+	})
+
 
 def update(issue, user, content='', mode=IssueHistory.COMMENT):
 	issue.last_updated = timezone.now()
@@ -12,7 +41,7 @@ def update(issue, user, content='', mode=IssueHistory.COMMENT):
 
 def notify(issue, user, template_name, context):
 	for watcher in issue.starring.all():
-		if user == watcher: continue
+		#if user == watcher: continue
 		send_mail(user, watcher, template_name, context)
 
 def assign(issue, request):
