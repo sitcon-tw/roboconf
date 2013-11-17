@@ -21,8 +21,8 @@ License
 -------
 This project (#Roboconf) is temporarily licensed under [GNU AGPL-3.0](http://www.gnu.org/licenses/agpl-3.0.html) with one conditional statement:
 
-> If #Roboconf were used to operate a conference with:  
-> (a) 200 or more participants or (b) 50 or more staff,  
-> the conference organizer would need to either  
-> (a) help promote SITCON by putting SITCON logo on the conference website, or  
-> (b) support SITCON by either donation or becoming one of SITCON's sponsor.  
+> If #Roboconf were used to operate a conference with: 
+> (a) 200 or more participants or (b) 50 or more staff, 
+> the conference organizer would need to either 
+> (a) help promote SITCON by putting SITCON logo on the conference website, or 
+> (b) support SITCON by either donation or becoming one of SITCON's sponsor.
