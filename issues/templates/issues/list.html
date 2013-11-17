@@ -5,11 +5,11 @@
 <div class="row">
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
-			<li{% if filters.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題 <span class="right">{{ counts.all }}</span></a></li>
+			<li{% if filter.mode == 'list' %} class="active"{% endif %}><a href="{% url 'issues:list' %}">所有議題 <span class="right">{{ counts.all }}</span></a></li>
 			{% if user.is_authenticated %}
 			<li{% if filter.assignee == user.id %} class="active"{% endif %}><a href="{% url 'issues:assigned' user.id %}">分派給我 <span class="right">{{ user.assigned_issues.count }}</span></a></li>
-			<li{% if filters.creator == user.id %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ user.created_issues.count }}</span></a></li>
-			<li{% if filters.starring == user.id %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ user.starred_issues.count }}</span></a></li>
+			<li{% if filter.creator == user.id %} class="active"{% endif %}><a href="{% url 'issues:created' user.id %}">由我建立 <span class="right">{{ user.created_issues.count }}</span></a></li>
+			<li{% if filter.starring == user.id %} class="active"{% endif %}><a href="{% url 'issues:starred' user.id %}">已加星號 <span class="right">{{ user.starred_issues.count }}</span></a></li>
 			{% endif %}
 		</ul>
 		<div class="divider"></div>
@@ -25,8 +25,8 @@
 			<div class="left">
 				<div>
 					<ul class="radius button-group">
-						<li><a href="{{ request.path }}?state=open" class="small secondary button {{ filters.is_open|yesno:'active,' }}">待處理 <span>({{ counts.open }})</span></a></li>
-						<li><a href="{{ request.path }}?state=closed" class="small secondary button {{ filters.is_open|yesno:',active' }}">已結案 <span>({{ counts.closed }})</span></a></li>
+						<li><a href="{{ request.path }}?state=open" class="small secondary button {{ filter.is_open|yesno:'active,' }}">待處理 <span>({{ counts.open }})</span></a></li>
+						<li><a href="{{ request.path }}?state=closed" class="small secondary button {{ filter.is_open|yesno:',active' }}">已結案 <span>({{ counts.closed }})</span></a></li>
 					</ul>
 				</div>
 				<div>
