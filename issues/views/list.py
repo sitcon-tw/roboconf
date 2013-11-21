@@ -17,7 +17,7 @@ def list(request, filter=None):
 
 	# 1st phase filtering
 	if not filter: filter = {}
-	if 'assigned' in filter:
+	if 'assignee' in filter:
 		dataset = dataset.filter(assignee__id=filter['assignee'])
 	if 'creator' in filter:
 		dataset = dataset.filter(creator__id=filter['creator'])
@@ -59,7 +59,7 @@ def list(request, filter=None):
 
 @login_required
 def assigned(request, user_id):
-	return list(request, {'assigned': user_id})
+	return list(request, {'assignee': user_id})
 
 @login_required
 def created(request, user_id):
