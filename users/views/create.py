@@ -4,10 +4,9 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from users.models import *
 from users.utils import *
-from notifications.utils import send_template_mail, format_address
 
 @sensitive_variables('password')
-@permission_required('auth.add_user', login_url='users:list')
+@permission_required('auth.add_user')
 def create(request):
 	errors = []
 	status = ''
@@ -24,8 +23,9 @@ def create(request):
 		else:
 			errors += ['username', 'invalid_username']
 
-		email = request.POST.get('email', '')
-		if validate_email(email):
+		from django.core.validators import validate_email
+		email = request.POST.get('email')
+		if email and validate_email(email):
 			if User.objects.filter(email=email).count() < 1:
 				user.email = email
 			else:
@@ -66,6 +66,8 @@ def create(request):
 					'groups': [g.name for g in user.groups.all()],
 				}
 
+				from notifications.utils import send_template_mail, format_address
+				
 				sender_address = format_address(get_user_name(request.user), request.user.email)
 				receiver_address = format_address(get_user_name(user), user.email)
 				send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
