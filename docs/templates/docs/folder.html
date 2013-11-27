@@ -134,10 +134,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('input[data-select-all]').change(function() {
-		$('input[data-list-checkbox]:not([data-select-all])').val(this.checked);
+		$('input[data-list-checkbox]:not([data-select-all])').prop('checked', this.checked);
 	});
 	$('input[data-list-checkbox]').change(function() {
-		l = $('input[data-list-checkbox]:not([data-select-all])');
+		l = $('input[data-list-checkbox]:not([data-select-all]):checked');
 		$('.button[data-action-button]').prop('disabled', !l.length);
 	});
 });
