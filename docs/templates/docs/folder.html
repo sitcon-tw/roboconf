@@ -40,15 +40,15 @@
 					{% if docperms.edit %}
 					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
 					{% endif %}
-					<button class="small radius secondary {{ docperms.edit|yesno:',disabled' }} button" title="共用"><span class="icon-share iconize"></span></button>
+					<button class="small radius secondary {{ docperms.edit|yesno:',disabled' }} button" title="共用" data-action-button><span class="icon-share iconize"></span></button>
 					{% if perms.docs.archive %}
-					<button class="small radius secondary button" title="封存"><span class="icon-archive iconize"></span></button>
+					<button class="small radius secondary button" title="封存" data-action-button disabled><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-2 button-group">
-						<li><button class="small secondary button" title="移動" disabled><span class="icon-move iconize"></span></button></li>
-						<li><button class="small secondary button" title="刪除" disabled><span class="icon-delete iconize"></span></button></li>
+						<li><button class="small secondary button" title="移動" data-action-button disabled><span class="icon-move iconize"></span></button></li>
+						<li><button class="small secondary button" title="刪除" data-action-button disabled><span class="icon-delete iconize"></span></button></li>
 					</ul>
-					<button class="small radius secondary button" title="詳細資訊" disabled><span class="icon-info iconize"></span></button>
+					<button class="small radius secondary button" title="詳細資訊"><span class="icon-info iconize"></span></button>
 				{% endif %}
 				</div>
 				<div class="right">
@@ -129,4 +129,17 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input[data-select-all]').change(function() {
+		$('input[data-list-checkbox]:not([data-select-all])').val(this.checked);
+	});
+	$('input[data-list-checkbox]').change(function() {
+		l = $('input[data-list-checkbox]:not([data-select-all])');
+		$('.button[data-action-button]').prop('disabled', !l.length);
+	});
+});
+</script>
 {% endblock %}

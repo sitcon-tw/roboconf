@@ -12,11 +12,6 @@ def get_user_name(user):
 		
 	return user.username
 
-def validate_email(email):
-	# TODO: Use regular expression?
-	i = email.find('@')
-	return i and (i == email.rfind('@')) and (i < email.rfind('.')) and (email.find(' ') < 0)
-
 def get_avatar_url(value):
 	import md5
 	hash_value = md5.new(value.strip().lower()).hexdigest()

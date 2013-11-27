@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.exceptions import PermissionDenied
+from django.core.validators import validate_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import *
-from users.utils import validate_email
 
 @login_required
 def edit(request, username):
 	user = get_object_or_404(User, username=username)
 	
 	if not (user == request.user or request.user.has_perm('auth.change_user')):
+		from django.core.exceptions import PermissionDenied
 		raise PermissionDenied
 	
 	errors = []
