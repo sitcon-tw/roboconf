@@ -91,7 +91,7 @@
 		</div>
 		<div class="row">
 			<div class="large-12 columns">
-				{% if items %}
+				{% if items %}{% spaceless %}
 				<table class="docs-list main">
 					<thead>
 						<tr>
@@ -103,7 +103,7 @@
 					</thead>
 					<tbody>
 					{% for i in items %}{% with f=i.node %}
-						<tr data-list-entry data-id="{{ f.id }}" data-type="{{ i.type }}" {% if i.starred %}data-starred{% endif %} {% if i.docperms.edit %}data-can-edit{% endif %}>
+						<tr data-list-entry data-id="{{ f.id }}" data-type="{{ i.type }}" {{ i.starred:yesno:'data-starred,' }} {{ i.docperms.edit|yesno:'data-can-edit,'}}>
 							<td class="icon-column"><input type="checkbox" data-list-selector></td>
 							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
 					{% if i.type == 'folder' %}
@@ -121,7 +121,7 @@
 				<div class="placeholder-message">
 					<span>尚無文件。{% if user.is_authenticated and docperms.edit %}<a href="{% url 'docs:create' %}?at={{ node.nid }}">建立新文件？</a>{% endif %}</span>
 				</div>
-				{% endif %}
+				{% endspaceless %}{% endif %}
 			</div>
 		</div>
 	</div>
