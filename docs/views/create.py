@@ -51,7 +51,7 @@ def create(request):
 				result['revision'] = r.id
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:view'), args=(f.nid(),))
+			return redirect(reverse('docs:view', args=(f.nid(),)))
 
 	elif request.is_ajax():
 		return not_allowed(request, ['POST'])
