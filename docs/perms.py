@@ -23,7 +23,7 @@ def is_in_scope(user, perm):
 def iter_perms(fileobj):
 	acl, node = [], fileobj
 	while node:
-		acl = sorted(node.permissions.all(), key=Permission.__key__)
+		acl = sorted(node.permissions.all(), key=Permission.__key__, reverse=True)
 		for i in acl: yield i
 		node = node.parent
 
