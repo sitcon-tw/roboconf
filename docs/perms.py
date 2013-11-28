@@ -20,19 +20,19 @@ def is_in_scope(user, perm):
 	# Permission.PUBLIC
 	return True
 
-def iter_perms(fileobj, descending=False):
+def iter_perms(fileobj):
 	acl, node = [], fileobj
 	while node:
-		acl = sorted(node.permissions.all(), key=Permission.__key__, reverse=descending)
+		acl = sorted(node.permissions.all(), key=Permission.__key__, reverse=True)
 		for i in acl: yield i
 		node = node.parent
 
-def get_perms(user, fileobj):
+def get_perms(user, fileobj, enumerator=iter_perms):
 	max_perm = len(PRIORITY)-1
 	cur_perm = -1
 
 	# Propagate through file nodes
-	for perm in iter_perms(fileobj, descending=False):
+	for perm in enumerator(fileobj):
 		priority = PRIORITY_MAPPING.get(perm.type)
 		if priority is None: continue
 		if not is_in_scope(user, perm): continue
@@ -44,12 +44,12 @@ def get_perms(user, fileobj):
 
 	return PRIORITY[:cur_perm+1]
 
-def has_perm(user, fileobj, perm_type):
+def has_perm(user, fileobj, perm_type, enumerator=iter_perms):
 	perm_priority = PRIORITY_MAPPING.get(perm_type)
 	if perm_priority is None: return False		# Support builtin permissions only
 
 	# Propagate through file nodes
-	for perm in iter_perms(fileobj, descending=True):
+	for perm in enumerator(fileobj):
 		if not is_in_scope(user, perm): continue
 
 		if perm.effect == Permission.ALLOW:
@@ -60,3 +60,11 @@ def has_perm(user, fileobj, perm_type):
 				return False
 
 	return False
+
+def optimized_get_perms(user, fileobj, *inherited_perms):
+	def generator(o):
+		from itertools import chain
+		this_perms = sorted(fileobj.permissions.all(), key=Permission.__key__, reverse=True)
+		perms = chain(this_perms, inherited_perms)
+		for p in perms: yield p
+	return get_perms(user, fileobj, generator)

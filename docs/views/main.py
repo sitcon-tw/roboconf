@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from core.api import *
 from docs.models import File, Folder, Permission, BlobText
-from docs.perms import get_perms, has_perm
+from docs.perms import get_perms, has_perm, optimized_get_perms
 from docs.utils import parse_nid
+from itertools import chain
 
 @login_required
 def main(request):
@@ -51,6 +52,25 @@ def view(request, nidb64):
 		if isinstance(f, Folder):
 			if f.parent:
 				params['docperms']['view_parent'] = has_perm(request.user, f.parent, Permission.VIEW)
+
+			nodes = chain(f.folders.all(), f.files.all())
+			items = []
+			for item in nodes:
+				item_perms = optimized_get_perms(request.user, item, perms)
+				if Permission.VIEW in item_perms:
+					items.append({
+						'node': item,
+						'type': 'folder' if isinstance(item, Folder) else 'file', 
+						'starred': item.starring.filter(id=request.user.id).exists(), 
+						'docperms': {
+							'view': True,
+							'comment': Permission.COMMENT in item_perms,
+							'edit': Permission.EDIT in item_perms,
+						},
+					})
+					
+			params['items'] = items
+
 			return render(request, 'docs/folder.html', params)
 		else:
 			return render(request, 'docs/file.html', params)
@@ -74,7 +94,6 @@ def get(request, f):
 			result['content'] = rev.text.text
 			result['format'] = dict(BlobText.FORMAT_ENUMERATION).get(rev.text.format)
 		elif isinstance(f, Folder):
-			from itertools import chain
 			items = chain(f.folders.all(), f.files.all())
 			result['content'] = [i.nid() for i in items]
 

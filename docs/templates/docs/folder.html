@@ -91,33 +91,30 @@
 		</div>
 		<div class="row">
 			<div class="large-12 columns">
-				{% if node.folders.exists or node.files.exists %}
+				{% if items %}
 				<table class="docs-list main">
 					<thead>
 						<tr>
-							<th class="icon-column"><input type="checkbox" data-list-checkbox data-select-all></th>
+							<th class="icon-column"><input type="checkbox" data-list-selector data-select-all></th>
 							<th class="icon-column"></th>
 							<th>名稱</th>
 							<th class="detail-column">上次修改日期</th>
 						</tr>
 					</thead>
 					<tbody>
-					{% for f in node.folders.all %}
-						<tr>
-							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="folder" data-id="{{ f.id }}"></td>
-							<td class="icon-column"><a href="#" data-list-star data-type="folder" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
+					{% for i in items %}{% with f=i.node %}
+						<tr data-list-entry data-id="{{ f.id }}" data-type="{{ i.type }}" {% if i.starred %}data-starred{% endif %} {% if i.docperms.edit %}data-can-edit{% endif %}>
+							<td class="icon-column"><input type="checkbox" data-list-selector></td>
+							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
+					{% if i.type == 'folder' %}
 							<td><a href="{% url 'docs:view' f.nid %}"><span class="icon-folder iconize"></span> {{ f.name }}</a></td>
 							<td class="detail-column">{{ f.last_modified|smartdate }}</td>
-						</tr>
-					{% endfor %}
-					{% for f in node.files.all %}
-						<tr>
-							<td class="icon-column"><input type="checkbox" data-list-checkbox data-type="file" data-id="{{ f.id }}"></td>
-							<td class="icon-column"><a href="#" data-list-star data-type="file" data-id="{{ f.id }}"><span class="icon-star iconize"></span></a></td>
+					{% elif i.type == 'file' %}
 							<td><a href="{% url 'docs:view' f.nid %}"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
 							<td class="detail-column">{{ f.last_modified|smartdate }} {{ f.current_revision.user|get_name }}</td>
+					{% endif %}
 						</tr>
-					{% endfor %}
+					{% endwith %}{% endfor %}
 					</tbody>
 				</table>
 				{% else %}
@@ -134,15 +131,15 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('input[data-select-all]').change(function() {
-		$('input[data-list-checkbox]:not([data-select-all])').prop('checked', this.checked);
+		$('input[data-list-selector]:not([data-select-all])').prop('checked', this.checked);
 	});
 	$('.docs-list tr').click(function() {
-		var b = $('input[data-list-checkbox]:not([data-select-all])', this).first();
+		var b = $('input[data-list-selector]:not([data-select-all])', this).first();
 		if (b) b.click();
 	});
-	$('input[data-list-checkbox], .docs-list tr a').click(function(e) { e.stopPropagation(); })
-	$('input[data-list-checkbox]').change(function() {
-		l = $('input[data-list-checkbox]:not([data-select-all]):checked');
+	$('input[data-list-selector], .docs-list tr a').click(function(e) { e.stopPropagation(); })
+	$('input[data-list-selector]').change(function() {
+		l = $('input[data-list-selector]:not([data-select-all]):checked');
 		$('.button[data-action-button]').prop('disabled', !l.length);
 	});
 });
