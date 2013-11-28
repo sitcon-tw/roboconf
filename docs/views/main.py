@@ -56,9 +56,6 @@ def view(request, nidb64):
 			return render(request, 'docs/file.html', params)
 
 def get(request, f):
-	#if not has_perm(request.user, f, Permission.VIEW):
-	#	raise PermissionDenied
-
 	details = request.GET.getlist('details', ['node'])
 	result = {'status': 'success'}
 
