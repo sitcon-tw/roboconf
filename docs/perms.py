@@ -20,10 +20,10 @@ def is_in_scope(user, perm):
 	# Permission.PUBLIC
 	return True
 
-def iter_perms(fileobj):
+def iter_perms(fileobj, descending=False):
 	acl, node = [], fileobj
 	while node:
-		acl = sorted(node.permissions.all(), key=Permission.__key__, reverse=True)
+		acl = sorted(node.permissions.all(), key=Permission.__key__, reverse=descending)
 		for i in acl: yield i
 		node = node.parent
 
@@ -32,7 +32,7 @@ def get_perms(user, fileobj):
 	cur_perm = -1
 
 	# Propagate through file nodes
-	for perm in iter_perms(fileobj):
+	for perm in iter_perms(fileobj, descending=False):
 		priority = PRIORITY_MAPPING.get(perm.type)
 		if priority is None: continue
 		if not is_in_scope(user, perm): continue
@@ -49,7 +49,7 @@ def has_perm(user, fileobj, perm_type):
 	if perm_priority is None: return False		# Support builtin permissions only
 
 	# Propagate through file nodes
-	for perm in iter_perms(fileobj):
+	for perm in iter_perms(fileobj, descending=True):
 		if not is_in_scope(user, perm): continue
 
 		if perm.effect == Permission.ALLOW:
