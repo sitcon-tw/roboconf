@@ -140,7 +140,7 @@ $(document).ready(function() {
 		var b = $('input[data-list-checkbox]:not([data-select-all])', this).first();
 		if (b) b.click();
 	});
-	$('input[data-list-checkbox]').click(function(e) { e.stopPropagation(); })
+	$('input[data-list-checkbox], .docs-list tr a').click(function(e) { e.stopPropagation(); })
 	$('input[data-list-checkbox]').change(function() {
 		l = $('input[data-list-checkbox]:not([data-select-all]):checked');
 		$('.button[data-action-button]').prop('disabled', !l.length);
