@@ -28,14 +28,27 @@ class Node(object):
 			else:
 				raise TypeError('Inappropriate model type')
 
-		self.__obj = nodeobj
+		self.model = nodeobj
 		self.__user = user
 
-	def model(self):
-		return self.__obj
+	def __perms(self):
+		try:
+			return self.__cached_perms
+		except AttributeError:
+			from docs.perms import get_perms
+			self.__cached_perms = get_perms(self.__user, self.model)
+			return self.__cached_perms
+
+	def __filter_items(self, set):
+		result = []
+		for i in set:
+			n = Node(nodeobj=i, user=self.__user)
+			if n.can_view():
+				result.append(n)
+		return result
 
 	def parent(self):
-		return None if not self.__obj.parent else Node(nodeobj=self.__obj.parent, user=self.__user) 
+		return None if not self.model.parent else Node(nodeobj=self.model.parent, user=self.__user) 
 
 	def is_file(self):
 		return self.__type == File
@@ -46,31 +59,29 @@ class Node(object):
 	def nid(self):
 		from django.utils.encoding import force_bytes
 		from django.utils.http import urlsafe_base64_encode
-		return urlsafe_base64_encode(force_bytes(self.__obj.id) + force_bytes(self.__type.nid_namespace))
+		return urlsafe_base64_encode(force_bytes(self.model.id) + force_bytes(self.__type.nid_namespace))
 
 	def can_view(self):
-		pass
+		return Permission.VIEW in self.__perms()
 
 	def can_comment(self):
-		pass
+		return Permission.COMMENT in self.__perms()
 
 	def can_edit(self):
-		pass
+		return Permission.EDIT in self.__perms()
 
 	def items(self):
 		if self.is_file():
 			return None
-		pass
+
+		from itertools import chain
+		return self.__filter_items(chain(self.model.folders.all(), self.model.files.all()))
 
 	def files(self):
-		if self.is_file():
-			return None
-		pass
+		return None if self.is_file() else self.__filter_items(self.model.files.all())
 
 	def folders(self):
-		if self.is_file():
-			return None
-		pass
+		return None if self.is_file() else self.__filter_items(self.model.folders.all())
 
 	def starred(self):
-		return None if not self.__user else self.__obj.starred.filter(id=self.__user.id).exists()
+		return None if not self.__user else self.model.starred.filter(id=self.__user.id).exists()
