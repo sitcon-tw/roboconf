@@ -56,7 +56,7 @@ def view(request, nidb64):
 			nodes = chain(f.folders.all(), f.files.all())
 			items = []
 			for item in nodes:
-				item_perms = optimized_get_perms(request.user, item, perms)
+				item_perms = optimized_get_perms(request.user, item, f)
 				if Permission.VIEW in item_perms:
 					items.append({
 						'node': item,
@@ -68,7 +68,7 @@ def view(request, nidb64):
 							'edit': Permission.EDIT in item_perms,
 						},
 					})
-					
+
 			params['items'] = items
 
 			return render(request, 'docs/folder.html', params)

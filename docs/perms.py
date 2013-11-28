@@ -20,11 +20,13 @@ def is_in_scope(user, perm):
 	# Permission.PUBLIC
 	return True
 
+def get_acl(fileobj):
+	return sorted(fileobj.permissions.all(), key=Permission.__key__, reverse=True)
+
 def iter_perms(fileobj):
 	acl, node = [], fileobj
 	while node:
-		acl = sorted(node.permissions.all(), key=Permission.__key__, reverse=True)
-		for i in acl: yield i
+		for i in get_acl(node): yield i
 		node = node.parent
 
 def get_perms(user, fileobj, enumerator=iter_perms):
@@ -61,10 +63,9 @@ def has_perm(user, fileobj, perm_type, enumerator=iter_perms):
 
 	return False
 
-def optimized_get_perms(user, fileobj, *inherited_perms):
+def optimized_get_perms(user, fileobj, *parents):
 	def generator(o):
 		from itertools import chain
-		this_perms = sorted(fileobj.permissions.all(), key=Permission.__key__, reverse=True)
-		perms = chain(this_perms, *inherited_perms)
+		perms = chain(get_acl(fileobj), *[get_acl(node) for node in parents])
 		for p in perms: yield p
 	return get_perms(user, fileobj, generator)
