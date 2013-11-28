@@ -83,7 +83,7 @@
 					<a href="{% url 'docs:view' f.nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
 				{% endfor %}
 				{% else %}
-					<a href="#" class="unavailable">文件</a>
+					{% if node.parent %}<a href="#" class="unavailable">文件</a>{% endif %}
 					<a href="#" class="current">{{ node.name }}</a>
 				{% endif %}
 				</nav>
