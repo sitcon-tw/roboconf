@@ -78,7 +78,7 @@ def create_revision(request):
 	if content:
 		text = BlobText()
 		text.text = content
-		text.format = dict((y, x) for x, y in BlobText.FORMAT_ENUMERATION).get('format', BlobText.TEXT)
+		text.format = dict((y, x) for x, y in BlobText.FORMAT_ENUMERATION).get(format, BlobText.TEXT)
 		text.save()
 
 		r = Revision()
