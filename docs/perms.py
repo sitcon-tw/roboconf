@@ -65,6 +65,6 @@ def optimized_get_perms(user, fileobj, *inherited_perms):
 	def generator(o):
 		from itertools import chain
 		this_perms = sorted(fileobj.permissions.all(), key=Permission.__key__, reverse=True)
-		perms = chain(this_perms, inherited_perms)
+		perms = chain(this_perms, *inherited_perms)
 		for p in perms: yield p
 	return get_perms(user, fileobj, generator)
