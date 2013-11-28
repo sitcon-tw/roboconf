@@ -56,10 +56,31 @@ class Node(object):
 	def is_folder(self):
 		return self.__type == Folder
 
+	def id(self):
+		return self.model.id
+
 	def nid(self):
 		from django.utils.encoding import force_bytes
 		from django.utils.http import urlsafe_base64_encode
 		return urlsafe_base64_encode(force_bytes(self.model.id) + force_bytes(self.__type.nid_namespace))
+
+	def name(self):
+		return self.model.name
+
+	def last_modified(self):
+		return self.model.last_modified
+
+	def last_editor(self):
+		return None if self.is_folder() else self.model.current_revision.user
+
+	def path(self):
+		node = self
+		path = [self]
+		while node.model.parent:
+			node = node.parent()
+			path.append(node)
+		path.reverse()
+		return path
 
 	def can_view(self):
 		return Permission.VIEW in self.__perms()
@@ -69,6 +90,9 @@ class Node(object):
 
 	def can_edit(self):
 		return Permission.EDIT in self.__perms()
+
+	def empty(self):
+		return not self.model.files.exists() and not self.model.folders.exists()
 
 	def items(self):
 		if self.is_file():

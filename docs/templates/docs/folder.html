@@ -16,11 +16,11 @@
 		{% if node.parent %}
 		<div class="treeview">
 			<ul>
-				{% if docperms.view_parent %}
+				{% if node.parent.can_view %}
 				<li>
 					<a href="{% url 'docs:view' node.parent.nid %}" class="folder">{{ node.parent.name }}</a>
 					<ul>
-					{% for f in node.parent.folders.all %}
+					{% for f in node.parent.folders %}
 						<li><a href="{% url 'docs:view' f.nid %}" class="folder {% if f.id == node.id %}active{% endif %}">{{ f.name }}</a></li>
 					{% endfor %}
 					</ul>
@@ -37,10 +37,10 @@
 			<div class="large-12 columns button-row">
 				<div class="left">
 				{% if user.is_authenticated %}
-					{% if docperms.edit %}
+					{% if node.can_edit %}
 					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
 					{% endif %}
-					<button class="small radius secondary {{ docperms.edit|yesno:',disabled' }} button" title="共用" data-action-button><span class="icon-share iconize"></span></button>
+					<button class="small radius secondary {{ node.can_edit|yesno:',disabled' }} button" title="共用" data-action-button><span class="icon-share iconize"></span></button>
 					{% if perms.docs.archive %}
 					<button class="small radius secondary button" title="封存" data-action-button disabled><span class="icon-archive iconize"></span></button>
 					{% endif %}
@@ -78,20 +78,19 @@
 		<div class="row">
 			<div class="large-12 columns">
 				<nav class="breadcrumbs">
-				{% if docperms.view_parent %}
 				{% for f in node.path %}
-					<a href="{% url 'docs:view' f.nid %}" {% if f == folder %}class="current"{% endif %}>{{ f.name }}</a>
-				{% endfor %}
+				{% if f.can_view %}
+					<a href="{% url 'docs:view' f.nid %}" {% if f == node %}class="current"{% endif %}>{{ f.name }}</a>
 				{% else %}
-					{% if node.parent %}<a href="#" class="unavailable">文件</a>{% endif %}
-					<a href="#" class="current">{{ node.name }}</a>
+					<a href="#" class="unavailable">{{ f.name }}</a>
 				{% endif %}
+				{% endfor %}
 				</nav>
 			</div>
 		</div>
 		<div class="row">
 			<div class="large-12 columns">
-				{% if items %}{% spaceless %}
+				{% if not node.empty %}{% spaceless %}
 				<table class="docs-list main">
 					<thead>
 						<tr>
@@ -102,16 +101,16 @@
 						</tr>
 					</thead>
 					<tbody>
-					{% for i in items %}{% with f=i.node %}
-						<tr data-list-entry data-id="{{ f.id }}" data-type="{{ i.type }}" {{ i.starred:yesno:'data-starred,' }} {{ i.docperms.edit|yesno:'data-can-edit,'}}>
+					{% for i in node.items %}
+						<tr data-list-entry data-id="{{ i.id }}" data-type="{{ i.is_folder|yesno:'folder,file' }}" {{ i.starred:yesno:'data-starred,' }} {{ i.docperms.edit|yesno:'data-can-edit,'}}>
 							<td class="icon-column"><input type="checkbox" data-list-selector></td>
 							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
-					{% if i.type == 'folder' %}
-							<td><a href="{% url 'docs:view' f.nid %}"><span class="icon-folder iconize"></span> {{ f.name }}</a></td>
-							<td class="detail-column">{{ f.last_modified|smartdate }}</td>
-					{% elif i.type == 'file' %}
-							<td><a href="{% url 'docs:view' f.nid %}"><span class="icon-file iconize"></span> {{ f.name }}</a></td>
-							<td class="detail-column">{{ f.last_modified|smartdate }} {{ f.current_revision.user|get_name }}</td>
+					{% if i.is_folder %}
+							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
+							<td class="detail-column">{{ i.last_modified|smartdate }}</td>
+					{% else %}
+							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-file iconize"></span> {{ i.name }}</a></td>
+							<td class="detail-column">{{ i.last_modified|smartdate }} {{ i.last_editor|get_name }}</td>
 					{% endif %}
 						</tr>
 					{% endwith %}{% endfor %}
@@ -119,7 +118,7 @@
 				</table>
 				{% else %}
 				<div class="placeholder-message">
-					<span>尚無文件。{% if user.is_authenticated and docperms.edit %}<a href="{% url 'docs:create' %}?at={{ node.nid }}">建立新文件？</a>{% endif %}</span>
+					<span>尚無文件。{% if user.is_authenticated and node.can_edit %}<a href="{% url 'docs:create' %}?at={{ node.nid }}">建立新文件？</a>{% endif %}</span>
 				</div>
 				{% endspaceless %}{% endif %}
 			</div>

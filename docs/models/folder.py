@@ -23,15 +23,6 @@ class Folder(models.Model):
 	# folders (OneToManyField to self)
 	# files (OneToManyField to File)
 
-	def path(self):
-		node = self
-		path = [self]
-		while node.parent:
-			node = node.parent
-			path.append(node)
-		path.reverse()
-		return path
-
 	def nid(self):
 		from docs.utils import get_nid
 		return get_nid(Folder, self.id)

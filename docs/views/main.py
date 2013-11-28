@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from core.api import *
 from docs.models import File, Folder, Permission, BlobText
+from docs.node import Node
 from docs.perms import get_perms, has_perm, optimized_get_perms
 from docs.utils import parse_nid
 from itertools import chain
@@ -26,10 +27,12 @@ def view(request, nidb64):
 		return put(request, f)
 	elif request.method == 'DELETE':
 		return delete(request, f)
-	elif request.is_ajax():
+	elif request.method != 'GET':
 		return not_allowed(request, ['GET', 'POST', 'PUT', 'DELETE'])
 
-	if not has_perm(request.user, f, Permission.VIEW):
+	node = Node(f, request.user)
+
+	if not node.can_view():
 		if not request.user.is_authenticated():
 			from django.contrib.auth.views import redirect_to_login
 			return redirect_to_login(request.path)
@@ -39,38 +42,8 @@ def view(request, nidb64):
 	if request.is_ajax():
 		return get(request, f)
 	else:
-		perms = get_perms(request.user, f)
-		params = {
-			'node': f,
-			'docperms': {
-				'view': True,
-				'comment': Permission.COMMENT in perms,
-				'edit': Permission.EDIT in perms,
-			},
-		}
-
+		params = { 'node': node }
 		if isinstance(f, Folder):
-			if f.parent:
-				params['docperms']['view_parent'] = has_perm(request.user, f.parent, Permission.VIEW)
-
-			nodes = chain(f.folders.all(), f.files.all())
-			items = []
-			for item in nodes:
-				item_perms = optimized_get_perms(request.user, item, f)
-				if Permission.VIEW in item_perms:
-					items.append({
-						'node': item,
-						'type': 'folder' if isinstance(item, Folder) else 'file', 
-						'starred': item.starring.filter(id=request.user.id).exists(), 
-						'docperms': {
-							'view': True,
-							'comment': Permission.COMMENT in item_perms,
-							'edit': Permission.EDIT in item_perms,
-						},
-					})
-
-			params['items'] = items
-
 			return render(request, 'docs/folder.html', params)
 		else:
 			return render(request, 'docs/file.html', params)
