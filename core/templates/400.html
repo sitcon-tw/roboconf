@@ -15,7 +15,9 @@
 				{% ifequal i '4' %}<q>與其費心於這些把戲，何不把時間花在端正自己的品格？</q>{% endifequal %}
 			{% endwith %}
 			{% endspaceless %}
-			送進來的要求有點奇怪，或許是瀏覽器的問題？<br>如果使用行政系統的 API，何不<a href="https://github.com/sitcon-tw/staff.sitcon.org/blob/master/API.md">讀了文件</a>再試試？
+			送進來的要求有點奇怪，或許是瀏覽器的問題？
+			{% if error %}<em>({{ error }})</em>{% endif %}
+			<br>如果使用行政系統的 API，何不<a href="https://github.com/sitcon-tw/staff.sitcon.org/blob/master/API.md">讀了文件</a>再試試？
 		</p>
 	</div>
 </div>

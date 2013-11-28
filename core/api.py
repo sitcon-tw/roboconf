@@ -15,8 +15,10 @@ def bad_request(request, obj=None):
 	if request.is_ajax():
 		return http.HttpResponseBadRequest(json.dumps(obj), content_type='application/json')
 	else:
-		from core.views import bad_request as friendly_bad_request
-		return friendly_bad_request(request)
+		from django.http import HttpResponseBadRequest
+		from django.template import (loader, Context)
+		template = loader.get_template('400.html')
+		return HttpResponseBadRequest(template.render(Context(obj)))
 
 def not_authorized(request, obj=None):
 	return http.HttpResponse(json.dumps(obj), content_type='application/json', status=401)
