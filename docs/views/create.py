@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from core.api import *
 from docs.models import *
-from docs.perms import has_perm
-from docs.utils import parse_nid
+from docs.node import Node
 
 def create(request):
 	if request.method == 'POST':
@@ -14,16 +14,20 @@ def create(request):
 		if not (kind and name and at):
 			return bad_request(request, {'error': 'invalid_args'})
 
-		parent = parse_nid(at)
-		if not (parent and isinstance(parent, Folder)):
+		try:
+			parent = Node(at, user=request.user)
+		except ObjectDoesNotExist:
 			return bad_request(request, {'error': 'invalid_node'})
 
-		if not has_perm(request.user, parent, Permission.EDIT):
+		if not parent.is_folder():
+			return bad_request(request, {'error': 'node_is_not_a_folder'})
+
+		if not parent.can_edit():
 			from django.core.exceptions import PermissionDenied
 			raise PermissionDenied
 		# Warning: removed creation restrictions on <ALLOW * EDIT> folder. Careful.
 		
-		if parent.is_archived:
+		if parent.is_archived():
 			return bad_request(request, {'error': 'node_archived'})
 
 		if kind == 'file':
@@ -41,27 +45,33 @@ def create(request):
 		f.name = name
 		f.save()
 
+		node = Node(nodeobj=f, user=request.user)
+
 		if request.is_ajax():
 			result = {
 				'status': 'success',
-				'nid': f.nid(),
-				'timestamp': f.last_modified,
+				'nid': node.nid(),
+				'timestamp': f.last_modified(),
 			}
-			if isinstance(f, File):
+			if node.is_file():
 				result['revision'] = r.id
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:view', args=(f.nid(),)))
+			return redirect(reverse('docs:view', args=(node.nid(),)))
 
 	elif request.is_ajax():
 		return not_allowed(request, ['POST'])
 
 	else:
-		parent = parse_nid(request.GET.get('at'))
-		if not (parent and isinstance(parent, Folder)):
+		try:
+			parent = Node(at, user=request.user)
+		except ObjectDoesNotExist:
+			parent = None
+
+		if not parent or not parent.is_folder():
 			return redirect(reverse('docs:main'))
 
-		if not has_perm(request.user, parent, Permission.EDIT):
+		if not parent.can_edit():
 			if not request.user.is_authenticated():
 				from django.contrib.auth.views import redirect_to_login
 				return redirect_to_login(request.path)

@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from core.api import *
-from docs.models import File, Folder, Permission, BlobText
+from docs.models import Permission, BlobText
 from docs.node import Node
-from docs.perms import get_perms, has_perm, optimized_get_perms
 from docs.utils import parse_nid
-from itertools import chain
 
 @login_required
 def main(request):
@@ -16,21 +14,20 @@ def main(request):
 	return redirect(reverse('docs:view', args=(get_nid(Folder, 0),)))
 
 def view(request, nidb64):
-	f = parse_nid(nidb64)
-	if not f:
+	try:
+		node = Node(nidb64, user=request.user)
+	except ObjectDoesNotExist:
 		from django.http import Http404
 		raise Http404
 
 	if request.method == 'POST':
-		return post(request, f)
+		return post(request, node)
 	elif request.method == 'PUT':
-		return put(request, f)
+		return put(request, node)
 	elif request.method == 'DELETE':
-		return delete(request, f)
+		return delete(request, node)
 	elif request.method != 'GET':
 		return not_allowed(request, ['GET', 'POST', 'PUT', 'DELETE'])
-
-	node = Node(f, request.user)
 
 	if not node.can_view():
 		if not request.user.is_authenticated():
@@ -40,39 +37,38 @@ def view(request, nidb64):
 			raise PermissionDenied
 	
 	if request.is_ajax():
-		return get(request, f)
+		return get(request, node)
 	else:
 		params = { 'node': node }
-		if isinstance(f, Folder):
+		if node.is_folder():
 			return render(request, 'docs/folder.html', params)
 		else:
 			return render(request, 'docs/file.html', params)
 
-def get(request, f):
+def get(request, node):
 	details = request.GET.getlist('details', ['node'])
 	result = {'status': 'success'}
 
 	if 'node' in details:
-		result['name'] = f.name
-		result['parent'] = f.parent.nid()
-		result['modified'] = f.last_modified.isoformat()
-		result['archived'] = f.is_archived
-		result['starred'] = f.starring.filter(id=request.user.id).exists()
+		result['name'] = node.name
+		result['parent'] = node.parent().nid()
+		result['modified'] = node.last_modified().isoformat()
+		result['archived'] = node.is_archived()
+		result['starred'] = node.starred()
 
 	if 'content' in details:
-		if isinstance(f, File):
-			rev = f.current_revision
+		if node.is_file():
+			rev = node.model.current_revision
 			result['revision'] = rev.id
 			result['author'] = rev.user.username if rev.user else None
 			result['content'] = rev.text.text
 			result['format'] = dict(BlobText.FORMAT_ENUMERATION).get(rev.text.format)
-		elif isinstance(f, Folder):
-			items = chain(f.folders.all(), f.files.all())
-			result['content'] = [i.nid() for i in items]
+		elif node.is_folder():
+			result['content'] = [i.nid() for i in node.items()]
 
 	if 'revisions' in details:
-		if isinstance(f, File):
-			result['revisions'] = [r.id for r in f.revisions.all()]
+		if node.is_file():
+			result['revisions'] = [r.id for r in node.model.revisions.all()]
 
 	if 'permissions' in details:
 		effects = dict(Permission.EFFECT_ENUMERATION)
@@ -80,7 +76,7 @@ def get(request, f):
 		scopes = dict(Permission.SCOPE_ENUMERATION)
 
 		perms = []
-		for p in f.permissions.all():
+		for p in node.__acl():
 			obj = {
 				'effect': effects.get(p.effect),
 				'type': kinds.get(p.type),
@@ -99,12 +95,14 @@ def get(request, f):
 
 	return render_json(request, result)
 
-def post(request, f):
-	if not has_perm(request.user, f, Permission.EDIT):
+def post(request, node):
+	if not node.can_edit():
 		raise PermissionDenied
 
-	if f.is_archived:
+	if node.is_archived():
 		return bad_request(request, {'error': 'node_archived'})
+
+	f = node.model
 
 	from docs.views.create import create_revision
 	r = create_revision(request)
@@ -128,24 +126,23 @@ def post(request, f):
 			}
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:view'), args=(f.nid(),))
+			return redirect(reverse('docs:view'), args=(node.nid(),))
 
 def put(request, f):
 	PUT = parse_json(request)
 	if not PUT:
 		return bad_request(request, {'error': 'invalid_json'})
 
-	perms = get_perms(request.user, f)
-
+	f = node.model
 	if 'star' in PUT:
-		if not Permission.VIEW in perms: raise PermissionDenied
+		if not node.can_view(): raise PermissionDenied
 		if not request.user.is_authenticated():
 			return bad_request(request, {'error': 'login_required'})
 
 		f.starring.add(request.user)
 
 	elif 'unstar' in PUT:
-		if not Permission.VIEW in perms: raise PermissionDenied
+		if not node.can_view(): raise PermissionDenied
 		if not request.user.is_authenticated():
 			return bad_request(request, {'error': 'login_required'})
 
@@ -163,12 +160,19 @@ def put(request, f):
 	elif 'move' in PUT:
 		if not Permission.EDIT in perms: raise PermissionDenied
 		
-		parent = parse_nid(PUT.get('at'))
-		if not (parent and isinstance(parent, Folder)):
+		try:
+			parent = Node(PUT.get('at'))
+
+		except ObjectDoesNotExist:
 			return bad_request(request, {'error': 'invalid_node'})
-		if not has_perm(request.user, parent, Permission.EDIT):
+
+		if not parent.is_folder():
+			return bad_request(request, {'error': 'node_is_not_a_folder'})
+
+		elif not parent.can_edit():
 			raise PermissionDenied
-		if parent.is_archived:
+
+		elif parent.is_archived():
 			return bad_request(request, {'error': 'node_archived'})
 
 		f.parent = parent
@@ -185,7 +189,7 @@ def put(request, f):
 		f.save()
 
 	elif 'permissions' in PUT:
-		if not Permission.EDIT in perms: raise PermissionDenied
+		if node.can_edit(): raise PermissionDenied
 		if not request.user.is_authenticated():
 			return bad_request(request, {'error': 'login_required'})
 		try:
@@ -221,11 +225,12 @@ def put(request, f):
 
 	return render_json(request, {'status': 'success'})
 
-def delete(request, f):
-	if not has_perm(request.user, f, Permission.EDIT):
+def delete(request, node):
+	if not node.can_edit():
 		raise PermissionDenied
 
 	# Remove any possible viewing permission, move to trash can
+	f = node.model
 	f.permissions.clear()
 	f.parent = Folder.objects.get(id=-1)
 	f.save()

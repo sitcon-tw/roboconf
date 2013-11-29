@@ -1,32 +1,35 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render as render_request
-from docs.models import File, Permission, BlobText, Permalink
-from docs.perms import get_perms
-from docs.utils import parse_nid
+from django.utils.timezone import now
+from docs.models import Permission, BlobText, Permalink
+from docs.node import Node
 
 def render(request, identifier):
-	f = parse_nid(identifier)
+	try:
+		node = Node(identifier, user=request.user)
+	except ObjectDoesNotExist:
+		node = None
 
-	if not f or not isinstance(f, File):
+	if not node or not node.is_file():
 		try:
 			permalink = Permalink.objects.get(name=identifier)
 		except Permalink.DoesNotExist:
 			permalink = None
 
-		from django.utils.timezone import now
 		if not permalink or (permalink.valid_since and permalink.valid_since > now()):
 			from django.http import Http404
 			raise Http404
 
-		f = permalink.file
-		rev = permalink.revision if permalink.revision else f.current_revision
+		node = Node(nodeobj=permalink.file, user=request.user)
+		rev = permalink.revision if permalink.revision else permalink.file.current_revision
 
-	else: rev = f.current_revision
+	else:
+		rev = node.model.current_revision
 
-	perms = get_perms(request.user, f)
-	if Permission.VIEW not in perms:
+	if not node.can_view():
 		if request.user.is_authenticated():
 			from django.core.exceptions import PermissionDenied
-			raise PermissionDenied 	# Access forbidden
+			raise PermissionDenied
 		else:
 			from django.contrib.auth.views import redirect_to_login
 			return redirect_to_login(request.path)
@@ -41,10 +44,6 @@ def render(request, identifier):
 		rendered_text = r'<blockquote>%s</blockquote>' % text.text
 
 	return render_request(request, 'docs/render.html', {
-		'node': f,
+		'node': node,
 		'text': rendered_text,
-		'docperms': {
-			'edit': Permission.EDIT in perms,
-			'comment': Permission.COMMENT in perms,
-		},
 	})

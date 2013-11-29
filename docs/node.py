@@ -16,7 +16,8 @@ class Node(object):
 					model = Folder
 					self.__type = Folder
 				else:
-					raise ValueError('Inappropriate NID type')
+					from django.core.exceptions import ObjectDoesNotExist
+					raise ObjectDoesNotExist
 
 				nodeobj = model.objects.get(id=nid[:-1])
 		else:
@@ -73,6 +74,7 @@ class Node(object):
 		result = []
 		for i in set:
 			n = Node(nodeobj=i, user=self.__user)
+			n.__parent = self
 			if n.can_view():
 				result.append(n)
 		return result
@@ -109,6 +111,9 @@ class Node(object):
 	def last_editor(self):
 		return None if self.is_folder() else self.model.current_revision.user
 
+	def is_archived(self):
+		return self.model.is_archived
+
 	def path(self):
 		node = self
 		path = [self]
@@ -144,4 +149,6 @@ class Node(object):
 		return None if self.is_file() else self.__filter_items(self.model.folders.all())
 
 	def starred(self):
-		return None if not self.__user else self.model.starred.filter(id=self.__user.id).exists()
+		if not self.__user or not self.__user.is_authenticated():
+			return None
+		return self.model.starred.filter(id=self.__user.id).exists()
