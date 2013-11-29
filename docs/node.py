@@ -61,6 +61,7 @@ class Node(object):
 				cur_perm = min(max(self.__parent.__perm_level(), cur_perm), max_perm)
 
 			self.__cached_perms = PRIORITY[:cur_perm+1]
+			self.__cached_perm_level = cur_perm
 			return self.__cached_perms
 
 	def __perm_level(self):
