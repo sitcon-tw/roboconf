@@ -3,6 +3,7 @@
 {% load dateutils %}
 {% block title %}{{ node.name }} ‧ 文件{{ block.super }}{% endblock %}
 {% block content %}
+<div id="node-meta" data-id="{{ node.id }}" data-type="folder" {{ node.starred|yesno:'data-starred,' }} {{ node.can_edit|yesno:'data-can-edit,'}}></div>
 <div class="row">
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
@@ -38,17 +39,17 @@
 				<div class="left">
 				{% if user.is_authenticated %}
 					{% if node.can_edit %}
-					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾"><span class="icon-folder iconize"></span></button>
+					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾" data-action="new_folder"><span class="icon-folder iconize"></span></button>
 					{% endif %}
-					<button class="small radius secondary {{ node.can_edit|yesno:',disabled' }} button" title="共用" data-action-button><span class="icon-share iconize"></span></button>
+					<button class="small radius secondary button" title="共用" data-action="share"><span class="icon-share iconize"></span></button>
 					{% if perms.docs.archive %}
-					<button class="small radius secondary button" title="封存" data-action-button disabled><span class="icon-archive iconize"></span></button>
+					<button class="small radius secondary button" title="封存" data-action="archive"><span class="icon-archive iconize"></span></button>
 					{% endif %}
-					<ul class="radius even-2 button-group">
-						<li><button class="small secondary button" title="移動" data-action-button disabled><span class="icon-move iconize"></span></button></li>
-						<li><button class="small secondary button" title="刪除" data-action-button disabled><span class="icon-delete iconize"></span></button></li>
+					<ul class="radius even-2 button-group context-button">
+						<li><button class="small secondary button" title="移動" data-action="move"><span class="icon-move iconize"></span></button></li>
+						<li><button class="small secondary button" title="刪除" data-action="delete"><span class="icon-delete iconize"></span></button></li>
 					</ul>
-					<button class="small radius secondary button" title="詳細資訊"><span class="icon-info iconize"></span></button>
+					<button class="small radius secondary button" title="詳細資訊" data-action="info"><span class="icon-info iconize"></span></button>
 				{% endif %}
 				</div>
 				<div class="right">
@@ -139,8 +140,9 @@ $(document).ready(function() {
 	$('input[data-list-selector], .docs-list tr a').click(function(e) { e.stopPropagation(); })
 	$('input[data-list-selector]').change(function() {
 		l = $('input[data-list-selector]:not([data-select-all]):checked');
-		$('.button[data-action-button]').prop('disabled', !l.length);
+		$('.context-button').toggle(!l.length);
 	});
+	$('.context-button').hide();
 });
 </script>
 {% endblock %}
