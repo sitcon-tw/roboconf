@@ -23,9 +23,5 @@ class Folder(models.Model):
 	# folders (OneToManyField to self)
 	# files (OneToManyField to File)
 
-	def nid(self):
-		from docs.utils import get_nid
-		return get_nid(Folder, self.id)
-
 	def __unicode__(self):
 		return self.name

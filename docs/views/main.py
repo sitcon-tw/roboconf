@@ -6,12 +6,12 @@ from django.utils.timezone import now
 from core.api import *
 from docs.models import Permission, BlobText
 from docs.node import Node
-from docs.utils import parse_nid
 
 @login_required
 def main(request):
-	from docs.utils import get_nid
-	return redirect(reverse('docs:view', args=(get_nid(Folder, 0),)))
+	from docs.models import Folder
+	node = Node(nodeobj=Folder.objects.get(id=0))
+	return redirect(reverse('docs:view', args=(node.nid(),))))
 
 def view(request, nidb64):
 	try:

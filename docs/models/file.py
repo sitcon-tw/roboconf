@@ -27,9 +27,5 @@ class File(models.Model):
 	# == Linkbacks from other models ==
 	# revisions (OneToManyField to Revision)
 
-	def nid(self):
-		from docs.utils import get_nid
-		return get_nid(File, self.id)
-
 	def __unicode__(self):
 		return self.name
