@@ -126,7 +126,7 @@ def post(request, node):
 			}
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:view'), args=(node.nid(),))
+			return redirect(reverse('docs:view', args=(node.nid(),)))
 
 def put(request, f):
 	PUT = parse_json(request)
