@@ -39,7 +39,7 @@
 				<div class="left">
 				{% if user.is_authenticated %}
 					{% if node.can_edit %}
-					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾" data-new-folder><span class="icon-folder iconize"></span></button>
+					<button class="small radius secondary button" title="在「{{ node.name }}」建立新資料夾" data-reveal-id="newFolderDialog"><span class="icon-folder iconize"></span></button>
 					{% endif %}
 					<button class="small radius secondary button" title="共用" data-action="share"><span class="icon-share iconize"></span></button>
 					{% if perms.docs.archive %}
@@ -126,6 +126,26 @@
 		</div>
 	</div>
 </div>
+{% if node.can_edit %}
+<div id="newFolderDialog" class="reveal-modal" data-reveal>
+	<h3>新資料夾</h3>
+	<form>
+		<div class="row">
+			<div class="large-12 columns">
+				<label>請輸入新資料夾的名稱：</label>
+				<input type="text" name="name" />
+			</div>
+		</div>
+	</form>
+	<div class="button-row">
+		<div class="right">
+			<button class="small radius button" data-dialog-accept>建立</button>
+			<button class="small radius secondary button" data-dialog-reject>取消</button>
+		</div>
+	</div>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+{% endif %}
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
@@ -153,14 +173,19 @@ $(document).ready(function() {
 	});
 	$('a[data-li-star]').click(function() {
 		p = $(this).parents('[data-list-entry]');
-		star = p.data('starred') != undefined;
-		args = star ? {unstar: true} : {star: true};
+		args = p.data('starred') != undefined ? {unstar: true} : {star: true};
 		$.ajax({
 			contentType: 'application/json',
 			data: JSON.stringify(args),
 			success: function(d,t,j){ window.location.reload(); },
 			url: '/docs/' + p.data('id'), type: 'PUT'
 		});
+	});
+	$('#newFolderDialog button').click(function() {
+		$('#newFolderDialog').foundation('reveal', 'close');
+	});
+	$('button[data-action]').click(function() {
+		$('input[data-list-selector]').prop('checked', false);
 	});
 });
 </script>
