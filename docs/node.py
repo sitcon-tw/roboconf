@@ -152,4 +152,4 @@ class Node(object):
 	def starred(self):
 		if not self.__user or not self.__user.is_authenticated():
 			return None
-		return self.model.starred.filter(id=self.__user.id).exists()
+		return self.model.starring.filter(id=self.__user.id).exists()
