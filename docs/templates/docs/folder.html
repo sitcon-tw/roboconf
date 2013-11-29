@@ -116,11 +116,11 @@
 					{% endfor %}
 					</tbody>
 				</table>
-				{% else %}
+				{% endspaceless %}{% else %}
 				<div class="placeholder-message">
 					<span>尚無文件。{% if user.is_authenticated and node.can_edit %}<a href="{% url 'docs:create' %}?at={{ node.nid }}">建立新文件？</a>{% endif %}</span>
 				</div>
-				{% endspaceless %}{% endif %}
+				{% endif %}
 			</div>
 		</div>
 	</div>
