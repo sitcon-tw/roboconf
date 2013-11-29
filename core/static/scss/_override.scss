@@ -170,8 +170,13 @@ table {
 			.icon-unstar.iconize { color: #ffbb33; }
 		}
 		a { color: #222; }
-		span.time { font-size: 0.9em; }
-		span.editor { color: #777; font-size: 0.9em; }
+		.detail-column {
+			span {
+				margin-right: 0.5em;
+				&.time { font-size: 0.9em; }
+				&.editor { color: #777; font-size: 0.9em; }
+			}
+		}
 	}
 	.icon-column { width: 24px; text-align: center; vertical-align: middle; }
 	.detail-column { width: 33%; }

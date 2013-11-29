@@ -108,10 +108,10 @@
 							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
 					{% if i.is_folder %}
 							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
-							<td class="detail-column">{{ i.last_modified|smartdate }}</td>
+							<td class="detail-column"><span class="time">{{ i.last_modified|smartdate }}</span></td>
 					{% else %}
 							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-file iconize"></span> {{ i.name }}</a></td>
-							<td class="detail-column"><span class="time">{{ i.last_modified|smartdate }}</span> <span class="editor">{{ i.last_editor|get_name }}</span></td>
+							<td class="detail-column"><span class="time">{{ i.last_modified|smartdate }}</span><span class="editor">{{ i.last_editor|get_name }}</span></td>
 					{% endif %}
 						</tr>
 					{% endfor %}
