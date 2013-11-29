@@ -172,7 +172,7 @@ table {
 		a { color: #222; }
 		.detail-column {
 			span {
-				margin-right: 0.5em;
+				&:after { content: ' '; }
 				&.time { font-size: 0.9em; }
 				&.editor { color: #777; font-size: 0.9em; }
 			}
