@@ -46,8 +46,8 @@
 					<button class="small radius secondary button" title="封存" data-action="archive"><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-2 button-group">
-						<li><button class="small secondary button hide" title="移動" data-context data-action="move"><span class="icon-move iconize"></span></button></li>
-						<li><button class="small secondary button hide" title="刪除" data-context data-action="delete"><span class="icon-delete iconize"></span></button></li>
+						<li data-context class="hide"><button class="small secondary button hide" title="移動" data-action="move"><span class="icon-move iconize"></span></button></li>
+						<li data-context class="hide"><button class="small secondary button hide" title="刪除" data-action="delete"><span class="icon-delete iconize"></span></button></li>
 					</ul>
 					<button class="small radius secondary button" title="詳細資訊" data-info><span class="icon-info iconize"></span></button>
 				{% endif %}
@@ -127,7 +127,7 @@
 	</div>
 </div>
 {% if node.can_edit %}
-<div id="newFolderDialog" class="reveal-modal" data-reveal>
+<div id="newFolderDialog" class="reveal-modal small" data-reveal>
 	<h3>新資料夾</h3>
 	<form>
 		<div class="row">
