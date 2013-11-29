@@ -151,6 +151,17 @@ $(document).ready(function() {
 			$('#node-meta').data('selection', '');
 		}
 	});
+	$('a[data-li-star]').click(function() {
+		p = $(this).parents('[data-list-entry]');
+		star = p.data('starred') != undefined;
+		args = star ? {unstar: true} : {star: true};
+		$.ajax({
+			contentType: 'application/json',
+			data: JSON.stringify(args),
+			success: function(d,t,j){ window.location.reload(); },
+			url: '/docs/' + p.data('id'), type: 'PUT'
+		});
+	});
 	$('[data-context]').hide();
 });
 </script>

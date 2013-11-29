@@ -51,7 +51,7 @@ def get(request, node):
 
 	if 'node' in details:
 		result['name'] = node.name
-		result['parent'] = node.parent().nid()
+		result['parent'] = node.parent().nid() if node.parent() else None
 		result['modified'] = node.last_modified().isoformat()
 		result['archived'] = node.is_archived()
 		result['starred'] = node.starred()
@@ -128,7 +128,7 @@ def post(request, node):
 		else:
 			return redirect(reverse('docs:view', args=(node.nid(),)))
 
-def put(request, f):
+def put(request, node):
 	PUT = parse_json(request)
 	if not PUT:
 		return bad_request(request, {'error': 'invalid_json'})

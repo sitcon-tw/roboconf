@@ -8,3 +8,8 @@ $(document).ready(function() {
 		$t.height(dest);
 	});
 });
+$(document).bind('ajaxSend', function(e, xhr, settings) {
+	if (!(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)))
+		xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+});
+
