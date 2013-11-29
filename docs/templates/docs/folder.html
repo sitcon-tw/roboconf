@@ -140,7 +140,7 @@ $(document).ready(function() {
 	$('input[data-list-selector], .docs-list tr a').click(function(e) { e.stopPropagation(); })
 	$('input[data-list-selector]').change(function() {
 		l = $('input[data-list-selector]:not([data-select-all]):checked');
-		$('.context-button').toggle(!l.length);
+		$('.context-button').toggle(l.length);
 	});
 	$('.context-button').hide();
 });
