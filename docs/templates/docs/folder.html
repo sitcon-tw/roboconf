@@ -46,8 +46,8 @@
 					<button class="small radius secondary button" title="封存" data-action="archive"><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-2 button-group">
-						<li data-context><button class="small secondary button" title="移動" data-action="move"><span class="icon-move iconize"></span></button></li>
-						<li data-context><button class="small secondary button" title="刪除" data-action="delete"><span class="icon-delete iconize"></span></button></li>
+						<li><button class="small secondary button hide" title="移動" data-context data-action="move"><span class="icon-move iconize"></span></button></li>
+						<li><button class="small secondary button hide" title="刪除" data-context data-action="delete"><span class="icon-delete iconize"></span></button></li>
 					</ul>
 					<button class="small radius secondary button" title="詳細資訊" data-info><span class="icon-info iconize"></span></button>
 				{% endif %}
@@ -140,7 +140,7 @@ $(document).ready(function() {
 	$('input[data-list-selector], .docs-list tr a').click(function(e) { e.stopPropagation(); })
 	$('input[data-list-selector]').change(function() {
 		l = $('input[data-list-selector]:not([data-select-all]):checked');
-		$('[data-context]').toggle(l.length > 0);
+		$('[data-context]').toggleClass('hide', l.length < 1);
 		if (l.length) {
 			ent = $(l).parents('tr[data-list-entry][data-can-edit]');
 			$('button[data-action]').prop('disabled', ent.length < l.length);
@@ -162,7 +162,6 @@ $(document).ready(function() {
 			url: '/docs/' + p.data('id'), type: 'PUT'
 		});
 	});
-	$('[data-context]').hide();
 });
 </script>
 {% endblock %}
