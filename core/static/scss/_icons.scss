@@ -55,7 +55,7 @@
 .issue-meta .action-button .iconize { font-size: 14px; }
 .treeview .folder {
 	&:before {
-		content: '\9589'; color: #555;
+		content: '\9589'; color: #8f8f8f;
 		font-size: 16px;
 		padding-right: 4px;
 		@include iconize;
@@ -64,9 +64,15 @@
 }
 .docs-list {
 	.iconize {
-		font-size: 16px; color: #555;
-		&.icon-star { color: #ddd; }
+		font-size: 16px; color: #8f8f8f;
+		&.icon-star { color: #ccc; }
 		&.icon-unstar { color: #ffbb33; }
+		&.icon-file { color: #4986e7; }
+		&.icon-doc { color: #4285f4; }
+		&.icon-sheet { color: #0f9d58; }
+		&.icon-slide { color: #ff7537; }
+		&.icon-image { color: #db4437; }
+		&.icon-pdf { color: #fb6249; }
 	}
 	a[data-checked="checked"] .icon-star:before { content: '\2605'; }
 }
