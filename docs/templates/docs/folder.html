@@ -46,8 +46,8 @@
 					<button class="small radius secondary button" title="封存" data-action="archive"><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-2 button-group">
-						<li><button class="small secondary button" title="移動" data-action="move" data-context><span class="icon-move iconize"></span></button></li>
-						<li><button class="small secondary button" title="刪除" data-action="delete" data-context><span class="icon-delete iconize"></span></button></li>
+						<li data-context><button class="small secondary button" title="移動" data-action="move"><span class="icon-move iconize"></span></button></li>
+						<li data-context><button class="small secondary button" title="刪除" data-action="delete"><span class="icon-delete iconize"></span></button></li>
 					</ul>
 					<button class="small radius secondary button" title="詳細資訊" data-info><span class="icon-info iconize"></span></button>
 				{% endif %}
@@ -105,7 +105,7 @@
 					{% for i in node.items %}
 						<tr data-list-entry data-id="{{ i.nid }}" data-type="{{ i.is_folder|yesno:'folder,file' }}" {{ i.starred|yesno:'data-starred,' }} {{ i.can_edit|yesno:'data-can-edit,'}}>
 							<td class="icon-column"><input type="checkbox" data-list-selector></td>
-							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
+							<td class="icon-column"><a href="#" data-li-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
 					{% if i.is_folder %}
 							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
 							<td class="detail-column">{{ i.last_modified|smartdate }}</td>
@@ -140,16 +140,18 @@ $(document).ready(function() {
 	$('input[data-list-selector], .docs-list tr a').click(function(e) { e.stopPropagation(); })
 	$('input[data-list-selector]').change(function() {
 		l = $('input[data-list-selector]:not([data-select-all]):checked');
-		$('button[data-context]').toggle(l.length > 0);
+		$('[data-context]').toggle(l.length > 0);
 		if (l.length) {
 			ent = $(l).parents('tr[data-list-entry][data-can-edit]');
 			$('button[data-action]').prop('disabled', ent.length < l.length);
 			sel = []
 			$(ent).each(function(i,ele) { sel.push($(ele).data('id')); });
 			$('#node-meta').data('selection', sel.join());
+		} else {
+			$('#node-meta').data('selection', '');
 		}
 	});
-	$('button[data-context]').hide();
+	$('[data-context]').hide();
 });
 </script>
 {% endblock %}
