@@ -1,5 +1,4 @@
 from docs.models import *
-from docs.perms import is_in_scope
 
 class Node(object):
 	
@@ -30,13 +29,44 @@ class Node(object):
 
 		self.model = nodeobj
 		self.__user = user
+		self.__parent = None
+
+	def __direct_acl(self):
+		return sorted(self.model.permissions.all(), key=Permission.__key__, reverse=True)
+
+	def __acl(self):
+		if self.__cached_acl:
+			return self.__cached_acl
+		else:
+			if self.parent():
+				from itertools import chain
+				self.__cached_acl = tuple(chain(self.__direct_acl(), self.__parent.__acl()))
+			else:
+				self.__cached_acl = self.__acl()
+			return self.__cached_acl
 
 	def __perms(self):
 		try:
 			return self.__cached_perms
 		except AttributeError:
-			from docs.perms import get_perms
-			self.__cached_perms = get_perms(self.__user, self.model)
+			from docs.perms import *
+			max_perm = PRIORITY_COUNT - 1
+			cur_perm = -1
+
+			for perm in self.__acl():
+				priority = PRIORITY_MAPPING[perm.type]
+
+				if is_in_scope(self.__user, perm):
+
+					if perm.effect == Permission.ALLOW:
+						cur_perm = min(max(priority, cur_perm), max_perm)
+
+					elif perm.effect == Permission.DENY:
+						max_perm = min(priority, max_perm) - 1
+						if cur_perm > max_perm:
+							break		# We can't acquire more permissions upstream
+
+			self.__cached_perms = PRIORITY[:cur_perm+1]
 			return self.__cached_perms
 
 	def __filter_items(self, set):
@@ -48,7 +78,13 @@ class Node(object):
 		return result
 
 	def parent(self):
-		return None if not self.model.parent else Node(nodeobj=self.model.parent, user=self.__user) 
+		if not self.__parent:
+			if not self.model.parent:
+				return None
+			else:
+				self.__parent = Node(nodeobj=self.model.parent, user=self.__user)
+				return self.__parent
+		return self.__parent
 
 	def is_file(self):
 		return self.__type == File
