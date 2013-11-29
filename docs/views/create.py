@@ -51,7 +51,7 @@ def create(request):
 			result = {
 				'status': 'success',
 				'nid': node.nid(),
-				'timestamp': f.last_modified(),
+				'timestamp': f.last_modified,
 			}
 			if node.is_file():
 				result['revision'] = r.id
