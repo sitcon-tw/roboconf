@@ -64,7 +64,7 @@ def create(request):
 
 	else:
 		try:
-			parent = Node(at, user=request.user)
+			parent = Node(request.GET.get('at'), user=request.user)
 		except ObjectDoesNotExist:
 			parent = None
 

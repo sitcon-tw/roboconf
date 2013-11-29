@@ -3,7 +3,7 @@
 {% load dateutils %}
 {% block title %}{{ node.name }} ‧ 文件{{ block.super }}{% endblock %}
 {% block content %}
-<div id="node-meta" data-id="{{ node.id }}" data-type="folder" {{ node.starred|yesno:'data-starred,' }} {{ node.can_edit|yesno:'data-can-edit,'}}></div>
+<div id="node-meta" data-id="{{ node.nid }}" data-type="folder" {{ node.starred|yesno:'data-starred,' }} {{ node.can_edit|yesno:'data-can-edit,'}}></div>
 <div class="row">
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav filter">
