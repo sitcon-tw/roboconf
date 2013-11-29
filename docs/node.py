@@ -4,7 +4,7 @@ class Node(object):
 	
 	def __init__(self, nid=None, nodeobj=None, user=None):
 		if not nodeobj:
-			if not nidb64:
+			if not nid:
 				raise TypeError('Must either specify NID or provide model instance')
 			else:
 				from django.utils.http import urlsafe_base64_decode
