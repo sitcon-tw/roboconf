@@ -4,22 +4,22 @@ class Node(object):
 	
 	def __init__(self, nid=None, nodeobj=None, user=None):
 		if not nodeobj:
-			if not nid:
+			if not nidb64:
 				raise TypeError('Must either specify NID or provide model instance')
 			else:
 				from django.utils.http import urlsafe_base64_decode
-				nid = urlsafe_base64_decode(nidb64)
-				if nid[-1:] == 'F':
+				nid_str = urlsafe_base64_decode(nid)
+				if nid_str[-1:] == 'F':
 					model = File
 					self.__type = File
-				elif nid[-1:] == 'D':
+				elif nid_str[-1:] == 'D':
 					model = Folder
 					self.__type = Folder
 				else:
 					from django.core.exceptions import ObjectDoesNotExist
 					raise ObjectDoesNotExist
 
-				nodeobj = model.objects.get(id=nid[:-1])
+				nodeobj = model.objects.get(id=nid_str[:-1])
 		else:
 			if isinstance(nodeobj, File):
 				self.__type = File
