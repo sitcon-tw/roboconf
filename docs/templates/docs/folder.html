@@ -103,7 +103,7 @@
 					</thead>
 					<tbody>
 					{% for i in node.items %}
-						<tr data-list-entry data-id="{{ i.id }}" data-type="{{ i.is_folder|yesno:'folder,file' }}" {{ i.starred|yesno:'data-starred,' }} {{ i.can_edit|yesno:'data-can-edit,'}}>
+						<tr data-list-entry data-id="{{ i.nid }}" data-type="{{ i.is_folder|yesno:'folder,file' }}" {{ i.starred|yesno:'data-starred,' }} {{ i.can_edit|yesno:'data-can-edit,'}}>
 							<td class="icon-column"><input type="checkbox" data-list-selector></td>
 							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
 					{% if i.is_folder %}
@@ -145,7 +145,7 @@ $(document).ready(function() {
 			ent = $(l).parents('tr[data-list-entry][data-can-edit]');
 			$('button[data-action]').prop('disabled', ent.length < l.length);
 			sel = []
-			for (ele in ent) sel.push($(ele).data('id'));
+			$(ent).each(function(i,ele) { sel.push($(ele).data('id')); });
 			$('#node-meta').data('selection', sel.join());
 		}
 	});
