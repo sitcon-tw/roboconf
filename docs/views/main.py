@@ -11,7 +11,7 @@ from docs.node import Node
 def main(request):
 	from docs.models import Folder
 	node = Node(nodeobj=Folder.objects.get(id=0))
-	return redirect(reverse('docs:view', args=(node.nid(),))))
+	return redirect(reverse('docs:view', args=(node.nid(),)))
 
 def view(request, nidb64):
 	try:
