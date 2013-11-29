@@ -31,19 +31,8 @@ class Node(object):
 		self.__user = user
 		self.__parent = None
 
-	def __direct_acl(self):
-		return sorted(self.model.permissions.all(), key=Permission.__key__, reverse=True)
-
 	def __acl(self):
-		if self.__cached_acl:
-			return self.__cached_acl
-		else:
-			if self.parent():
-				from itertools import chain
-				self.__cached_acl = tuple(chain(self.__direct_acl(), self.__parent.__acl()))
-			else:
-				self.__cached_acl = self.__acl()
-			return self.__cached_acl
+		return sorted(self.model.permissions.all(), key=Permission.__key__, reverse=True)
 
 	def __perms(self):
 		try:
@@ -66,8 +55,19 @@ class Node(object):
 						if cur_perm > max_perm:
 							break		# We can't acquire more permissions upstream
 
+			# Inherit permissions if applicable
+			if cur_perm < max_perm and self.parent():
+				cur_perm = min(max(self.__parent.__perm_level(), cur_perm), max_perm)
+
 			self.__cached_perms = PRIORITY[:cur_perm+1]
 			return self.__cached_perms
+
+	def __perm_level(self):
+		try:
+			return self.__cached_perm_level
+		except AttributeError:
+			self.__perms()
+			return self.__cached_perm_level
 
 	def __filter_items(self, set):
 		result = []
