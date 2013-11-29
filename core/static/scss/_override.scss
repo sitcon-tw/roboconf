@@ -166,9 +166,12 @@ table {
 		}
 		input[type="checkbox"] { margin: 0; }
 		a[data-list-star] {
-			.iconize { color: #ddd; }
-			&[data-checked="checked"] .iconize { color: #ffbb33; }
+			.icon-star.iconize { color: #ccc; }
+			.icon-unstar.iconize { color: #ffbb33; }
 		}
+		a { color: #222; }
+		span.time { font-size: 0.9em; }
+		span.editor { color: #777; font-size: 0.9em; }
 	}
 	.icon-column { width: 24px; text-align: center; vertical-align: middle; }
 	.detail-column { width: 33%; }
