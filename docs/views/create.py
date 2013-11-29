@@ -41,7 +41,7 @@ def create(request):
 		else:
 			return bad_request(request, {'error': 'invalid_type'})
 
-		f.parent = parent
+		f.parent = parent.model
 		f.name = name
 		f.save()
 
