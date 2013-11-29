@@ -110,7 +110,7 @@
 							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
 							<td class="detail-column">{{ i.last_modified|smartdate }}</td>
 					{% else %}
-							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-file iconize"></span> {{ i.name }}</a></td>
+							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-doc iconize"></span> {{ i.name }}</a></td>
 							<td class="detail-column">{{ i.last_modified|smartdate }} {{ i.last_editor|get_name }}</td>
 					{% endif %}
 						</tr>
@@ -133,14 +133,14 @@
 		<div class="row">
 			<div class="large-12 columns">
 				<label>請輸入新資料夾的名稱：</label>
-				<input type="text" name="name" />
+				<input type="text" name="name" value="新資料夾" />
 			</div>
 		</div>
 	</form>
 	<div class="button-row">
 		<div class="right">
-			<button class="small radius button" data-dialog-accept>建立</button>
-			<button class="small radius secondary button" data-dialog-reject>取消</button>
+			<button class="small radius button" data-dialog-action="accept">建立</button>
+			<button class="small radius secondary button" data-dialog-action="reject">取消</button>
 		</div>
 	</div>
 	<a class="close-reveal-modal">&#215;</a>
@@ -182,6 +182,17 @@ $(document).ready(function() {
 		});
 	});
 	$('#newFolderDialog button').click(function() {
+		if ($(this).data('dialogAction') == 'accept') {
+			$.ajax({
+				data: {
+					type: 'folder',
+					name: $('#newFolderDialog input[name="name"]').val() || "新資料夾",
+					at: $('#node-meta').data('id')
+				},
+				success: function(d,t,j){ window.location.reload(); },
+				url: '/docs/create', type: 'POST'
+			});
+		}
 		$('#newFolderDialog').foundation('reveal', 'close');
 	});
 	$('button[data-action]').click(function() {
