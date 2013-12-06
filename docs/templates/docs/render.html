@@ -1,16 +1,26 @@
-{% extends 'core/safe_master.html' %}
-{% block title %}{{ node.name }} ‧ 文件{{ block.super }}{% endblock %}
-{% block content %}
-<div class="left">
-	<a class="right iconize icon-back has-tip" href="{% url 'docs:view' node.parent.nid %}" title="回到「{{ node.parent.name }}」" data-tooltip></a>
-</div>
-<div class="row">
-	<div class="large-9 large-centered columns">
-		<article>{{ text|safe }}</article>
-		<hr />
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="{{ LANGUAGE_CODE }}" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="{{ LANGUAGE_CODE }}" > <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>{{ node.name }} ‧ SITCON {% endblock %}</title>
+	<meta name="description" content="文件「{{ node.name }}」，由 SITCON 學生計算機年會行政系統提供。" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="{% static 'css/doc.css' %}" />
+	<link rel="shortcut icon" href="{% static 'img/SITCON.ico' %}" />
+	<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}" />
+	<script src="{% static 'js/vendor/custom.modernizr.js' %}"></script>
+</head>
+<body>
+<div class="page">
+	<div class="content">
+		<article class="document">{{ text|safe }}</article>
 		<footer>
-			<small>本文件由 <a href="http://staff.sitcon.org/">SITCON 行政系統</a>提供。</small>
+			<a href="http://staff.sitcon.org/" class="logo" title="本文件由 SITCON 行政系統提供">SITCON</a>
 		</footer>
 	</div>
 </div>
-{% endblock %}
+</body>
+</html>

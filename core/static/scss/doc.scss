@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+$include-html-classes: false;
+@import "foundation/components/global";
+@import "foundation/components/grid";
+
+@import "vendor/cinshui";
+
+.page {
+	@include grid-row();
+	.content {
+		@include grid-column(10, $center: true);
+
+		footer {
+			margin-top: -1em;
+			padding: 1em 2em 2em;
+			position: relative;
+			text-align: right;
+
+			.logo {
+				display: inline-block;
+				width: 6em; height: 2em;
+				text-indent: -200000px;
+				text-align: left;
+				overflow: hidden;
+				background: url('/static/img/SITCON-colored.svg') center no-repeat;
+				
+				@import "compass/css3/background-size";
+				@include background-size(contain);
+
+				.no-svg & { background-image: url('/static/img/SITCON-colored.png'); }
+			}
+		}
+	}
+}
