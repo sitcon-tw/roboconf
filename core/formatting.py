@@ -1,13 +1,13 @@
 import markdown as m
 
 inline = m.Markdown(
-	extensions=['fenced_code', 'nl2br', 'vendor.del_ins'],
+	extensions=['fenced_code', 'nl2br', 'vendor.del_ins', 'vendor.linkify'],
 	safe_mode='escape',
 	smart_emphasis=False,	# Prevent problems on Chinese characters
 )
 
 docs = m.Markdown(
-	extensions=['abbr', 'def_list', 'fenced_code', 'footnotes', 'tables', 'toc', 'nl2br', 'vendor.del_ins'],
+	extensions=['abbr', 'def_list', 'fenced_code', 'footnotes', 'tables', 'toc', 'nl2br', 'vendor.del_ins', 'vendor.linkify'],
 	smart_emphasis=False,	# Prevent problems on Chinese characters
 )
 
