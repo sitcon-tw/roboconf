@@ -146,6 +146,24 @@
 	<a class="close-reveal-modal">&#215;</a>
 </div>
 {% endif %}
+<div id="renameDialog" class="reveal-modal small" data-reveal>
+	<h3>重新命名</h3>
+	<form>
+		<div class="row">
+			<div class="large-12 columns">
+				<label>請輸入新的名稱：</label>
+				<input type="text" name="name" />
+			</div>
+		</div>
+	</form>
+	<div class="button-row">
+		<div class="right">
+			<button class="small radius button" data-dialog-action="accept">建立</button>
+			<button class="small radius secondary button" data-dialog-action="reject">取消</button>
+		</div>
+	</div>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
@@ -194,6 +212,18 @@ $(document).ready(function() {
 			});
 		}
 		$('#newFolderDialog').foundation('reveal', 'close');
+	});
+	$('#renameDialog button').click(function() {
+		if ($(this).data('dialogAction') == 'accept') {
+			t = $('#node-meta').data('selection');
+			n = $('#newFolderDialog input[name="name"]').val();
+			if (t && n && (t.indexOf(',') < 0))
+				$.ajax({
+					data: { rename: true, name: n },
+					success: function(d,t,j){ window.location.reload(); },
+					url: '/docs/' + t, type: 'PUT'
+				});
+		}
 	});
 	$('button[data-action]').click(function() {
 		$('input[data-list-selector]').prop('checked', false);
