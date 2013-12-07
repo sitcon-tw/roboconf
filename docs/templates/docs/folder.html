@@ -159,7 +159,7 @@
 	</form>
 	<div class="button-row">
 		<div class="right">
-			<button class="small radius button" data-dialog-action="accept">建立</button>
+			<button class="small radius button" data-dialog-action="accept">確定</button>
 			<button class="small radius secondary button" data-dialog-action="reject">取消</button>
 		</div>
 	</div>
@@ -229,7 +229,7 @@ $(document).ready(function() {
 			n = $('#newFolderDialog input[name="name"]').val();
 			if (t && n && (t.indexOf(',') < 0))
 				$.ajax({
-					data: { rename: true, name: n },
+					data: JSON.stringify({ rename: true, name: n }),
 					success: function(d,t,j){ window.location.reload(); },
 					url: '/docs/' + t, type: 'PUT'
 				});
