@@ -234,6 +234,7 @@ $(document).ready(function() {
 					url: '/docs/' + t, type: 'PUT'
 				});
 		}
+		$('#renameDialog').foundation('reveal', 'close');
 	});
 	$('button[data-action]').click(function() {
 		$('input[data-list-selector]').prop('checked', false);
