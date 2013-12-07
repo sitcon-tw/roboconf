@@ -226,7 +226,7 @@ $(document).ready(function() {
 	$('#renameDialog button').click(function() {
 		if ($(this).data('dialogAction') == 'accept') {
 			t = $('#node-meta').data('selection');
-			n = $('#newFolderDialog input[name="name"]').val();
+			n = $('#renameDialog input[name="name"]').val();
 			if (t && n && (t.indexOf(',') < 0))
 				$.ajax({
 					data: JSON.stringify({ rename: true, name: n }),
