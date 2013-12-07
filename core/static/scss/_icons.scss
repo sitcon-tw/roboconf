@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'IcoMoon';
-	src:url('../font/IcoMoon.eot');
-	src:url('../font/IcoMoon.eot?#iefix') format('embedded-opentype'),
-		url('../font/IcoMoon.woff') format('woff'),
-		url('../font/IcoMoon.ttf') format('truetype'),
-		url('../font/IcoMoon.svg#IcoMoon') format('svg');
+	src:url('../font/icomoon.eot');
+	src:url('../font/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../font/icomoon.woff') format('woff'),
+		url('../font/icomoon.ttf') format('truetype'),
+		url('../font/icomoon.svg#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -31,24 +31,22 @@
 .icon-tag:before { content: '\6a19'; }
 .icon-tags:before { content: '\7c64'; }
 .icon-clock:before { content: '\6642'; }
-.icon-check:before { content: '\2705'; }
-.icon-add:before { content: '\002b'; }
 .icon-email:before { content: '\4fe1'; }
 .icon-profile:before { content: '\4eba'; }
 .icon-contacts:before { content: '\7c3f'; }
 .icon-star:before { content: '\2606'; }
 .icon-unstar:before { content: '\2605'; }
-.icon-edit:before { content: '\8a2d'; }
+.icon-edit:before { content: '\7b46'; }
 .icon-delete:before { content: '\68c4'; }
 .icon-school:before { content: '\5bb6'; }
 .icon-phone:before { content: '\260e'; }
 .icon-folder:before { content: '\9589'; }
 .icon-share:before { content: '\4eab'; }
 .icon-move:before { content: '\21aa'; }
-.icon-info:before { content: '\8a2d'; }
+.icon-info:before { content: 'i'; }
 .icon-file:before { content: '\6587'; }
 .icon-new:before { content: '\65b0'; }
-.icon-upload:before { content: '\9644'; }
+.icon-upload:before { content: '\4f48'; }
 .icon-link:before { content: '\93c8'; }
 .icon-comment:before { content: '\8a71'; }
 .button .iconize { font-size: 16px; vertical-align: middle; }
