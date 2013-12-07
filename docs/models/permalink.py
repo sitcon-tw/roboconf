@@ -12,6 +12,6 @@ class Permalink(models.Model):
 
 	def __unicode__(self):
 		if self.revision:
-			return '%s (%s +%d)' % (self.name, self.file.nid(), self.revision.id)
+			return '%s (#%s +%d)' % (self.name, self.file.id, self.revision.id)
 		else:
-			return '%s (%s)' % (self.name, self.file.nid())
+			return '%s (#%s)' % (self.name, self.file.id)
