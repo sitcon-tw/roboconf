@@ -149,7 +149,7 @@ def put(request, node):
 		f.starring.remove(request.user)
 
 	elif 'rename' in PUT:
-		if not Permission.EDIT in perms: raise PermissionDenied
+		if not node.can_edit(): raise PermissionDenied
 		
 		name = PUT.get('name')
 		if not name:
@@ -158,7 +158,7 @@ def put(request, node):
 		f.save()
 
 	elif 'move' in PUT:
-		if not Permission.EDIT in perms: raise PermissionDenied
+		if not node.can_edit(): raise PermissionDenied
 		
 		try:
 			parent = Node(PUT.get('at'))
