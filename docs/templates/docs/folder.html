@@ -46,7 +46,7 @@
 					<button class="small radius secondary button" title="封存" data-action="archive"><span class="icon-archive iconize"></span></button>
 					{% endif %}
 					<ul class="radius even-3 button-group hide" data-context>
-						<li><button class="small secondary button" title="重新命名" data-action="rename" data-reveal-id="renameDialog"><span class="icon-edit iconize"></span></button></li>
+						<li><button class="small secondary button" title="重新命名" data-action="rename"><span class="icon-edit iconize"></span></button></li>
 						<li><button class="small secondary button" title="移動" data-action="move"><span class="icon-move iconize"></span></button></li>
 						<li><button class="small secondary button" title="刪除" data-action="delete"><span class="icon-delete iconize"></span></button></li>
 					</ul>
@@ -108,7 +108,7 @@
 							<td class="icon-column"><input type="checkbox" data-list-selector></td>
 							<td class="icon-column"><a href="#" data-list-star><span class="{{ i.starred|yesno:'icon-unstar,icon-star' }} iconize"></span></a></td>
 					{% if i.is_folder %}
-							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
+							<td><a href="{% url 'docs:view' i.nid %}" data-name><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
 							<td class="detail-column"><span class="time">{{ i.last_modified|smartdate }}</span></td>
 					{% else %}
 							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-file iconize"></span> {{ i.name }}</a></td>
@@ -213,6 +213,13 @@ $(document).ready(function() {
 			});
 		}
 		$('#newFolderDialog').foundation('reveal', 'close');
+	});
+	$('button[data-action="rename"]').click(function() {
+		n = $('#node-meta').data('selection');
+		if (n && n.indexOf(',') < 0) {
+			$('#renameDialog input[name="name"]').val($('[data-id="'+n+'"] [data-name]').text());
+			$('#renameDialog').foundation('reveal', 'open');
+		}
 	});
 	$('#renameDialog button').click(function() {
 		if ($(this).data('dialogAction') == 'accept') {
