@@ -111,7 +111,7 @@
 							<td><a href="{% url 'docs:view' i.nid %}" data-name><span class="icon-folder iconize"></span> {{ i.name }}</a></td>
 							<td class="detail-column"><span class="time">{{ i.last_modified|smartdate }}</span></td>
 					{% else %}
-							<td><a href="{% url 'docs:view' i.nid %}"><span class="icon-file iconize"></span> {{ i.name }}</a></td>
+							<td><a href="{% url 'docs:view' i.nid %}" data-name><span class="icon-file iconize"></span> {{ i.name }}</a></td>
 							<td class="detail-column"><span class="time">{{ i.last_modified|smartdate }}</span><span class="editor">{{ i.last_editor|get_name }}</span></td>
 					{% endif %}
 						</tr>
@@ -217,8 +217,10 @@ $(document).ready(function() {
 	$('button[data-action="rename"]').click(function() {
 		n = $('#node-meta').data('selection');
 		if (n && n.indexOf(',') < 0) {
-			$('#renameDialog input[name="name"]').val($('[data-id="'+n+'"] [data-name]').text());
+			t = $('#renameDialog input[name="name"]');
+			t.val($('[data-id="'+n+'"] [data-name]').text());
 			$('#renameDialog').foundation('reveal', 'open');
+			t.focus();
 		}
 	});
 	$('#renameDialog button').click(function() {
