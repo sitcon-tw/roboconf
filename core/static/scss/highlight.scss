@@ -32,12 +32,7 @@ $blue: #33b5e5;
 		color: lighten($darkgray, 10%);
 	}
 
-	.cm-link {
-		color: $blue;
-		text-decoration: none;
-	}
-
-	.cm-string, .cm-strong, .cm-comment, .cm-quote, .cm-number, .cm-atom, .cm-tag {
+	.cm-link, .cm-string, .cm-strong, .cm-comment, .cm-quote, .cm-number, .cm-atom, .cm-tag {
 		color: #000;
 		font-weight: bold;
 	}

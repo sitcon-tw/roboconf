@@ -58,7 +58,7 @@
 $(document).ready(function() {
 	t = $('#contentTextArea')[0];
 	CodeMirror.fromTextArea(t, {
-		mode: 'markdown',
+		mode: 'gfm',
 		lineWrapping: true, lineNumbers: false,
 		readOnly: $(t).prop('disabled')
 	});
