@@ -1,1 +1,45 @@
+@import "vendor/settings";
 @import "vendor/codemirror";
+
+$darkgray: #3c4043;
+$blue: #33b5e5;
+
+.document .CodeMirror {
+	height: auto;
+	font-family: $code-font-family;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	font-weight: lighter;
+	color: lighten($darkgray, 10%);
+
+	.CodeMirror-focused, .CodeMirror-selected {
+		color: $darkgray;
+		background: lighten($blue, 20%);
+	}
+
+	::selection {
+		color: $darkgray;
+		background: lighten($blue, 20%);
+	}
+
+	.cm-header {
+		color: #000;
+		font-size: 1.414em;
+		line-height: 1.697em;
+		font-weight: bold;
+	}
+
+	.cm-variable-2, .cm-variable-3, .cm-keyword {
+		color: lighten($darkgray, 10%);
+	}
+
+	.cm-link {
+		color: $blue;
+		text-decoration: none;
+	}
+
+	.cm-string, .cm-strong, .cm-comment, .cm-quote, .cm-number, .cm-atom, .cm-tag {
+		color: #000;
+		font-weight: bold;
+	}
+}

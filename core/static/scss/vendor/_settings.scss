@@ -182,8 +182,8 @@ $header-font-family: Roboto, "Droid Sans", "Droid Sans Fallback", /* Android */
 
 // Style <code> tags
 
-// $code-color: darken($alert-color, 15%);
-// $code-font-family: Consolas, 'Liberation Mono', Courier, monospace;
+$code-color: darken($secondary-color, 30%);
+$code-font-family: Consolas, Inconsolata, 'Source Code Pro', Monaco, monospace;
 // $code-font-weight: bold;
 
 // Style anchors

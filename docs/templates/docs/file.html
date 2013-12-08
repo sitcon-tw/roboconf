@@ -17,7 +17,7 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'docs:view' node.parent.nid %}" title="回到「{{ node.parent.name }}」" data-tooltip></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'docs:view' node.nid %}" method="POST">
+		<form action="{% url 'docs:view' node.nid %}" method="POST" class="document">
 		{% csrf_token %}
 			<div class="row">
 				<div class="large-12 columns">
