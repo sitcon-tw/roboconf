@@ -233,7 +233,7 @@ $(document).ready(function() {
 	$('button[data-action="delete"]').click(function() {
 		x = selection();
 		if (x.length)
-			for (var i in x) Roboconf.delete('/docs/' + i);
+			Roboconf.delete('/docs/' + x[0]);
 	});
 	$('button[data-action]').click(function() {
 		$('input[data-list-selector]').prop('checked', false);
