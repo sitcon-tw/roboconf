@@ -202,6 +202,7 @@ $(document).ready(function() {
 			p.data('starred') != undefined ? {unstar: true} : {star: true}
 		);
 	});
+{% if node.can_edit %}
 	$('#newFolderDialog button').click(function() {
 		if ($(this).data('dialogAction') == 'accept') {
 			Roboconf.post('/docs/new', {
@@ -212,6 +213,14 @@ $(document).ready(function() {
 		}
 		$('#newFolderDialog').foundation('reveal', 'close');
 	});
+{% endif %}
+{% if perms.docs.archive %}
+	$('button[data-action="archive"]').click(function() {
+		x = selection();
+		n = x.length ? x[0] : $('#node-meta').data('id');
+		Roboconf.put('/docs/' + n, { archive: true });
+	});
+{% endif %}
 	$('button[data-action="rename"]').click(function() {
 		x = selection();
 		if (x.length) {
