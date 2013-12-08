@@ -192,24 +192,16 @@ $(document).ready(function() {
 	});
 	$('a[data-list-star]').click(function() {
 		p = $(this).parents('[data-list-entry]');
-		args = p.data('starred') != undefined ? {unstar: true} : {star: true};
-		$.ajax({
-			contentType: 'application/json',
-			data: JSON.stringify(args),
-			success: function(d,t,j){ window.location.reload(); },
-			url: '/docs/' + p.data('id'), type: 'PUT'
-		});
+		Roboconf.put('/docs/' + p.data('id'), 
+			p.data('starred') != undefined ? {unstar: true} : {star: true}
+		);
 	});
 	$('#newFolderDialog button').click(function() {
 		if ($(this).data('dialogAction') == 'accept') {
-			$.ajax({
-				data: {
-					type: 'folder',
-					name: $('#newFolderDialog input[name="name"]').val() || "新資料夾",
-					at: $('#node-meta').data('id')
-				},
-				success: function(d,t,j){ window.location.reload(); },
-				url: '/docs/new', type: 'POST'
+			Roboconf.post('/docs/new', {
+				type: 'folder',
+				name: $('#newFolderDialog input[name="name"]').val() || "新資料夾",
+				at: $('#node-meta').data('id')
 			});
 		}
 		$('#newFolderDialog').foundation('reveal', 'close');
@@ -228,11 +220,7 @@ $(document).ready(function() {
 			t = $('#node-meta').data('selection');
 			n = $('#renameDialog input[name="name"]').val();
 			if (t && n && (t.indexOf(',') < 0))
-				$.ajax({
-					data: JSON.stringify({ rename: true, name: n }),
-					success: function(d,t,j){ window.location.reload(); },
-					url: '/docs/' + t, type: 'PUT'
-				});
+				Roboconf.put('/docs/' + t, { rename: true, name: n });
 		}
 		$('#renameDialog').foundation('reveal', 'close');
 	});
