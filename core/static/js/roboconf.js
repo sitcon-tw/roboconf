@@ -20,6 +20,12 @@ var Roboconf = (function(){
 				success: (options && options.success) || defSuccess,
 				url: url, type: 'PUT'
 			});
+		},
+		delete: function(url, args, options) {
+			$.ajax({
+				success: (options && options.success) || defSuccess,
+				url: url, type: 'DELETE'
+			})
 		}
 	}
 })()

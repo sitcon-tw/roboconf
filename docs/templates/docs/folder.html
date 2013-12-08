@@ -169,6 +169,11 @@
 {% block scripts %}
 <script type="text/javascript">
 $(document).ready(function() {
+	selection = function() {
+		sel = $('#node-meta').data('selection');
+		return sel ? sel.split(',') : [];
+	}
+
 	$('input[data-select-all]').change(function() {
 		$('input[data-list-selector]:not([data-select-all])').prop('checked', this.checked);
 	});
@@ -180,6 +185,7 @@ $(document).ready(function() {
 	$('input[data-list-selector]').change(function() {
 		l = $('input[data-list-selector]:not([data-select-all]):checked');
 		$('[data-context]').toggleClass('hide', l.length < 1);
+		$('[data-action="rename"]').toggleClass('hide', l.length == 1);
 		if (l.length) {
 			ent = $(l).parents('tr[data-list-entry][data-can-edit]');
 			$('button[data-action]').prop('disabled', ent.length < l.length);
@@ -207,22 +213,27 @@ $(document).ready(function() {
 		$('#newFolderDialog').foundation('reveal', 'close');
 	});
 	$('button[data-action="rename"]').click(function() {
-		n = $('#node-meta').data('selection');
-		if (n && n.indexOf(',') < 0) {
+		x = selection();
+		if (x.length) {
 			t = $('#renameDialog input[name="name"]');
-			t.val($('[data-id="'+n+'"] [data-name]').text());
+			t.val($('[data-id="'+x[0]+'"] [data-name]').text());
 			$('#renameDialog').foundation('reveal', 'open');
 			t.focus();
 		}
 	});
 	$('#renameDialog button').click(function() {
 		if ($(this).data('dialogAction') == 'accept') {
-			t = $('#node-meta').data('selection');
+			x = selection();
 			n = $('#renameDialog input[name="name"]').val();
-			if (t && n && (t.indexOf(',') < 0))
-				Roboconf.put('/docs/' + t, { rename: true, name: n });
+			if (x.length && n)
+				Roboconf.put('/docs/' + x[0], { rename: true, name: n });
 		}
 		$('#renameDialog').foundation('reveal', 'close');
+	});
+	$('button[data-action="delete"]').click(function() {
+		x = selection();
+		if (x.length)
+			for (var i in x) Roboconf.delete('/docs/' + i);
 	});
 	$('button[data-action]').click(function() {
 		$('input[data-list-selector]').prop('checked', false);

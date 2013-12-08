@@ -230,9 +230,15 @@ def delete(request, node):
 		raise PermissionDenied
 
 	# Remove any possible viewing permission, move to trash can
-	f = node.model
-	f.permissions.clear()
-	f.parent = Folder.objects.get(id=-1)
-	f.save()
+	open_nodes = [node]
+
+	while len(open_nodes):
+		i = open_nodes.pop(0)
+		i.model.permissions.clear()
+		if node.is_folder():
+			open_nodes += list(node.items())
+
+	node.model.parent = Folder.objects.get(id=-1)
+	node.model.save()
 
 	return render_json(request, {'status': 'success'})
