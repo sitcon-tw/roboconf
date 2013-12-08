@@ -1,5 +1,9 @@
 {% extends 'core/master.html' %}
+{% load staticfiles %}
 {% block title %}{{ node.name }} ‧ 文件{{ block.super }}{% endblock %}
+{% block headers %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/highlight.css' %}">
+{% endblock %}
 {% block content %}
 {% if status %}
 <div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
@@ -29,7 +33,7 @@
 			</div>
 			<div class="row">
 				<div class="large-12 columns">
-					<textarea name="content" style="min-height: 23em;" {{ node.can_edit|yesno:',disabled' }}>{{ node.model.current_revision.text.text }}</textarea>
+					<textarea id="contentTextArea" name="content" {{ node.can_edit|yesno:',disabled' }}>{{ node.model.current_revision.text.text }}</textarea>
 				</div>
 			</div>
 			<div class="button-row">
@@ -47,4 +51,17 @@
 		</ul>
 	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/vendor/codemirror.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	t = $('#contentTextArea')[0];
+	CodeMirror.fromTextArea(t, {
+		mode: 'markdown',
+		lineWrapping: true, lineNumbers: false,
+		readOnly: $(t).prop('disabled')
+	});
+});
+</script>
 {% endblock %}
