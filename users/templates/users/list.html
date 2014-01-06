@@ -19,7 +19,7 @@
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav users-actions">
 			{% if perms.auth.add_user %}<li><a href="{% url 'users:create' %}"><span class="icon-add iconize"></span> 新增人員</a></li>{% endif %}
-			<li><a href="{% url 'users:edit' user.id %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
+			<li><a href="{% url 'users:edit' user.username %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
 			<li><a href="{% url 'users:contacts' %}"><span class="icon-contacts iconize"></span> 檢視通訊錄</a></li>
 		</ul>
 		<div class="divider"></div>
