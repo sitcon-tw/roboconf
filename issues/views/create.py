@@ -8,11 +8,11 @@ import datetime
 
 @login_required
 def create(request):
+	errors = []
+
 	if 'submit' in request.POST:
 		if not request.user.has_perm('issues.add_issue'):
 			return redirect(reverse('issues:list'))	# Audit fail
-
-		errors = []
 		
 		issue = Issue()
 		issue.title = request.POST['title']
