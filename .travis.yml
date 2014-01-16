@@ -1,0 +1,22 @@
+language: python
+python:
+- '2.7'
+services:
+- postgres
+env:
+- SECRET_KEY='TRAVIS_CI_KEY'
+install:
+- 'pip install .'
+- 'pip install -r requirements.txt'
+before_script:
+- psql -c 'CREATE DATABASE sitcon_staff_dev;' -U postgres
+script:
+- python setup.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: B5s6q70HiwRjX9GWBDBz8F5hhT03CqV9wyZGxuANaz9+MMkuUiA2jxhtwySVbRjL5Vpdn0iFyfVFQqQIIxMcRSd6naBwG1jWuweq4WS6GNRGB46atdbmxrCB3OdbLgA93n95v+1kLPXmLNWGzTPFsIR2P0Eq49o2CU85+PbiLkQ=
+  app: sitcon-staff
+  on:
+    repo: sitcon-tw/staff.sitcon.org
+    branch: master
