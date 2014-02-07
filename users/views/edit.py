@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.validators import validate_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import *
@@ -40,12 +39,14 @@ def edit(request, username):
 
 		email = request.POST.get('email', '')
 		if email != user.email:
-			if validate_email(email):
+			try:
+				validate_email(email)
+
 				if User.objects.filter(email=email).count() < 1:
 					user.email = email
 				else:
 					errors += ['email', 'email_already_taken']
-			else:
+			except ValidationError:
 				errors += ['email', 'invalid_email']
 
 		profile.display_name = request.POST.get('display_name')

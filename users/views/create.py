@@ -24,13 +24,17 @@ def create(request):
 			errors += ['username', 'invalid_username']
 
 		from django.core.validators import validate_email
+		from django.core.exceptions import ValidationError
 		email = request.POST.get('email')
-		if email and validate_email(email):
+		try:
+			validate_email(email)
+
 			if User.objects.filter(email=email).count() < 1:
 				user.email = email
 			else:
 				errors += ['email', 'email_already_taken']
-		else:
+		
+		except ValidationError:
 			errors += ['email', 'invalid_email']
 
 		user.first_name = request.POST.get('first_name')
