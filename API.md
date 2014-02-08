@@ -3,7 +3,7 @@ staff.sitcon.org API
 
 總則
 ---
-* API 皆與普通界面共用資源端點，因此須於標頭指定 `X-Requested-With` 方能正常存取。  
+* API 皆與普通界面共用資源端點，因此須於標頭指定 `X-Requested-With: XMLHttpRequest` 方能正常存取。  
 * PUT 與 DELETE 方法皆以 JSON 傳入參數。
 * 當存取的物件不存在，傳回 **HTTP 404**。
 * 當不具物件的相對應權限，傳回 **HTTP 403**。
@@ -20,16 +20,19 @@ staff.sitcon.org API
 ```
 {
   "denny0223": {
+      "name": "Denny Huang",
       "title": "總召",
       "avatar": "https://secure.gravatar.com/..."
   },
 
   "RSChiang": {
+      "name": "RSChiang",
       "title": "行政組長",
       "avatar": "https://secure.gravatar.com/..."
   },
 
   "elct9620": {
+      "name": "蒼時弦也", 
       "title": "文創煉金師",
       "avatar": "https://secure.gravatar.com/..."
   },

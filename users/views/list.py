@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from users.models import *
-from users.utils import get_user_sorting_key, get_avatar_url
+from users.utils import *
 
 def sorted_users(group_id=None):
 	users = User.objects.filter(is_active=True)
@@ -17,6 +17,7 @@ def list(request):
 		result = {}
 		for u in User.objects.filter(is_active=True, groups__id=11):
 			result[u.username] = {
+				"name": get_user_name(u),
 				"title": u.profile.title,
 				"avatar": get_avatar_url(u.email),
 			}

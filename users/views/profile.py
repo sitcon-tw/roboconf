@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from users.utils import get_avatar_url
+from users.utils import get_user_name, get_avatar_url
 
 def profile(request, username):
 	user = get_object_or_404(User, username=username)
@@ -9,9 +9,9 @@ def profile(request, username):
 		if user.is_active:
 			return render_json(request, {
 				'status': 'success',
-				'name': user.username,
-				'avatar': get_avatar_url(user.email),
+				'name': get_user_name(u),,
 				'title': user.profile.title,
+				'avatar': get_avatar_url(user.email),
 			})
 		return bad_request(request, {'status': 'invalid'})
 
