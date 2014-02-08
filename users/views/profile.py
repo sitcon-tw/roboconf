@@ -9,7 +9,7 @@ def profile(request, username):
 		if user.is_active:
 			return render_json(request, {
 				'status': 'success',
-				'name': get_user_name(u),,
+				'name': get_user_name(u),
 				'title': user.profile.title,
 				'avatar': get_avatar_url(user.email),
 			})
