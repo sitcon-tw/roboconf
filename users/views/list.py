@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from users.models import *
 from users.utils import *
+from core.decorators import api_endpoint
 
 def sorted_users(group_id=None):
 	users = User.objects.filter(is_active=True)
@@ -10,6 +11,7 @@ def sorted_users(group_id=None):
 		users = users.filter(groups__id=group_id) 
 	return sorted(users, key=get_user_sorting_key)
 
+@api_endpoint(public=True)
 def list(request):
 	if request.is_ajax():
 		from core.api import *

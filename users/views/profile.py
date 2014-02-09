@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from users.utils import get_user_name, get_avatar_url
+from core.decorators import api_endpoint
 
+@api_endpoint(public=True)
 def profile(request, username):
 	user = get_object_or_404(User, username=username)
 	if request.is_ajax():
