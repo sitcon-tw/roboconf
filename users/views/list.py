@@ -17,7 +17,7 @@ def list(request):
 		from core.api import *
 
 		result = {}
-		for u in User.objects.filter(is_active=True, groups__id=11):
+		for u in sorted_users(group_id=11):
 			result[u.username] = {
 				"name": get_user_name(u),
 				"title": u.profile.title,
