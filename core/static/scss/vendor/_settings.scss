@@ -25,10 +25,11 @@ $default-float: left;
 
 // $body-bg: #fff;
 // $body-font-color: #222;
-$body-font-family: "XinGothic", "XinGothic-TC W4", /* XinGothic */
+$body-font-family: "XinGothic-TC", "XinGothic-TC W4", /* XinGothic */
+					"Helvetica Neue", Helvetica, Arial, /* Fallback */
 					"LantingHei TC", "Apple LiGothic", /* OS X */
 					"Microsoft Jhenghei", /* Windows */
-					"Helvetica Neue", Helvetica, Arial, sans-serif;
+					sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -136,10 +137,11 @@ $success-color: #597cb0;
 
 // Control header font styles
 
-$header-font-family: "XinGothic", "XinGothic-TC W6", /* XinGothic */
+$header-font-family: "XinGothic-TC", "XinGothic-TC W6", /* XinGothic */
+					"Helvetica Neue", Helvetica, Arial, /* Fallback */
 					"LantingHei TC", "Apple LiGothic", /* OS X */
 					"Microsoft Jhenghei", /* Windows */
-					Helvetica, Arial, sans-serif;
+					sans-serif;
 $header-font-weight: 600;
 // $header-font-style: normal;
 // $header-font-color: #222;
