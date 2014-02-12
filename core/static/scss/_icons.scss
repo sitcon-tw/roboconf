@@ -23,6 +23,8 @@
 .iconize { @include iconize; }
 
 .icon-back:before { content: '\21a9'; }
+.icon-add:before { content: '+'; }
+.icon-remove:before { content: '−'; }
 .icon-issue-open:before { content: '\2191'; color: #3f3; }
 .icon-issue-expired:before { content: '\ff01'; color: #f33; }
 .icon-issue-closed:before { content: '\2193'; color: #666; }
