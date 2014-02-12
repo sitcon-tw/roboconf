@@ -1241,8 +1241,8 @@ $topbar-bg-color: #232323;
 
 // Style the top bar dropdown elements
 
-// $topbar-dropdown-bg: #222;
-// $topbar-dropdown-link-color: #fff;
+$topbar-dropdown-bg: #232323;
+$topbar-dropdown-link-color: #666;
 // $topbar-dropdown-link-bg: lighten(#111, 5%);
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
@@ -1250,20 +1250,20 @@ $topbar-bg-color: #232323;
 
 // Set the link colors and styles for top-level nav
 
-// $topbar-link-color: #fff;
-// $topbar-link-color-hover: #fff;
-// $topbar-link-color-active: #fff;
+$topbar-link-color: #666;
+$topbar-link-color-hover: #fff;
+$topbar-link-color-active: #fff;
 // $topbar-link-weight: bold;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
-// $topbar-link-bg-hover: #245e00;
-// $topbar-link-bg-active: #245e00;
+$topbar-link-bg-hover: #232323;
+$topbar-link-bg-active: #232323;
 
-// $topbar-dropdown-label-color: #555;
+$topbar-dropdown-label-color: #aaa;
 // $topbar-dropdown-label-text-transform: uppercase;
 // $topbar-dropdown-label-font-weight: bold;
 $topbar-dropdown-label-font-size: em-calc(13);
-// $topbar-dropdown-label-bg: $topbar-dropdown-bg;
+$topbar-dropdown-label-bg: $topbar-dropdown-bg;
 
 // Top menu icon styles
 
@@ -1283,8 +1283,8 @@ $topbar-dropdown-label-font-size: em-calc(13);
 
 // Divider Styles
 
-// $topbar-divider-border-bottom: solid 1px lighten(#111, 10%);
-// $topbar-divider-border-top: solid 1px darken(#111, 10%);
+$topbar-divider-border-bottom: solid 1px lighten(#111, 10%);
+$topbar-divider-border-top: solid 1px darken(#111, 10%);
 
 // Sticky Class
 
