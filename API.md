@@ -19,23 +19,27 @@ staff.sitcon.org API
 列出工作人員，回傳如下結果：
 ```
 {
-  "denny0223": {
+  "status": "success", 
+  "users": [
+    {
+      "id": "denny0223", 
       "name": "Denny Huang",
       "title": "總召",
       "avatar": "https://secure.gravatar.com/..."
-  },
-
-  "RSChiang": {
+    },
+    {
+      "id": "RSChiang", 
       "name": "RSChiang",
       "title": "行政組長",
       "avatar": "https://secure.gravatar.com/..."
-  },
-
-  "elct9620": {
+    },
+    {
+      "id": "elct9620", 
       "name": "蒼時弦也", 
       "title": "文創煉金師",
       "avatar": "https://secure.gravatar.com/..."
-  },
+    }
+  ]
 }
 ```
 
@@ -49,10 +53,13 @@ staff.sitcon.org API
 回傳如下結果：
 ```
 {
-    "status": "success",
+  "status": "success",
+  "user": {
+    "id": "RSChiang", 
     "name": "RSChiang",
     "title": "行政組長",
     "avatar": "https://secure.gravatar.com/..."
+  }
 }
 ```
 

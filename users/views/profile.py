@@ -10,10 +10,13 @@ def profile(request, username):
 		from core.api import *
 		if user.is_active:
 			return render_json(request, {
-				'status': 'success',
-				'name': get_user_name(user),
-				'title': user.profile.title,
-				'avatar': get_avatar_url(user.email),
+				'status': 'success', 
+				'user': {
+					'id': user.username, 
+					'name': get_user_name(user),
+					'title': user.profile.title,
+					'avatar': get_avatar_url(user.email),
+				}
 			})
 		return bad_request(request, {'status': 'invalid'})
 

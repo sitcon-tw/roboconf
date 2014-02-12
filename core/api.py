@@ -8,7 +8,7 @@ def parse_json(request):
 		return None
 
 def render_json(request, obj):
-	result = json.dumps(obj)
+	result = json.dumps(obj, ensure_ascii=False)
 	return http.HttpResponse(result, content_type='application/json')
 
 def bad_request(request, obj=None):

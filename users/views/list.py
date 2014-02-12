@@ -16,14 +16,19 @@ def list(request):
 	if request.is_ajax():
 		from core.api import *
 
-		result = {}
+		users = []
 		for u in sorted_users(group_id=11):
-			result[u.username] = {
-				"name": get_user_name(u),
-				"title": u.profile.title,
-				"avatar": get_avatar_url(u.email),
-			}
-		
+			users.append({
+				'id': u.username,
+				'name': get_user_name(u),
+				'title': u.profile.title,
+				'avatar': get_avatar_url(u.email),
+			})
+
+		result = {
+			'status': 'success',
+			'users': users,
+		}
 		return render_json(request, result)
 	
 	elif not request.user.is_authenticated():
