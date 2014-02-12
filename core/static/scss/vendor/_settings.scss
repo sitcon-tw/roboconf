@@ -25,7 +25,10 @@ $default-float: left;
 
 // $body-bg: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: "XinGothic", "XinGothic-TC W4", /* XinGothic */
+					"LantingHei TC", "Apple LiGothic", /* OS X */
+					"Microsoft Jhenghei", /* Windows */
+					"Helvetica Neue", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -39,10 +42,10 @@ $default-float: left;
 
 // Colors
 
-$primary-color: #2d7500;
+$primary-color: #7cb059;
 $secondary-color: #e9e9e9;
-$alert-color: #2cb1e1;
-$success-color: #5da423;
+$alert-color: #b06959;
+$success-color: #597cb0;
 
 // Make sure border radius matches unless we want it different.
 
@@ -133,12 +136,11 @@ $success-color: #5da423;
 
 // Control header font styles
 
-$header-font-family: Roboto, "Droid Sans", "Droid Sans Fallback", /* Android */
-					"Helvetica Neue", /* OS X */
+$header-font-family: "XinGothic", "XinGothic-TC W6", /* XinGothic */
+					"LantingHei TC", "Apple LiGothic", /* OS X */
 					"Microsoft Jhenghei", /* Windows */
 					Helvetica, Arial, sans-serif;
-
-// $header-font-weight: bold;
+$header-font-weight: 600;
 // $header-font-style: normal;
 // $header-font-color: #222;
 // $header-line-height: 1.4;
@@ -1220,7 +1222,7 @@ $code-font-family: Consolas, Inconsolata, 'Source Code Pro', Monaco, monospace;
 
 // Background color for the top bar
 
-$topbar-bg-color: #2d7500;
+$topbar-bg-color: #232323;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin
@@ -1239,9 +1241,9 @@ $topbar-bg-color: #2d7500;
 
 // Style the top bar dropdown elements
 
-$topbar-dropdown-bg: #222;
+// $topbar-dropdown-bg: #222;
 // $topbar-dropdown-link-color: #fff;
-$topbar-dropdown-link-bg: lighten(#111, 5%);
+// $topbar-dropdown-link-bg: lighten(#111, 5%);
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
 // $topbar-dropdown-toggle-alpha: 0.5;
@@ -1254,14 +1256,14 @@ $topbar-dropdown-link-bg: lighten(#111, 5%);
 // $topbar-link-weight: bold;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
-$topbar-link-bg-hover: #245E00;
-$topbar-link-bg-active: #245E00;
+// $topbar-link-bg-hover: #245e00;
+// $topbar-link-bg-active: #245e00;
 
-$topbar-dropdown-label-color: #555;
+// $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
 // $topbar-dropdown-label-font-weight: bold;
 $topbar-dropdown-label-font-size: em-calc(13);
-$topbar-dropdown-label-bg: $topbar-dropdown-bg;
+// $topbar-dropdown-label-bg: $topbar-dropdown-bg;
 
 // Top menu icon styles
 
@@ -1281,8 +1283,8 @@ $topbar-dropdown-label-bg: $topbar-dropdown-bg;
 
 // Divider Styles
 
-$topbar-divider-border-bottom: solid 1px lighten(#111, 10%);
-$topbar-divider-border-top: solid 1px darken(#111, 10%);
+// $topbar-divider-border-bottom: solid 1px lighten(#111, 10%);
+// $topbar-divider-border-top: solid 1px darken(#111, 10%);
 
 // Sticky Class
 
