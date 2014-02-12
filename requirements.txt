@@ -6,4 +6,4 @@ gunicorn==17.5
 psycopg2==2.5.1
 wsgiref==0.1.2
 markdown==2.3.1
-bleach==1.2.2
+bleach==1.4

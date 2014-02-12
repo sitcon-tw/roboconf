@@ -1,10 +1,12 @@
 *.log
 *.pot
 *.pyc
+*.sublime-*
 local_settings.py
+
 venv/
 .sass-cache/
+
 */.DS_Store
 .DS_Store
 .DS_Store?
-*.sublime-*
