@@ -15,21 +15,18 @@ def sorted_users(group_id=None):
 def list(request):
 	if request.is_ajax():
 		from core.api import *
-
-		users = []
-		for u in sorted_users(group_id=11):
-			users.append({
-				'id': u.username,
-				'name': get_user_name(u),
-				'title': u.profile.title,
-				'avatar': get_avatar_url(u.email),
-			})
-
-		result = {
+		return render_json(request, {
 			'status': 'success',
-			'users': users,
-		}
-		return render_json(request, result)
+			'users': [
+				{
+					'id': u.username,
+					'name': get_user_name(u),
+					'title': u.profile.title,
+					'avatar': get_avatar_url(u.email),	
+				}
+				for u in sorted_users(group_id=11)
+			],
+		})
 	
 	elif not request.user.is_authenticated():
 		from django.contrib.auth.views import redirect_to_login
