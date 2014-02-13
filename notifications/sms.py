@@ -29,7 +29,7 @@ class SmsMessage(object):
 			params['text'] = self.text
 		except:
 			params['type'] = 'unicode'
-			params['text'] = unicode(text, 'utf8').encode('utf8')
+			params['text'] = unicode(self.text, 'utf8').encode('utf8')
 
 		url = '%s?%s' % (SMS_API_URL, urlencode(params))
 
@@ -40,6 +40,7 @@ class SmsMessage(object):
 			# Determine status
 			for message in response['messages']:
 				if message['status'] != SMS_STATUS_SUCCESS:
+					print 'SMS error status code %s' % message['status']
 					return False
 
 		except URLError:
