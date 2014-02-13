@@ -5,9 +5,9 @@ from django.conf import settings
 
 SMS_API_URL = 'https://rest.nexmo.com/sms/json'
 
-SMS_STATUS_SUCCESS = 0
-SMS_STATUS_BUSY = 1
-SMS_STATUS_OUT_OF_BALANCE = 9
+SMS_STATUS_SUCCESS = '0'
+SMS_STATUS_BUSY = '1'
+SMS_STATUS_OUT_OF_BALANCE = '9'
 
 class SmsMessage(object):
 	
