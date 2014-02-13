@@ -1,22 +1,16 @@
-from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
+from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from notifications.models import Message
 from notifications.utils import *
 from users.utils import get_user_name
 
-@login_required
+@permission_required('notifications.add_message')
 def list(request):
-	if not request.user.has_perm('notifications.add_message'):
-		return redirect(reverse('core:index'))
 	return render(request, 'notifications/list.html', {'messages': Message.objects.filter(is_sent=False) })
 
-@login_required
+@permission_required('notifications.add_message')
 def create(request):
-	if not request.user.has_perm('notifications.add_message'):
-		return redirect(reverse('notifications:list'))
-
 	context = {}
 
 	if request.POST.get('submit'):
