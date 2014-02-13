@@ -23,10 +23,6 @@ def create(request):
 			for user in User.objects.exclude(email=''):
 				receivers[user.email] = get_user_name(user)
 
-		if 'mailing_list' in receiver_target:
-			for addr in get_mail_setting('receiver', 'mailing_lists', []):
-				receivers[addr] = ''
-
 		if request.POST.get('receivers'):
 			additional_receivers = request.POST.get('receivers').strip().split('\n')
 			for entry in additional_receivers:

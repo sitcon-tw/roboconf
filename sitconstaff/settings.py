@@ -172,9 +172,6 @@ NOTIFICATIONS = {
         'account': u'SITCON 行政系統:accounts@staff.sitcon.org',
         'issues': '%s:issues@staff.sitcon.org',
     },
-    'receiver': {
-        'mailing_lists': ['sitcon-general@googlegroups.com'],
-    },
 }
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
@@ -183,6 +180,10 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = u'"SITCON 行政系統" <admin@staff.sitcon.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+SMS_API_KEY = os.environ.get('SMS_API_KEY')
+SMS_API_SECRET = os.environ.get('SMS_API_SECRET')
+DEFAULT_SMS_SENDER = 'SITCON'
 
 # Heroku-specific settings
 if 'HEROKU' in os.environ:
