@@ -6,10 +6,6 @@ from notifications.utils import *
 from users.utils import get_user_name
 
 @permission_required('notifications.add_message')
-def list(request):
-	return render(request, 'notifications/list.html', {'messages': Message.objects.filter(is_sent=False) })
-
-@permission_required('notifications.add_message')
 def create(request):
 	context = {}
 
