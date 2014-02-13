@@ -10,7 +10,9 @@ def create(request):
 	context = {}
 
 	if request.POST.get('submit'):
-		# TODO: Send SMS
+
+		if request.POST.get('method') == 'sms':
+			pass
 
 		sender = ''
 		receivers = {}

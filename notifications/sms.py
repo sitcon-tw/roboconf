@@ -37,7 +37,7 @@ class SmsMessage(object):
 			buf = urlopen(url)
 			response = json.load(buf)
 
-			# Determine remaining balance
+			# Determine status
 			for message in response['messages']:
 				if message['status'] != SMS_STATUS_SUCCESS:
 					return False
