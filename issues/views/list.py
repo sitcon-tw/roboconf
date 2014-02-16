@@ -46,7 +46,7 @@ def list(request, filter=None):
 	# 2nd phase filtering
 	dataset = dataset.filter(is_open=filter['is_open'])
 	if 'label' in filter:
-		dataset = dataset.filter(label__id=filter['label'])
+		dataset = dataset.filter(labels__id=filter['label'])
 	if 'due_time' in filter:
 		dataset = dataset.order_by('due_time' if filter['due_time'] == '+' else '-due_time')
 	if 'creation_time' in filter:
