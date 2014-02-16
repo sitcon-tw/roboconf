@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.forms import ValidationError
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 from notifications.utils import get_mail_setting, format_address, send_template_mail
