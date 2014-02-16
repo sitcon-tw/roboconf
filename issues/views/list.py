@@ -2,14 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from core.api.decorators import api_endpoint, ajax_required
+from core.api.views import *
 from issues.models import Issue, Label
+
+@api_endpoint
+@ajax_required(redirect_url='issues:list')
+def ajax(request):
+	return not_implemented(request, {'error': 'not_implemented'})
 
 @login_required
 def list(request, filter=None):
-	if request.is_ajax():
-		from core.api.views import not_implemented
-		return not_implemented(request, {'error': 'not_implemented'})
-		
 	dataset = Issue.objects
 	counts = {
 		'all': Issue.objects.count(),

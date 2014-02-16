@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from core.api.decorators import api_endpoint
+from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
 from users.models import *
 from users.utils import *
@@ -20,25 +20,20 @@ def list(request):
 	})
 
 @api_endpoint(public=True)
+@ajax_required(redirect_url='users:list')
 def ajax(request):
-	if request.is_ajax():
-		return render_json(request, {
-			'status': 'success',
-			'users': [
-				{
-					'id': u.username,
-					'name': get_user_name(u),
-					'title': u.profile.title,
-					'avatar': get_avatar_url(u.email),	
-				}
-				for u in sorted_users(group_id=11)
-			],
-		})
-	else:
-		# Emulate middleware redirection
-		from django.shortcuts import redirect
-		from django.core.urlresolvers import reverse
-		return redirect(reverse('users:list'), permanent=True)
+	return render_json(request, {
+		'status': 'success',
+		'users': [
+			{
+				'id': u.username,
+				'name': get_user_name(u),
+				'title': u.profile.title,
+				'avatar': get_avatar_url(u.email),	
+			}
+			for u in sorted_users(group_id=11)
+		],
+	})
 
 @login_required
 def contacts(request):
