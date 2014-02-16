@@ -18,7 +18,7 @@
 						<td>{{ m.id }}</td>
 						<td>{% if m.method == m.SMS %}簡訊{% else %}電子郵件{% endif %}</td>
 						<td>{{ m.receiver }}</td>
-						<td>{% if m.method == m.SMS %}{{ m.content|truncatechars:20 }}{% else %}{{ m.subject }}{% endif %}</td>
+						<td>{% if m.method == m.SMS %}{{ m.content|truncatechars:30 }}{% else %}{{ m.subject }}{% endif %}</td>
 					</tr>
 				{% endfor %}
 				</tbody>
