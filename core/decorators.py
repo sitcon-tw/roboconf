@@ -19,8 +19,8 @@ def api_endpoint(methods=None, public=False):
 				if request.method == 'OPTIONS':
 					response = HttpResponse()	# Reset HTTP response
 
-					methods = methods if methods else DEFAULT_ALLOWED_METHODS
-					response['Access-Control-Allow-Methods'] = ','.join(methods)
+					m = methods if methods else DEFAULT_ALLOWED_METHODS
+					response['Access-Control-Allow-Methods'] = ','.join(m)
 					response['Access-Control-Allow-Headers'] = ['X-Requested-With']
 
 				if public:
