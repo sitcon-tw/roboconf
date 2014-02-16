@@ -40,7 +40,7 @@ class SmsMessage(object):
 			params['text'] = self.text
 		except:
 			params['type'] = 'unicode'
-			params['text'] = unicode(self.text, 'utf8').encode('utf8')
+			params['text'] = self.text.encode('utf8')
 
 		url = '%s?%s' % (SMS_API_URL, urlencode(params))
 
