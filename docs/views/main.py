@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
-from core.api import *
+from core.api.views import *
 from docs.models import Permission, BlobText
 from docs.node import Node
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from core.api import *
+from core.api.views import *
 from docs.models import *
 from docs.node import Node
 

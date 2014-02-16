@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from core.api.decorators import api_endpoint
+from core.api.views import render_json
 from users.models import *
 from users.utils import *
-from core.decorators import api_endpoint
 
 def sorted_users(group_id=None):
 	users = User.objects.filter(is_active=True)
@@ -14,7 +15,6 @@ def sorted_users(group_id=None):
 @api_endpoint(public=True)
 def list(request):
 	if request.is_ajax():
-		from core.api import *
 		return render_json(request, {
 			'status': 'success',
 			'users': [

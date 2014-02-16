@@ -7,7 +7,7 @@ from issues.models import Issue, Label
 @login_required
 def list(request, filter=None):
 	if request.is_ajax():
-		from core.api import not_implemented
+		from core.api.views import not_implemented
 		return not_implemented(request, {'error': 'not_implemented'})
 		
 	dataset = Issue.objects
