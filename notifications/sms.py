@@ -1,6 +1,7 @@
 import json
 from urllib import urlencode
 from urllib2 import urlopen, URLError
+from django.conf import settings
 
 SMS_API_URL = 'https://rest.nexmo.com/sms/json'
 
@@ -19,12 +20,18 @@ class SmsMessage(object):
 		if to: self.to = to
 		if text: self.text = text
 
+	def normalize(self):
+		if self.to.startswith('0') and not self.to.startswith('00'):
+			self.to = settings.DEFAULT_SMS_COUNTRY_CODE + self.to[1:]
+
 	def send(self):
+		self.normalize()
+		
 		params = {
 			'api_key': settings.SMS_API_KEY,
 			'api_secret': settings.SMS_API_SECRET, 
 			'type': 'text', 
-			'from': self.from_sender,
+			'from': self.from_sender if self.from_sender else settings.DEFAULT_SMS_SENDER,
 			'to': self.to, 
 		}
 
