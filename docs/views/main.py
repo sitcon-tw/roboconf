@@ -10,7 +10,7 @@ from docs.node import Node
 def main(request):
 	from docs.models import Folder
 	node = Node(nodeobj=Folder.objects.get(id=0))
-	return redirect('docs:view', args=(node.nid(),))
+	return redirect('docs:view', node.nid())
 
 def view(request, nidb64):
 	try:
@@ -125,7 +125,7 @@ def post(request, node):
 			}
 			return render(request, result)
 		else:
-			return redirect('docs:view', args=(node.nid(),))
+			return redirect('docs:view', node.nid())
 
 def put(request, node):
 	PUT = parse_json(request)

@@ -63,7 +63,7 @@ def create(request):
 				except Label.DoesNotExist: pass
 
 			issue.save()	# Now save the labels
-			return redirect('issues:detail', args=(issue.id,))
+			return redirect('issues:detail', issue.id)
 		
 	return render(request, 'issues/create.html', {
 		'labels': Label.objects.all(),
