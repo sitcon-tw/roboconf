@@ -42,7 +42,7 @@ def update(issue, user, content='', mode=IssueHistory.COMMENT):
 
 def notify(issue, user, template_name, context):
 	for watcher in issue.starring.all():
-		#if user == watcher: continue
+		if user == watcher: continue
 		send_mail(user, watcher, template_name, context)
 
 def assign(issue, request):
