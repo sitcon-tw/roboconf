@@ -11,16 +11,17 @@ def api_endpoint(methods=None, public=False):
 	def decorator(f):
 		@wraps(f, assigned=available_attrs(f))
 		def inner(request, *args, **kwargs):
+			response = f(request, *args, **kwargs)
+			
 			if 'Origin' in request.META:
 				origin = request.META['Origin']
-				response = HttpResponse()
 
 				if request.method == 'OPTIONS':
+					response = HttpResponse()	# Reset HTTP response
+					
 					methods = methods if methods else DEFAULT_ALLOWED_METHODS
 					response['Access-Control-Allow-Methods'] = ','.join(methods)
 					response['Access-Control-Allow-Headers'] = ['X-Requested-With']
-				else:
-					response = f(request, *args, **kwargs)
 
 				if public:
 					response['Access-Control-Allow-Origin'] = '*'
