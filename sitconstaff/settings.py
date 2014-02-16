@@ -184,6 +184,7 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 SMS_API_KEY = os.environ.get('SMS_API_KEY')
 SMS_API_SECRET = os.environ.get('SMS_API_SECRET')
 DEFAULT_SMS_SENDER = 'SITCON'
+DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
 # Heroku-specific settings
 if 'HEROKU' in os.environ:

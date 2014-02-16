@@ -34,3 +34,18 @@ def send_template_mail(sender, receiver, template_name, context, autosave=True):
 	message.content = content
 	if autosave: message.save()
 	return message
+
+def send_template_sms(sender, receiver, template_name, context, autosave=True):
+	message = Message()
+	message.method = Message.SMS
+	message.sender = sender
+	message.receiver = receiver
+
+	context['sender_address'] = sender
+	context['receiver_address'] = receiver
+	context['site_url'] = 'http://staff.sitcon.org'
+	
+	content = render_to_string(template_name, context).strip()
+	message.content = content
+	if autosave: message.save()
+	return message

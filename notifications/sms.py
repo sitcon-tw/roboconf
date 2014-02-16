@@ -15,7 +15,18 @@ class SmsMessage(object):
 	to = ''
 	text = ''
 
+	def __init__(self, text=None, to=None, from_sender=None):
+		if from_sender: self.from_sender = from_sender
+		if to: self.to = to
+		if text: self.text = text
+
+	def normalize(self):
+		if self.to.startswith('0') and not self.to.startswith('00'):
+			self.to = settings.DEFAULT_SMS_COUNTRY_CODE + self.to[1:]
+
 	def send(self):
+		self.normalize()
+		
 		params = {
 			'api_key': settings.SMS_API_KEY,
 			'api_secret': settings.SMS_API_SECRET, 

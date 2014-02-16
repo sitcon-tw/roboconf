@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from issues.models import *
-from issues.utils import send_mail
+from issues.utils import send_mail, send_sms
 from users.utils import get_user_name
+
+ISSUE_MAGIC_TOKEN = '#!'
 
 @login_required
 def detail(request, issue_id):
@@ -100,8 +102,17 @@ def comment(issue, request):
 
 	content = request.POST.get('content')
 	if content:
+		urgent = False
+		if content.startswith(ISSUE_MAGIC_TOKEN):
+			content = content[len(ISSUE_MAGIC_TOKEN):]
+			urgent = True
+
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
+		if urgent:
+			phone = issue.assignee.profile.phone if issue.assignee else None
+			if phone:
+				send_sms(user, assignee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
 
 def toggle_state(issue, request):
 	if not request.user.has_perm('issues.toggle_issue'):
