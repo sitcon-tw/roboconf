@@ -1,3 +1,4 @@
+from list import ajax as default
 from auth import login, logout
 from list import list, contacts
 from profile import profile

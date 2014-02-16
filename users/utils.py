@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from users.models import *
 
 def get_user_name(user):
@@ -30,3 +31,9 @@ def get_user_sorting_key(user):
 	title = user.profile.title.ljust(5)
 	name = get_user_name(user)
 	return ''.join((identity, title, name))
+
+def sorted_users(group_id=None):
+	users = User.objects.filter(is_active=True)
+	if group_id:
+		users = users.filter(groups__id=group_id) 
+	return sorted(users, key=get_user_sorting_key)

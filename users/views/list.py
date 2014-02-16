@@ -6,14 +6,21 @@ from core.api.views import render_json
 from users.models import *
 from users.utils import *
 
-def sorted_users(group_id=None):
-	users = User.objects.filter(is_active=True)
-	if group_id:
-		users = users.filter(groups__id=group_id) 
-	return sorted(users, key=get_user_sorting_key)
+def list(request):
+	if not request.user.is_authenticated():
+		from django.contrib.auth.views import redirect_to_login
+		return redirect_to_login(request.path)
+
+	group = request.GET.get('g', '')
+	group = None if not group.isdigit() else int(group)
+	return render(request, 'users/list.html', {
+		'users': sorted_users(group_id=group),
+		'categories': GroupCategory.objects.all(),
+		'filter': group,
+	})
 
 @api_endpoint(public=True)
-def list(request):
+def ajax(request):
 	if request.is_ajax():
 		return render_json(request, {
 			'status': 'success',
@@ -27,18 +34,11 @@ def list(request):
 				for u in sorted_users(group_id=11)
 			],
 		})
-	
-	elif not request.user.is_authenticated():
-		from django.contrib.auth.views import redirect_to_login
-		return redirect_to_login(request.path)
-
-	group = request.GET.get('g', '')
-	group = None if not group.isdigit() else int(group)
-	return render(request, 'users/list.html', {
-		'users': sorted_users(group_id=group),
-		'categories': GroupCategory.objects.all(),
-		'filter': group,
-	})
+	else:
+		# Emulate middleware redirection
+		from django.shortcuts import redirect
+		from django.core.urlresolvers import reverse
+		return redirect(reverse('users:list'), permanent=True)
 
 @login_required
 def contacts(request):
