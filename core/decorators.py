@@ -13,12 +13,12 @@ def api_endpoint(methods=None, public=False):
 		def inner(request, *args, **kwargs):
 			response = f(request, *args, **kwargs)
 			
-			if 'Origin' in request.META:
-				origin = request.META['Origin']
+			if 'HTTP_ORIGIN' in request.META:
+				origin = request.META['HTTP_ORIGIN']
 
 				if request.method == 'OPTIONS':
 					response = HttpResponse()	# Reset HTTP response
-					
+
 					methods = methods if methods else DEFAULT_ALLOWED_METHODS
 					response['Access-Control-Allow-Methods'] = ','.join(methods)
 					response['Access-Control-Allow-Headers'] = ['X-Requested-With']
