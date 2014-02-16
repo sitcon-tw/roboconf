@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
@@ -11,7 +10,7 @@ from docs.node import Node
 def main(request):
 	from docs.models import Folder
 	node = Node(nodeobj=Folder.objects.get(id=0))
-	return redirect(reverse('docs:view', args=(node.nid(),)))
+	return redirect('docs:view', args=(node.nid(),))
 
 def view(request, nidb64):
 	try:
@@ -126,7 +125,7 @@ def post(request, node):
 			}
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:view', args=(node.nid(),)))
+			return redirect('docs:view', args=(node.nid(),))
 
 def put(request, node):
 	PUT = parse_json(request)

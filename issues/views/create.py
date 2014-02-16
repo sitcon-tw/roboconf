@@ -1,19 +1,16 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.utils import dateparse
 from issues.models import *
 from issues.utils import send_mail
 import datetime
 
-@login_required
+@permission_required('issues.add_issue')
 def create(request):
 	errors = []
 
 	if 'submit' in request.POST:
-		if not request.user.has_perm('issues.add_issue'):
-			return redirect(reverse('issues:list'))	# Audit fail
 		
 		issue = Issue()
 		issue.title = request.POST['title']
@@ -66,7 +63,7 @@ def create(request):
 				except Label.DoesNotExist: pass
 
 			issue.save()	# Now save the labels
-			return redirect(reverse('issues:detail', args=(issue.id,)))
+			return redirect('issues:detail', args=(issue.id,))
 		
 	return render(request, 'issues/create.html', {
 		'labels': Label.objects.all(),

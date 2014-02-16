@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from core.api.views import *
 from docs.models import *
 from docs.node import Node
@@ -57,7 +56,7 @@ def create(request):
 				result['revision'] = r.id
 			return render(request, result)
 		else:
-			return redirect(reverse('docs:view', args=(node.nid(),)))
+			return redirect('docs:view', args=(node.nid(),))
 
 	elif request.is_ajax():
 		return not_allowed(request, ['POST'])
@@ -69,7 +68,7 @@ def create(request):
 			parent = None
 
 		if not parent or not parent.is_folder():
-			return redirect(reverse('docs:main'))
+			return redirect('docs:main')
 
 		if not parent.can_edit():
 			if not request.user.is_authenticated():

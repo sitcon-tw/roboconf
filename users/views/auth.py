@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
 from django.views.decorators.debug import sensitive_post_parameters
 import django.contrib.auth as auth
 
 @sensitive_post_parameters('password')
 def login(request):
 	if request.user.is_authenticated():
-		return redirect(reverse('index'))
+		return redirect('index')
 
 	context = {}
 	if 'submit' in request.POST:
@@ -33,5 +32,5 @@ def login(request):
 
 def logout(request):
 	auth.logout(request)
-	return redirect(reverse('users:login'))
+	return redirect('users:login')
 	
