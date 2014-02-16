@@ -110,9 +110,8 @@ def comment(issue, request):
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
 		if urgent:
-			phone = issue.assignee.profile.phone if issue.assignee else None
-			if phone:
-				send_sms(user, assignee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
+			if issue.assignee and issue.assignee.profile.phone:
+				send_sms(request.user, issue.assignee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
 
 def toggle_state(issue, request):
 	if not request.user.has_perm('issues.toggle_issue'):
