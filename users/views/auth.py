@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.views.decorators.debug import sensitive_post_parameters
 import django.contrib.auth as auth
 
