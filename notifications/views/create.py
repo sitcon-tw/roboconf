@@ -22,7 +22,7 @@ def create(request):
 		
 		receiver_target = request.POST.get('receiver', '').split(',')
 		if 'staff' in receiver_target:
-			for user in User.objects.exclude(email=''):
+			for user in User.objects.exclude(email='', is_active=False):
 				receivers[user.email] = get_user_name(user)
 
 		if request.POST.get('receivers'):
