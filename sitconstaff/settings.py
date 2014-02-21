@@ -102,6 +102,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # External middlewares
+    'corsheaders.middleware.CorsMiddleware', 
 )
 
 ROOT_URLCONF = 'sitconstaff.urls'
@@ -126,6 +129,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+    # External apps
+    'corsheaders', 
+
     'core',
     'users',
     'docs',
@@ -194,6 +201,11 @@ if 'HEROKU' in os.environ:
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# CORS settings
+CORS_ORIGIN_REGEX_WHITELIST = (r'^https?://(.+)\.sitcon\.org$', )
+CORS_ALLOWED_METHODS = ('GET', 'POST', 'OPTIONS')
+#CORS_ALLOW_CREDENTIALS = True
 
 # Allow all host headers
 #ALLOWED_HOSTS = ['*']

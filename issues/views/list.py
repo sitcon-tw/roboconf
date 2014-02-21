@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from core.api.decorators import api_endpoint, ajax_required
+from core.api.decorators import ajax_required
 from core.api.views import *
 from issues.models import Issue, Label
 
-@api_endpoint
 @ajax_required(redirect_url='issues:list')
 def ajax(request):
 	return not_implemented(request, {'error': 'not_implemented'})

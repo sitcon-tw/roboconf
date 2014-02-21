@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from core.api.decorators import api_endpoint, ajax_required
+from core.api.decorators import ajax_required
 from core.api.views import render_json
 from users.models import *
 from users.utils import *
@@ -19,7 +19,6 @@ def list(request):
 		'filter': group,
 	})
 
-@api_endpoint(public=True)
 @ajax_required(redirect_url='users:list')
 def ajax(request):
 	return render_json(request, {
