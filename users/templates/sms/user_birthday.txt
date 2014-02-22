@@ -1,0 +1,9 @@
+{% load usermeta %}
+Hi {{ receiver|get_name }}，{% spaceless %}
+{% with i='1112223344'|make_list|random %}
+	{% ifequal i '1' %}感謝你為 SITCON 的付出，生日快樂噢！♪( ´▽｀){% endifequal %}
+	{% ifequal i '2' %}辛苦了，生日快樂嘿！SITCON 有你真好。（´ω`*）{% endifequal %}
+	{% ifequal i '3' %}百忙之中打擾只為了跟你說聲生日快樂！SITCON 一起加油呦！ (・ω・)ノ{% endifequal %}
+	{% ifequal i '4' %}生日工作量也不會比較少啦！(σ′▽‵)σ SITCON 感謝有你喲！{% endifequal %}
+{% endwith %}
+{% endspaceless %} by 行政組
