@@ -5,23 +5,34 @@
 	<div class="large-1 columns">
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表" data-tooltip></a>
 	</div>
-	<div class="large-9 columns">
+	<div class="large-{{ show_details|yesno:'11,9' }} columns">
 		<h3>SITCON 工作人員通訊錄</h3>
 		<table class="user-contacts main">
 			<thead><tr>
 				<th>職稱</th>
 				<th>名稱</th>
-				{% if show_details %}<th>電話</th>{% endif %}
+				{% if show_details %}
+				<th>本名</th>
+				<th>學校</th>
+				{% endif %}
+				{% if is_trusted %}
+				<th>電話</th>
+				{% endif %}
 				<th>Email</th>
 			</tr></thead>
 			<tbody>
 			{% for u in users %}
 			<tr>
 				<td>{{ u.profile.title }}</td>
-				<td><img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
-					{{ u.profile.name }}
+				<td>
+					<img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
+					<a href="{% if perms.auth.change_user %}{% url 'users:edit' u.username %}{% else %}{% url 'users:profile' u.username %}{% endif %}">{{ u.profile.name }}</a>
 				</td>
 				{% if show_details %}
+				<td>{{ u.last_name }} {{ u.first_name }}</td>
+				<td>{{ u.profile.school }}}</td>
+				{% endif %}
+				{% if is_trusted %}
 				<td>{% if u.profile.phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}
 				<td>{{ u.email|urlize }}</td>
@@ -30,7 +41,9 @@
 			</tbody>
 		</table>
 	</div>
+	{% if not show_details %}
 	<div class="large-2 columns">
 	</div>
+	{% endif %}
 </div>
 {% endblock %}

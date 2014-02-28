@@ -38,7 +38,9 @@ def ajax(request):
 @login_required
 def contacts(request):
 	dataset = User.objects.filter(is_active=True)
+	show_details = request.GET.get('details') and request.user.has_perm('auth.change_user')
 	return render(request, 'users/contacts.html', {
 		'users': sorted_users(),
-		'show_details': request.user.groups.filter(id=11).exists(),	# Only show cellphone to staff
+		'show_details': show_details, 
+		'is_trusted': show_details or request.user.groups.filter(id=11).exists(),	# Only show cellphone to staff
 	})
