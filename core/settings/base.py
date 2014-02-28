@@ -38,7 +38,7 @@ TIME_ZONE = 'Asia/Taipei'
 LANGUAGE_CODE = 'zh-tw'
 
 SITE_ID = 1
-USE_I18N = False    # TODO: Implement internationalization
+USE_I18N = True    # TODO: Implement internationalization
 USE_L10N = True
 USE_TZ = True
 
