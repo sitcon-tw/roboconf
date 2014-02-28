@@ -1,5 +1,4 @@
 {% extends 'core/master.html' %}
-{% load usermeta %}
 {% block title %}通訊錄{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -19,8 +18,8 @@
 			{% for u in users %}
 			<tr>
 				<td>{{ u.profile.title }}</td>
-				<td><img class="avatar small" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" />
-					{{ u|get_name }}
+				<td><img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
+					{{ u.profile.name }}
 				</td>
 				{% if show_details %}
 				<td>{% if u.profile.phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>

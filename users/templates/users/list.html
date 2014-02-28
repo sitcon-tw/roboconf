@@ -1,5 +1,4 @@
 {% extends 'core/master.html' %}
-{% load usermeta %}
 {% block title %}人員{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -8,8 +7,8 @@
 		{% for u in users %}
 			<li class="user-item">
 				<a href="{% url 'users:profile' u.username %}">
-					<img class="avatar medium" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" />
-					<h4>{{ u|get_name }}</h4>
+					<img class="avatar medium" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
+					<h4>{{ u.profile.name }}</h4>
 					<h4 class="subheader">{{ u.profile.title }}</h4>
 				</a>
 			</li>

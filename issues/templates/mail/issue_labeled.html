@@ -1,9 +1,8 @@
-{% load usermeta %}
 {% load markdown %}
 Re: [#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="font-size: 0.8em; padding: 0.5em; border: 1px solid #f0f0f0; border-radius: 3px;">
-	<a href="{{ site_url }}{% url 'users:profile' sender.username %}">{{ sender|get_name }}</a>
+	<a href="{{ site_url }}{% url 'users:profile' sender.username %}">{{ sender.profile.name }}</a>
 	{% if old_labels %}
 		已自此議題移除標籤：{% for label in old_labels %}<b>{{ label.name }}</b>{{ forloop.last|yesno:',、' }}{% endfor %}
 	{% endif %}

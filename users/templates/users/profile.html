@@ -1,11 +1,10 @@
 {% extends 'core/master.html' %}
-{% load usermeta %}
-{% block title %}{{ u|get_name }}{{ block.super }}{% endblock %}
+{% block title %}{{ u.profile.name }}{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="large-3 columns">
-		<img class="avatar large" src="{{ u.email|get_avatar:400 }}" alt="{{ u|get_name }}" />
-		<h4>{{ u|get_name }}</h4>
+		<img class="avatar large" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
+		<h4>{{ u.profile.name }}</h4>
 		<h5 class="subheader">{{ u.profile.title }}</h5>
 		<ul class="profile-meta">
 			{% if u.profile.school %}<li><span class="icon-school iconize"></span> {{ u.profile.school }} {{ u.profile.grade }}</li>{% endif %}

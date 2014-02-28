@@ -1,3 +1,2 @@
-{% load usermeta %}
 {% load markdown %}
-[#{{ issue.id }}] {{ sender|get_name }}：{{ comment|markdown|striptags|truncatechars:50 }}
+[#{{ issue.id }}] {{ sender.profile.name }}：{{ comment|markdown|striptags|truncatechars:50 }}

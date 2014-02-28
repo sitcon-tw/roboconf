@@ -15,6 +15,19 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return self.title
 
+	def name(self):
+		if self.display_name:
+			return display_name
+		elif self.user.first_name and self.user.last_name:
+			return '%s %s' % (self.user.last_name, self.user.first_name)
+		else:
+			return user.username
+
+	def avatar(self):
+		import md5
+		hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+		return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+
 class GroupCategory(models.Model):
 	name = models.CharField(max_length=30)
 	is_visible = models.BooleanField(default=True)

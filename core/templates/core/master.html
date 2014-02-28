@@ -1,6 +1,4 @@
 {% extends 'core/base.html' %}
-{% load usermeta %}
-{% load staticfiles %}
 {% block content_block %}
 <div class="contain-to-grid fixed">
 	<nav class="top-bar">
@@ -25,8 +23,8 @@
 				{% if user.is_authenticated %}
 				<li class="has-dropdown">
 					<a href="#">
-						<img class="avatar small" src="{{ user.email|get_avatar:'#' }}" alt="{{ user|get_name }}" />
-						{{ user|get_name }}
+						<img class="avatar small" src="{{ user.profile.avatar }}" alt="{{ user.profile.name }}" />
+						{{ user.profile.name }}
 					</a>
 					<ul class="dropdown">
 						<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>

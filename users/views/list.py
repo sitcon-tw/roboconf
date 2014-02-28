@@ -27,9 +27,9 @@ def ajax(request):
 		'users': [
 			{
 				'id': u.username,
-				'name': get_user_name(u),
+				'name': u.profile.name(),
 				'title': u.profile.title,
-				'avatar': get_avatar_url(u.email),	
+				'avatar': u.profile.avatar(),	
 			}
 			for u in sorted_users(group_id=11)
 		],

@@ -1,6 +1,5 @@
 {% extends 'core/master.html' %}
-{% load usermeta %}
-{% block title %}編輯 ‧ {{ u|get_name }}{{ block.super }}{% endblock %}
+{% block title %}編輯 ‧ {{ u.profile.name }}{{ block.super }}{% endblock %}
 {% block content %}
 {% if status %}
 <div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
@@ -11,7 +10,7 @@
 {% endif %}
 <div class="row">
 	<div class="large-1 avatars columns">
-		<img class="avatar medium has-tip" src="{{ u.email|get_avatar:'#' }}" alt="{{ u|get_name }}" title="請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照" data-tooltip />
+		<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" title="請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照" data-tooltip />
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">

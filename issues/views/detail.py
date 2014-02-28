@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from issues.models import *
 from issues.utils import send_mail, send_sms
-from users.utils import get_user_name
 
 ISSUE_MAGIC_TOKEN = '#!'
 

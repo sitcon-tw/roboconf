@@ -1,13 +1,11 @@
 {% extends 'core/master.html' %}
-{% load usermeta %}
-{% load staticfiles %}
 {% block title %}提交議題{{ block.super }}{% endblock %}
 {% block content %}
 <form class="issue-edit custom" action="{% url 'issues:create' %}" method="POST">
 	{% csrf_token %}
 	<div class="row">
 		<div class="large-1 avatars columns">
-			<img class="avatar medium" src="{{ user.email|get_avatar:'#' }}" alt="{{ user|get_name }}" />
+			<img class="avatar medium" src="{{ user.email.profile.avatar }}" alt="{{ user.profile.name }}" />
 			<a class="right iconize icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項" data-tooltip></a>
 		</div>
 		<div class="large-8 columns">
@@ -21,7 +19,7 @@
 						<select id="assignee" name="assignee">
 							<option disabled>將此議題指派給</option>
 							{% for u in users %}
-							<option value="{{ u.id }}">{{ u|get_name }}</option>
+							<option value="{{ u.id }}">{{ u.profile.name }}</option>
 							{% endfor %}
 							<option value="" selected>（未指派）</option>
 						</select>

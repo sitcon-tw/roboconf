@@ -1,5 +1,4 @@
-{% load usermeta %}
-Hi {{ receiver|get_name }}，{% spaceless %}
+Hi {{ receiver.profile.name }}，{% spaceless %}
 {% with i='1112223344'|make_list|random %}
 	{% ifequal i '1' %}感謝你為 SITCON 的付出，生日快樂噢！♪( ´▽｀){% endifequal %}
 	{% ifequal i '2' %}辛苦了，生日快樂嘿！SITCON 有你真好。（´ω`*）{% endifequal %}

@@ -72,8 +72,8 @@ def create(request):
 
 				from notifications.utils import send_template_mail, format_address
 				
-				sender_address = format_address(get_user_name(request.user), request.user.email)
-				receiver_address = format_address(get_user_name(user), user.email)
+				sender_address = format_address(request.user.profile.name(), request.user.email)
+				receiver_address = format_address(user.profile.name(), user.email)
 				send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
 
 			status = 'success'

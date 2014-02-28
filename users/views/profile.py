@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from users.utils import get_user_name, get_avatar_url
 from core.api.decorators import api_endpoint
 from core.api.views import *
 
@@ -13,9 +12,9 @@ def profile(request, username):
 				'status': 'success', 
 				'user': {
 					'id': user.username, 
-					'name': get_user_name(user),
+					'name': user.profile.name(),
 					'title': user.profile.title,
-					'avatar': get_avatar_url(user.email),
+					'avatar': user.profile.avatar(),
 				}
 			})
 		return bad_request(request, {'status': 'invalid'})
