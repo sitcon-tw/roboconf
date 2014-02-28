@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 
 	def name(self):
 		if self.display_name:
-			return display_name
+			return self.display_name
 		elif self.user.first_name and self.user.last_name:
 			return '%s %s' % (self.user.last_name, self.user.first_name)
 		else:
