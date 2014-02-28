@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from sitconstaff.shortcuts import redirect_static
+from core.shortcuts import redirect_static
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -7,8 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'sitconstaff.views.home', name='home'),
-    # url(r'^sitconstaff/', include('sitconstaff.foo.urls')),
+    # url(r'^$', 'roboconf.views.home', name='home'),
+    # url(r'^roboconf/', include('roboconf.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

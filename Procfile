@@ -1,1 +1,1 @@
-web: gunicorn sitconstaff.wsgi
+web: gunicorn core.wsgi
