@@ -9,13 +9,26 @@ Proposed Functionalities
 * Time control
 * Staff management
 
+Requirements
+------------
+* Django
+* gunicorn
+* wsgiref
+* markdown
+* bleach
+
+For Heroku and PostgreSQL targets, 
+
+* dj-database-url
+* psycopg2
+
 Developers
 ----------
 * [RSChiang](https://github.com/rschiang)
 
 Contributing
 ------------
-We welcome issue report, pull requests, and/or friends willing to join SITCON's preparation. Find us at irc.freenode.net #SITCON channel, or [send us a letter](mailto:contact@sitcon.org).
+We welcome issue report, pull requests, and/or friends willing to join SITCON's preparation. Find us at irc.freenode.net #sitcon channel, or [send us a letter](mailto:contact@sitcon.org).
 
 License
 -------
