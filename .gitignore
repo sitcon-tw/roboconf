@@ -3,6 +3,7 @@
 *.pyc
 *.sublime-*
 local_settings.py
+roboconf.db
 
 venv/
 .sass-cache/
