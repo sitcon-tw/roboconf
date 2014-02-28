@@ -20,3 +20,16 @@ def compass(action):
 	else:
 		local("compass " + action)
 
+def shell():
+	local('heroku run ./manage.py shell')
+
+def log():
+	local('heroku logs')
+
+def dev():
+	local('./manage.py runserver')
+
+def deploy(branch='master'):
+	local('git push heroku %s:master' % branch)
+	if branch == 'master':
+		local('git push origin master')
