@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 		url(r'^password/change$', views.change_password, name='change_password'),
 		url(r'^password/reset$', views.reset_password, name='reset_password'),
 		url(r'^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z_\-]+)$', views.reset_password_confirm, name='reset_password_confirm'),
+		url(r'^me$', views.me, name='me'), 
 		url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)$', views.profile, name='profile'),
 		url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)/edit$', views.edit, name='edit'),
 	)
