@@ -4,7 +4,7 @@ class Compass:
 	require = ['zurb-foundation']
 	arguments = {
 		'css_dir': 'core/static/css',
-		'sass_dir': 'core/static/scss',
+		'sass_dir': 'core/scss',
 		'images_dir': 'core/static/img',
 		'javascripts_dir': 'core/static/js',
 		'output_style': 'compressed',
