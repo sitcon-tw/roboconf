@@ -64,7 +64,7 @@ def create(request):
 	else:
 		try:
 			parent = Node(request.GET.get('at'), user=request.user)
-		except ObjectDoesNotExist:
+		except (TypeError, ObjectDoesNotExist):
 			parent = None
 
 		if not parent or not parent.is_folder():
