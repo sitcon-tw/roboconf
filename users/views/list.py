@@ -37,10 +37,52 @@ def ajax(request):
 
 @login_required
 def contacts(request):
-	dataset = User.objects.filter(is_active=True)
 	show_details = request.GET.get('details') and request.user.has_perm('auth.change_user')
 	return render(request, 'users/contacts.html', {
 		'users': sorted_users(),
 		'show_details': show_details, 
 		'is_trusted': show_details or request.user.groups.filter(id=11).exists(),	# Only show cellphone to staff
 	})
+
+#@login_required
+def export(request, format=None):
+	formats = {
+		'html': ('text/html', 'users/export.html'), 
+		'csv': ('text/csv', 'users/export.csv'), 
+		'xml': ('application/xml', 'users/export.xml'), 
+	}
+
+	if format and format not in formats.keys():
+		from django.http import Http404
+		raise Http404
+
+	users = []
+	authorized = request.user.groups.filter(id=11).exists()
+	trusted = authorized and request.user.has_perm('auth.change_user')
+
+	for user in sorted_users():
+		entity = {
+			'id': user.username, 
+			'name': user.profile.name(), 
+			'title': user.profile.title, 
+			'avatar': user.profile.avatar(), 
+			'email': user.email, 
+		}
+		
+		if authorized:
+			entity['phone'] = user.profile.phone
+
+		if trusted:
+			entity['model_id'] = user.id
+			entity['last_name'] = user.last_name
+			entity['first_name'] = user.first_name
+			entity['school'] = user.profile.school
+			entity['grade'] = user.profile.grade
+			entity['comment'] = user.profile.comment
+			entity['groups'] = ' '.join([g.id for g in user.groups.all()])
+
+		users.append(entity)
+
+
+	content_type, template = formats[format or 'html']
+	return render(request, template, { 'users': users }, content_type=content_type)

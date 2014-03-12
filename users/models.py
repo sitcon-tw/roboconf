@@ -21,7 +21,7 @@ class UserProfile(models.Model):
 		elif self.user.first_name and self.user.last_name:
 			return '%s %s' % (self.user.last_name, self.user.first_name)
 		else:
-			return user.username
+			return self.user.username
 
 	def avatar(self):
 		import md5

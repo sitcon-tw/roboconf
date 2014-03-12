@@ -1,0 +1,3 @@
+{% for user in users %}{% if forloop.first %}{{ user.keys|join:',' }}
+{% endif %}{{ user.values|join:',' }}
+{% endfor %}

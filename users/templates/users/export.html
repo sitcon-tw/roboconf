@@ -1,0 +1,26 @@
+{% extends 'core/safe_master.html' %}
+{% block title %}匯出{{ block.super }}{% endblock %}
+{% block content %}
+<table class="user-export main">
+{% spaceless %}
+{% for user in users %}
+	{% if forloop.first %}
+	<thead><tr>
+		{% for field in user.keys %}
+		<th>{{ field }}</th>
+		{% endfor %}
+	</tr></thead>
+	<tbody>
+	{% endif %}
+		<tr>
+			{% for value in user.values %}
+			<td>{{ value }}</td>
+			{% endfor %}
+		</tr>
+	{% if forloop.last %}
+	</tbody>
+	{% endif %}
+{% endfor %}
+{% endspaceless %}
+</table>
+{% endblock %}
