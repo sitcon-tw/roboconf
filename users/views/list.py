@@ -79,7 +79,7 @@ def export(request, format=None):
 			entity['school'] = user.profile.school
 			entity['grade'] = user.profile.grade
 			entity['comment'] = user.profile.comment
-			entity['groups'] = ' '.join([g.id for g in user.groups.all()])
+			entity['groups'] = ' '.join([str(g.id) for g in user.groups.all()])
 
 		users.append(entity)
 
