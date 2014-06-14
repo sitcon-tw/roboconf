@@ -29,7 +29,7 @@ def ajax(request):
 				'id': u.username,
 				'name': u.profile.name(),
 				'title': u.profile.title,
-				'avatar': u.profile.avatar(),	
+				'avatar': u.profile.avatar(),
 			}
 			for u in sorted_users(group_id=11)
 		],
@@ -40,16 +40,17 @@ def contacts(request):
 	show_details = request.GET.get('details') and request.user.has_perm('auth.change_user')
 	return render(request, 'users/contacts.html', {
 		'users': sorted_users(),
-		'show_details': show_details, 
+		'show_details': show_details,
 		'is_trusted': show_details or request.user.groups.filter(id=11).exists(),	# Only show cellphone to staff
 	})
 
 #@login_required
 def export(request, format=None):
 	formats = {
-		'html': ('text/html', 'users/export.html'), 
-		'csv': ('text/csv', 'users/export.csv'), 
-		'xml': ('application/xml', 'users/export.xml'), 
+		'html': ('text/html', 'users/export.html'),
+		'csv': ('text/csv', 'users/export.csv'),
+		'xml': ('application/xml', 'users/export.xml'),
+		'vcard': ('text/vcard', 'users/export.vcf'),
 	}
 
 	if format and format not in formats.keys():
@@ -62,13 +63,13 @@ def export(request, format=None):
 
 	for user in sorted_users():
 		entity = {
-			'id': user.username, 
-			'name': user.profile.name(), 
-			'title': user.profile.title, 
-			'avatar': user.profile.avatar(), 
-			'email': user.email, 
+			'id': user.username,
+			'name': user.profile.name(),
+			'title': user.profile.title,
+			'avatar': user.profile.avatar(),
+			'email': user.email,
 		}
-		
+
 		if authorized:
 			entity['phone'] = user.profile.phone
 

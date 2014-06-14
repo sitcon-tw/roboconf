@@ -1,0 +1,13 @@
+{% load textutils %}{% autoescape off %}{% for user in users %}
+BEGIN:VCARD
+VERSION:4.0
+{% if user.first_name %}N:{{ user.last_name|escapevcard }};{{ user.first_name|escapevcard }};{% endif %}
+FN:{% if user.first_name %}{{ user.last_name|escapevcard }}{{ user.first_name }}{% else %}{{ user.name }}{% endif %}
+NICKNAME:{{ user.name|escapevcard }}
+ORG:SITCON
+TITLE:{{ user.title }}
+PHOTO;VALUE=uri:{{ user.avatar }}
+{% if user.phone %}TEL;TYPE=cell:{{ user.phone }}{% endif %}
+EMAIL:{{ user.email }}
+END:VCARD
+{% endfor %}{% endautoescape %}

@@ -9,3 +9,14 @@ def formateach(iterable, format):
 @register.filter
 def escapecsv(iterable):
 	return [r'"%s"' % unicode(i).replace(r'"', r'""') for i in iterable]
+
+@register.filter
+def escapevcard(str):
+	chars_to_replace = (
+		(',', '\\,'),
+		(';', '\\;'),
+		('\n', '\\n'),
+	)
+	for src, dest in chars_to_replace:
+		str = str.replace(src, dest)
+	return str
