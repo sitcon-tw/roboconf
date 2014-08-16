@@ -1,0 +1,37 @@
+from django.db import models
+
+# Paper submission
+class Submission(models.Model):
+	class Meta:
+		permissions = (
+			('review', 'Review submissions'),
+		)
+	SHORT = 'S'
+	LONG = 'L'
+	LIGHTNING = 'N'
+	SUBMISSION_TYPES = (
+			(SHORT, 'Short talk'),
+			(LONG, 'Talk'),
+			(LIGHTNING, 'Lightning talk'),
+		)
+
+	ACCEPTED = 'A'
+	REJECTED = 'R'
+	PENDING = 'P'
+	REVIEWING = 'V'
+	STATUS = (
+			(ACCEPTED, 'Accepted'),
+			(REJECTED, 'Rejected'),
+			(PENDING, 'Pending'),
+			(REVIEWING, 'Reviewing'),
+		)
+
+	user = models.ForeignKey(User, editable=False, related_name='submissions')
+	title = models.CharField(max_length=150)
+	type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
+	bio = models.TextField(help_text='biography')
+	avatar = models.CharField(blank=True, help_text='link to custom avatar image')
+	abstract = models.CharField()
+	details = models.TextField(blank=True)
+	status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
+	comment = models.TextField(blank=True, help_text='Review comment')
