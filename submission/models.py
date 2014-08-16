@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 # Paper submission
 class Submission(models.Model):
@@ -30,8 +31,8 @@ class Submission(models.Model):
 	title = models.CharField(max_length=150)
 	type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
 	bio = models.TextField(help_text='biography')
-	avatar = models.CharField(blank=True, help_text='link to custom avatar image')
-	abstract = models.CharField()
+	avatar = models.CharField(max_length=1000, blank=True, help_text='link to custom avatar image')
+	abstract = models.TextField()
 	details = models.TextField(blank=True)
 	status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
 	comment = models.TextField(blank=True, help_text='Review comment')

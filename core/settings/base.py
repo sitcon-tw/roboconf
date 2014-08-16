@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'issues',
     'agenda',
     'notifications',
+    'submission',
 )
 
 LOGGING = {
