@@ -32,11 +32,19 @@
 					<textarea name="abstract" placeholder="摘要" required></textarea>
 				</div>
 			</div>
-			<div class="button-row">
-				<div class="right">
-					<input type="submit" class="radius button" name="submit" value="儲存" />
-				</div>
-			</div>
+            <div class="row">
+                <div class="button-row">
+                    <div class="right">
+                        <input type="submit" class="radius button" name="submit" value="儲存" />
+                    </div>
+                </div>
+            </div>
+            {% autoescape off %}
+            <div class="row collapse">
+                <h4>投稿須知</h4>
+                <p>{{ rule }}</p>
+            </div>
+            {% endautoescape %}
 			{% if submission.status != 'P' %}
 			<div class="row collapse">
 				<div class="small-6 columns">

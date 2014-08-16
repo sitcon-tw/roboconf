@@ -28,7 +28,6 @@ table.main { width: 100%; }
 .button-row>.left>*, .button-row>.right>* { margin: auto 0.25em; float: left; }
 .button-row>.left>*:first-child { margin-left: 0em; }
 .button-row>.right>*:last-child { margin-right: 0em; }
-.button-row:after { clear: both }
 .f-dropdown {
 	li { line-height: 166.66%; }
 	h6 { line-height: 1; font-size: 0.875em; }
