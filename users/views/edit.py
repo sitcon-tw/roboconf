@@ -19,10 +19,10 @@ def edit(request, username):
 	action = request.POST.get('action')
 	if action and request.user.has_perm('auth.change_user'):
 		if action == 'activate':
-			u.is_active = True
+			user.is_active = True
 		elif action == 'deactivate':
-			u.is_active = False
-		u.save()
+			user.is_active = False
+		user.save()
 		status = 'success'
 
 	if request.POST.get('submit'):
