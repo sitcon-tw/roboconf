@@ -36,6 +36,20 @@
 				{% endif %}
 				</div>
 				<div class="small-4 columns">
+				{% with groups=u.groups.all %}
+				{% if perms.auth.change_user %}
+					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">選取組別</a></label>
+					<ul id="groups_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
+					{% for c in categories %}
+						<h6>{{ c.name }}</h6>
+						{% for g in c.groups.all %}
+						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" data-label="{{ g.name }}" {% if g in groups %}checked{% endif %} />{{ g.name }}</label></li>
+						{% endfor %}
+					{% endfor %}
+					</ul>
+				{% else %}
+					{% for g in groups %}{{ g.name }}{% if not forloop.last %}、{% endif %}{% endfor %}
+				{% endif %}
 				</div>
 			</div>
 			<div class="row">
@@ -100,4 +114,19 @@
 		</ul>
 	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+{% if perms.auth.change_user %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.group_checkbox').change(function() {
+		var sel = [];
+		$('.group_checkbox:checked').each(function (index,e) {
+			sel.push($.trim($(e).data('label')));
+		});
+		$('#groups_label').text(sel.length ? sel.join('、') : $('#groups_label').data('default-content'));
+	});
+});
+</script>
+{% endif %}
 {% endblock %}

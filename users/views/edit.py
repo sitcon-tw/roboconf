@@ -43,6 +43,18 @@ def edit(request, username):
 				else:
 					errors += ['username', 'invalid_username']
 
+			groups = request.POST.getlist('groups')
+			old_groups = user.groups.all()
+			for group in old_groups:
+				if group.id not in groups:
+					user.groups.remove(group)
+
+			for group_id in groups:
+				try:
+					if group_id not in old_groups:
+						user.groups.add(Group.objects.get(id=group_id))
+				except Group.DoesNotExist: pass
+
 			profile.title = request.POST.get('title')
 
 		user.first_name = request.POST.get('first_name')
