@@ -15,7 +15,7 @@ def list(request):
 	group = None if not group.isdigit() else int(group)
 	return render(request, 'users/list.html', {
 		'users': sorted_users(group_id=group),
-		'categories': GroupCategory.objects.all(),
+		'categories': sorted_categories,
 		'filter': group,
 	})
 

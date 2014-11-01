@@ -88,7 +88,7 @@ def edit(request, username):
 
 	return render(request, 'users/edit_profile.html', {
 		'u': user,
-		'categories': GroupCategory.objects.all() if privileged else None,
+		'categories': sorted_categories if privileged else None,
 		'errors': errors,
 		'status': status,
 	})

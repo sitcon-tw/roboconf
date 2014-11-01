@@ -33,7 +33,7 @@ def create(request):
 				user.email = email
 			else:
 				errors += ['email', 'email_already_taken']
-		
+
 		except ValidationError:
 			errors += ['email', 'invalid_email']
 
@@ -71,7 +71,7 @@ def create(request):
 				}
 
 				from notifications.utils import send_template_mail, format_address
-				
+
 				sender_address = format_address(request.user.profile.name(), request.user.email)
 				receiver_address = format_address(user.profile.name(), user.email)
 				send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
@@ -81,7 +81,7 @@ def create(request):
 			status = 'error'
 
 	return render(request, 'users/create.html', {
-		'categories': GroupCategory.objects.all(),
+		'categories': sorted_categories(),
 		'errors': errors,
 		'status': status,
 	})
