@@ -8,13 +8,22 @@ from users.models import *
 @login_required
 def edit(request, username):
 	user = get_object_or_404(User, username=username)
-	
+
 	if not (user == request.user or request.user.has_perm('auth.change_user')):
 		from django.core.exceptions import PermissionDenied
 		raise PermissionDenied
-	
+
 	errors = []
 	status = ''
+
+	action = request.POST.get('action')
+	if action and request.user.has_perm('auth.change_user'):
+		if action == 'activate':
+			u.is_active = True
+		elif action == 'deactivate':
+			u.is_active = False
+		u.save()
+		status = 'success'
 
 	if request.POST.get('submit'):
 		profile = None
@@ -35,7 +44,7 @@ def edit(request, username):
 					errors += ['username', 'invalid_username']
 
 			profile.title = request.POST.get('title')
-		
+
 		user.first_name = request.POST.get('first_name')
 		user.last_name = request.POST.get('last_name')
 
