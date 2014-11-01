@@ -8,8 +8,9 @@ from users.models import *
 @login_required
 def edit(request, username):
 	user = get_object_or_404(User, username=username)
+	privileged = request.user.has_perm('auth.change_user')
 
-	if not (user == request.user or request.user.has_perm('auth.change_user')):
+	if not (user == request.user or privileged):
 		from django.core.exceptions import PermissionDenied
 		raise PermissionDenied
 
@@ -17,7 +18,7 @@ def edit(request, username):
 	status = ''
 
 	action = request.POST.get('action')
-	if action and request.user.has_perm('auth.change_user'):
+	if action and privileged:
 		if action == 'activate':
 			user.is_active = True
 		elif action == 'deactivate':
@@ -32,7 +33,7 @@ def edit(request, username):
 		except UserProfile.DoesNotExist:
 			profile = UserProfile(user=user)
 
-		if request.user.has_perm('auth.change_user'):
+		if privileged:
 			username = request.POST.get('username')
 			if username != user.username:
 				if username:
@@ -87,6 +88,7 @@ def edit(request, username):
 
 	return render(request, 'users/edit_profile.html', {
 		'u': user,
+		'categories': GroupCategory.objects.all() if privileged else None,
 		'errors': errors,
 		'status': status,
 	})
