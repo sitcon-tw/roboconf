@@ -22,7 +22,7 @@
 			<li><a href="{% url 'users:contacts' %}"><span class="icon-contacts iconize"></span> 檢視通訊錄</a></li>
 		</ul>
 		<div class="divider"></div>
-		{% for c, groups in categories %}
+		{% for c, groups in categories.items %}
 			{% if c.is_visible or user.is_staff %}
 			<h5>篩選{{ c.name }}</h5>
 			<ul class="side-nav">

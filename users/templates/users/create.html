@@ -39,7 +39,7 @@
 				<div class="small-4 columns">
 					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">選取組別</a></label>
 					<ul id="groups_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
-					{% for c, groups in categories %}
+					{% for c, groups in categories.items %}
 						<h6>{{ c.name }}</h6>
 						{% for g in groups %}
 						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" data-label="{{ g.name }}" />{{ g.name }}</label></li>
