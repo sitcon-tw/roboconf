@@ -50,6 +50,7 @@
 				{% else %}
 					{% for g in groups %}{{ g.name }}{% if not forloop.last %}、{% endif %}{% endfor %}
 				{% endif %}
+				{% endwith %}
 				</div>
 			</div>
 			<div class="row">
