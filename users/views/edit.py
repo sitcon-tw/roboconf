@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from users.models import *
+from users.utils import *
 
 @login_required
 def edit(request, username):
