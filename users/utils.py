@@ -33,4 +33,4 @@ def is_authorized_user(user):
 	return user.groups.filter(id=11).exists()
 
 def is_trusted_user(user):
-	return is_authorized_user() and user.has_perm('auth.change_user')
+	return is_authorized_user(user) and user.has_perm('auth.change_user')
