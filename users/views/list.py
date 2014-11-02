@@ -24,7 +24,7 @@ def list(request):
 	if groups:
 		groups = [int(g) for g in groups.split(',') if g.isdigit()]
 		to_include = [g for g in groups if g >= 0]
-		to_exclude = [g for g in groups if g < 0]
+		to_exclude = [-g for g in groups if g < 0]
 
 		if to_include:
 			users = users.filter(groups__in=to_include)
