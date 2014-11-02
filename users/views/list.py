@@ -29,15 +29,17 @@ def list(request):
 				g = int(g)
 			except ValueError: pass
 			else:
-				(to_include if g >= 0 else to_exclude).append(g)
+				filters.append(g)
+				if g >= 0:
+					to_include.append(g)
+				else:
+					to_exclude.append(-g)
 
 		if to_include:
 			users = users.filter(groups__in=to_include)
-			filters += to_include
 
 		if to_exclude:
 			users = users.exclude(groups__in=to_exclude)
-			filters += to_exclude
 
 	return render(request, 'users/list.html', {
 		'users': sorted_users(users),
