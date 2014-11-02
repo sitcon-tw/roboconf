@@ -22,17 +22,22 @@ def list(request):
 		users = users.filter(is_active=True)
 
 	if groups:
-		groups = [int(g) for g in groups.split(',') if g.isdigit()]
-		to_include = [g for g in groups if g >= 0]
-		to_exclude = [-g for g in groups if g < 0]
+		to_include, to_exclude = [], []
+
+		for g in groups.split(','):
+			try:
+				g = int(g)
+			except ValueError: pass
+			else:
+				(to_include if g >= 0 else to_exclude).append(g)
 
 		if to_include:
 			users = users.filter(groups__in=to_include)
+			filters += to_include
 
 		if to_exclude:
 			users = users.exclude(groups__in=to_exclude)
-
-		filters += groups
+			filters += to_exclude
 
 	return render(request, 'users/list.html', {
 		'users': sorted_users(users),
