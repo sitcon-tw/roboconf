@@ -7,6 +7,15 @@
 	</div>
 	<div class="large-{{ show_details|yesno:'11,9' }} columns">
 		<h3>SITCON 工作人員通訊錄</h3>
+		<p>
+			匯出：
+			<ul class="inline-list">
+				<li><a href="{% url 'users:export' 'html' %}">HTML</a></li>
+				<li><a href="{% url 'users:export' 'csv' %}">CSV</a></li>
+				<li><a href="{% url 'users:export' 'xml' %}">XML</a></li>
+				<li><a href="{% url 'users:export' 'vcard' %}">vCard</a></li>
+			</ul>
+		</p>
 		<table class="user-contacts main">
 			<thead><tr>
 				<th>職稱</th>
