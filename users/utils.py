@@ -15,10 +15,9 @@ def get_user_sorting_key(user):
 	name = user.profile.name()
 	return ''.join((identity, title, name))
 
-def sorted_users(group_id=None):
-	users = User.objects.filter(is_active=True)
-	if group_id:
-		users = users.filter(groups__id=group_id)
+def sorted_users(users):
+	if not users:
+		users = User.objects.filter(is_active=True)
 	return sorted(users, key=get_user_sorting_key)
 
 def get_group_sorting_key(category):
@@ -29,3 +28,9 @@ def get_group_sorting_key(category):
 
 def sorted_categories():
 	return { category : sorted(category.groups.all(), key=get_group_sorting_key) for category in GroupCategory.objects.all() }
+
+def is_authorized_user(user):
+	return user.groups.filter(id=11).exists()
+
+def is_trusted_user(user):
+	return is_authorized_user() and user.has_perm('auth.change_user')

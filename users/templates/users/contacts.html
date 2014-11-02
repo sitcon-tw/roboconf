@@ -15,7 +15,7 @@
 				<th>本名</th>
 				<th>學校</th>
 				{% endif %}
-				{% if is_trusted %}
+				{% if authorized %}
 				<th>電話</th>
 				{% endif %}
 				<th>Email</th>
@@ -32,7 +32,7 @@
 				<td>{{ u.last_name }} {{ u.first_name }}</td>
 				<td>{{ u.profile.school }} {{ u.profile.grade|truncatechars:12 }}</td>
 				{% endif %}
-				{% if is_trusted %}
+				{% if authorized %}
 				<td>{% if u.profile.phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}
 				<td>{{ u.email|urlize }}</td>

@@ -27,11 +27,19 @@
 			<h5>篩選{{ c.name }}</h5>
 			<ul class="side-nav">
 			{% for g in groups %}
-				<li{% if filter == g.id %} class="active"{% endif %}><a href="{% url 'users:list' %}?g={{ g.id }}">{{ g.name }}</a></li>
+				<li{% if g.id in filters %} class="active"{% endif %}><a href="{% url 'users:list' %}?g={{ g.id }}">{{ g.name }}</a></li>
 			{% endfor %}
 			</ul>
 			{% endif %}
 		{% endfor %}
+		{% if perms.auth.add_user or perms.auth.change_user %}
+			<h5>異次元<span class="has-tip" title="供行政組維護帳號使用">™</span></h5>
+			<ul class="side-nav">
+				<li{% if 'disabled' in filters %} class="active"{% endif %}><a href="{% url 'users:list' %}?find=disabled">停用的帳號</a></li>
+				<li{% if '-11' in filters %} class="active"{% endif %}><a href="{% url 'users:list' %}?g=-11">非工作人員帳號</a></li>
+				<li{% if 'all' in filters %} class="active"{% endif %}><a href="{% url 'users:list' %}?find=all">所有帳號</a></li>
+			</ul>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

@@ -11,12 +11,33 @@ def list(request):
 		from django.contrib.auth.views import redirect_to_login
 		return redirect_to_login(request.path)
 
-	group = request.GET.get('g', '')
-	group = None if not group.isdigit() else int(group)
+	users = User.objects.all()
+	filters = request.GET.getlist('find')
+	groups = request.GET.get('g')
+	trusted = is_trusted_user(request.user)
+
+	if 'disabled' in filters and trusted:
+		users = users.filter(is_active=False)
+	elif 'all' not in filters or not trusted:
+		users = users.filter(is_active=True)
+
+	if groups:
+		groups = [int(g) for g in groups.split(',') if g.isdigit()]
+		to_include = [g for g in groups if g >= 0]
+		to_exclude = [g for g in groups if g < 0]
+
+		if to_include:
+			users = users.filter(groups__in=to_include)
+
+		if to_exclude:
+			users = users.exclude(groups__in=to_exclude)
+
+		filters += groups
+
 	return render(request, 'users/list.html', {
-		'users': sorted_users(group_id=group),
+		'users': sorted_users(users),
 		'categories': sorted_categories,
-		'filter': group,
+		'filters': filters,
 	})
 
 @api_endpoint(public=True)
@@ -31,17 +52,16 @@ def ajax(request):
 				'title': u.profile.title,
 				'avatar': u.profile.avatar(),
 			}
-			for u in sorted_users(group_id=11)
+			for u in sorted_users(Users.objects.filter(is_active=True, groups=11))
 		],
 	})
 
 @login_required
 def contacts(request):
-	show_details = request.GET.get('details') and request.user.has_perm('auth.change_user')
 	return render(request, 'users/contacts.html', {
 		'users': sorted_users(),
-		'show_details': show_details,
-		'is_trusted': show_details or request.user.groups.filter(id=11).exists(),	# Only show cellphone to staff
+		'authorized': is_authorized_user(request.user),
+		'show_details': request.GET.get('details') and is_trusted_user(request.user),
 	})
 
 #@login_required
@@ -58,10 +78,11 @@ def export(request, format=None):
 		raise Http404
 
 	users = []
-	authorized = request.user.groups.filter(id=11).exists()
-	trusted = authorized and request.user.has_perm('auth.change_user')
+	authorized = is_authorized_user(request.user)
+	trusted = is_trusted_user(request.user)
+	user_source = User.objects.filter(is_active=True) if not trusted else User.objects.all()
 
-	for user in sorted_users():
+	for user in sorted_users(user_source):
 		entity = {
 			'id': user.username,
 			'name': user.profile.name(),
