@@ -1,6 +1,20 @@
-{% extends 'core/safe_master.html' %}
+{% extends 'core/base.html' %}
 {% block title %}匯出{{ block.super }}{% endblock %}
-{% block content %}
+{% block content_block %}
+<div class="fixed">
+	<nav class="top-bar">
+		{% spaceless %}
+		<ul class="title-area">
+			<li class="name"><h1><a href="/"><span class="logo">SITCON</span></a></h1></li>
+			<li class="toggle-topbar"><a href="#"><span></span></a></li>
+		</ul>
+		<section class="top-bar-section">
+			<ul class="left"></ul>
+			<ul class="right"></ul>
+		</section>
+		{% endspaceless %}
+	</nav>
+</div>
 <table class="user-export main">
 {% spaceless %}
 {% for user in users %}
