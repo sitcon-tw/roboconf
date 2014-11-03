@@ -16,8 +16,6 @@ def get_user_sorting_key(user):
 	return ''.join((identity, title, name))
 
 def sorted_users(users):
-	if not users:
-		users = User.objects.filter(is_active=True)
 	return sorted(users, key=get_user_sorting_key)
 
 def get_group_sorting_key(category):

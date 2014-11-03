@@ -59,14 +59,14 @@ def ajax(request):
 				'title': u.profile.title,
 				'avatar': u.profile.avatar(),
 			}
-			for u in sorted_users(Users.objects.filter(is_active=True, groups=11))
+			for u in sorted_users(User.objects.filter(is_active=True, groups=11))
 		],
 	})
 
 @login_required
 def contacts(request):
 	return render(request, 'users/contacts.html', {
-		'users': sorted_users(),
+		'users': sorted_users(User.objects.filter(is_active=True)),
 		'authorized': is_authorized_user(request.user),
 		'show_details': request.GET.get('details') and is_trusted_user(request.user),
 	})
