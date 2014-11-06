@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from annoying.fields import AutoOneToOneField
 
 # Create your models here.
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User, related_name='profile')
+	user = AutoOneToOneField(User, related_name='profile')
 	display_name = models.CharField(max_length=16)
 	title = models.CharField(max_length=16)
 	school = models.CharField(max_length=32, blank=True, help_text='school or company')
