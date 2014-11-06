@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
+from django.db.models import Q
 from django.utils import dateparse
 from issues.models import *
 from issues.utils import send_mail
@@ -46,10 +47,10 @@ def create(request):
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
 
-			mentions = set(re.findall(r'(?<=@)[0-9A-Za-z_\-]+', issue.content))
+			mentions = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', issue.content))
 			for mention in mentions:
 				try:
-					mentionee = User.objects.get(username=mention)
+					mentionee = User.objects.get(Q(username_istartswith=mention) | Q(profile__display_name_iexact=mention))
 				except User.DoesNotExist:
 					continue
 
