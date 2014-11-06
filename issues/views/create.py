@@ -50,7 +50,7 @@ def create(request):
 			mentions = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', issue.content))
 			for mention in mentions:
 				try:
-					mentionee = User.objects.get(Q(username_istartswith=mention) | Q(profile__display_name_iexact=mention))
+					mentionee = User.objects.get(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention))
 				except User.DoesNotExist:
 					continue
 
