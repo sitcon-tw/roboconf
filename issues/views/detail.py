@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.utils import timezone
 from issues.models import *
 from issues.utils import send_mail, send_sms
@@ -110,7 +111,7 @@ def comment(issue, request):
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
 
-		mentions = set(re.findall(r'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\-]+', issue.content))
+		mentions = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', issue.content))
 		for mention in mentions:
 			try:
 				mentionee = User.objects.get(Q(username_istartswith=mention) | Q(profile__display_name_iexact=mention))
