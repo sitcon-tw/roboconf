@@ -150,6 +150,11 @@
 					<span class="radius postfix with-button">{{ issue.starring.count }}</span>
 				</div>
 			</form>
+			<ul class="issue-starring small-block-grid-5">
+			{% for u in issue.starring.all %}
+				<li><a href="{% url 'users:profile' u.username %}"><img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" /></a></li>
+			{% endfor %}
+			</ul>
 		</div>
 		<div class="issue-labels">
 			{% if user == issue.assignee or perms.issues.label_issue %}
