@@ -5,7 +5,7 @@
 	{% csrf_token %}
 	<div class="row">
 		<div class="large-1 avatars columns">
-			<img class="avatar medium" src="{{ user.email.profile.avatar }}" alt="{{ user.profile.name }}" />
+			<img class="avatar medium" src="{{ user.profile.avatar }}" alt="{{ user.profile.name }}" />
 			<a class="right iconize icon-back has-tip" href="{% url 'issues:list' %}" title="回到待辦事項" data-tooltip></a>
 		</div>
 		<div class="large-8 columns">
