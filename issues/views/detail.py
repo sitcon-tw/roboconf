@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils import timezone
 from issues.models import *
 from issues.utils import send_mail, send_sms
+from users.utils import sorted_users
 import re
 
 ISSUE_MAGIC_TOKEN = '#!'
@@ -31,7 +32,7 @@ def detail(request, issue_id):
 	return render(request, 'issues/detail.html', {
 		'issue': issue,
 		'labels': Label.objects.all(),
-		'users': User.objects.all(),
+		'users': sorted_users(User.objects.filter(is_active=True)),
 		'has_starred': issue.starring.filter(id=request.user.id).count() > 0,
 	})
 
