@@ -6,6 +6,7 @@ from issues.models import *
 from issues.utils import send_mail
 from users.utils import sorted_users
 import datetime
+import re
 
 @permission_required('issues.add_issue')
 def create(request):
@@ -44,6 +45,16 @@ def create(request):
 		if len(errors) < 1:
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
+
+			mentions = set(re.findall(r'(?<=@)[0-9A-Za-z_\-]+', issue.content))
+			for mention in mentions:
+				try:
+					mentionee = User.objects.get(username=mention)
+				except User.DoesNotExist:
+					continue
+
+				issue.starring.add(mentionee)	# Auto watch
+				send_mail(request.user, mentionee, 'mail/issue_mentioned.html', {'issue': issue, 'new_topic': True})
 
 			if assignee:
 				IssueHistory.objects.create(issue=issue, user=request.user,

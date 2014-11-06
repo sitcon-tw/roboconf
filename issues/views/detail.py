@@ -47,7 +47,7 @@ def notify(issue, user, template_name, context):
 def assign(issue, request):
 	if not request.user.has_perm('issues.assign_issue'):
 		return	# Audit fail
-		
+
 	assignee = request.POST.get('assignee')
 	if assignee is not None:					# empty string => unassign
 		if len(assignee) > 0:
@@ -66,7 +66,7 @@ def assign(issue, request):
 def set_label(issue, request):
 	if not (issue.assignee == request.user or request.user.has_perm('issues.label_issue')):
 		return	# Audit fail
-		
+
 	old_labels = [l.id for l in issue.labels.all()]
 	new_labels = []
 
@@ -108,6 +108,19 @@ def comment(issue, request):
 
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
+
+		mentions = set(re.findall(r'(?<=@)[0-9A-Za-z_\-]+', content))
+		for mention in mentions:
+			try:
+				mentionee = User.objects.get(username=mention)
+			except User.DoesNotExist:
+				continue
+
+			issue.starring.add(mentionee)	# Auto watch
+			send_mail(request.user, mentionee, 'mail/issue_mentioned.html', {'issue': issue, 'comment': content })
+			if urgent:
+				send_sms(request.user, mentionee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
+
 		if urgent:
 			if issue.assignee and issue.assignee.profile.phone:
 				send_sms(request.user, issue.assignee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })

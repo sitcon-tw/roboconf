@@ -1,0 +1,17 @@
+{% load markdown %}
+{{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
+=====
+<div style="font-size: 0.8em; padding: 0.5em; border: 1px solid #f0f0f0; border-radius: 3px;">
+	<a href="{{ site_url }}{% url 'users:profile' sender.username %}">{{ sender.profile.name }}</a>
+	在議題上提到了你。
+	<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視</a>
+</div>
+<div style="margin: 0.5em auto;">
+{% if comment %}
+	{{ comment|markdown }}
+{% else %}
+	{{ issue.content|markdown }}
+{% endif %}
+</div>
+<hr/>
+<p style="font-size: 0.8em;">本信件由 SITCON 行政系統自動寄送，請勿直接回覆此信件。</p>
