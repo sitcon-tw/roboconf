@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import permission_required
 from django.utils import dateparse
 from issues.models import *
 from issues.utils import send_mail
+from users.utils import sorted_users
 import datetime
 
 @permission_required('issues.add_issue')
@@ -11,7 +12,7 @@ def create(request):
 	errors = []
 
 	if 'submit' in request.POST:
-		
+
 		issue = Issue()
 		issue.title = request.POST['title']
 		issue.content = request.POST['content']
@@ -52,7 +53,7 @@ def create(request):
 				send_mail(request.user, issue.assignee, 'mail/issue_assigned.html', {'issue': issue, 'new_topic': True})
 
 			if due_time:
-				IssueHistory.objects.create(issue=issue, user=request.user, 
+				IssueHistory.objects.create(issue=issue, user=request.user,
 											mode=IssueHistory.SET_DUE, content=due_time)
 
 
@@ -64,9 +65,9 @@ def create(request):
 
 			issue.save()	# Now save the labels
 			return redirect('issues:detail', issue.id)
-		
+
 	return render(request, 'issues/create.html', {
 		'labels': Label.objects.all(),
-		'users': User.objects.all(),
+		'users': sorted_users(User.objects.filter(is_active=True)),
 		'errors': errors,
 	})
