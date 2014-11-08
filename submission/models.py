@@ -36,3 +36,4 @@ class Submission(models.Model):
 	details = models.TextField(blank=True)
 	status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
 	comment = models.TextField(blank=True, help_text='Review comment')
+	method = models.CharField(max_length=10)
