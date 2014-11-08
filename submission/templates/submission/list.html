@@ -16,7 +16,7 @@
 					<tr>
 						<td>{{ s.title }}</td>
 						<td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
-						<td><a href="#">編輯</a> <a class="delete" data-submission-id="{{ s.id }}">刪除</a></td>
+						<td><a href="{% url 'submission:edit' s.id %}">編輯</a> <a class="delete" data-submission-id="{{ s.id }}">刪除</a></td>
 					</tr>
 				{% endfor %}
 				</tbody>

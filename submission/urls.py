@@ -5,4 +5,5 @@ urlpatterns = patterns('',
 		url(r'^$', views.list, name='list'),
 		url(r'^new$', views.create, name='create'),
 		url(r'^delete$', views.delete, name='delete'),
+		url(r'^edit/(\d+)$', views.edit, name='edit'),
 	)
