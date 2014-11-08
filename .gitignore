@@ -2,6 +2,7 @@
 *.pot
 *.pyc
 *.sublime-*
+*.swp
 local_settings.py
 roboconf.db
 
