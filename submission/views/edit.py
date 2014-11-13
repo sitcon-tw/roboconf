@@ -20,7 +20,6 @@ def edit(request, submission_id):
 			submission.save()
 			return redirect('submission:list')
 		else:
-			# Todo : return and display error messages
 			pass
 
 	context = {
