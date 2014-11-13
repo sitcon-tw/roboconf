@@ -7,7 +7,10 @@ from submission.models import Submission
 
 @login_required
 def edit(request, submission_id):
-	instance = get_object_or_404(Submission, id=submission_id, user=request.user)
+	if request.user.has_perm('submission.review'):
+		instance = get_object_or_404(Submission, id=submission_id)
+	else:
+		instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
 	if request.POST.get('submit'):
 		SubmissionForm = modelform_factory(Submission, fields='__all__', exclude=('status', 'type'))
