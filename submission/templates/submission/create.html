@@ -2,36 +2,36 @@
 {% block title %}新增投稿{{ block.super }}{% endblock %}
 {% block content %}
 <div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
-	<a href="#" class="close">&times;</a>
+    <a href="#" class="close">&times;</a>
 </div>
 <form action="{% url 'submission:create' %}" method="POST" class="submission-main">
 <div class="row">
-	<div class="large-1 avatars columns">
-		<a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
-	</div>
-	<div class="large-8 columns">
-		{% csrf_token %}
-			<div class="row collapse">
-				<h4>投稿者 {{ user.profile.display_name }} <small><em>如欲修改請至右上角「帳號設定」修改「顯示名稱」</em></small></h4>
-			</div>
-			<div class="row collapse">
-				<h4>標題</h4>
-				<div class="small-12 columns">
-					<input type="text" name="title" placeholder="講題" required />
-				</div>
-				<h4>個人介紹</h4>
-				<div class="small-12 columns">
-					<textarea name="bio" placeholder="個人介紹" required></textarea>
-				</div>
-				<h4>摘要</h4>
-				<div class="small-12 columns">
-					<textarea name="abstract" placeholder="摘要" required></textarea>
-				</div>
-				<h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
-				<div class="small-12 columns">
-					<textarea name="details" placeholder="詳細說明" required></textarea>
-				</div>
-			</div>
+    <div class="large-1 avatars columns">
+        <a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
+    </div>
+    <div class="large-8 columns">
+        {% csrf_token %}
+            <div class="row collapse">
+                <h4>投稿者 {{ user.profile.display_name }} <small><em>如欲修改請至右上角「帳號設定」修改「顯示名稱」</em></small></h4>
+            </div>
+            <div class="row collapse">
+                <h4>標題</h4>
+                <div class="small-12 columns">
+                    <input type="text" name="title" placeholder="講題" maxlength="40" value="{{ submission.title.value }}" required />
+                </div>
+                <h4>個人介紹</h4>
+                <div class="small-12 columns">
+                    <textarea name="bio" placeholder="個人介紹" maxlength="300" required>{{ submission.bio.value }}</textarea>
+                </div>
+                <h4>摘要</h4>
+                <div class="small-12 columns">
+                    <textarea name="abstract" placeholder="摘要" maxlength="400" required>{{ submission.abstract.value }}</textarea>
+                </div>
+                <h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
+                <div class="small-12 columns">
+                    <textarea name="details" placeholder="詳細說明" required>{{ submission.details.value }}</textarea>
+                </div>
+            </div>
             <div class="row">
                 <div class="button-row">
                     <div class="right">
@@ -45,43 +45,43 @@
                 <p>{{ rule }}</p>
             </div>
             {% endautoescape %}
-			{% if submission.status != 'P' %}
-			<div class="row collapse">
-				<div class="small-6 columns">
-					<h5>狀態</h5>
-				</div>
-				<div class="small-6 columns">
-					{% if submission.status == 'A' %}
-					<p>噫！中了！</p>
-					{% elif submission.status == 'R' %}
-					<p>沒上QQ</p>
-					{% elif submission.status == 'V' %}
-					<p>審稿中</p>
-					{% endif %}
-				</div>
-			</div>
-			<div class="row collapse">
-				<h5>審稿評論</h5>
-				{{ submission.comment }}
-			</div>
-			{% endif %}
-		</form>
-	</div>
-	<div class="large-3 columns main-side-nav">
-		<div class="row">
-			<div>
-				<h4>投稿類型</h4>
-				<label for="method_email_radio"><input type="radio" name="method" value="email" id="method_email_radio" checked /><span>電子郵件</span></label>
-				<label for="method_sms_radio"><input type="radio" name="method" value="sms" id="method_sms_radio" /><span>簡訊</span></label>
-			</div>
-		</div>
-		<div class="row">
-			<div>
-				<h4>大頭照</h4>
-				<img src="{{ user.profile.avatar }}" />
-			</div>
-		</div>
-	</div>
+            {% if submission.status != 'P' %}
+            <div class="row collapse">
+                <div class="small-6 columns">
+                    <h5>狀態</h5>
+                </div>
+                <div class="small-6 columns">
+                    {% if submission.status == 'A' %}
+                    <p>噫！中了！</p>
+                    {% elif submission.status == 'R' %}
+                    <p>沒上QQ</p>
+                    {% elif submission.status == 'V' %}
+                    <p>審稿中</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row collapse">
+                <h5>審稿評論</h5>
+                {{ submission.comment }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+    <div class="large-3 columns main-side-nav">
+        <div class="row">
+            <div>
+                <h4>投稿類型</h4>
+                <label for="method_email_radio"><input type="radio" name="method" value="email" id="method_email_radio" checked /><span>電子郵件</span></label>
+                <label for="method_sms_radio"><input type="radio" name="method" value="sms" id="method_sms_radio" /><span>簡訊</span></label>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <h4>大頭照</h4>
+                <img src="{{ user.profile.avatar }}" />
+            </div>
+        </div>
+    </div>
 </div>
 </form>
 {% endblock %}
