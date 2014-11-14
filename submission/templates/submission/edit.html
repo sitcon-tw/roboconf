@@ -1,9 +1,6 @@
 {% extends 'core/master.html' %}
 {% block title %}編輯投稿{{ block.super }}{% endblock %}
 {% block content %}
-<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
-    <a href="#" class="close">&times;</a>
-</div>
 <form action="{% url 'submission:edit' submission.id %}" method="POST" class="submission-main">
 <div class="row">
     <div class="large-1 avatars columns">
@@ -83,5 +80,4 @@
         </div>
     </div>
 </div>
-</form>
 {% endblock %}
