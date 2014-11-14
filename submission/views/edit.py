@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from django.forms.models import modelform_factory
 from django.shortcuts import redirect
+from submission.forms import SubmissionForm
 from submission.models import Submission
 
 @login_required
@@ -13,7 +13,6 @@ def edit(request, submission_id):
 		instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
 	if request.POST.get('submit'):
-		SubmissionForm = modelform_factory(Submission, fields='__all__', exclude=('status', 'type'))
 		submission = SubmissionForm(request.POST, instance=instance)
 
 		if submission.is_valid():
