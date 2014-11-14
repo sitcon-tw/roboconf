@@ -4,11 +4,9 @@ from submission.models import Submission
 
 @login_required
 def delete(request):
-	submission = Submission.objects.get(id=request.POST['submission_id'])
+    submission = Submission.objects.get(id=request.POST['submission_id'])
 
-	if request.user == submission.user:
-		submission.delete()
+    if request.user == submission.user:
+        submission.delete()
 
-	return redirect('submission:list')
-
-# vim: noet ts=8 sw=8
+    return redirect('submission:list')
