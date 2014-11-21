@@ -16,17 +16,29 @@
                 <div class="small-12 columns">
                     <input type="text" name="title" placeholder="講題" maxlength="40" value="{{ submission.title.value }}" required />
                 </div>
+                <h4>暱稱</h4>
+                <div class="small-12 columns">
+                    <textarea name="nickname" placeholder="暱稱" maxlength="100" required>{{ submission.nickname.value }}</textarea>
+                </div>
                 <h4>個人介紹</h4>
                 <div class="small-12 columns">
                     <textarea name="bio" placeholder="個人介紹" maxlength="300" required>{{ submission.bio.value }}</textarea>
                 </div>
+                <h4>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h4>
+                <div class="small-12 columns">
+                    <input type="file" name="photo" />
+                </div>
                 <h4>摘要</h4>
                 <div class="small-12 columns">
-                    <textarea name="abstract" placeholder="摘要" maxlength="400" required>{{ submission.abstract.value }}</textarea>
+                    <textarea name="abstract" placeholder="摘要" maxlength="500" required>{{ submission.abstract.value }}</textarea>
                 </div>
                 <h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
                 <div class="small-12 columns">
                     <textarea name="details" placeholder="詳細說明" required>{{ submission.details.value }}</textarea>
+                </div>
+                <h4>出發地 <small>平時生活的地區，必填，僅供大會調查統</small></h4>
+                <div class="small-12 columns">
+                    <input type="text" name="departure" placeholder="出發地" maxlength="1000" value="{{ submission.departure.value }}" required />
                 </div>
                 <h4>File</h4>
                 <div class="small-12 columns">
@@ -72,8 +84,8 @@
         <div class="row">
             <div>
                 <h4>投稿類型</h4>
-                <label for="method_email_radio"><input type="radio" name="method" value="email" id="method_email_radio" checked /><span>電子郵件</span></label>
-                <label for="method_sms_radio"><input type="radio" name="method" value="sms" id="method_sms_radio" /><span>簡訊</span></label>
+                <label for="type_S"><input type="radio" name="type" value="S" id="type_S" /><span>Short Talk</span></label>
+                <label for="type_L"><input type="radio" name="type" value="L" id="type_L" checked /><span>Talk</span></label>
             </div>
         </div>
         <div class="row">
