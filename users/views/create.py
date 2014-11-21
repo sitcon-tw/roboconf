@@ -85,3 +85,76 @@ def create(request):
 		'errors': errors,
 		'status': status,
 	})
+
+@sensitive_variables('password')
+def submitter_create(request):
+	errors = []
+	status = ''
+
+	if 'submit' in request.POST:
+		user = User()
+
+		username = request.POST.get('username')
+		if username:
+			if User.objects.filter(username=username).count() < 1:
+				user.username = username
+			else:
+				errors += ['username', 'username_already_taken']
+		else:
+			errors += ['username', 'invalid_username']
+
+		from django.core.validators import validate_email
+		from django.core.exceptions import ValidationError
+		email = request.POST.get('email')
+		try:
+			validate_email(email)
+
+			if User.objects.filter(email=email).count() < 1:
+				user.email = email
+			else:
+				errors += ['email', 'email_already_taken']
+
+		except ValidationError:
+			errors += ['email', 'invalid_email']
+
+		user.first_name = request.POST.get('first_name')
+		user.last_name = request.POST.get('last_name')
+
+		password = generate_password()
+		user.set_password(password)
+
+		if len(errors) < 1:
+			user.save()
+
+			profile = UserProfile(user=user)
+			profile.title = "submitter"
+			profile.display_name = request.POST.get('display_name')
+			profile.school = request.POST.get('school')
+			profile.grade = request.POST.get('grade')
+			profile.phone = request.POST.get('phone')
+			profile.comment = request.POST.get('comment')
+			profile.save()
+
+			user.save()
+
+			context = {
+				'sender': request.user,
+				'receiver': user,
+				'password': password,
+			}
+
+			from notifications.utils import send_template_mail, format_address
+
+			sender_address = format_address('SITCON', 'sitcon@sitcon.com')
+			receiver_address = format_address(user.username, user.email)
+			send_template_mail(sender_address, receiver_address, 'mail/submitter_welcome.html', context)
+
+			status = 'success'
+		else:
+			status = 'error'
+
+	return render(request, 'users/submitter_create.html', {
+		'categories': sorted_categories(),
+		'errors': errors,
+		'status': status,
+	})
