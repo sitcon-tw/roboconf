@@ -13,7 +13,7 @@ class UserProfile(models.Model):
 	comment = models.TextField(blank=True)
 
 	def __unicode__(self):
-		return self.title
+		return '%s - %s' % (self.title, self.user.username)
 
 	def name(self):
 		if self.display_name:
