@@ -1,7 +1,7 @@
 {% extends 'core/master.html' %}
 {% block title %}新增投稿{{ block.super }}{% endblock %}
 {% block content %}
-<form action="{% url 'submission:create' %}" method="POST" class="submission-main">
+<form action="{% url 'submission:create' %}" method="POST" enctype="multipart/form-data" class="submission-main">
 <div class="row">
     <div class="large-1 avatars columns">
         <a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
@@ -27,6 +27,10 @@
                 <h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
                 <div class="small-12 columns">
                     <textarea name="details" placeholder="詳細說明" required>{{ submission.details.value }}</textarea>
+                </div>
+                <h4>File</h4>
+                <div class="small-12 columns">
+                    <input type="file" name="slide" required />
                 </div>
             </div>
             <div class="row">

@@ -13,7 +13,10 @@ def edit(request, submission_id):
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
     if request.POST.get('submit'):
-        submission = SubmissionForm(request.POST, instance=instance)
+        if request.FILES:
+            submission = SubmissionForm(request.POST, request.FILES, instance=instance)
+        else:
+            submission = SubmissionForm(request.POST, instance=instance)
 
         if submission.is_valid():
             submission.save()

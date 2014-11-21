@@ -37,3 +37,4 @@ class Submission(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
     comment = models.TextField(blank=True, help_text='Review comment')
     method = models.CharField(max_length=10)
+    slide = models.FileField(upload_to="slides")

@@ -15,7 +15,7 @@ def create(request):
             }
 
     if request.POST.get('submit'):
-        sub = SubmissionForm(request.POST)
+        sub = SubmissionForm(request.POST, request.FILES)
 
         if sub.is_valid():
             submission = sub.save(commit=False)
