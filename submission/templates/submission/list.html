@@ -1,0 +1,44 @@
+{% extends 'core/master.html' %}
+{% block title %}投稿{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="large-9 columns">
+        <div>
+        {% with c=submissions.count %}
+        {% if c > 0 %}
+            <h3><small>共 {{ submissions.count }} 篇投稿</small></h3>
+            <table class="submissions-list main">
+                <thead>
+                    <tr><th>標題</th><th>狀態</th><th>動作</th></tr>
+                </thead>
+                <tbody>
+                {% for s in submissions %}
+                    <tr>
+                        <td>{{ s.title }}</td>
+                        <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
+                        <td><a href="{% url 'submission:edit' s.id %}">編輯</a> <a class="delete" data-submission-id="{{ s.id }}">刪除</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3><small>還沒有任何投稿</small></h3>
+        {% endif %}
+        {% endwith %}
+        </div>
+    </div>
+    <div class="large-3 columns main-side-nav">
+        <ul class="side-nav users-actions">
+            <li><a href="{% url 'submission:create' %}"><span class="icon-email iconize"></span> 新增投稿</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(".delete").on("click", function () {
+    Roboconf.post("{% url 'submission:delete' %}", {"submission_id": this.dataset['submissionId']});
+});
+</script>
+{% endblock %}

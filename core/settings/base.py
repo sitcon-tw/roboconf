@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Django settings for Roboconf.
 import os
+import datetime
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -78,6 +79,7 @@ INSTALLED_APPS = (
     'issues',
     'agenda',
     'notifications',
+    'submission',
 )
 
 LOGGING = {
@@ -126,3 +128,6 @@ DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+SUBMISSION_START = datetime.datetime(2014, 11, 1, 0, 0, 0)
+SUBMISSION_END = datetime.datetime(2015, 2, 1, 0, 0, 0)
+SUBMISSION_RULE_DOCID = "MUY"

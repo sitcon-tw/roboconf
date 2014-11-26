@@ -1,0 +1,102 @@
+{% extends 'core/master.html' %}
+{% load staticfiles %}
+{% block title %}編輯投稿{{ block.super }}{% endblock %}
+{% block content %}
+<form action="{% url 'submission:edit' submission.id %}" method="POST" enctype="multipart/form-data" class="submission-main">
+<div class="row">
+    <div class="large-1 avatars columns">
+        <a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
+    </div>
+    <div class="large-8 columns">
+        {% csrf_token %}
+            <div class="row collapse">
+                <h4>投稿者 {{ user.profile.display_name }} <small><em>如欲修改請至右上角「帳號設定」修改「顯示名稱」</em></small></h4>
+            </div>
+            <div class="row collapse">
+                <h4>標題</h4>
+                <div class="small-12 columns">
+                    <input type="text" name="title" placeholder="講題" maxlength="40" value="{{ submission.title }}" required />
+                </div>
+                <h4>暱稱</h4>
+                <div class="small-12 columns">
+                    <textarea name="nickname" placeholder="暱稱" maxlength="100" required>{{ submission.nickname }}</textarea>
+                </div>
+                <h4>個人介紹</h4>
+                <div class="small-12 columns">
+                    <textarea name="bio" placeholder="個人介紹" maxlength="300" required>{{ submission.bio }}</textarea>
+                </div>
+                <h4>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h4>
+                <div class="small-12 columns">
+                    <h5><a href="{{ submission.photo.url }}">目前檔案</a></h5>
+                    <input type="file" name="photo" />
+                </div>
+                <h4>摘要</h4>
+                <div class="small-12 columns">
+                    <textarea name="abstract" placeholder="摘要" maxlength="500" required>{{ submission.abstract }}</textarea>
+                </div>
+                <h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
+                <div class="small-12 columns">
+                    <textarea name="details" placeholder="詳細說明" required>{{ submission.details }}</textarea>
+                </div>
+                <h4>出發地 <small>平時生活的地區，必填，僅供大會調查統</small></h4>
+                <div class="small-12 columns">
+                    <input type="text" name="departure" placeholder="出發地" maxlength="1000" value="{{ submission.departure }}" required />
+                </div>
+                <h4>File</h4>
+                <div class="small-12 columns">
+                    <h5><a href="{{ submission.slide.url }}">目前檔案</a></h5>
+                    <input type="file" name="slide" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="button-row">
+                    <div class="right">
+                        <input type="submit" class="radius button" name="submit" value="儲存" />
+                    </div>
+                </div>
+            </div>
+            {% autoescape off %}
+            <div class="row collapse">
+                <h4>投稿須知</h4>
+                <p>{{ rule }}</p>
+            </div>
+            {% endautoescape %}
+            {% if submission.status != 'P' %}
+            <div class="row collapse">
+                <div class="small-6 columns">
+                    <h5>狀態</h5>
+                </div>
+                <div class="small-6 columns">
+                    {% if submission.status == 'A' %}
+                    <p>噫！中了！</p>
+                    {% elif submission.status == 'R' %}
+                    <p>沒上QQ</p>
+                    {% elif submission.status == 'V' %}
+                    <p>審稿中</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row collapse">
+                <h5>審稿評論</h5>
+                {{ submission.comment }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+    <div class="large-3 columns main-side-nav">
+        <div class="row">
+            <div>
+                <h4>投稿類型</h4>
+                <label for="type_S"><input type="radio" name="type" value="S" id="type_S" {% if submission.type == 'S'%}checked{% endif %} /><span>Short Talk</span></label>
+                <label for="type_L"><input type="radio" name="type" value="L" id="type_L" {% if submission.type == 'L'%}checked{% endif %} /><span>Talk</span></label>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <h4>大頭照</h4>
+                <img src="{{ user.profile.avatar }}" />
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
