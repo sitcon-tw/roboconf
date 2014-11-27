@@ -12,7 +12,12 @@ def ajax(request):
 
 @login_required
 def list(request, filter=None):
-	dataset = Issue.objects
+	if request.user.profile.is_sitcon_staff:
+		dataset = request.user.assigned_issues.all()
+		dataset = dataset | request.user.created_issues.all()
+	else:
+		dataset = Issue.objects
+
 	counts = {
 		'all': Issue.objects.count(),
 	}
@@ -25,7 +30,7 @@ def list(request, filter=None):
 		dataset = dataset.filter(creator__id=filter['creator'])
 	if 'starring' in filter:
 		dataset = dataset.filter(starring__id=filter['starring'])
-	
+
 	# 1st phase counting
 	counts['open'] = dataset.filter(is_open=True).count()
 	counts['closed'] = dataset.filter(is_open=False).count()
