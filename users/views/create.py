@@ -127,7 +127,7 @@ def submitter_create(request):
 			user.save()
 
 			profile = UserProfile(user=user)
-			profile.title = "submitter"
+			profile.title = TITLE_SUBMITTER
 			profile.display_name = request.POST.get('display_name')
 			profile.school = request.POST.get('school')
 			profile.grade = request.POST.get('grade')
