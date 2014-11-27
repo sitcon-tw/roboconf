@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from submission.forms import SubmissionForm
+from submission.forms import SubmissionFileForm
 from submission.models import Submission
 
 @login_required
@@ -19,7 +20,19 @@ def edit(request, submission_id):
             submission = SubmissionForm(request.POST, instance=instance)
 
         if submission.is_valid():
-            submission.save()
+
+            sub = submission.save()
+
+            for f in sub.files.all():
+                f.file.delete()
+                f.delete()
+
+            for f in request.FILES.getlist('slide'):
+                form = SubmissionFileForm().save(commit=False)
+                form.submission = sub
+                form.file = f
+                form.save()
+
             return redirect('submission:list')
         else:
             pass

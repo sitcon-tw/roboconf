@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import redirect
 from submission.forms import SubmissionForm
+from submission.forms import SubmissionFileForm
 from core.formatting import render_document
 from docs.node import Node
 
@@ -21,6 +22,13 @@ def create(request):
             submission = sub.save(commit=False)
             submission.user = request.user
             submission.save()
+
+            for f in request.FILES.getlist('slide'):
+                form = SubmissionFileForm().save(commit=False)
+                form.submission = submission
+                form.file = f
+                form.save()
+
             return redirect('submission:list')
         else:
             pass
