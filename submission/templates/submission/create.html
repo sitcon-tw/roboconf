@@ -58,26 +58,6 @@
                 <p>{{ rule }}</p>
             </div>
             {% endautoescape %}
-            {% if submission.status != 'P' %}
-            <div class="row collapse">
-                <div class="small-6 columns">
-                    <h5>狀態</h5>
-                </div>
-                <div class="small-6 columns">
-                    {% if submission.status == 'A' %}
-                    <p>噫！中了！</p>
-                    {% elif submission.status == 'R' %}
-                    <p>沒上QQ</p>
-                    {% elif submission.status == 'V' %}
-                    <p>審稿中</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row collapse">
-                <h5>審稿評論</h5>
-                {{ submission.comment }}
-            </div>
-            {% endif %}
         </form>
     </div>
     <div class="large-3 columns main-side-nav">
