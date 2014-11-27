@@ -27,7 +27,9 @@
                 </div>
                 <h4>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h4>
                 <div class="small-12 columns">
-                    <h5><a href="{{ submission.photo.url }}">目前檔案</a></h5>
+                    <img src="{{ submission.photo.url }}"></img>
+                    <br/>
+                    <br/>
                     <input type="file" name="photo" />
                 </div>
                 <h4>摘要</h4>
@@ -42,10 +44,14 @@
                 <div class="small-12 columns">
                     <input type="text" name="departure" placeholder="出發地" maxlength="1000" value="{{ submission.departure }}" required />
                 </div>
-                <h4>File</h4>
+                <h4>附加檔案</h4>
                 <div class="small-12 columns">
-                    <h5><a href="{{ submission.slide.url }}">目前檔案</a></h5>
-                    <input type="file" name="slide" />
+                    <h5>目前檔案</h5>
+                    {% for file in submission.files.all %}
+                        <li><a href="{{ file.url }}">{{ file.name }}</a></li>
+                    {% endfor %}
+                    <br/>
+                    <input type="file" name="slide" multiple/>
                 </div>
             </div>
             <div class="row">

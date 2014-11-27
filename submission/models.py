@@ -39,4 +39,19 @@ class Submission(models.Model):
     comment = models.TextField(blank=True, help_text='Review comment')
     departure = models.CharField(max_length=1000, help_text='departure')
     photo = models.FileField(upload_to='photos')
-    slide = models.FileField(upload_to='slides')
+
+    def __unicode__(self):
+        return self.title
+
+class SubmissionFile(models.Model):
+    submission = models.ForeignKey(Submission, related_name='files')
+    file = models.FileField(upload_to='submission_files')
+
+    def __unicode__(self):
+        return self.file.name
+
+    def url(self):
+        return self.file.url
+
+    def name(self):
+        return self.file.name.rpartition('/')[2]
