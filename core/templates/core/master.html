@@ -9,15 +9,30 @@
 		<section class="top-bar-section">
 			<ul class="left">
 				{% if user.is_authenticated %}
+
+				{% if perms.docs %}
 				<li><a href="{% url 'docs:main' %}">文件</a></li>
+				{% endif %}
+
+				{% if perms.issues %}
 				<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
+				{% endif %}
+
+				{% if perms.agenda %}
 				<li><a href="#">聚會</a></li>
 				<li><a href="{% url 'agenda:main' %}">時間表</a></li>
-				<li><a href="{% url 'submission:list' %}">投稿</a></li>
+				{% endif %}
+
+				{% if perms.users %}
 				<li><a href="{% url 'users:list' %}">人員</a></li>
+				{% endif %}
+
 				{% if perms.notifications.add_message %}
 				<li><a href="{% url 'notifications:list' %}">通知</a></li>
 				{% endif %}
+
+				<li><a href="{% url 'submission:list' %}">投稿</a></li>
+
 				{% endif %}
 			</ul>
 			<ul class="right">
