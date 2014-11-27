@@ -35,7 +35,7 @@ class Submission(models.Model):
         )
 
     user = models.ForeignKey(User, editable=False, related_name='submissions')
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=40, unique=True)
     type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
     nickname = models.CharField(max_length=100, help_text='nickname')
     bio = models.TextField(max_length=300, help_text='biography')
