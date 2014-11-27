@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from django.utils.timezone import now
 from core.api.views import *
 from docs.models import Permission, BlobText
 from docs.node import Node
 
 @login_required
+@permission_required('user.profile.is_sitcon_staff')
 def main(request):
 	from docs.models import Folder
 	node = Node(nodeobj=Folder.objects.get(id=0))
@@ -34,7 +36,7 @@ def view(request, nidb64):
 			return redirect_to_login(request.path)
 		else:
 			raise PermissionDenied
-	
+
 	if request.is_ajax():
 		return get(request, node)
 	else:
@@ -149,7 +151,7 @@ def put(request, node):
 
 	elif 'rename' in PUT:
 		if not node.can_edit(): raise PermissionDenied
-		
+
 		name = PUT.get('name')
 		if not name:
 			return bad_request(request, {'error': 'invalid_name'})
@@ -158,7 +160,7 @@ def put(request, node):
 
 	elif 'move' in PUT:
 		if not node.can_edit(): raise PermissionDenied
-		
+
 		try:
 			parent = Node(PUT.get('at'))
 
