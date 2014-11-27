@@ -1,5 +1,12 @@
 from django.db import models
+from django.conf import settings
 from users.models import User
+
+def file_path(instance, filename):
+    return u'{}submission_files/{} - {}'.format(
+            settings.MEDIA_ROOT,
+            instance.submission.title,
+            filename)
 
 # Paper submission
 class Submission(models.Model):
@@ -28,7 +35,7 @@ class Submission(models.Model):
         )
 
     user = models.ForeignKey(User, editable=False, related_name='submissions')
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=40, unique=True)
     type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
     nickname = models.CharField(max_length=100, help_text='nickname')
     bio = models.TextField(max_length=300, help_text='biography')
@@ -45,7 +52,7 @@ class Submission(models.Model):
 
 class SubmissionFile(models.Model):
     submission = models.ForeignKey(Submission, related_name='files')
-    file = models.FileField(upload_to='submission_files')
+    file = models.FileField(upload_to=file_path)
 
     def __unicode__(self):
         return self.file.name

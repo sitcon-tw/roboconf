@@ -23,15 +23,17 @@ def edit(request, submission_id):
 
             sub = submission.save()
 
-            for f in sub.files.all():
-                f.file.delete()
-                f.delete()
+            if request.FILES.getlist('slide'):
 
-            for f in request.FILES.getlist('slide'):
-                form = SubmissionFileForm().save(commit=False)
-                form.submission = sub
-                form.file = f
-                form.save()
+                for f in sub.files.all():
+                    f.file.delete()
+                    f.delete()
+
+                for f in request.FILES.getlist('slide'):
+                    form = SubmissionFileForm().save(commit=False)
+                    form.submission = sub
+                    form.file = f
+                    form.save()
 
             return redirect('submission:list')
         else:
