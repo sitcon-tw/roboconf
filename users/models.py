@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 
+TITLE_SUBMITTER = "submitter"
+
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -27,6 +29,9 @@ class UserProfile(models.Model):
 		import md5
 		hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
 		return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+
+	def is_sitcon_staff(self):
+		return self.title != TITLE_SUBMITTER
 
 class GroupCategory(models.Model):
 	name = models.CharField(max_length=30)
