@@ -12,7 +12,7 @@ def ajax(request):
 
 @login_required
 def list(request, filter=None):
-	if request.user.profile.is_sitcon_staff:
+	if not request.user.profile.is_sitcon_staff:
 		dataset = request.user.assigned_issues.all()
 		dataset = dataset | request.user.created_issues.all()
 	else:
