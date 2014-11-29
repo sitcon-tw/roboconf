@@ -1,17 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.decorators import permission_required
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
 from users.models import *
 from users.utils import *
 
-@permission_required('user.profile.is_sitcon_staff')
 def list(request):
+
 	if not request.user.is_authenticated():
 		from django.contrib.auth.views import redirect_to_login
 		return redirect_to_login(request.path)
+
+	if not request.user.profile.is_sitcon_staff:
+		return redirect('index')
 
 	users = User.objects.all()
 	filters = request.GET.getlist('find')
