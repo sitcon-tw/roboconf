@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
 from django.utils.timezone import now
 from core.api.views import *
 from docs.models import Permission, BlobText
 from docs.node import Node
 
 @login_required
-@permission_required('user.profile.is_sitcon_staff')
 def main(request):
+	if not request.user.profile.is_sitcon_staff:
+		return redirect('index')
+
 	from docs.models import Folder
 	node = Node(nodeobj=Folder.objects.get(id=0))
 	return redirect('docs:view', node.nid())
