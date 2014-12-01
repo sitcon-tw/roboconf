@@ -18,7 +18,7 @@ def create(request):
 
 		if request.POST.get('sender_email'):
 			sender = format_address(request.POST.get('sender_name'), request.POST.get('sender_email'))
-		
+
 		receiver_target = request.POST.get('receiver', '').split(',')
 		if 'staff' in receiver_target:
 			for user in User.objects.exclude(email='', is_active=False):
@@ -37,9 +37,9 @@ def create(request):
 
 		for email, name in receivers.iteritems():
 			message = send_template_mail(
-				sender, 
-				format_address(name, email), 
-				'mail/notification_general.html', 
+				sender,
+				format_address(name, email),
+				'mail/notification_general.html',
 				{
 					'subject': request.POST.get('subject'),
 					'content': request.POST.get('content'),
@@ -49,6 +49,7 @@ def create(request):
 			)
 			messages.append(message)
 
+		# TODO: This will not send messages now
 		Message.objects.bulk_create(messages)
 		context['status'] = 'success'
 
