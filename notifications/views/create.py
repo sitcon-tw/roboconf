@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
-from notifications.models import Message
-from notifications.utils import *
+from notifications.utils import format_address, parse_address, send_template_mail
 
 @permission_required('notifications.add_message')
 def create(request):
@@ -33,10 +32,9 @@ def create(request):
 				else:
 					receivers[entry] = ''
 
-		messages = []
-
+		# TODO: Reimplement batch sending
 		for email, name in receivers.iteritems():
-			message = send_template_mail(
+			send_template_mail(
 				sender,
 				format_address(name, email),
 				'mail/notification_general.html',
@@ -44,13 +42,9 @@ def create(request):
 					'subject': request.POST.get('subject'),
 					'content': request.POST.get('content'),
 					'reply_to': request.POST.get('reply_address'),
-				},
-				autosave=False,
+				}
 			)
-			messages.append(message)
 
-		# TODO: This will not send messages now
-		Message.objects.bulk_create(messages)
 		context['status'] = 'success'
 
 	return render(request, 'notifications/create.html', context)
