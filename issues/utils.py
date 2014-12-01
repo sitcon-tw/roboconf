@@ -1,12 +1,13 @@
 import re
+from django.conf import settings
 from django.db.models import Q
-from notifications.utils import get_mail_setting, send_template_mail, format_address, send_template_sms
+from notifications.utils import format_address, send_template_mail, send_template_sms
 from users.models import User
 
 def send_mail(sender, receiver, template_name, context):
 	context['sender'] = sender
 	context['receiver'] = receiver
-	sender = get_mail_setting('sender', 'issues') % sender.profile.name()
+	sender = settings.ISSUES_FROM_EMAIL % sender.profile.name()
 	receiver = format_address(receiver.profile.name(), receiver.email)
 	return send_template_mail(sender, receiver, template_name, context)
 

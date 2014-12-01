@@ -1,6 +1,5 @@
-from email.utils import formataddr
-from django.conf import settings
 from django.template.loader import render_to_string
+from email.utils import formataddr
 from notifications.models import Message
 
 def to_email_address(nsaddr):
@@ -16,9 +15,6 @@ def parse_address(nsaddr):
 	if nsaddr is None: return ('', '')
 	(name, _, addr) = nsaddr.rpartition(':')
 	return (name, addr)
-
-def get_mail_setting(category, value, default=None):
-	return settings.NOTIFICATIONS[category].get(value, default)
 
 '''
 Create message from a specific set of context.

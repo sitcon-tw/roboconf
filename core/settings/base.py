@@ -106,20 +106,16 @@ LOGGING = {
     }
 }
 
-NOTIFICATIONS = {
-    'sender': {
-        'default': '',
-        'account': '',
-        'issues': '',
-    },
-}
-
 EMAIL_HOST = ''
 EMAIL_PORT = ''
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'Roboconf <roboconf@example.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+NOTIFICATION_FROM_EMAIL = DEFAULT_FROM_EMAIL
+ACCOUNTS_FROM_EMAIL = DEFAULT_FROM_EMAIL
+ISSUES_FROM_EMAIL = DEFAULT_FROM_EMAIL
 
 SMS_API_KEY = ''
 SMS_API_SECRET = ''
