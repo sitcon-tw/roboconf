@@ -1,12 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.utils import timezone
-from issues.models import *
-from issues.utils import send_mail, send_sms
+from issues.models import Issue, IssueHistory, Label
+from issues.utils import send_mail, send_sms, filter_mentions
 from users.utils import sorted_users
-import re
 
 ISSUE_MAGIC_TOKEN = '#!'
 
@@ -112,21 +110,18 @@ def comment(issue, request):
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
 
-		mentions = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', content))
-		for mention in mentions:
-			try:
-				mentionee = User.objects.get(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention))
-			except User.DoesNotExist:
-				continue
-
+		mentions = filter_mentions(content)
+		for mentionee in mentions:
 			issue.starring.add(mentionee)	# Auto watch
 			send_mail(request.user, mentionee, 'mail/issue_mentioned.html', {'issue': issue, 'comment': content })
-			if urgent:
-				send_sms(request.user, mentionee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
 
 		if urgent:
-			if issue.assignee and issue.assignee.profile.phone:
-				send_sms(request.user, issue.assignee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
+			if issue.assignee and issue.assignee not in mentions:
+				mentions.append(issue.assignee)
+
+			for mentionee in mentions:
+				if mentionee.profile.phone:
+					send_sms(request.user, mentionee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
 
 def toggle_state(issue, request):
 	if not request.user.has_perm('issues.toggle_issue'):
