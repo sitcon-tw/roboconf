@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
-from django.db.models import Q
 from django.utils import dateparse
-from issues.models import *
-from issues.utils import send_mail
+from issues.models import Issue, IssueHistory, Label
+from issues.utils import send_mail, filter_mentions
 from users.utils import sorted_users
 import datetime
-import re
 
 @permission_required('issues.add_issue')
 def create(request):
@@ -47,13 +45,8 @@ def create(request):
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
 
-			mentions = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', issue.content))
-			for mention in mentions:
-				try:
-					mentionee = User.objects.get(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention))
-				except User.DoesNotExist:
-					continue
-
+			mentions = filter_mentions(issue.content)
+			for mentionee in mentions:
 				issue.starring.add(mentionee)	# Auto watch
 				send_mail(request.user, mentionee, 'mail/issue_mentioned.html', {'issue': issue, 'new_topic': True})
 
