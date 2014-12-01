@@ -1,9 +1,5 @@
-from django.conf import settings
-from django.core import mail
 from django.db import models
-from django.utils import html, timezone
-from notifications.sms import SmsMessage
-from notifications.utils import to_email_address
+from django.utils import timezone
 
 class Message(models.Model):
 	EMAIL = '@'
@@ -30,6 +26,11 @@ class Message(models.Model):
 
 	def send(self, **kwargs):
 		if self.method == Message.EMAIL:
+			from django.conf import settings
+			from django.core import mail
+			from django.utils import html
+			from notifications.utils import to_email_address
+
 			email = mail.EmailMultiAlternatives(self.subject, connection=kwargs.get('connection'))
 			email.from_email = to_email_address(self.sender or settings.NOTIFICATION_FROM_EMAIL)
 			email.to = (to_email_address(self.receiver),)
@@ -45,6 +46,8 @@ class Message(models.Model):
 				super(Message, self).save()
 
 		elif self.method == Message.SMS:
+			from notifications.sms import SmsMessage
+			
 			sms = SmsMessage()
 			sms.to = self.receiver
 			sms.text = self.content
