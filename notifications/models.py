@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from notifications.sms import SmsMessage
 
 class Message(models.Model):
 	EMAIL = '@'
@@ -10,7 +11,7 @@ class Message(models.Model):
 	)
 
 	method = models.CharField(max_length=1, choices=METHOD_CHOICES, default=EMAIL)
-	sender = models.CharField(max_length=160, blank=True, default='')	# In sender & receiver field, 
+	sender = models.CharField(max_length=160, blank=True, default='')	# In sender & receiver field,
 	receiver = models.CharField(max_length=160)		# use ':' to separate between name and address/number
 	subject = models.CharField(max_length=128)
 	content = models.TextField()
@@ -19,3 +20,19 @@ class Message(models.Model):
 
 	def __unicode__(self):
 		return "%s[%s] %s" % (self.method, self.receiver, self.subject)
+
+	def save(self, *args, **kwargs):
+		super(Message, self).save(*args, **kwargs)
+		self.send()
+
+	def send(self):
+		if self.method == Message.SMS:
+			sms = SmsMessage()
+			sms.to = self.receiver
+			sms.text = self.content
+
+			if self.sender:
+				sms.from_sender = self.sender
+
+			self.is_sent = sms.send()
+			super(Message, self).save()
