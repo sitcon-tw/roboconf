@@ -1,6 +1,10 @@
+from email.utils import formataddr
 from django.conf import settings
 from django.template.loader import render_to_string
 from notifications.models import Message
+
+def to_email_address(nsaddr):
+	return formataddr(parse_address(nsaddr))
 
 def format_address(name, addr):
 	return '%s:%s' % (
