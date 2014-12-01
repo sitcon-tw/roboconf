@@ -10,7 +10,7 @@ class Command(NoArgsCommand):
 
 	def handle_noargs(self, **options):
 		time_delta = settings.ISSUE_EXPIRE_TIMEDELTA
-		time_range = (timezone.now() - time_delta, timezone.now() + time_delta)
+		time_range = (timezone.now() - time_delta, timezone.now())
 
 		issues = Issue.objects.filter(is_open=True, due_time__range=time_range)
 		for issue in issues:
