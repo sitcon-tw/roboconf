@@ -8,9 +8,6 @@ from docs.node import Node
 
 @login_required
 def main(request):
-	if not request.user.profile.is_sitcon_staff:
-		return redirect('index')
-
 	from docs.models import Folder
 	node = Node(nodeobj=Folder.objects.get(id=0))
 	return redirect('docs:view', node.nid())

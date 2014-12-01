@@ -1,24 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
-from users.models import *
-from users.utils import *
+from users.utils import sorted_users, sorted_categories
 
 def list(request):
-
 	if not request.user.is_authenticated():
 		from django.contrib.auth.views import redirect_to_login
 		return redirect_to_login(request.path)
-
-	if not request.user.profile.is_sitcon_staff:
+	elif not request.user.profile.is_authorized():
 		return redirect('index')
 
 	users = User.objects.all()
 	filters = request.GET.getlist('find')
 	groups = request.GET.get('g')
-	trusted = is_trusted_user(request.user)
+	trusted = request.user.profile.is_trusted()
 
 	if 'disabled' in filters and trusted:
 		users = users.filter(is_active=False)
@@ -71,8 +68,8 @@ def ajax(request):
 def contacts(request):
 	return render(request, 'users/contacts.html', {
 		'users': sorted_users(User.objects.filter(is_active=True)),
-		'authorized': is_authorized_user(request.user),
-		'show_details': request.GET.get('details') and is_trusted_user(request.user),
+		'authorized': request.user.profile.is_authorized(),
+		'show_details': request.GET.get('details') and request.user.profile.is_trusted(),
 	})
 
 #@login_required
@@ -89,8 +86,8 @@ def export(request, format=None):
 		raise Http404
 
 	users = []
-	authorized = is_authorized_user(request.user)
-	trusted = is_trusted_user(request.user)
+	authorized = request.user.profile.is_authorized()
+	trusted = request.user.profile.is_trusted()
 	user_source = User.objects.filter(is_active=True) if not trusted else User.objects.all()
 
 	for user in sorted_users(user_source):

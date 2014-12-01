@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import *
@@ -12,7 +11,7 @@ def ajax(request):
 
 @login_required
 def list(request, filter=None):
-	if not request.user.profile.is_sitcon_staff:
+	if not request.user.profile.is_authorized():
 		dataset = request.user.assigned_issues.all()
 		dataset = dataset | request.user.created_issues.all()
 	else:

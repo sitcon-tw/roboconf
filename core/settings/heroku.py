@@ -24,6 +24,8 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 DEFAULT_NOTIFICATION_SENDER = u'SITCON 行政系統:notifications@staff.sitcon.org'
 DEFAULT_ACCOUNTS_SENDER =  u'SITCON 行政系統:accounts@staff.sitcon.org'
 DEFAULT_ISSUE_SENDER = u'SITCON 行政系統:issues@staff.sitcon.org'
+
+SUBMITTER_ACCOUNTS_SENDER = u'SITCON:accounts@staff.sitcon.org'
 USER_ISSUE_SENDER = '%s (SITCON):issues@staff.sitcon.org'
 
 SMS_API_KEY = os.environ.get('SMS_API_KEY')

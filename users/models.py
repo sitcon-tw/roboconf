@@ -1,10 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 
-TITLE_SUBMITTER = "submitter"
-
-# Create your models here.
-
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile')
 	display_name = models.CharField(max_length=16)
@@ -30,8 +26,12 @@ class UserProfile(models.Model):
 		hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
 		return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
 
-	def is_sitcon_staff(self):
-		return self.title != TITLE_SUBMITTER
+	def is_authorized(self):
+		return self.user.groups.filter(id=11).exists()
+
+	def is_trusted(self):
+		return self.is_authorized() and self.user.has_perm('auth.change_user')
+
 
 class GroupCategory(models.Model):
 	name = models.CharField(max_length=30)
