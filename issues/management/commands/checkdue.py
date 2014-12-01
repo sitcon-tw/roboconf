@@ -3,7 +3,7 @@ from django.core.management.base import NoArgsCommand
 from django.utils import timezone
 from issues.models import Issue
 from issues.utils import is_issue_urgent
-from notifications.utils import format_address, send_template_email, send_template_sms
+from notifications.utils import format_address, send_template_mail, send_template_sms
 
 class Command(NoArgsCommand):
 	help = "Checks and sends SMS from notification queue."
@@ -15,7 +15,7 @@ class Command(NoArgsCommand):
 		issues = Issue.objects.filter(is_open=True, due_time__range=time_range)
 		for issue in issues:
 			for watcher in issue.starring.all():
-				send_template_email(
+				send_template_mail(
 					settings.DEFAULT_ISSUE_SENDER,
 					format_address(watcher.profile.name(), watcher.email),
 					'mail/issue_expired.html',
