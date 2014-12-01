@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.template.loader import render_to_string
-from notifications.models import *
+from notifications.models import Message
 
 def format_address(name, addr):
 	return '%s:%s' % (
-		unicode(name if name is not None else '').strip().replace(':', '-'), 
+		unicode(name if name is not None else '').strip().replace(':', '-'),
 		unicode(addr if addr is not None else '').strip()
 	)
 
@@ -32,7 +32,8 @@ def send_template_mail(sender, receiver, template_name, context, autosave=True):
 	subject, _, content = raw_content.partition('\n=====\n')
 	message.subject = subject
 	message.content = content
-	if autosave: message.save()
+	if autosave:
+		message.save()
 	return message
 
 def send_template_sms(sender, receiver, template_name, context, autosave=True):
@@ -44,8 +45,9 @@ def send_template_sms(sender, receiver, template_name, context, autosave=True):
 	context['sender_address'] = sender
 	context['receiver_address'] = receiver
 	context['site_url'] = 'http://staff.sitcon.org'
-	
+
 	content = render_to_string(template_name, context).strip()
 	message.content = content
-	if autosave: message.save()
+	if autosave:
+		message.save()
 	return message
