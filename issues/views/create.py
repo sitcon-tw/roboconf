@@ -46,9 +46,14 @@ def create(request):
 			issue.starring.add(request.user)	# Auto watch
 
 			mentions = filter_mentions(issue.content)
-			for mentionee in mentions:
-				issue.starring.add(mentionee)	# Auto watch
-				send_mail(request.user, mentionee, 'mail/issue_mentioned.html', {'issue': issue, 'new_topic': True})
+			users = list(User.objects.filter(is_active=True, groups__id=11))
+			for user in users:
+				if user == request.user:
+					continue
+				elif user in mentions:
+					issue.starring.add(user)	# Auto watch
+
+				send_mail(request.user, user, 'mail/issue_created.html', {'issue': issue})
 
 			if assignee:
 				IssueHistory.objects.create(issue=issue, user=request.user,

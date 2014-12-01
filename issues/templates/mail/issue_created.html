@@ -1,12 +1,8 @@
 {% load markdown %}
-{{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
+[#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="margin: 0.5em auto;">
-{% if comment %}
-	{{ comment|markdown }}
-{% else %}
 	{{ issue.content|markdown }}
-{% endif %}
 </div>
 <hr/>
 <p style="font-size: 0.8em;">在 SITCON 行政系統<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
