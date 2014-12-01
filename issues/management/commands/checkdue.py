@@ -8,7 +8,10 @@ class Command(NoArgsCommand):
 	help = "Checks and sends SMS from notification queue."
 
 	def handle_noargs(self, **options):
-		issues = Issue.objects.filter(is_open=True, due_time__gte=timezone.now())
+		time_delta = settings.ISSUE_EXPIRE_TIMEDELTA
+		time_range = (timezone.now() - time_delta, timezone.now() + time_delta)
+		
+		issues = Issue.objects.filter(is_open=True, due_time__range=time_range)
 		for issue in issues:
 			for watcher in issue.starring.all():
 				send_template_email(
