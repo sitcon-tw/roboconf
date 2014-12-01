@@ -21,9 +21,10 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = u'"SITCON 行政系統" <admin@staff.sitcon.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-NOTIFICATION_FROM_EMAIL = u'SITCON 行政系統:notifications@staff.sitcon.org'
-ACCOUNTS_FROM_EMAIL =  u'SITCON 行政系統:accounts@staff.sitcon.org'
-ISSUES_FROM_EMAIL = '%s (SITCON):issues@staff.sitcon.org'
+DEFAULT_NOTIFICATION_SENDER = u'SITCON 行政系統:notifications@staff.sitcon.org'
+DEFAULT_ACCOUNTS_SENDER =  u'SITCON 行政系統:accounts@staff.sitcon.org'
+DEFAULT_ISSUE_SENDER = u'SITCON 行政系統:issues@staff.sitcon.org'
+USER_ISSUE_SENDER = '%s (SITCON):issues@staff.sitcon.org'
 
 SMS_API_KEY = os.environ.get('SMS_API_KEY')
 SMS_API_SECRET = os.environ.get('SMS_API_SECRET')
