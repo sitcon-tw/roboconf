@@ -1,0 +1,2 @@
+{% load markdown %}
+SITCON #{{ issue.id }}「{{ issue.title|truncatechars:50 }}」已逾期，請即處理。
