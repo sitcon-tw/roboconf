@@ -128,3 +128,5 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SUBMISSION_START = datetime.datetime(2014, 11, 1, 0, 0, 0)
 SUBMISSION_END = datetime.datetime(2015, 2, 1, 0, 0, 0)
 SUBMISSION_RULE_DOCID = "MUY"
+
+ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=6)
