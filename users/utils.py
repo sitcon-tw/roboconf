@@ -26,9 +26,3 @@ def get_group_sorting_key(category):
 
 def sorted_categories():
 	return { category : sorted(category.groups.all(), key=get_group_sorting_key) for category in GroupCategory.objects.all() }
-
-def is_authorized_user(user):
-	return user.groups.filter(id=11).exists()
-
-def is_trusted_user(user):
-	return is_authorized_user(user) and user.has_perm('auth.change_user')

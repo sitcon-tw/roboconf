@@ -1,9 +1,11 @@
-from django.shortcuts import render
-from django.views.decorators.debug import sensitive_variables
+from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
-from users.models import *
-from users.utils import *
+from django.shortcuts import render
+from django.views.decorators.debug import sensitive_variables
+from notifications.utils import send_template_mail, format_address
+from users.models import UserProfile
+from users.utils import generate_password, sorted_categories
 
 @sensitive_variables('password')
 @permission_required('auth.add_user')
@@ -70,8 +72,6 @@ def create(request):
 					'groups': [g.name for g in user.groups.all()],
 				}
 
-				from notifications.utils import send_template_mail, format_address
-
 				sender_address = format_address(request.user.profile.name(), request.user.email)
 				receiver_address = format_address(user.profile.name(), user.email)
 				send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
@@ -127,7 +127,7 @@ def submitter_create(request):
 			user.save()
 
 			profile = UserProfile(user=user)
-			profile.title = TITLE_SUBMITTER
+			profile.title = u'\u6295\u7a3f\u8b1b\u8005'
 			profile.display_name = request.POST.get('display_name')
 			profile.school = request.POST.get('school')
 			profile.grade = request.POST.get('grade')
@@ -135,7 +135,7 @@ def submitter_create(request):
 			profile.comment = request.POST.get('comment')
 			profile.save()
 
-			user.save()
+			user.groups.add(Group.objects.get(id=16))
 
 			context = {
 				'sender': request.user,
@@ -143,10 +143,8 @@ def submitter_create(request):
 				'password': password,
 			}
 
-			from notifications.utils import send_template_mail, format_address
-
-			sender_address = format_address('SITCON', 'sitcon@sitcon.com')
-			receiver_address = format_address(user.username, user.email)
+			sender_address = settings.SUBMITTER_ACCOUNTS_SENDER
+			receiver_address = format_address(user.profile.display_name, user.email)
 			send_template_mail(sender_address, receiver_address, 'mail/submitter_welcome.html', context)
 
 			status = 'success'
@@ -154,7 +152,6 @@ def submitter_create(request):
 			status = 'error'
 
 	return render(request, 'users/submitter_create.html', {
-		'categories': sorted_categories(),
 		'errors': errors,
 		'status': status,
 	})
