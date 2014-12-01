@@ -12,7 +12,7 @@ TEMPLATE_DEBUG = False
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-ALLOWED_HOSTS = ['staff.sitcon.org', 'sitcon-staff.herokuapp.com']
+ALLOWED_HOSTS = ['staff.sitcon.org']
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
@@ -23,7 +23,7 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 NOTIFICATION_FROM_EMAIL = u'SITCON 行政系統:notifications@staff.sitcon.org'
 ACCOUNTS_FROM_EMAIL =  u'SITCON 行政系統:accounts@staff.sitcon.org'
-ISSUES_FROM_EMAIL = '%s:issues@staff.sitcon.org'
+ISSUES_FROM_EMAIL = '%s (SITCON):issues@staff.sitcon.org'
 
 SMS_API_KEY = os.environ.get('SMS_API_KEY')
 SMS_API_SECRET = os.environ.get('SMS_API_SECRET')
