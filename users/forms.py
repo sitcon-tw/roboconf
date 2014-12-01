@@ -1,8 +1,9 @@
-from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
-from notifications.utils import get_mail_setting, format_address, send_template_mail
+from django.contrib.auth.models import User
+from notifications.utils import format_address, send_template_mail
 from users.token import generate_uid, generate_token
 
 class PasswordResetForm(DjangoPasswordResetForm):
@@ -28,6 +29,6 @@ class PasswordResetForm(DjangoPasswordResetForm):
 				'reset_link': reverse('users:reset_password_confirm', args=(generate_uid(user), generate_token(user))),
 			}
 
-			sender_address = get_mail_setting('sender', 'account')
+			sender_address = settings.ACCOUNTS_FROM_EMAIL
 			receiver_address = format_address(user.profile.name(), user.email)
 			send_template_mail(sender_address, receiver_address, 'mail/user_reset_password.html', context)
