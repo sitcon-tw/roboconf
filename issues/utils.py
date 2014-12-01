@@ -26,3 +26,7 @@ def filter_mentions(content):
 		except User.DoesNotExist:
 			continue
 	return mentions
+
+def is_issue_urgent(issue):
+	# Label 1 stands for urgent in current staff system
+	return issue.labels.filter(id=1).exists()
