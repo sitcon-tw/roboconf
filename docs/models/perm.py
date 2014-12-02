@@ -20,8 +20,8 @@ class Permission(models.Model):
 	PER_USER = 'U'
 
 	TYPE_CHOICES = (
-			(VIEW, 'View document'), 
-			(COMMENT, 'Comment on document'), 
+			(VIEW, 'View document'),
+			(COMMENT, 'Comment on document'),
 			(EDIT, 'Edit document'),
 		)
 
@@ -79,7 +79,7 @@ class Permission(models.Model):
 
 	def __unicode__(self):
 		return '%s:%s %s%s %s' % (
-				self.__key__(), 
+				self.__key__(),
 				Permission.EFFECT_NAMES.get(self.effect, '?'),
 				Permission.SCOPE_NAMES.get(self.scope, '?'),
 				(' %s' % self.target) if self.target else '',

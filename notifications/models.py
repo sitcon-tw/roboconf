@@ -47,7 +47,7 @@ class Message(models.Model):
 
 		elif self.method == Message.SMS:
 			from notifications.sms import SmsMessage
-			
+
 			sms = SmsMessage()
 			sms.to = self.receiver
 			sms.text = self.content

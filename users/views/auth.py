@@ -16,7 +16,7 @@ def login(request):
 		if user is not None:
 			if user.is_active:
 				auth.login(request, user)
-				
+
 				# Do redirection if provided
 				url = request.POST.get('next')
 				url = reverse('index') if (not url) or ('//' in url) else url
@@ -34,4 +34,3 @@ def login(request):
 def logout(request):
 	auth.logout(request)
 	return redirect('users:login')
-	

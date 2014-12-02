@@ -23,7 +23,7 @@ class Issue(models.Model):
 			('toggle_issue', 'Close or reopen issues'),
 			('comment_issue', 'Comment on issues'),
 		)
-		
+
 	title = models.CharField(max_length=128)
 	creator = models.ForeignKey(User, editable=False, related_name='created_issues')
 	creation_time = models.DateTimeField(editable=False, default=timezone.now)
@@ -48,7 +48,7 @@ class Issue(models.Model):
 class IssueHistory(models.Model):
 	class Meta:
 		ordering = ['timestamp']
-		
+
 	COMMENT = '.'
 	CLOSE = 'C'
 	REOPEN = 'R'

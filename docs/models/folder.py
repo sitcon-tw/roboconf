@@ -14,7 +14,7 @@ class Folder(models.Model):
 	parent = models.ForeignKey('self', null=True, related_name='folders')
 	last_modified = models.DateTimeField(editable=False, default=now)
 	permissions = models.ManyToManyField('Permission', related_name='folderperm+')
-	
+
 	# == Version control ==
 	is_archived = models.BooleanField(default=False)
 	starring = models.ManyToManyField(User, related_name='starred_folders')
