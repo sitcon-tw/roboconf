@@ -1,8 +1,8 @@
 from models import Permission
 
 PRIORITY = (
-		Permission.VIEW, 
-		Permission.COMMENT, 
+		Permission.VIEW,
+		Permission.COMMENT,
 		Permission.EDIT,
 	)
 PRIORITY_COUNT = len(PRIORITY)

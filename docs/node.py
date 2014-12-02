@@ -1,7 +1,7 @@
 from docs.models import *
 
 class Node(object):
-	
+
 	def __init__(self, nid=None, nodeobj=None, user=None):
 		if not nodeobj:
 			if not nid:

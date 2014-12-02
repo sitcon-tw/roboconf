@@ -37,7 +37,7 @@ def reset_password(request):
 			form = PasswordResetForm({'email': user.email})
 		except User.DoesNotExist:
 			pass
-	
+
 	if not status == 'invalid_token':
 		status = None
 

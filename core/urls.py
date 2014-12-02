@@ -15,7 +15,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'core.views.index', name='index'),
     url(r'^favicon.ico$', redirect_static('img/SITCON.ico'), name='favicon'),
-    url(r'^users$', 'users.views.default'), 
+    url(r'^users$', 'users.views.default'),
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^docs/', include('docs.urls', namespace='docs')),
     url(r'^issues/', include('issues.urls', namespace='issues')),
@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^403$', 'django.views.defaults.permission_denied'),
     url(r'^404$', 'django.views.defaults.page_not_found'),
     url(r'^500$', 'django.views.defaults.server_error'),
-    
+
     # Uncomment the next line to enable the admin:
     url(r'^backend/', include(admin.site.urls)),
 )

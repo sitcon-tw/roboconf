@@ -14,7 +14,7 @@ def api_endpoint(methods=None, public=False):
 		@wraps(f, assigned=available_attrs(f))
 		def inner(request, *args, **kwargs):
 			response = f(request, *args, **kwargs)
-			
+
 			if 'HTTP_ORIGIN' in request.META:
 				origin = request.META['HTTP_ORIGIN']
 

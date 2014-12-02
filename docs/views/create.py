@@ -25,14 +25,14 @@ def create(request):
 			from django.core.exceptions import PermissionDenied
 			raise PermissionDenied
 		# Warning: removed creation restrictions on <ALLOW * EDIT> folder. Careful.
-		
+
 		if parent.is_archived():
 			return bad_request(request, {'error': 'node_archived'})
 
 		if kind == 'file':
 			r = create_revision(request)
 			if not r:
-				return bad_request(request, {'error': 'content_required'})		
+				return bad_request(request, {'error': 'content_required'})
 			f = File()
 			f.current_revision = r
 		elif kind == 'folder':
@@ -98,5 +98,5 @@ def create_revision(request):
 		r.save()
 
 		return r
-	
+
 	return None

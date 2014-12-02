@@ -11,9 +11,9 @@ def profile(request, username):
 	if request.is_ajax():
 		if user.is_active:
 			return render_json(request, {
-				'status': 'success', 
+				'status': 'success',
 				'user': {
-					'id': user.username, 
+					'id': user.username,
 					'name': user.profile.name(),
 					'title': user.profile.title,
 					'avatar': user.profile.avatar(),
