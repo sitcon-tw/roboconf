@@ -1,16 +1,14 @@
 {% load markdown %}
 {{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
 =====
-{% if comment %}
 <div style="margin: 0.5em auto;">
 {% if comment %}
 	{{ comment|markdown }}
-{% else %}
+{% elif issue.is_open %}
 	對 <a href="{{ site_url }}{% url 'issues:detail' issue.id %}">#{{ issue.id }}</a> 提出復議。
 {% else %}
 	已將 <a href="{{ site_url }}{% url 'issues:detail' issue.id %}">#{{ issue.id }}</a> 結案。
 {% endif %}
 </div>
-{% endif %}
 <hr/>
 <p style="font-size: 0.8em;">在 SITCON 行政系統<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
