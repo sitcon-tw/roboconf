@@ -1,3 +1,4 @@
+import notifications.utils as utils
 from django.db import models
 from django.utils import timezone
 
@@ -29,11 +30,10 @@ class Message(models.Model):
 			from django.conf import settings
 			from django.core import mail
 			from django.utils import html
-			from notifications.utils import to_email_address
 
 			email = mail.EmailMultiAlternatives(self.subject, connection=kwargs.get('connection'))
-			email.from_email = to_email_address(self.sender or settings.DEFAULT_NOTIFICATION_SENDER)
-			email.to = (to_email_address(self.receiver),)
+			email.from_email = utils.to_email_address(self.sender or settings.DEFAULT_NOTIFICATION_SENDER)
+			email.to = (utils.to_email_address(self.receiver),)
 			email.body = html.strip_tags(self.content)
 			email.attach_alternative(self.content, 'text/html')
 
