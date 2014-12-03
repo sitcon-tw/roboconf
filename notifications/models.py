@@ -26,22 +26,23 @@ class Message(models.Model):
 
 	def send(self, **kwargs):
 		if self.method == Message.EMAIL:
+			import traceback
+			import notifications.utils as utils
 			from django.conf import settings
 			from django.core import mail
 			from django.utils import html
-			import notifications.utils as utils
 
 			email = mail.EmailMultiAlternatives(self.subject, connection=kwargs.get('connection'))
 			email.from_email = utils.to_email_address(self.sender or settings.DEFAULT_NOTIFICATION_SENDER)
-			email.to = (utils.to_email_address(self.receiver),)
+			email.to = [utils.to_email_address(self.receiver)]
 			email.body = html.strip_tags(self.content)
 			email.attach_alternative(self.content, 'text/html')
 
 			try:
 				email.send()
-			except Exception as e:
+			except:
 				print('Failed to send email')
-				raise e
+				traceback.print_exc()
 			else:
 				self.is_sent = True
 				super(Message, self).save()
