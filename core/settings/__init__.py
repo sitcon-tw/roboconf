@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 
-if "HEROKU" in os.environ:
+if 'HEROKU' in os.environ:
 	from .heroku import *
-else:
+elif 'DEBUG' in os.environ:
 	from .sqlite import *
+else:
+	from .postgres import *

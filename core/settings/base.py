@@ -7,15 +7,15 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Poren Chiang', 'ren.chiang@gmail.com'),
+    ('SITCON Administrators', 'sitcon-admin@googlegroups.com'),
 )
 
 MANAGERS = ADMINS
 
 PROJECT_PATH = '/'.join(os.path.dirname(os.path.abspath(__file__)).split('/')[0:-2])
 
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(PROJECT_PATH, '/media/')
+MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'staticfiles')
 STATIC_URL = '/static/'
@@ -127,8 +127,8 @@ DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-SUBMISSION_START = datetime.datetime(2014, 11, 1, 0, 0, 0)
-SUBMISSION_END = datetime.datetime(2015, 2, 1, 0, 0, 0)
-SUBMISSION_RULE_DOCID = "MUY"
+SUBMISSION_START = datetime.datetime.min
+SUBMISSION_END = datetime.datetime.max
+SUBMISSION_RULE_DOCID = ''
 
 ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
