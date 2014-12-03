@@ -91,6 +91,11 @@ LOGGING = {
         }
     },
     'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'filename': '/var/log/roboconf.log',
+            'class': 'logging.FileHandler'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -98,6 +103,11 @@ LOGGING = {
         }
     },
     'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
