@@ -39,8 +39,9 @@ class Message(models.Model):
 
 			try:
 				email.send()
-			except:
+			except Exception as e:
 				print('Failed to send email')
+				raise e
 			else:
 				self.is_sent = True
 				super(Message, self).save()
