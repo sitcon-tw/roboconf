@@ -7,7 +7,7 @@ from users.models import User
 def send_mail(sender, receiver, template_name, context):
 	context['sender'] = sender
 	context['receiver'] = receiver
-	sender = settings.USER_ISSUE_SENDER % sender.profile.name()
+	sender = settings.USER_ISSUE_SENDER.format(sender.profile.name())
 	receiver = format_address(receiver.profile.name(), receiver.email)
 	return send_template_mail(sender, receiver, template_name, context)
 
