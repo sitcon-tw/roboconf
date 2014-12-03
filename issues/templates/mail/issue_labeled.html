@@ -2,14 +2,14 @@
 Re: [#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="margin: 0.5em auto;">
-	{% if old_labels %}
+{% if old_labels %}
 	移除標籤
 	{% for label in old_labels %}<b>「{{ label.name }}」</b>{{ forloop.last|yesno:',、' }}{% endfor %}
-	{% endif %}
-	{% if new_labels %}
+{% endif %}
+{% if new_labels %}
 	{{ old_labels|yesno:'，同時,' }}套用標籤
 	{% for label in new_labels %}<b>「{{ label.name }}」</b>{{ forloop.last|yesno:',、' }}{% endfor %}。
-	{% endif %}
+{% endif %}
 </div>
 <hr/>
 <p style="font-size: 0.8em;">在 SITCON 行政系統<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
