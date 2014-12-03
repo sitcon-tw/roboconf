@@ -11,7 +11,7 @@ DEFAULT_ACCOUNTS_SENDER =  u'SITCON 行政系統:accounts@staff.sitcon.org'
 DEFAULT_ISSUE_SENDER = u'SITCON 行政系統:issues@staff.sitcon.org'
 
 SUBMITTER_ACCOUNTS_SENDER = u'SITCON:accounts@staff.sitcon.org'
-USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
+USER_ISSUE_SENDER = u'{0} (SITCON):issues@staff.sitcon.org'
 
 DEFAULT_SMS_SENDER = 'SITCON'
 
