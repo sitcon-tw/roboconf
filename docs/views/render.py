@@ -1,9 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render as render_request
 from django.utils.timezone import now
-from docs.models import Permission, BlobText, Permalink
+from django.views.decorators.clickjacking import xframe_options_exempt
+from docs.models import BlobText, Permalink
 from docs.node import Node
 
+@xframe_options_exempt
 def render(request, identifier):
 	try:
 		node = Node(identifier, user=request.user)
