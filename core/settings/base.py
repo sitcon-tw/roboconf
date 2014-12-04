@@ -12,6 +12,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+SITE_URL = ''
 PROJECT_PATH = '/'.join(os.path.dirname(os.path.abspath(__file__)).split('/')[0:-2])
 
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
@@ -44,6 +45,17 @@ USE_L10N = True
 USE_TZ = True
 
 SECRET_KEY = 'roboconf'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+    'core.context_processors.site_url',
+)
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
