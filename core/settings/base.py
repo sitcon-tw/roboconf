@@ -14,7 +14,7 @@ MANAGERS = ADMINS
 
 PROJECT_PATH = '/'.join(os.path.dirname(os.path.abspath(__file__)).split('/')[0:-2])
 
-MEDIA_ROOT = os.path.join(PROJECT_PATH, '/media/')
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'staticfiles')
@@ -103,14 +103,9 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['file', 'mail_admins'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
