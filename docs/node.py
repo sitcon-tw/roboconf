@@ -1,5 +1,6 @@
 import re
 from docs.models import *
+from docs.perms import *
 from django.utils.http import urlsafe_base64_decode
 
 class Node(object):
@@ -15,7 +16,7 @@ class Node(object):
 
 		elif not nid:
 			raise TypeError('Must either specify NID or provide model instance')
-		
+
 		else:
 			try:
 				nid_str = urlsafe_base64_decode(nid)
@@ -48,7 +49,6 @@ class Node(object):
 		try:
 			return self.__cached_perms
 		except AttributeError:
-			from docs.perms import *
 			max_perm = PRIORITY_COUNT - 1
 			cur_perm = -1
 
