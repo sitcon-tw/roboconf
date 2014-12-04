@@ -2,6 +2,7 @@
 import datetime
 
 ALLOWED_HOSTS = ['staff.sitcon.org']
+SITE_URL = 'https://staff.sitcon.org'
 
 DEFAULT_FROM_EMAIL = u'"SITCON 行政系統" <admin@staff.sitcon.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
