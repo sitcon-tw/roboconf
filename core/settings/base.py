@@ -111,10 +111,10 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
-        }
+        },
         'django.request': {
-            'handlers': ['file', 'mail_admins'],
-            'level': 'DEBUG',
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
             'propagate': True,
         },
         'django.security.DisallowedHost': {
