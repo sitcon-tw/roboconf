@@ -1,4 +1,4 @@
-from fabric.api import cd, env, local, prefix, run
+from fabric.api import cd, env, local, prefix, run, sudo
 
 deploy_path = '/srv/http/staff.sitcon.org'
 
@@ -56,3 +56,6 @@ def deploy(branch='master'):
 			run('git stash')
 			run('git pull --rebase')
 			run('git stash pop')
+
+def restart():
+	sudo('apachectl -k restart')

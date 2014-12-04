@@ -12,7 +12,7 @@ DATABASES = {
         'NAME': os.environ.get('DATABASE_NAME', 'roboconf'),
         'USER': os.environ.get('DATABASE_USER', 'postgres'),
         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
