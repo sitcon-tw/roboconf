@@ -1,4 +1,10 @@
-from fabric.api import local
+from fabric.api import cd, env, local, prefix, run
+
+deploy_path = '/srv/http/staff.sitcon.org'
+
+env.user = env.user.lower()
+env.hosts = ['staff.sitcon.org']
+env.roledefs['heroku'] = ['sitcon-staff.herokuapps.com']
 
 class Compass:
 	require = ['zurb-foundation']
@@ -21,15 +27,32 @@ def compass(action):
 		local("compass " + action)
 
 def shell():
-	local('heroku run ./manage.py shell')
+	if 'heroku' in env.roles:
+		local('heroku run ./manage.py shell')
+	else:
+		with cd(deploy_path), prefix('source venv/bin/activate'):
+			env.output_prefix = False
+			run
+			run('./manage.py shell')
 
 def log():
-	local('heroku logs')
+	if 'heroku' in env.roles:
+		local('heroku logs')
+	else:
+		env.output_prefix = False
+		run('cat /var/log/roboconf.log')
 
 def dev():
 	local('./manage.py runserver')
 
 def deploy(branch='master'):
-	local('git push heroku %s:master' % branch)
+	if 'heroku' in env.roles:
+		local('git push heroku %s:master' % branch)
+	else:
+		local('git push origin %s' % branch)
+
 	if branch == 'master':
-		local('git push origin master')
+		with cd(deploy_path):
+			run('git stash')
+			run('git pull --rebase')
+			run('git stash pop')
