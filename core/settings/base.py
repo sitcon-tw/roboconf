@@ -130,7 +130,7 @@ LOGGING = {
             'propagate': True,
         },
         'django.security.DisallowedHost': {
-            'handlers': ['null'],
+            'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': False,
         }
