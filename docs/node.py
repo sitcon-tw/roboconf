@@ -1,32 +1,41 @@
+import re
 from docs.models import *
+from django.utils.http import urlsafe_base64_decode
 
 class Node(object):
 
 	def __init__(self, nid=None, nodeobj=None, user=None):
-		if not nodeobj:
-			if not nid:
-				raise TypeError('Must either specify NID or provide model instance')
-			else:
-				from django.utils.http import urlsafe_base64_decode
-				nid_str = urlsafe_base64_decode(nid)
-				if nid_str[-1:] == 'F':
-					model = File
-					self.__type = File
-				elif nid_str[-1:] == 'D':
-					model = Folder
-					self.__type = Folder
-				else:
-					from django.core.exceptions import ObjectDoesNotExist
-					raise ObjectDoesNotExist
-
-				nodeobj = model.objects.get(id=nid_str[:-1])
-		else:
+		if nodeobj:
 			if isinstance(nodeobj, File):
 				self.__type = File
 			elif isinstance(nodeobj, Folder):
 				self.__type = Folder
 			else:
 				raise TypeError('Inappropriate model type')
+
+		elif not nid:
+			raise TypeError('Must either specify NID or provide model instance')
+		
+		else:
+			try:
+				nid_str = urlsafe_base64_decode(nid)
+
+				if re.match('\d+[FD]', nid_str):
+					node_type = nid_str[-1:]
+					if node_type == 'F':
+						model = File
+						self.__type = File
+					elif node_type == 'D':
+						model = Folder
+						self.__type = Folder
+
+					nodeobj = model.objects.get(id=nid_str[:-1])
+
+			except TypeError: pass
+
+			if not nodeobj:
+				from django.core.exceptions import ObjectDoesNotExist
+				raise ObjectDoesNotExist
 
 		self.model = nodeobj
 		self.__user = user
