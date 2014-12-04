@@ -91,6 +91,10 @@ LOGGING = {
         }
     },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler'
+        },
         'file': {
             'level': 'DEBUG',
             'filename': '/var/log/roboconf.log',
@@ -103,11 +107,21 @@ LOGGING = {
         }
     },
     'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
         'django.request': {
             'handlers': ['file', 'mail_admins'],
             'level': 'DEBUG',
             'propagate': True,
         },
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'level': 'DEBUG',
+            'propagate': False,
+        }
     }
 }
 
