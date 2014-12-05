@@ -16,8 +16,8 @@ USER_ISSUE_SENDER = u'{0} (SITCON):issues@staff.sitcon.org'
 
 DEFAULT_SMS_SENDER = 'SITCON'
 
-SUBMISSION_START = datetime.datetime(2014, 11, 1, 0, 0, 0)
-SUBMISSION_END = datetime.datetime(2015, 2, 1, 0, 0, 0)
+SUBMISSION_START = datetime.datetime(2014, 12, 5, 12, 0, 0)
+SUBMISSION_END = datetime.datetime(2015, 1, 31, 6, 38, 0)
 SUBMISSION_RULE_DOCID = 'MUY'
 
 ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
