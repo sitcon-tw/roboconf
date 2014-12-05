@@ -9,9 +9,6 @@
 </div>
 {% endif %}
 <div class="row">
-	<div class="large-1 avatars columns">
-		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表" data-tooltip></a>
-	</div>
 	<div class="large-8 columns">
 		<form action="{% url 'users:submitter_create' %}" method="POST" enctype="multipart/form-data" class="profile-main">
 		{% csrf_token %}
@@ -22,6 +19,7 @@
 			</div>
 			<div class="row">
 				<div class="small-12 columns {% if 'username' in errors %}error{% endif %}">
+					<label for="username">帳號，僅用作投稿系統登入使用</label>
 					<input type="text" name="username" id="username" maxlength="30" placeholder="帳號" required />
 					{% if 'invalid_username' in errors %}<small>無效的帳號名稱。</small>
 					{% elif 'username_already_taken' in errors %}<small>帳號名稱已被使用。</small>{% endif %}
@@ -29,7 +27,8 @@
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" />
+					<label for="display_name">暱稱（顯示名稱），公開於講者海報及網站，如未填寫，將使用本名</label>
+					<input type="text" name="display_name" maxlength="16" placeholder="暱稱" />
 				</div>
 			</div>
 			<div class="row">
@@ -60,10 +59,10 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input type="text" name="school" maxlength="30" placeholder="學校" required />
+					<input type="text" name="school" maxlength="30" placeholder="學校/單位" required />
 				</div>
 				<div class="small-6 columns">
-					<input type="text" name="grade" maxlength="30" placeholder="系所" required />
+					<input type="text" name="grade" maxlength="30" placeholder="系級/職稱" required />
 				</div>
 			</div>
 			<div class="row">
@@ -75,6 +74,7 @@
 				<div class="small-12 columns">
 					<input type="text" name="departure" placeholder="出發地，平時生活的地區，必填，僅供大會調查統計" maxlength="1000" required />
 				</div>
+				<!-- TODO 出發地、大頭照-->
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
@@ -83,16 +83,16 @@
 			</div>
 			<div class="button-row">
 				<div class="right">
-					<input type="submit" class="radius button" name="submit" value="新增人員" />
+					<input type="submit" class="radius button" name="submit" value="註冊" />
 				</div>
 			</div>
 		</form>
 	</div>
-	<div class="large-3 columns text">
-		<h5>登記流程</h5>
+	<div class="large-4 columns text">
+		<h5>投稿流程</h5>
 		<ol>
-			<li>申請新帳號</li>
-			<li>系統將自動寄送歡迎信，邀請加入郵件清單並設定新密碼。</li>
+			<li>註冊新帳號</li>
+			<li>系統將自動寄送歡迎信，邀請加入郵件清單並設定新密碼</li>
 			<li>登入、送出投稿</li>
 		</ol>
 	</div>
