@@ -28,11 +28,13 @@
                 <div class="small-12 columns">
                     <textarea name="abstract" placeholder="摘要" maxlength="500" required>{{ submission.abstract.value }}</textarea>
                 </div>
-                <h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
+				<hr/>
+				<p>以下資料為選填，但強烈建議您填寫，讓審稿委員更瞭解您的稿件，以增加入選機率</p>
+                <h4>詳細說明 <small>選填，不公開，僅供議程組審稿參考</small></h4>
                 <div class="small-12 columns">
                     <textarea name="details" placeholder="詳細說明">{{ submission.details.value }}</textarea>
                 </div>
-                <h4>附加檔案</h4>
+				<h4>附加檔案 <small><em>詳細說明</em>的補充資料</small></h4>
                 <div class="small-12 columns">
                     <input type="file" name="slide" multiple />
                 </div>
