@@ -91,27 +91,6 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler'
-        },
-        'file': {
-            'level': 'DEBUG',
-            'filename': '/var/log/roboconf.log',
-            'class': 'logging.FileHandler'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
     'loggers': {
         'django': {
             'handlers': ['file'],
@@ -128,7 +107,37 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         }
-    }
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'filename': '/var/log/roboconf.log',
+            'formatter': 'verbose',
+            'class': 'logging.FileHandler'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s %(name)s: %(module)s %(process)d %(thread)d %(message)s'
+        }
+    },
 }
 
 EMAIL_HOST = ''
