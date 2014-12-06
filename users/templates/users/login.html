@@ -10,6 +10,11 @@
 	<a href="#" class="close">&times;</a>
 </div>
 {% endif %}
+{% if status == 'success' %}
+<div class="radius secondary alert-box" data-alert>
+	註冊成功，臨時密碼已經寄到您的信箱，登入之後可以新增投稿。
+</div>
+{% endif %}
 <div class="row">
 	<div class="large-6 small-9 small-centered columns">
 		<div class="login-panel">

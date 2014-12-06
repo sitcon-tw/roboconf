@@ -1,10 +1,9 @@
 {% extends 'core/master.html' %}
 {% block title %}新增人員{{ block.super }}{% endblock %}
 {% block content %}
-{% if status %}
-<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
-	{% if status == 'success' %}帳號新增成功。
-	{% else %}儲存個人檔案時發生錯誤，請修正下列欄位。{% endif %}
+{% if status == 'error' %}
+<div class="radius alert alert-box" data-alert>
+	儲存個人檔案時發生錯誤，請修正下列欄位。
 	<a href="#" class="close">&times;</a>
 </div>
 {% endif %}
