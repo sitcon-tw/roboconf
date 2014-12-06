@@ -3,14 +3,12 @@ from django.conf import settings
 from users.models import User
 
 def photo_path(instance, filename):
-    return u'{}photos/{} - {}'.format(
-            settings.MEDIA_ROOT,
+    return u'photos/{} - {}'.format(
             instance.title,
             filename)
 
 def file_path(instance, filename):
-    return u'{}submission_files/{} - {}'.format(
-            settings.MEDIA_ROOT,
+    return u'submission_files/{} - {}'.format(
             instance.submission.title,
             filename)
 
