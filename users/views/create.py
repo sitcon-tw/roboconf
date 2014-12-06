@@ -1,3 +1,5 @@
+ # -*- coding: utf-8 -*-
+
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
@@ -127,7 +129,7 @@ def submitter_create(request):
 			user.save()
 
 			profile = UserProfile(user=user)
-			profile.title = u'\u6295\u7a3f\u8b1b\u8005'
+			profile.title = u'投稿講者'
 			profile.display_name = request.POST.get('display_name')
 			profile.school = request.POST.get('school')
 			profile.grade = request.POST.get('grade')
