@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.utils import dateparse
+from django.conf import settings
 from issues.models import Issue, IssueHistory, Label
 from issues.utils import send_mail, filter_mentions
 from users.utils import sorted_users
@@ -46,7 +47,7 @@ def create(request):
 			issue.starring.add(request.user)	# Auto watch
 
 			mentions = filter_mentions(issue.content)
-			users = list(User.objects.filter(is_active=True, groups__id=11))
+			users = list(User.objects.filter(is_active=True, groups__id=settings.STAFF_GROUP_ID))
 			for user in users:
 				if user == request.user:
 					continue
