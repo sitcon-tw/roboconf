@@ -135,7 +135,7 @@ def submitter_create(request):
 			profile.comment = request.POST.get('comment')
 			profile.save()
 
-			user.groups.add(Group.objects.get(id=16))
+			user.groups.add(Group.objects.get(id=settings.SUBMITTER_GROUP_ID))
 
 			context = {
 				'sender': request.user,

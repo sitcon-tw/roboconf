@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from django.conf import settings
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile')
@@ -27,7 +28,8 @@ class UserProfile(models.Model):
 		return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
 
 	def is_authorized(self):
-		return self.user.groups.filter(id=11).exists()
+		return self.user.groups.filter(id=settings.STAFF_GROUP_ID).exists()
+		#return self.user.groups.filter(name=settings.STAFF_GROUP_NAME).exists()
 
 	def is_trusted(self):
 		return self.is_authorized() and self.user.has_perm('auth.change_user')
