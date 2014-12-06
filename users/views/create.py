@@ -150,7 +150,12 @@ def submitter_create(request):
 		else:
 			status = 'error'
 
-	return render(request, 'users/submitter_create.html', {
-		'errors': errors,
-		'status': status,
-	})
+	if status == 'success':
+		return render(request, 'users/login.html', {
+			'status': status,
+		})
+	else:
+		return render(request, 'users/submitter_create.html', {
+			'errors': errors,
+			'status': status,
+		})
