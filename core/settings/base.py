@@ -8,7 +8,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('SITCON Administrators', 'sitcon-admin@googlegroups.com'),
+    ('SITCON Developers', 'sitcon-dev@googlegroups.com'),
 )
 
 MANAGERS = ADMINS
@@ -104,7 +104,6 @@ LOGGING = {
         },
         'django.security.DisallowedHost': {
             'handlers': ['file'],
-            'level': 'DEBUG',
             'propagate': False,
         }
     },
