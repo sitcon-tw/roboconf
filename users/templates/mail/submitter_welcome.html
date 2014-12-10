@@ -6,7 +6,7 @@
 <p>嗨 {{ receiver.profile.title }} {{ receiver.profile.name }}，</p>
 <p>感謝您註冊成為 SITCON 投稿講者！</p>
 <p>您於<a href="{{ site_url }}">投稿系統</a>的帳號 <strong>{{ receiver.username }}</strong> 已經啟用，臨時密碼為 <em>{{ password }}</em>。請於<a href="{{ site_url }}{% url 'users:login' %}">登入</a>後立即<a href="{{ site_url }}{% url 'users:change_password' %}">修改您的密碼</a>。</p>
-<p>欲送出稿件，請至<a href="{{ site_url }}{% url 'submission.list' %}">投稿</a>頁面點選「新增投稿」，填寫相關資料後送出即可。</p>
+<p>欲送出稿件，請至<a href="{{ site_url }}{% url 'submission:list' %}">投稿</a>頁面點選「新增投稿」，填寫相關資料後送出即可。</p>
 <p>註：送出成功不代表稿件符合格式要求，我們仍可能會請您刪減或增加字數，一切規範以 <a href="http://sitcon.org/2015/cfp.html">CFP</a> 為準。</p>
 <p>請定期檢查信箱，未來議程組主要將用電子郵件與您聯繫。</p>
 <p>在此先感謝您的投稿，並預祝您入選！</p>
