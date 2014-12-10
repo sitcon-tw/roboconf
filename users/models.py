@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from django.conf import settings
 
+def photo_path(instance, filename):
+    return u'photos/{} - {}'.format(
+            instance.title,
+            filename)
+
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile')
 	display_name = models.CharField(max_length=16)
@@ -9,6 +14,8 @@ class UserProfile(models.Model):
 	school = models.CharField(max_length=32, blank=True, help_text='school or company')
 	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
 	phone = models.CharField(max_length=16, blank=True)
+        photo = models.FileField(upload_to=photo_path)
+        departure = models.CharField(max_length=1000, help_text='departure')
 	comment = models.TextField(blank=True)
 
 	def __unicode__(self):

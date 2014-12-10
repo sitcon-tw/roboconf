@@ -1,11 +1,6 @@
 from django.db import models
 from users.models import User
 
-def photo_path(instance, filename):
-    return u'photos/{} - {}'.format(
-            instance.title,
-            filename)
-
 def file_path(instance, filename):
     return u'submission_files/{} - {}'.format(
             instance.submission.title,
@@ -47,8 +42,6 @@ class Submission(models.Model):
     details = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
     comment = models.TextField(blank=True, help_text='Review comment')
-    departure = models.CharField(max_length=1000, help_text='departure')
-    photo = models.FileField(upload_to=photo_path)
 
     def __unicode__(self):
         return self.title
