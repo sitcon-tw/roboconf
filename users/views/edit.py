@@ -78,6 +78,8 @@ def edit(request, username):
 		profile.school = request.POST.get('school')
 		profile.grade = request.POST.get('grade')
 		profile.phone = request.POST.get('phone')
+		profile.photo = request.POST.get('photo')
+		profile.departure = request.POST.get('departure')
 		profile.comment = request.POST.get('comment')
 
 		if len(errors) < 1:
