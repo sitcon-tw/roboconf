@@ -14,7 +14,7 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'users:edit' u.username %}" method="POST" class="profile-main">
+		<form action="{% url 'users:edit' u.username %}" method="POST" enctype="multipart/form-data" class="profile-main">
 		{% csrf_token %}
 			<div class="row">
 				<div class="small-12 columns {% if 'username' in errors %}error{% endif %}">
@@ -84,6 +84,11 @@
 			<div class="row">
 				<div class="small-12 columns">
 					<input type="text" name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="departure" placeholder="出發地，平時生活的地區，必填，僅供大會調查統計" maxlength="1000" value="{% if u.profile.departure %}{{ u.profile.departure }}{% endif %}" required />
 				</div>
 			</div>
 			<div class="row">
