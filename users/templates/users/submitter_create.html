@@ -13,7 +13,7 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表" data-tooltip></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'users:submitter_create' %}" method="POST" class="profile-main">
+		<form action="{% url 'users:submitter_create' %}" method="POST" enctype="multipart/form-data" class="profile-main">
 		{% csrf_token %}
 			<div class="row field-header">
 				<div class="small-12 columns">
@@ -39,6 +39,12 @@
 					{% elif 'email_already_taken' in errors %}<small>電子郵件信箱已被使用。</small>{% endif %}
 				</div>
 			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<h6>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h6>
+					<input type="file" name="photo" required />
+				</div>
+			</div>
 			<div class="row field-header">
 				<div class="small-12 columns">
 					<h6>個人檔案資訊</h6>
@@ -46,23 +52,28 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input type="text" name="last_name" maxlength="30" placeholder="姓" />
+					<input type="text" name="last_name" maxlength="30" placeholder="姓" required />
 				</div>
 				<div class="small-6 columns">
-					<input type="text" name="first_name" maxlength="30" placeholder="名" />
+					<input type="text" name="first_name" maxlength="30" placeholder="名" required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input type="text" name="school" maxlength="30" placeholder="學校" />
+					<input type="text" name="school" maxlength="30" placeholder="學校" required />
 				</div>
 				<div class="small-6 columns">
-					<input type="text" name="grade" maxlength="30" placeholder="系所" />
+					<input type="text" name="grade" maxlength="30" placeholder="系所" required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input type="text" name="phone" placeholder="電話號碼" />
+					<input type="text" name="phone" placeholder="電話號碼" required />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<input type="text" name="departure" placeholder="出發地，平時生活的地區，必填，僅供大會調查統計" maxlength="1000" required />
 				</div>
 			</div>
 			<div class="row">

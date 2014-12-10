@@ -24,10 +24,6 @@
                 <div class="small-12 columns">
                     <textarea name="bio" placeholder="個人介紹" maxlength="300" required>{{ submission.bio.value }}</textarea>
                 </div>
-                <h4>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h4>
-                <div class="small-12 columns">
-                    <input type="file" name="photo" required />
-                </div>
                 <h4>摘要</h4>
                 <div class="small-12 columns">
                     <textarea name="abstract" placeholder="摘要" maxlength="500" required>{{ submission.abstract.value }}</textarea>
@@ -35,10 +31,6 @@
                 <h4>詳細說明 <small>不限，不公開，僅供議程組審稿參考</small></h4>
                 <div class="small-12 columns">
                     <textarea name="details" placeholder="詳細說明">{{ submission.details.value }}</textarea>
-                </div>
-                <h4>出發地 <small>平時生活的地區，必填，僅供大會調查統計</small></h4>
-                <div class="small-12 columns">
-                    <input type="text" name="departure" placeholder="出發地" maxlength="1000" value="{{ submission.departure.value }}" required />
                 </div>
                 <h4>附加檔案</h4>
                 <div class="small-12 columns">
