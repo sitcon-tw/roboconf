@@ -118,6 +118,15 @@
 			</li>
 		{% endif %}
 		</ul>
+		<div class="row">
+			<div class="small-12 columns">
+				<h6>個人頭像 <br /><small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h6>
+				<img src="{{ submission.photo.url }}"></img>
+				<br />
+				<br />
+				<input type="file" name="photo" />
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
