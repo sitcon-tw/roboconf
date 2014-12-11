@@ -4,7 +4,7 @@ from django.conf import settings
 
 def photo_path(instance, filename):
     return u'photos/{} - {}'.format(
-            instance.title,
+            instance.display_name,
             filename)
 
 class UserProfile(models.Model):
