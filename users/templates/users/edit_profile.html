@@ -120,7 +120,7 @@
 		<div class="row">
 			<div class="small-12 columns">
 				<h6>個人頭像 <br /><small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h6>
-				<img src="{{ u.profile.photo.url }}"></img>
+				<img src="{% if u.profile.photo %}{{ u.profile.photo.url }}{% endif %}"></img>
 				<br />
 				<br />
 				<input type="file" name="photo" />
