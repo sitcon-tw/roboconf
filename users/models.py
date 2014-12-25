@@ -12,6 +12,7 @@ class UserProfile(models.Model):
 	display_name = models.CharField(max_length=16)
 	title = models.CharField(max_length=16)
 	school = models.CharField(max_length=32, blank=True, help_text='school or company')
+	bio = models.TextField(max_length=300, help_text='biography')
 	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
 	phone = models.CharField(max_length=16, blank=True)
         photo = models.FileField(upload_to=photo_path)
