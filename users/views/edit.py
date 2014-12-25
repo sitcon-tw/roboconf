@@ -76,6 +76,7 @@ def edit(request, username):
 
 		profile.display_name = request.POST.get('display_name')
 		profile.school = request.POST.get('school')
+		profile.bio = request.POST.get('bio')
 		profile.grade = request.POST.get('grade')
 		profile.phone = request.POST.get('phone')
 

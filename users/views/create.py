@@ -54,6 +54,7 @@ def create(request):
 			profile.title = request.POST.get('title')
 			profile.display_name = request.POST.get('display_name')
 			profile.school = request.POST.get('school')
+			profile.bio = request.POST.get('bio')
 			profile.grade = request.POST.get('grade')
 			profile.phone = request.POST.get('phone')
 			profile.comment = request.POST.get('comment')
