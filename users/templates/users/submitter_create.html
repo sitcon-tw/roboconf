@@ -19,7 +19,7 @@
 			<div class="row">
 				<div class="small-12 columns {% if 'username' in errors %}error{% endif %}">
 					<label for="username">帳號，僅用作投稿系統登入使用</label>
-					<input type="text" name="username" id="username" maxlength="30" placeholder="帳號" required />
+					<input type="text" name="username" id="username" maxlength="30" placeholder="帳號" value="{{ saved.username }}" required />
 					{% if 'invalid_username' in errors %}<small>無效的帳號名稱。</small>
 					{% elif 'username_already_taken' in errors %}<small>帳號名稱已被使用。</small>{% endif %}
 				</div>
@@ -27,12 +27,12 @@
 			<div class="row">
 				<div class="small-12 columns">
 					<label for="display_name">暱稱（顯示名稱），公開於講者海報及網站，如未填寫，將使用本名</label>
-					<input type="text" name="display_name" maxlength="16" placeholder="暱稱" />
+					<input type="text" name="display_name" maxlength="16" placeholder="暱稱" value="{{ saved.display_name }}" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns {% if 'email' in errors %}error{% endif %}">
-					<input type="text" name="email" placeholder="電子郵件信箱" required />
+					<input type="text" name="email" placeholder="電子郵件信箱" value="{{ saved.email }}" required />
 					{% if 'invalid_email' in errors %}<small>無效的電子郵件地址。</small>
 					{% elif 'email_already_taken' in errors %}<small>電子郵件信箱已被使用。</small>{% endif %}
 				</div>
@@ -50,39 +50,39 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input type="text" name="last_name" maxlength="30" placeholder="姓" required />
+					<input type="text" name="last_name" maxlength="30" placeholder="姓" value="{{ saved.last_name }}" required />
 				</div>
 				<div class="small-6 columns">
-					<input type="text" name="first_name" maxlength="30" placeholder="名" required />
+					<input type="text" name="first_name" maxlength="30" placeholder="名" value="{{ saved.first_name }}" required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<input type="text" name="school" maxlength="30" placeholder="學校/單位" required />
+					<input type="text" name="school" maxlength="30" placeholder="學校/單位" value="{{ saved.school }}" required />
 				</div>
 				<div class="small-6 columns">
-					<input type="text" name="grade" maxlength="30" placeholder="系級/職稱" required />
+					<input type="text" name="grade" maxlength="30" placeholder="系級/職稱" value="{{ saved.grade }}" required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input type="text" name="phone" placeholder="電話號碼" required />
+					<input type="text" name="phone" placeholder="電話號碼" value="{{ saved.phone }}" required />
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<textarea name="bio" placeholder="個人介紹" maxlength="300" required></textarea>
+					<textarea name="bio" placeholder="個人介紹" maxlength="300" value="{{ saved.bio }}" required></textarea>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<input type="text" name="departure" placeholder="出發地，平時生活的地區，必填，僅供大會調查統計" maxlength="1000" required />
+					<input type="text" name="departure" placeholder="出發地，平時生活的地區，必填，僅供大會調查統計" maxlength="1000" value="{{ saved.departure }}" required />
 				</div>
 				<!-- TODO 出發地、大頭照-->
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<textarea name="comment" placeholder="備註"></textarea>
+					<textarea name="comment" placeholder="備註">{{ saved.comment }}</textarea>
 				</div>
 			</div>
 			<div class="button-row">
