@@ -57,7 +57,7 @@
         <div class="row">
             <div>
                 <h4>大頭照</h4>
-                <img src="{{ user.profile.photo.url }}" title="請至右上角的帳號設定更換您的大頭照" data-tooltip />
+				<img src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}{{ user.profile.avatar }}{% endif %}" title="請至右上角的帳號設定更換您的大頭照" data-tooltip />
             </div>
         </div>
     </div>
