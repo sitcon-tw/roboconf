@@ -31,9 +31,12 @@ class UserProfile(models.Model):
 			return self.user.username
 
 	def avatar(self):
-		import md5
-		hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
-		return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+		if self.is_authorized():
+			import md5
+			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+		else:
+			return self.photo.url
 
 	def is_authorized(self):
 		return self.user.groups.filter(id=settings.STAFF_GROUP_ID).exists()
