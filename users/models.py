@@ -15,8 +15,8 @@ class UserProfile(models.Model):
 	bio = models.TextField(max_length=300, help_text='biography')
 	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
 	phone = models.CharField(max_length=16, blank=True)
-        photo = models.FileField(upload_to=photo_path)
-        departure = models.CharField(max_length=1000, help_text='departure')
+	photo = models.FileField(upload_to=photo_path)
+	departure = models.CharField(max_length=1000, help_text='departure')
 	comment = models.TextField(blank=True)
 
 	def __unicode__(self):
