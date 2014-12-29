@@ -31,8 +31,8 @@ class UserProfile(models.Model):
 			return self.user.username
 
 	def avatar(self):
-        import md5
-        hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+		import md5
+		hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
 		if self.is_authorized():
 			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
 		else:
