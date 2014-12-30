@@ -10,7 +10,7 @@
     <div class="large-8 columns">
         {% csrf_token %}
             <div class="row collapse">
-                <h4>投稿者 {{ user.profile.display_name }} <small><em>如欲修改請至右上角「帳號設定」修改「顯示名稱」</em></small></h4>
+                <h4>投稿者 {{ submission.user.profile.display_name }} <small><em>如欲修改請至右上角「帳號設定」修改「顯示名稱」</em></small></h4>
             </div>
             <div class="row collapse">
                 <h4>標題</h4>
