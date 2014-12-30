@@ -129,11 +129,22 @@ def submitter_create(request):
 		if len(errors) < 1:
 			user.save()
 
-			profile = CommiterProfileForm(request.POST, request.FILES)
-			profile = profile.save(commit=False)
-			profile.user = user
-			profile.title = u'投稿講者'
-			profile.save()
+			try:
+				profile = CommiterProfileForm(request.POST, request.FILES)
+				profile = profile.save(commit=False)
+				profile.user = user
+				profile.title = u'投稿講者'
+				profile.save()
+			except:
+				errors += ['invalid_profile']
+				user.delete()
+				status = 'error'
+
+				return render(request, 'users/submitter_create.html', {
+					'errors': errors,
+					'status': status,
+					'saved': request.POST,
+				})
 
 			user.groups.add(Group.objects.get(id=settings.SUBMITTER_GROUP_ID))
 
