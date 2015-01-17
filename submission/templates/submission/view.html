@@ -1,0 +1,68 @@
+{% extends 'core/master.html' %}
+{% load staticfiles %}
+{% block title %}檢視投稿{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="large-1 avatars columns">
+        <a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
+    </div>
+    <div class="large-8 columns">
+            <div class="row collapse">
+                <h4>投稿者 {{ submission.user.profile.display_name }}</h4>
+            </div>
+            <div class="row collapse">
+                <h4>標題</h4>
+				<p>{{ submission.title }}</p>
+                <h4>摘要</h4>
+				<p>{{ submission.abstract }}</p>
+                <h4>詳細說明</h4>
+				<p>{{ submission.details }}</p>
+				<h4>附加檔案</h4>
+                <div class="small-12 columns">
+                    <h4>目前檔案</h4>
+                    {% for file in submission.files.all %}
+                        <li><a href="{{ file.url }}">{{ file.name }}</a></li>
+                    {% endfor %}
+                    <br/>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="small-6 columns">
+                    <h4>狀態</h4>
+                </div>
+                <div class="small-6 columns">
+                    {% if submission.status == 'A' %}
+                    <p>噫！中了！</p>
+                    {% elif submission.status == 'R' %}
+                    <p>沒上QQ</p>
+                    {% elif submission.status == 'V' %}
+                    <p>審稿中</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row collapse">
+                <h4>審稿評論</h4>
+                {{ submission.comment }}
+            </div>
+        </form>
+    </div>
+    <div class="large-3 columns main-side-nav">
+        <div class="row">
+            <div>
+                <h4>投稿類型</h4>
+				{% if submission.type == 'S'%}
+				<p>Short Talk</p>
+				{% elif submission.type == 'L'%}
+				<p>Talk</p>
+				{% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <h4>大頭照</h4>
+				<img src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}{{ user.profile.avatar }}{% endif %}"/>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
