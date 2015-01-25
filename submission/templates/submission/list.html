@@ -9,12 +9,13 @@
             <h3><small>共 {{ submissions.count }} 篇投稿</small></h3>
             <table class="submissions-list main">
                 <thead>
-                    <tr><th>標題</th><th>投稿者</th><th>狀態</th><th>動作</th></tr>
+					<tr><th>標題</th><th>類型</th><th>投稿者</th><th>狀態</th><th>動作</th></tr>
                 </thead>
                 <tbody>
                 {% for s in submissions %}
                     <tr>
                         <td>{{ s.title }}</td>
+						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
                         <td>{{ s.user.profile.display_name }}</td>
                         <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
                         <td>
