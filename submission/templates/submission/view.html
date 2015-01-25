@@ -60,7 +60,7 @@
         <div class="row">
             <div>
                 <h4>大頭照</h4>
-				<img src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}{{ user.profile.avatar }}{% endif %}"/>
+				<img src="{% if submission.user.profile.photo %}{{ submission.user.profile.photo.url }}{% else %}{{ submission.user.profile.avatar }}{% endif %}"/>
             </div>
         </div>
     </div>
