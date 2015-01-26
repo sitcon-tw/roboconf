@@ -33,7 +33,7 @@
 				{% if perms.auth.change_user %}
 					<input type="text" name="title" maxlength="16" placeholder="職稱" value="{{ u.profile.title }}" />
 				{% else %}
-					<h5>{{ u.profile.title }}</h4>
+					<h5>{{ u.profile.title }}</h5>
 				{% endif %}
 				</div>
 				<div class="small-4 columns">
@@ -126,7 +126,7 @@
 		<div class="row">
 			<div class="small-12 columns">
 				<h6>個人頭像 <br /><small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h6>
-				<img src="{% if u.profile.photo %}{{ u.profile.photo.url }}{% endif %}"></img>
+				<img src="{% if u.profile.photo %}{{ u.profile.photo.url }}{% endif %}">
 				<br />
 				<br />
 				<input type="file" name="photo" />
