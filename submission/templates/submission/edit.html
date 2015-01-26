@@ -13,11 +13,11 @@
                 <h4>投稿者 {{ submission.user.profile.display_name }} <small><em>如欲修改請至右上角「帳號設定」修改「顯示名稱」</em></small></h4>
             </div>
             <div class="row collapse">
-                <h4>標題</h4>
+				<h4>標題 <small><em id="title-text-count"></em></small></h4>
                 <div class="small-12 columns">
                     <input type="text" name="title" placeholder="講題" maxlength="40" value="{{ submission.title }}" required />
                 </div>
-                <h4>摘要</h4>
+				<h4>摘要 <small><em id="abstract-text-count"></em></small></h4>
                 <div class="small-12 columns">
                     <textarea name="abstract" placeholder="摘要" maxlength="500" required>{{ submission.abstract }}</textarea>
                 </div>
@@ -83,9 +83,41 @@
         <div class="row">
             <div>
                 <h4>大頭照</h4>
+				{{ submission.user.profile.photo.url }}
 				<img src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}{{ user.profile.avatar }}{% endif %}" title="請至右上角的帳號設定更換您的大頭照" data-tooltip />
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+	function countchar( input, msg, atleast, atmost) {
+		var fullcnt=0;
+		var halfcnt=0;
+		for (var i = 0, len = input.val().length; i < len; i++) {
+		if ( input.val()[i].match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/) ) {
+		fullcnt++;
+		} else {
+		halfcnt++;
+		}
+		}
+		msg.text(atleast+" ≤半形✕ 0.5＋全形≤"+atmost+"，目前半形 = "+halfcnt+" ,全形 = "+fullcnt);
+		if ( atleast <= halfcnt/2 + fullcnt && halfcnt/2 + fullcnt <= atmost ) {
+			input.removeClass("error");
+		} else {
+			input.addClass("error");
+		}
+	}
+	countchar($('input[name="title"]'), $('#title-text-count'), 1, 15);
+	countchar($('textarea[name="abstract"]'), $('#abstract-text-count'), 150, 250);
+	$('input[name="title"]').on('keyup', function() {
+		countchar($('input[name="title"]'), $('#title-text-count'), 1, 15);
+	});
+	$('textarea[name="abstract"]').on('keyup', function() {
+		countchar($('textarea[name="abstract"]'), $('#abstract-text-count'), 150, 250);
+	});
+});
+</script>
 {% endblock %}
