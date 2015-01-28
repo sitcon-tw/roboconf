@@ -7,5 +7,6 @@ urlpatterns = patterns('',
         url(r'^delete$', views.delete, name='delete'),
         url(r'^score$', views.score, name='score'),
         url(r'^edit/(\d+)$', views.edit, name='edit'),
+        url(r'^view/partial/(\d+)$', views.view_partial, name='view_partial'),
         url(r'^view/(\d+)$', views.view, name='view'),
     )

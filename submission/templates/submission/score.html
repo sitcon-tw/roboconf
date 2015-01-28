@@ -31,7 +31,9 @@
 				{% with sorted_submissions=submissions|dictsort:"type" %}
                 {% for s in sorted_submissions %}
                     <tr>
-                        <td>+ {{ s.title }}</td>
+                        <td>
+                            <a class="submission-detail" data-status="close" data-template="{% url 'submission:view_partial' s.id %}" id="{{ s.id }}">＋</a> {{ s.title }}
+                        </td>
 						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
 						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
                         <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
@@ -43,9 +45,9 @@
                         <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
                         <td>儲存</td>
                     </tr>
-                    <tr class="hide" id="{{ s.id }}-tr">
+                    <tr class="hide" id="submission-{{ s.id }}-tr">
                         <td colspan="0">
-                            <div id="{{ s.id }}"></div>
+                            <div id="submission-{{ s.id }}"></div>
                         </td>
                     </tr>
                 {% endfor %}
@@ -79,6 +81,33 @@
 <script>
 $(".delete").on("click", function () {
     Roboconf.post("{% url 'submission:delete' %}", {"submission_id": this.dataset['submissionId']});
+});
+
+$(".submission-detail").on("click", function () {
+    var target = "#submission-" + this.id;
+    var node = target + "-tr";
+    var template = this.dataset.template;
+    x = this;
+
+    if (this.dataset.status == "close") {
+
+        if (! this.dataset.loaded) {
+            $(target).load(template);
+            this.dataset.loaded = 1;
+        }
+
+        $(node)[0].classList.remove("hide");
+
+        this.dataset.status = "open";
+        this.textContent = "－";
+
+    } else {
+
+        $(node)[0].classList.add("hide");
+
+        this.dataset.status = "close";
+        this.textContent = "＋";
+    }
 });
 </script>
 {% endblock %}
