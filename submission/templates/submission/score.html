@@ -39,11 +39,19 @@
                         <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
 
                         <!-- Todo : move the style into scss file -->
-                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
-                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
-                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
-                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
-                        <td>儲存</td>
+                        <td>
+                            <input id="submission-{{ s.id }}-audience" type="number" min="0" max="10" style="max-width: 60px;">
+                        </td>
+                        <td>
+                            <input id="submission-{{ s.id }}-cool" type="number" min="0" max="10" style="max-width: 60px;">
+                        </td>
+                        <td>
+                            <input id="submission-{{ s.id }}-expression" type="number" min="0" max="10" style="max-width: 60px;">
+                        </td>
+                        <td>
+                            <input id="submission-{{ s.id }}-difficulty" type="number" min="0" max="10" style="max-width: 60px;">
+                        </td>
+                        <td><a class="score-save" data-id="{{ s.id }}">儲存</a></td>
                     </tr>
                     <tr class="hide" id="submission-{{ s.id }}-tr">
                         <td colspan="0">
@@ -79,15 +87,33 @@
 
 {% block scripts %}
 <script>
-$(".delete").on("click", function () {
-    Roboconf.post("{% url 'submission:delete' %}", {"submission_id": this.dataset['submissionId']});
+$(".score-save").on("click", function () {
+    var id = this.dataset.id;
+
+    var audience    = "#submission-" + id + "-audience";
+    var cool        = "#submission-" + id + "-cool";
+    var expression  = "#submission-" + id + "-expression";
+    var difficulty  = "#submission-" + id + "-difficulty";
+
+    var args = {
+            "submission": id,
+            "audience": $(audience)[0].value,
+            "cool": $(cool)[0].value,
+            "expression": $(expression)[0].value,
+            "difficulty": $(difficulty)[0].value,
+        };
+    args = JSON.stringify(args);
+    args = {"data": args};
+
+    $.post("{% url 'submission:score_save' %}", args, function (data) {
+        // Todo : give some message when success
+    });
 });
 
 $(".submission-detail").on("click", function () {
     var target = "#submission-" + this.id;
     var node = target + "-tr";
     var template = this.dataset.template;
-    x = this;
 
     if (this.dataset.status == "close") {
 
