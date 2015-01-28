@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from submission.models import Submission
 from core.settings.base import SUBMISSION_END
 import datetime
 
 @login_required
-def list(request):
+def score(request):
     if request.user.has_perm('submission.review'):
         context = {
             'submissions': Submission.objects.all(),
@@ -15,11 +15,6 @@ def list(request):
             'expired': (SUBMISSION_END < datetime.datetime.now() ),
         }
     else:
-        context = {
-            'submissions': request.user.submissions.all(),
-            'user': request.user,
-            'submission_end': SUBMISSION_END,
-            'submission_review': False,
-            'expired': (SUBMISSION_END < datetime.datetime.now() ),
-        }
-    return render(request, 'submission/list.html', context)
+        return redirect('submission:list')
+
+    return render(request, 'submission/score.html', context)
