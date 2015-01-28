@@ -8,6 +8,7 @@ from django.views.decorators.debug import sensitive_variables
 from notifications.utils import send_template_mail, format_address
 from users.forms import CommiterProfileForm
 from users.utils import generate_password, sorted_categories
+from users.models import UserProfile
 
 @sensitive_variables('password')
 @permission_required('auth.add_user')
