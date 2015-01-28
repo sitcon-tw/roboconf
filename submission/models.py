@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator
 from users.models import User
 
 def file_path(instance, filename):
@@ -56,3 +57,17 @@ class SubmissionFile(models.Model):
 
     def name(self):
         return self.file.name.rpartition('/')[2]
+
+class Score(models.Model):
+    submission  = models.ForeignKey(Submission, related_name='scores')
+    user        = models.ForeignKey(User)
+    audience    = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
+    cool        = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
+    expression  = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
+    difficulty  = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
+
+    class Meta:
+        unique_together = ('submission', 'user')
+
+    def total_score(self):
+        return audience + cool + expression
