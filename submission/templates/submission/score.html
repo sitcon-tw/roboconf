@@ -1,5 +1,5 @@
 {% extends 'core/master.html' %}
-{% block title %}投稿{{ block.super }}{% endblock %}
+{% block title %}投稿 - 評分{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
     <div class="large-9 columns">
@@ -9,23 +9,44 @@
             <h3><small>共 {{ submissions.count }} 篇投稿</small></h3>
             <table class="submissions-list main">
                 <thead>
-					<tr><th>標題</th><th>類型</th><th>投稿者</th><th>狀態</th><th>動作</th></tr>
+					<tr>
+                        <th rowspan="2">標題</th>
+                        <th rowspan="2">類型</th>
+                        <th rowspan="2">投稿者</th>
+                        <th rowspan="2">狀態</th>
+                        <th rowspan="1" colspan="4">評分</th>
+                        <th rowspan="2">動作</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="1" colspan="1">適合聽眾</th>
+                        <th rowspan="1" colspan="1">酷炫</th>
+                        <th rowspan="1" colspan="1">表達能力</th>
+                        <th rowspan="1" colspan="1">難度</th>
+                    </tr>
+                    <tr>
+                        <th class="hide" colspan="0">投稿資訊</th>
+                    </tr>
                 </thead>
                 <tbody>
 				{% with sorted_submissions=submissions|dictsort:"type" %}
                 {% for s in sorted_submissions %}
                     <tr>
-                        <td>{{ s.title }}</td>
+                        <td>+ {{ s.title }}</td>
 						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
 						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
                         <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
-                        <td>
-							{% if s.user == user %}
-							<a href="{% url 'submission:edit' s.id %}">編輯</a> <a class="delete" data-submission-id="{{ s.id }}">刪除</a>
-							{% else %}
-							<a href="{% url 'submission:view' s.id %}">檢視</a>
-							{% endif %}
-						</td>
+
+                        <!-- Todo : move the style into scss file -->
+                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
+                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
+                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
+                        <td><input type="number" min="0" max="10" style="max-width: 60px;"></td>
+                        <td>儲存</td>
+                    </tr>
+                    <tr class="hide" id="{{ s.id }}-tr">
+                        <td colspan="0">
+                            <div id="{{ s.id }}"></div>
+                        </td>
                     </tr>
                 {% endfor %}
 				{% endwith %}
