@@ -16,7 +16,7 @@
                     <tr>
                         <td>{{ s.title }}</td>
 						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
-                        <td>{{ s.user.profile.display_name }}</td>
+						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
                         <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
                         <td>
 							{% if s.user == user %}
