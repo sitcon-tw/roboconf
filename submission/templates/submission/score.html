@@ -4,9 +4,9 @@
 <div class="row">
     <div class="large-9 columns">
         <div>
-        {% with c=submissions.count %}
+        {% with c=submissions_total %}
         {% if c > 0 %}
-            <h3><small>共 {{ submissions.count }} 篇投稿</small></h3>
+            <h3><small>共 {{ submissions_total }} 篇投稿</small></h3>
             <table class="submissions-list main">
                 <thead>
 					<tr>
