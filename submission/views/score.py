@@ -22,9 +22,11 @@ def score(request):
     if request.user.has_perm('submission.review'):
 
         submissions = Submission.objects.order_by('type', 'id')
+        total = submissions.count()
         scores = [ get_score(s.id, request.user.id) for s in submissions ]
 
         context = {
+            'submissions_total': total,
             'submissions': zip(submissions, scores),
             'user': request.user,
             'submission_end': SUBMISSION_END,
