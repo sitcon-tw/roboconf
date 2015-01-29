@@ -2,7 +2,7 @@
 {% block title %}投稿 - 評分{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
-    <div class="large-9 columns">
+    <div class="large-12 columns">
         <div>
         {% with c=submissions_total %}
         {% if c > 0 %}
@@ -85,20 +85,6 @@
         {% endif %}
         {% endwith %}
         </div>
-    </div>
-    <div class="large-3 columns main-side-nav">
-		{% if expired == True %}
-		<h4>投稿已經截止，<br/>請等待審查</h4>
-		{% else %}
-		<h4>投稿截止時間：<br/>{{ submission_end }}</h4>
-        <ul class="side-nav users-actions">
-            <li><a href="{% url 'submission:create' %}"><span class="icon-email iconize"></span> 新增投稿</a></li>
-
-            {% if submission_review %}
-            <li><a href="{% url 'submission:score' %}"><span class="icon-star iconize"></span> 幫我打分數 &gt; &lt;</a></li>
-            {% endif %}
-        </ul>
-		{% endif %}
     </div>
 </div>
 {% endblock %}
