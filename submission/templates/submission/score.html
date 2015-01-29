@@ -51,7 +51,7 @@
                                    type="number"
                                    min="0"
                                    max="10"
-                                   value="{% if score.cool %}{{ score.audience }}{% else %}0{% endif %}"
+                                   value="{% if score.cool %}{{ score.cool }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
                         <td>
@@ -59,7 +59,7 @@
                                    type="number"
                                    min="0"
                                    max="10"
-                                   value="{% if score.expression %}{{ score.audience }}{% else %}0{% endif %}"
+                                   value="{% if score.expression %}{{ score.expression }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
                         <td>
@@ -67,7 +67,7 @@
                                    type="number"
                                    min="0"
                                    max="10"
-                                   value="{% if score.difficulty %}{{ score.audience }}{% else %}0{% endif %}"
+                                   value="{% if score.difficulty %}{{ score.difficulty }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
                         <td><a class="score-save" data-id="{{ s.id }}">儲存</a></td>
