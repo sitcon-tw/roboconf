@@ -1,10 +1,5 @@
-<div class="large-8 columns">
+<div class="large-12 columns">
     <div class="row collapse">
-        <h4>投稿者 {{ submission.user.profile.display_name }}</h4>
-    </div>
-    <div class="row collapse">
-        <h4>標題</h4>
-        <p>{{ submission.title }}</p>
         <h4>摘要</h4>
         <p>{{ submission.abstract }}</p>
         <h4>詳細說明</h4>
@@ -15,24 +10,6 @@
                 <li><a href="{{ file.url }}">{{ file.name }}</a></li>
             {% endfor %}
             <br/>
-        </div>
-    </div>
-</div>
-<div class="large-3 columns main-side-nav">
-    <div class="row">
-        <div>
-            <h4>投稿類型</h4>
-            {% if submission.type == 'S'%}
-            <p>Short Talk</p>
-            {% elif submission.type == 'L'%}
-            <p>Talk</p>
-            {% endif %}
-        </div>
-    </div>
-    <div class="row">
-        <div>
-            <h4>大頭照</h4>
-            <img src="{% if submission.user.profile.photo %}{{ submission.user.profile.photo.url }}{% else %}{{ submission.user.profile.avatar }}{% endif %}"/>
         </div>
     </div>
 </div>
