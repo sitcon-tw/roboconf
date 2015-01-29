@@ -42,7 +42,16 @@ def score_save(request):
 
         data = json.loads(request.POST['data'])
         data['user'] = request.user.id
-        score = ScoreForm(data).save()
+
+        try:
+            instance = Score.objects.get(user_id=request.user.id, submission_id=data['submission'])
+        except:
+            instance = None
+
+        if instance:
+            score = ScoreForm(data, instance=instance).save()
+        else:
+            score = ScoreForm(data).save()
 
         return JsonResponse({'status': 'OK'})
 
