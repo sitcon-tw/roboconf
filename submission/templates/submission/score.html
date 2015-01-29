@@ -28,8 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-				{% with sorted_submissions=submissions|dictsort:"type" %}
-                {% for s in sorted_submissions %}
+                {% for s, score in submissions %}
                     <tr>
                         <td>
                             <a class="submission-detail" data-status="close" data-template="{% url 'submission:view_partial' s.id %}" id="{{ s.id }}">＋</a> {{ s.title }}
@@ -40,16 +39,36 @@
 
                         <!-- Todo : move the style into scss file -->
                         <td>
-                            <input id="submission-{{ s.id }}-audience" type="number" min="0" max="10" style="max-width: 60px;">
+                            <input id="submission-{{ s.id }}-audience"
+                                   type="number"
+                                   min="0"
+                                   max="10"
+                                   value="{% if score.audience %}{{ score.audience }}{% else %}0{% endif %}"
+                                   style="max-width: 60px;">
                         </td>
                         <td>
-                            <input id="submission-{{ s.id }}-cool" type="number" min="0" max="10" style="max-width: 60px;">
+                            <input id="submission-{{ s.id }}-cool"
+                                   type="number"
+                                   min="0"
+                                   max="10"
+                                   value="{% if score.cool %}{{ score.audience }}{% else %}0{% endif %}"
+                                   style="max-width: 60px;">
                         </td>
                         <td>
-                            <input id="submission-{{ s.id }}-expression" type="number" min="0" max="10" style="max-width: 60px;">
+                            <input id="submission-{{ s.id }}-expression"
+                                   type="number"
+                                   min="0"
+                                   max="10"
+                                   value="{% if score.expression %}{{ score.audience }}{% else %}0{% endif %}"
+                                   style="max-width: 60px;">
                         </td>
                         <td>
-                            <input id="submission-{{ s.id }}-difficulty" type="number" min="0" max="10" style="max-width: 60px;">
+                            <input id="submission-{{ s.id }}-difficulty"
+                                   type="number"
+                                   min="0"
+                                   max="10"
+                                   value="{% if score.difficulty %}{{ score.audience }}{% else %}0{% endif %}"
+                                   style="max-width: 60px;">
                         </td>
                         <td><a class="score-save" data-id="{{ s.id }}">儲存</a></td>
                     </tr>
@@ -59,7 +78,6 @@
                         </td>
                     </tr>
                 {% endfor %}
-				{% endwith %}
                 </tbody>
             </table>
         {% else %}
