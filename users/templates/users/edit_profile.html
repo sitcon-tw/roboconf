@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="large-1 avatars columns">
 		<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}"
-		title="{% if not u.profile.photo %}請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照" data-tooltip{% endif %} />
+		title="{% if not u.profile.photo %}請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照{% endif %}" {% if not u.profile.photo %}data-tooltip{% endif %} />
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 	</div>
 	<div class="large-8 columns">
