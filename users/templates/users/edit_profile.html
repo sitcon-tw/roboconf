@@ -116,10 +116,7 @@
 			<li><a href="{% url 'users:reset_password' %}?id={{ u.id }}"><span class="icon-password iconize"></span> 重設密碼</a></li>
 			<li>
 				<a href="#" onClick="$('#active-form').submit();"><span class="icon-{{ u.is_active|yesno:'deactivate,activate' }} iconize"></span> {{ u.is_active|yesno:'停用帳號,啟用帳號' }}</a>
-				<form id="active-form" action="{% url 'users:edit' u.username %}" method="POST">
-					{% csrf_token %}
 					<input type="hidden" name="action" value="{{ u.is_active|yesno:'deactivate,activate' }}" />
-				</form>
 			</li>
 		{% endif %}
 		</ul>
@@ -135,6 +132,12 @@
 	</div>
 </div>
 </form>
+
+<form class="hide" id="active-form" action="{% url 'users:edit' u.username %}" method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="action" value="{{ u.is_active|yesno:'deactivate,activate' }}" />
+</form>
+
 {% endblock %}
 {% block scripts %}
 {% if perms.auth.change_user %}
