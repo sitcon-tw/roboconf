@@ -3,15 +3,21 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.conf import settings
+from django.http import Http404
 from core.formatting import render_document
 from docs.node import Node
 from submission.forms import SubmissionForm
 from submission.forms import SubmissionFileForm
 from submission.models import Submission
+from core.settings.base import SUBMISSION_END
+import datetime
+
 
 @login_required
 def edit(request, submission_id):
-    if request.user.has_perm('submission.review'):
+    if SUBMISSION_END < datetime.datetime.now():
+        raise Http404
+    elif request.user.has_perm('submission.review'):
         instance = get_object_or_404(Submission, id=submission_id)
     else:
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)

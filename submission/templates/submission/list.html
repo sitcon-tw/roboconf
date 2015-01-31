@@ -20,7 +20,7 @@
 						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
                         <td>{% if s.status == s.ACCEPTED %}噫！中了！{% else %}審查中{% endif %}</td>
                         <td>
-							{% if s.user == user %}
+							{% if s.user == user and not expired %}
 							<a href="{% url 'submission:edit' s.id %}">編輯</a> <a class="delete" data-submission-id="{{ s.id }}">刪除</a>
 							{% else %}
 							<a href="{% url 'submission:view' s.id %}">檢視</a>
