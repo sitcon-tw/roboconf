@@ -1,5 +1,5 @@
 from django import forms
-from submission.models import Submission, SubmissionFile
+from submission.models import Submission, SubmissionFile, Score
 
 class SubmissionForm(forms.ModelForm):
     class Meta:
@@ -10,4 +10,9 @@ class SubmissionForm(forms.ModelForm):
 class SubmissionFileForm(forms.ModelForm):
     class Meta:
         model = SubmissionFile
+        fields = '__all__'
+
+class ScoreForm(forms.ModelForm):
+    class Meta:
+        model = Score
         fields = '__all__'
