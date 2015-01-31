@@ -11,6 +11,7 @@ def list(request):
             'submissions': Submission.objects.all(),
             'user': request.user,
             'submission_end': SUBMISSION_END,
+            'submission_review': True,
             'expired': (SUBMISSION_END < datetime.datetime.now() ),
         }
     else:
@@ -18,6 +19,7 @@ def list(request):
             'submissions': request.user.submissions.all(),
             'user': request.user,
             'submission_end': SUBMISSION_END,
+            'submission_review': False,
             'expired': (SUBMISSION_END < datetime.datetime.now() ),
         }
     return render(request, 'submission/list.html', context)

@@ -19,7 +19,16 @@
 				<li><a href="{% url 'notifications:list' %}">通知</a></li>
 				{% endif %}
                 {% endif %}
+				{% if perms.submission.review %}
+				<li class="has-dropdown">
+					<a href="{% url 'submission:list' %}">投稿</a>
+					<ul class="dropdown">
+						<li><a href="{% url 'submission:score' %}">評分</a></li>
+					</ul>
+				</li>
+				{% else %}
 				<li><a href="{% url 'submission:list' %}">投稿</a></li>
+				{% endif %}
 				{% endif %}
 			</ul>
 			<ul class="right">

@@ -1,0 +1,15 @@
+<div class="large-12 columns">
+    <div class="row collapse">
+        <h4>摘要</h4>
+        <p>{{ submission.abstract }}</p>
+        <h4>詳細說明</h4>
+        <p>{{ submission.details|linebreaks }}</p>
+        <h4>附加檔案</h4>
+        <div class="small-12 columns">
+            {% for file in submission.files.all %}
+                <li><a href="{{ file.url }}">{{ file.name }}</a></li>
+            {% endfor %}
+            <br/>
+        </div>
+    </div>
+</div>

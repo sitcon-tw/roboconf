@@ -49,6 +49,10 @@
 		<h4>投稿截止時間：<br/>{{ submission_end }}</h4>
         <ul class="side-nav users-actions">
             <li><a href="{% url 'submission:create' %}"><span class="icon-email iconize"></span> 新增投稿</a></li>
+
+            {% if submission_review %}
+            <li><a href="{% url 'submission:score' %}"><span class="icon-star iconize"></span> 幫我打分數 &gt; &lt;</a></li>
+            {% endif %}
         </ul>
 		{% endif %}
     </div>
