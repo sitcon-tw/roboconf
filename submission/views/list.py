@@ -8,7 +8,7 @@ import datetime
 def list(request):
     if request.user.has_perm('submission.review'):
         context = {
-            'submissions': Submission.objects.all(),
+            'submissions': Submission.objects.order_by('type', 'id'),
             'user': request.user,
             'submission_end': SUBMISSION_END,
             'submission_review': True,
@@ -16,7 +16,7 @@ def list(request):
         }
     else:
         context = {
-            'submissions': request.user.submissions.all(),
+            'submissions': request.user.submissions.order_by('type', 'id'),
             'user': request.user,
             'submission_end': SUBMISSION_END,
             'submission_review': False,
