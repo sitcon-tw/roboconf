@@ -93,6 +93,7 @@
 <script>
 $(".score-save").on("click", function () {
     var id = this.dataset.id;
+	var clicked_object = $(this);
 
     var audience    = "#submission-" + id + "-audience";
     var cool        = "#submission-" + id + "-cool";
@@ -110,7 +111,10 @@ $(".score-save").on("click", function () {
     args = {"data": args};
 
     $.post("{% url 'submission:score_save' %}", args, function (data) {
-        // Todo : give some message when success
+		clicked_object.text("✓ 已儲存");
+		setTimeout(function() {
+			clicked_object.text("儲存");
+		}, 700);
     });
 });
 
