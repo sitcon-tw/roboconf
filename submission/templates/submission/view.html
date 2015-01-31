@@ -27,18 +27,14 @@
                 </div>
             </div>
             <div class="row collapse">
-                <div class="small-6 columns">
-                    <h4>狀態</h4>
-                </div>
-                <div class="small-6 columns">
-                    {% if submission.status == 'A' %}
-                    <p>噫！中了！</p>
-                    {% elif submission.status == 'R' %}
-                    <p>沒上QQ</p>
-                    {% elif submission.status == 'V' %}
-                    <p>審稿中</p>
-                    {% endif %}
-                </div>
+                <div class="small-12 columns">
+                    <h4>狀態：{% if submission.status == 'A' %}噫！中了！
+						{% elif submission.status == 'R' %}沒上QQ
+						{% elif submission.status == 'P' %}待審查
+						{% elif submission.status == 'V' %}審查中
+						{% endif %}
+					</h4>
+				</div>
             </div>
             <div class="row collapse">
                 <h4>審稿評論</h4>
