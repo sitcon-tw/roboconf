@@ -78,6 +78,11 @@
                         </td>
                     </tr>
                 {% endfor %}
+                    <tr>
+                        <td>
+                            <a id="save-all" class="small radius button">儲存全部</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         {% else %}
@@ -143,5 +148,34 @@ $(".submission-detail").on("click", function () {
         this.textContent = "＋";
     }
 });
+
+$("#save-all").on("click", function () {
+    $('.score-save').forEach(
+        function(i){
+            var clicked_object = $(i);
+            id = i.getAttribute('data-id');
+            var audience = "#submission-" + id + "-audience";
+            var cool = "#submission-" + id + "-cool";
+            var expression = "#submission-" + id + "-expression";
+            var difficulty = "#submission-" + id + "-difficulty";
+            var args = {
+            "submission": id,
+            "audience": $(audience)[0].value,
+            "cool": $(cool)[0].value,
+            "expression": $(expression)[0].value,
+            "difficulty": $(difficulty)[0].value,
+            };
+            args = JSON.stringify(args);
+            args = {"data": args};
+            $.post("/submission/score/save", args, function (data) {
+                clicked_object.text("✓ 已儲存");
+                setTimeout(function() {
+                    clicked_object.text("儲存");
+                }, 700);
+            });
+        }
+    );
+});
+
 </script>
 {% endblock %}
