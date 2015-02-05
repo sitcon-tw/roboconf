@@ -7,6 +7,13 @@ def file_path(instance, filename):
             instance.submission.title,
             filename)
 
+class Room(models.Model):
+    shortname = models.CharField(max_length=5, help_text='Short room name')
+    fullname = models.CharField(max_length=40, help_text='Full room name')
+
+    def __unicode__(self):
+        return self.shortname
+
 # Paper submission
 class Submission(models.Model):
     class Meta:
@@ -41,6 +48,8 @@ class Submission(models.Model):
     details = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
     comment = models.TextField(blank=True, help_text='Review comment')
+    room = models.ForeignKey(Room, blank=True, null=True)
+    time = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
         return self.title
