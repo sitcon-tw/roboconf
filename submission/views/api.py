@@ -13,6 +13,8 @@ def all(request):
 		'submissions': [
 			{
 				'speaker': s.user.profile.display_name,
+				'speakerbio': s.user.profile.bio,
+                'avatar': s.user.profile.avatar(),
 				'title': s.title,
 				'type': dict(Submission.SUBMISSION_TYPES)[s.type],
 				'abstract': s.abstract,
