@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from submission.models import Submission
 from core.settings.base import SUBMISSION_END
 from core.api.views import render_json
+from core.api.decorators import api_endpoint, ajax_required
 import datetime
 
 @api_endpoint(public=True)
