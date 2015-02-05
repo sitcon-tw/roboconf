@@ -14,9 +14,10 @@ def all(request):
 			{
 				'speaker': s.user.profile.display_name,
 				'title': s.title,
-				'type': s.type,
+				'type': dict(Submission.SUBMISSION_TYPES)[s.type],
 				'abstract': s.abstract,
-                #TODO: venue and time
+                'room': s.room.shortname if s.room else None,
+                'time': s.time,
 			}
 			for s in Submission.objects.filter(status='A').order_by('type', 'id')
 		],
