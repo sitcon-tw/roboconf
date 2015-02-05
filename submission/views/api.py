@@ -18,8 +18,8 @@ def all(request):
 				'title': s.title,
 				'type': dict(Submission.SUBMISSION_TYPES)[s.type],
 				'abstract': s.abstract,
-                'room': s.room.shortname if s.room else None,
-                'time': s.time,
+                'room': s.room.fullname if s.room else None,
+                'time': s.time.isoformat() if s.time else None,
 			}
 			for s in Submission.objects.filter(status='A').order_by('type', 'id')
 		],
