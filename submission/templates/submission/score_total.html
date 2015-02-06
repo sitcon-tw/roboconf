@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for s in submissions %}
+                {% for s in submissions|dictsortreversed:"total_score" %}
                     <tr>
                         <td>{{ s.title }}</td>
 						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
