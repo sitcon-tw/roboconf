@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Avg
 from submission.models import Submission, Score
 from submission.forms import ScoreForm
 from core.settings.base import SUBMISSION_END
@@ -59,3 +60,34 @@ def score_save(request):
 
     else:
         return JsonResponse({'status': 'You Can Not Do This !'})
+
+@login_required
+def score_total(request):
+    #if request.user.profile.is_authorized():
+    if True:
+        submissions = Submission.objects.filter(
+                                scores__audience__gt=0,
+                                scores__cool__gt=0,
+                                scores__expression__gt=0,
+                                scores__difficulty__gt=0,
+                            ).annotate(
+                                audience=Avg('scores__audience'),
+                                cool=Avg('scores__cool'),
+                                expression=Avg('scores__expression'),
+                                difficulty=Avg('scores__difficulty'),
+                            )
+
+        for i in submissions:
+            i.total_score = i.audience + i.cool + i.expression
+
+        submissions.order_by('-total_score')
+
+        context = {
+            'submissions': submissions,
+            'user': request.user,
+        }
+
+        return render(request, 'submission/score_total.html', context)
+
+    else:
+        return redirect('submission:list')
