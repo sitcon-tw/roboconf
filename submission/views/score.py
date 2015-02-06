@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from submission.models import Submission, Score
 from submission.forms import ScoreForm
 from core.settings.base import SUBMISSION_END
@@ -70,6 +70,7 @@ def score_total(request):
                                 scores__expression__gt=0,
                                 scores__difficulty__gt=0,
                             ).annotate(
+                                scores_number=Count('scores__audience'),
                                 audience=Avg('scores__audience'),
                                 cool=Avg('scores__cool'),
                                 expression=Avg('scores__expression'),

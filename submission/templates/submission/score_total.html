@@ -13,6 +13,7 @@
                         <th rowspan="2">標題</th>
                         <th rowspan="2">類型</th>
                         <th rowspan="2">投稿者</th>
+                        <th rowspan="2">評分人數</th>
                         <th rowspan="1" colspan="4">評分</th>
                         <th rowspan="2">總和 (不包含難度)</th>
                     </tr>
@@ -29,6 +30,7 @@
                         <td>{{ s.title }}</td>
 						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
 						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
+                        <td>{{ s.scores_number }}</td>
                         <td>{{ s.audience|floatformat:1 }}</td>
                         <td>{{ s.cool|floatformat:1 }}</td>
                         <td>{{ s.expression|floatformat:1 }}</td>
