@@ -23,4 +23,7 @@ class Activity(models.Model):
     submission = models.OneToOneField('submission.Submission', blank=True, null=True)
 
     def __unicode__(self):
-        return self.timeslot.start.astimezone(pytz.timezone(TIME_ZONE)).strftime('%X') + " " + self.description + " @ " + self.room.fullname
+        retstr = self.timeslot.start.astimezone(pytz.timezone(TIME_ZONE)).strftime('%X') + " "
+        retstr += self.submission.title if self.submission else self.description
+        retstr += " @ " + self.room.fullname
+        return retstr
