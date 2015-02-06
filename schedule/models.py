@@ -1,4 +1,6 @@
 from django.db import models
+from core.settings.base import TIME_ZONE
+import pytz
 
 class Room(models.Model):
     shortname = models.CharField(max_length=5, help_text='Short room name')
@@ -10,6 +12,9 @@ class Room(models.Model):
 class Timeslot(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
+
+    def __unicode__(self):
+        return self.start.astimezone(pytz.timezone(TIME_ZONE)).strftime('%x %X') + " duration: " + str(self.end-self.start)
 
 class Activity(models.Model):
     description = models.TextField(default='N/A')

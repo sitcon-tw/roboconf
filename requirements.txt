@@ -5,3 +5,4 @@ psycopg2==2.5.1
 wsgiref==0.1.2
 markdown==2.3.1
 bleach==1.4
+pytz==2014.10
