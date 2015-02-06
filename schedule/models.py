@@ -21,3 +21,6 @@ class Activity(models.Model):
     timeslot = models.ForeignKey(Timeslot)
     room = models.ForeignKey(Room, blank=True, null=True)
     submission = models.OneToOneField('submission.Submission', blank=True, null=True)
+
+    def __unicode__(self):
+        return self.timeslot.start.astimezone(pytz.timezone(TIME_ZONE)).strftime('%X') + " " + self.description + " @ " + self.room.fullname
