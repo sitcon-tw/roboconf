@@ -86,6 +86,8 @@ INSTALLED_APPS = (
     'agenda',
     'notifications',
     'submission',
+    'schedule',
+    'rest_framework',
 )
 
 LOGGING = {
