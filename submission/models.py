@@ -71,3 +71,7 @@ class Score(models.Model):
 
     class Meta:
         unique_together = ('submission', 'user')
+
+    def __unicode__(self):
+        return self.submission.title+" ["+str(self.audience)+" "+str(self.cool)+" "+\
+                str(self.expression)+" "+str(self.difficulty)+"] by "+self.user.profile.display_name
