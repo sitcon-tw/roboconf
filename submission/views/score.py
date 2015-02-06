@@ -63,8 +63,7 @@ def score_save(request):
 
 @login_required
 def score_total(request):
-    #if request.user.profile.is_authorized():
-    if True:
+    if request.user.profile.is_authorized():
         submissions = Submission.objects.filter(
                                 scores__audience__gt=0,
                                 scores__cool__gt=0,
