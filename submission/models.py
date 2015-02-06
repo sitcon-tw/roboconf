@@ -1,18 +1,12 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from users.models import User
+from schedule.models import Room
 
 def file_path(instance, filename):
     return u'submission_files/{} - {}'.format(
             instance.submission.title,
             filename)
-
-class Room(models.Model):
-    shortname = models.CharField(max_length=5, help_text='Short room name')
-    fullname = models.CharField(max_length=40, help_text='Full room name')
-
-    def __unicode__(self):
-        return self.shortname
 
 # Paper submission
 class Submission(models.Model):
