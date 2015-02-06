@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'submission',
     'schedule',
     'rest_framework',
+    'api',
 )
 
 LOGGING = {
@@ -139,6 +140,11 @@ LOGGING = {
             'format': '[%(asctime)s] %(levelname)s %(name)s: %(module)s %(process)d %(thread)d %(message)s'
         }
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
 }
 
 EMAIL_HOST = ''
