@@ -22,7 +22,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class RoomSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Room
-        fields = ('url', 'shortname', 'fullname')
+        fields = ('url', 'shortname', 'fullname', 'activity_set')
 
 class TimeslotSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -39,4 +39,4 @@ class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Submission
-        fields = ('url', 'speaker', 'title', 'type', 'abstract')
+        fields = ('url', 'speaker', 'title', 'type', 'abstract', 'activity')
