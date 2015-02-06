@@ -1,0 +1,48 @@
+{% extends 'core/master.html' %}
+{% block title %}投稿{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="large-9 columns">
+        <div>
+        {% with c=submissions.count %}
+        {% if c > 0 %}
+            <h3><small>共 {{ submissions.count }} 篇投稿已評分</small></h3>
+            <table class="submissions-list main">
+                <thead>
+					<tr>
+                        <th rowspan="2">標題</th>
+                        <th rowspan="2">類型</th>
+                        <th rowspan="2">投稿者</th>
+                        <th rowspan="1" colspan="4">評分</th>
+                        <th rowspan="2">總和 (不包含難度)</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="1" colspan="1">適合聽眾</th>
+                        <th rowspan="1" colspan="1">酷炫</th>
+                        <th rowspan="1" colspan="1">表達能力</th>
+                        <th rowspan="1" colspan="1">難度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for s in submissions %}
+                    <tr>
+                        <td>{{ s.title }}</td>
+						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
+						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
+                        <td>{{ s.audience }}</td>
+                        <td>{{ s.cool }}</td>
+                        <td>{{ s.expression }}</td>
+                        <td>{{ s.difficulty }}</td>
+                        <td>{{ s.total_score }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3><small>還沒有任何投稿</small></h3>
+        {% endif %}
+        {% endwith %}
+        </div>
+    </div>
+</div>
+{% endblock %}
