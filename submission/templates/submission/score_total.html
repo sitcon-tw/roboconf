@@ -29,11 +29,11 @@
                         <td>{{ s.title }}</td>
 						<td>{% if s.type == s.LONG %}Talk{% elif s.type == s.SHORT %}Short talk{% endif %}</td>
 						<td><a href="{% url 'users:profile' s.user.username %}">{{ s.user.profile.display_name }}</a></td>
-                        <td>{{ s.audience }}</td>
-                        <td>{{ s.cool }}</td>
-                        <td>{{ s.expression }}</td>
-                        <td>{{ s.difficulty }}</td>
-                        <td>{{ s.total_score }}</td>
+                        <td>{{ s.audience|floatformat:1 }}</td>
+                        <td>{{ s.cool|floatformat:1 }}</td>
+                        <td>{{ s.expression|floatformat:1 }}</td>
+                        <td>{{ s.difficulty|floatformat:1 }}</td>
+                        <td>{{ s.total_score|floatformat:1 }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
