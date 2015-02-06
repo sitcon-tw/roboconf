@@ -1,3 +1,6 @@
 from django.contrib import admin
+from schedule.models import *
 
-# Register your models here.
+admin.site.register(Activity)
+admin.site.register(Timeslot)
+admin.site.register(Room)
