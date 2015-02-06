@@ -77,6 +77,3 @@ class Score(models.Model):
 
     class Meta:
         unique_together = ('submission', 'user')
-
-    def total_score(self):
-        return audience + cool + expression
