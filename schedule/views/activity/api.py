@@ -14,7 +14,7 @@ def all(request):
                 'description': a.description,
                 'room': a.room.fullname if a.room else None,
                 'time': a.timeslot.start.astimezone(pytz.timezone(TIME_ZONE)).strftime('%X'),
-                'submission': a.submission._id if a.submission else None
+                'submission': a.submission.pk if a.submission else None
 			}
 			for a in Activity.objects.order_by('timeslot__start')
 		],
