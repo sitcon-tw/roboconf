@@ -40,6 +40,13 @@
 				<li{% if 'all' in filters %} class="active"{% endif %}><a href="{% url 'users:list' %}?find=all">所有帳號</a></li>
 			</ul>
 		{% endif %}
+		<div class="divider"></div>
+			<h5>匯出左列人員</h5>
+			<ul class="side-nav">
+				{% for f in formats %}
+				<li><a href="{% url 'users:export' f %}{{ params }}">{{ f }}</a></li>
+				{% endfor %}
+			</ul>
 	</div>
 </div>
 {% endblock %}
