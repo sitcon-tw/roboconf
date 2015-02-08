@@ -108,6 +108,7 @@ def export(request, format=None):
 			entity['first_name'] = user.first_name
 			entity['school'] = user.profile.school
 			entity['grade'] = user.profile.grade
+			entity['bio'] = user.profile.bio if user.profile.bio else None
 			entity['comment'] = user.profile.comment
 			entity['groups'] = ' '.join([str(g.id) for g in user.groups.all()])
 
