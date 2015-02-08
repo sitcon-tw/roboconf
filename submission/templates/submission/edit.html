@@ -62,6 +62,8 @@
                     <p>沒上QQ</p>
                     {% elif submission.status == 'V' %}
                     <p>審稿中</p>
+                    {% elif submission.status == 'E' %}
+                    <p>待修正</p>
                     {% endif %}
                 </div>
             </div>
