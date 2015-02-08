@@ -81,7 +81,7 @@ def contacts(request):
 		'show_details': request.GET.get('details') and request.user.profile.is_trusted(),
 	})
 
-#@login_required
+@login_required
 def export(request, format=None):
 	if format and format not in formats.keys():
 		from django.http import Http404
