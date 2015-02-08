@@ -5,6 +5,13 @@ from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
 from users.utils import sorted_users, sorted_categories
 
+formats = {
+	'html': ('text/html', 'users/export.html'),
+	'csv': ('text/csv', 'users/export.csv'),
+	'xml': ('application/xml', 'users/export.xml'),
+	'vcard': ('text/vcard', 'users/export.vcf'),
+}
+
 def list(request):
 	if not request.user.is_authenticated():
 		from django.contrib.auth.views import redirect_to_login
@@ -46,6 +53,8 @@ def list(request):
 		'users': sorted_users(users),
 		'categories': sorted_categories,
 		'filters': filters,
+		'params': "?"+request.GET.urlencode() if request.GET else "",
+		'formats': formats.keys(),
 	})
 
 @api_endpoint(public=True)
@@ -74,13 +83,6 @@ def contacts(request):
 
 #@login_required
 def export(request, format=None):
-	formats = {
-		'html': ('text/html', 'users/export.html'),
-		'csv': ('text/csv', 'users/export.csv'),
-		'xml': ('application/xml', 'users/export.xml'),
-		'vcard': ('text/vcard', 'users/export.vcf'),
-	}
-
 	if format and format not in formats.keys():
 		from django.http import Http404
 		raise Http404
