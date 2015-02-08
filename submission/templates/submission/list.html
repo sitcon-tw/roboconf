@@ -27,6 +27,8 @@
                         <td>
 							{% if s.user == user and not expired %}
 							<a href="{% url 'submission:edit' s.id %}">編輯</a> <a class="delete" data-submission-id="{{ s.id }}">刪除</a>
+							{% elif s.user == user and expired and s.status == 'E' %}
+							<a href="{% url 'submission:edit' s.id %}">編輯</a>
 							{% else %}
 							<a href="{% url 'submission:view' s.id %}">檢視</a>
 							{% endif %}
