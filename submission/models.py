@@ -27,11 +27,13 @@ class Submission(models.Model):
     REJECTED = 'R'
     PENDING = 'P'
     REVIEWING = 'V'
+    EDITING = 'E'
     STATUS = (
             (ACCEPTED, 'Accepted'),
             (REJECTED, 'Rejected'),
             (PENDING, 'Pending'),
             (REVIEWING, 'Reviewing'),
+            (EDITING, 'Editing'),
         )
 
     user = models.ForeignKey(User, editable=False, related_name='submissions')
