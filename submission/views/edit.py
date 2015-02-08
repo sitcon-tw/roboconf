@@ -16,7 +16,9 @@ import datetime
 @login_required
 def edit(request, submission_id):
     if SUBMISSION_END < datetime.datetime.now():
-        raise Http404
+        instance = get_object_or_404(Submission, id=submission_id, user=request.user)
+        if instance.status!='E':
+            raise Http404
     elif request.user.has_perm('submission.review'):
         instance = get_object_or_404(Submission, id=submission_id)
     else:
