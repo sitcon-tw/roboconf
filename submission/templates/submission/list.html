@@ -6,7 +6,7 @@
         <div>
         {% with c=submissions.count %}
         {% if c > 0 %}
-            <h3><small>共 {{ submissions.count }} 篇投稿</small></h3>
+		<h3><small>共 {{ submissions.count }} 篇投稿{% if submitter_count %}，{{ submitter_count }} 個不重複投稿人{% endif %}</small></h3>
             <table class="submissions-list main">
                 <thead>
 					<tr><th>標題</th><th>類型</th><th>投稿者</th><th>狀態</th><th>動作</th></tr>
