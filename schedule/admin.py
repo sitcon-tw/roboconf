@@ -10,6 +10,7 @@ class ActivityAdmin(admin.ModelAdmin):
         for a in queryset:
             a_copy = copy.copy(a)
             a_copy.pk = None
+            a_copy.submission = None
             a_copy.save()
 
     def propagate_all_rooms(self, request, queryset):
