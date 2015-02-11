@@ -19,6 +19,7 @@ class ActivityAdmin(admin.ModelAdmin):
                 if not a.room == r:
                     a_copy = copy.copy(a)
                     a_copy.pk = None
+                    a_copy.submission = None
                     a_copy.room = r
                     a_copy.save()
 
