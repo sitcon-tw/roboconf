@@ -4,6 +4,7 @@ from api.serializers import *
 from users.models import UserProfile
 from schedule.models import *
 from submission.models import *
+from core.settings.base import SUBMITTER_GROUP_ID
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.filter(is_active=True)
@@ -11,10 +12,16 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = UserProfile.objects.filter(user__is_active=True)
+    #active_ids = UserProfile.objects.filter(user__is_active=True).value_list('pk')
+    #queryset.exclude(user__group__in=[SUBMITTER_GROUP_ID] and user__submissions__isnull)
     serializer_class = UserProfileSerializer
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Group.objects.filter(categories__in=[3,2])
     serializer_class = GroupSerializer
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
