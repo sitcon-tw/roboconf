@@ -39,9 +39,13 @@ class TimeslotSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'start', 'end', 'activity_set')
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):
+    start = serializers.DateTimeField(source='timeslot.start')
+    end = serializers.DateTimeField(source='timeslot.end')
+    room = serializers.CharField(source='room.fullname')
+
     class Meta:
         model = Activity
-        fields = ('url', 'description', 'timeslot', 'room', 'submission')
+        fields = ('url', 'description', 'start', 'end', 'room', 'submission')
 
 class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
     speaker = serializers.CharField(source='user.profile.display_name')
