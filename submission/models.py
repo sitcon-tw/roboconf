@@ -38,7 +38,7 @@ class Submission(models.Model):
             (EDITING, 'Editing'),
         )
 
-    user = models.ForeignKey(User, editable=False, related_name='submissions')
+    user = models.ForeignKey(User, related_name='submissions')
     title = models.CharField(max_length=40, unique=True)
     type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
     avatar = models.CharField(max_length=1000, blank=True, help_text='link to custom avatar image')
