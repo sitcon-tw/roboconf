@@ -22,7 +22,7 @@ class Submission(models.Model):
             (SHORT, 'Short talk'),
             (LONG, 'Talk'),
             (LIGHTNING, 'Lightning talk'),
-            (KEYNOTE, 'K'),
+            (KEYNOTE, 'Keynote'),
         )
 
     ACCEPTED = 'A'
