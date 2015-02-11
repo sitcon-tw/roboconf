@@ -5,6 +5,7 @@ import copy
 
 class ActivityAdmin(admin.ModelAdmin):
     actions = ['copy_activity', 'propagate_all_rooms']
+    list_filter = ('timeslot', 'room')
 
     def copy_activity(self, request, queryset):
         for a in queryset:
