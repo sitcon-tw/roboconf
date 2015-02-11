@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'schedule',
     'rest_framework',
     'api',
+    'imagekit',
 )
 
 LOGGING = {
