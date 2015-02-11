@@ -4,17 +4,21 @@ from users.models import UserProfile
 from schedule.models import *
 from submission.models import *
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'profile', 'groups')
-
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('url', 'user', 'display_name', 'bio', 'title', 'avatar')
 
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    profile = UserProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ('url', 'profile', 'groups')
+
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    user_set = UserSerializer(many=True)
+
     class Meta:
         model = Group
         fields = ('url', 'name', 'user_set')
