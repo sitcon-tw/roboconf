@@ -21,7 +21,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GroupSerializer
 
 class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Group.objects.filter(categories__in=[3,2])
+    queryset = Group.objects.filter(categories__in=[2])
     serializer_class = GroupSerializer
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
