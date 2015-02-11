@@ -17,10 +17,12 @@ class Submission(models.Model):
     SHORT = 'S'
     LONG = 'L'
     LIGHTNING = 'N'
+    KEYNOTE = 'K'
     SUBMISSION_TYPES = (
             (SHORT, 'Short talk'),
             (LONG, 'Talk'),
             (LIGHTNING, 'Lightning talk'),
+            (KEYNOTE, 'K'),
         )
 
     ACCEPTED = 'A'
