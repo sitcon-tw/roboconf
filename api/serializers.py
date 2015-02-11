@@ -17,11 +17,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'profile', 'groups')
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    user_set = UserSerializer(many=True)
+    users = serializers.SerializerMethodField()
 
     class Meta:
         model = Group
-        fields = ('url', 'name', 'user_set')
+        fields = ('url', 'name', 'users')
+
+    def get_users(self, group):
+        users = User.objects.filter(groups__in=[group]).filter(is_active=True)
+        serializer = UserSerializer(instance=users, many=True, context={'request': self.context['request']})
+        return serializer.data
 
 class RoomSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
