@@ -5,6 +5,7 @@ admin.site.register(Score)
 
 class SubmissionAdmin(admin.ModelAdmin):
     actions = ['make_editing', 'make_accepted', 'make_rejected', 'make_reviewing', 'make_pending']
+    list_filter = ('type', 'status')
 
     def make_editing(self, request, queryset):
         queryset.update(status='E')
