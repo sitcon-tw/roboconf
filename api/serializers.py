@@ -5,14 +5,9 @@ from schedule.models import *
 from submission.models import *
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
-    avatar = serializers.SerializerMethodField()
-
     class Meta:
         model = UserProfile
         fields = ('url', 'user', 'display_name', 'bio', 'title', 'avatar')
-
-    def get_avatar(self, profile):
-        return self.context['request'].build_absolute_uri(profile.avatar())
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer()
