@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 def photo_path(instance, filename):
     return u'photos/{} - {}'.format(
@@ -31,12 +32,28 @@ class UserProfile(models.Model):
 			return self.user.username
 
 	def avatar(self):
-		import md5
-		hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
-		if self.is_authorized():
+		if not self.photo:
+			import md5
+			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
 			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
 		else:
-			return self.photo.url if self.photo else ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value) 
+			return reverse('users:photo_medium', kwargs={'username': self.user.username}, current_app='users')
+
+	def avatar_small(self):
+		if not self.photo:
+			import md5
+			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+		else:
+			return reverse('users:photo_small', kwargs={'username': self.user.username}, current_app='users')
+
+	def avatar_full(self):
+		if not self.photo:
+			import md5
+			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+		else:
+			return self.photo.url
 
 	def is_authorized(self):
 		return self.user.groups.filter(id=settings.STAFF_GROUP_ID).exists()
