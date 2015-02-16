@@ -33,7 +33,7 @@ class TimeslotViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TimeslotSerializer
 
 class ActivityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Activity.objects.order_by('timeslot__start')
+    queryset = Activity.objects.order_by('timeslot__start', 'room__pk')
     serializer_class = ActivitySerializer
 
 class SubmissionViewSet(viewsets.ReadOnlyModelViewSet):
