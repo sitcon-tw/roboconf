@@ -26,7 +26,8 @@ def api_endpoint(methods=None, public=False):
 					response['Access-Control-Allow-Headers'] = ','.join(DEFAULT_ALLOWED_HEADERS)
 
 				if public:
-					response['Access-Control-Allow-Origin'] = '*'
+					#response['Access-Control-Allow-Origin'] = '*'
+					response['Access-Control-Allow-Origin'] = ''
 				elif DEFAULT_ALLOWED_ORIGIN.match(origin):
 					response['Access-Control-Allow-Origin'] = origin
 
