@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from users.models import UserProfile
+from users.utils import sorted_users
 from schedule.models import *
 from submission.models import *
 
@@ -24,7 +25,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name', 'users')
 
     def get_users(self, group):
-        users = User.objects.filter(groups__in=[group]).filter(is_active=True)
+        users = sorted_users(User.objects.filter(groups=group).filter(is_active=True))
         serializer = UserSerializer(instance=users, many=True, context={'request': self.context['request']})
         return serializer.data
 
