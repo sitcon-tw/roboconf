@@ -18,12 +18,16 @@ class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserProfileSerializer
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = sorted_groups(Group.objects.all())
     serializer_class = GroupSerializer
 
+    def get_queryset(self):
+        return sorted_groups(Group.objects.all())
+
 class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = sorted_groups(Group.objects.filter(categories__in=[2]))
     serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        return sorted_groups(Group.objects.filter(categories__id=2))
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()
