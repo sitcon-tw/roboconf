@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from api.serializers import *
 from users.models import UserProfile
+from users.utils import sorted_groups
 from schedule.models import *
 from submission.models import *
 from core.settings.base import SUBMITTER_GROUP_ID
@@ -17,11 +18,11 @@ class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserProfileSerializer
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Group.objects.all()
+    queryset = sorted_groups(Group.objects.all())
     serializer_class = GroupSerializer
 
 class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Group.objects.filter(categories__in=[2])
+    queryset = sorted_groups(Group.objects.filter(categories__in=[2]))
     serializer_class = GroupSerializer
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
