@@ -2,28 +2,10 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from api.serializers import *
 from users.models import UserProfile
-from users.utils import sorted_groups as utils_sorted_groups
+from users.utils import sorted_groups
 from schedule.models import *
 from submission.models import *
 from core.settings.base import SUBMITTER_GROUP_ID
-
-class FakeQuerySet(object):
-    '''
-    workaround for quertset.model
-    '''
-
-    def __init__(self, data):
-        self.data = data
-        self.model = type(data[0])
-    def __iter__(self):
-        return self.data.__iter__()
-
-def sorted_groups(data):
-    '''
-    workaround
-    '''
-
-    return FakeQuerySet(utils_sorted_groups(data))
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.filter(is_active=True)
@@ -36,12 +18,16 @@ class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserProfileSerializer
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = sorted_groups(Group.objects.all())
     serializer_class = GroupSerializer
 
+    def get_queryset(self):
+        return sorted_groups(Group.objects.all())
+
 class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = sorted_groups(Group.objects.filter(categories__in=[2]))
     serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        return sorted_groups(Group.objects.filter(categories__id=2))
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()
