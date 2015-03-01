@@ -109,6 +109,7 @@ def comment(issue, request):
 
 		update(issue=issue, user=request.user, content=content)
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
+		issue.starring.add(request.user)	# Follow after comment
 
 		mentions = filter_mentions(content)
 		for mentionee in mentions:
