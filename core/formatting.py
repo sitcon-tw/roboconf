@@ -1,17 +1,33 @@
+import bleach
 import markdown as m
 
 inline = m.Markdown(
-	extensions=['fenced_code', 'nl2br', 'extensions.vendor.del_ins', 'extensions.vendor.linkify'],
-	safe_mode='escape',
-	smart_emphasis=False,	# Prevent problems on Chinese characters
+	extensions=[
+		'markdown.extensions.fenced_code',
+		'markdown.extensions.nl2br',
+		'markdown.extensions.tables',
+		'mdx_del_ins',
+		'mdx_linkify.mdx_linkify',
+	],
 )
 
 docs = m.Markdown(
-	extensions=['abbr', 'def_list', 'fenced_code', 'footnotes', 'tables', 'toc', 'nl2br', 'extensions.vendor.del_ins', 'extensions.vendor.linkify'],
-	smart_emphasis=False,	# Prevent problems on Chinese characters
+	extensions=[
+		'markdown.extensions.abbr',
+		'markdown.extensions.def_list',
+		'markdown.extensions.fenced_code',
+		'markdown.extensions.footnotes',
+		'markdown.extensions.tables',
+		'markdown.extensions.toc',
+		'markdown.extensions.nl2br',
+		'mdx_del_ins', 
+		'mdx_linkify.mdx_linkify',
+	],
 )
 
 def render_inline(text, autoescape=True):
+	if autoescape:
+		text = bleach.clean(text)
 	return inline.convert(text)
 
 def render_document(text):
