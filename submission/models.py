@@ -46,6 +46,7 @@ class Submission(models.Model):
     details = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
     comment = models.TextField(blank=True, help_text='Review comment')
+    slides = models.TextField(blank=True, help_text='links to slides')
 
     def __unicode__(self):
         return self.title
