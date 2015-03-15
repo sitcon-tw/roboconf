@@ -30,12 +30,14 @@ class Submission(models.Model):
     PENDING = 'P'
     REVIEWING = 'V'
     EDITING = 'E'
+    ENDED = 'Z'
     STATUS = (
             (ACCEPTED, 'Accepted'),
             (REJECTED, 'Rejected'),
             (PENDING, 'Pending'),
             (REVIEWING, 'Reviewing'),
             (EDITING, 'Editing'),
+            (ENDED, 'Ended'),
         )
 
     user = models.ForeignKey(User, related_name='submissions')
