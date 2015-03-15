@@ -1,0 +1,12 @@
+[uwsgi]
+chdir=/srv/http/roboconf
+virtualenv=/srv/http/roboconf/venv
+module=core.wsgi:application
+env= LC_ALL=en_US.UTF-8
+env= LANG=en_US.UTF-8
+master=True
+pidfile=/tmp/roboconf.pid
+socket=/tmp/roboconf.sock
+processes=10
+vacuum=True
+daemonize=/var/log/uwsgi/roboconf.log
