@@ -36,6 +36,10 @@
                     <br/>
                     <input type="file" name="slide" multiple/>
                 </div>
+				<h4>簡報連結 <small>公開於年會網站</small></h4>
+                <div class="small-12 columns">
+                    <textarea name="slides">{{ submission.slides }}</textarea>
+                </div>
             </div>
             <div class="row">
                 <div class="button-row">
@@ -64,6 +68,8 @@
                     <p>審稿中</p>
                     {% elif submission.status == 'E' %}
                     <p>待修正</p>
+                    {% elif submission.status == 'Z' %}
+                    <p>演講結束</p>
                     {% endif %}
                 </div>
             </div>
