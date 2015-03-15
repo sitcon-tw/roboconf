@@ -46,8 +46,6 @@ class Submission(models.Model):
     details = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
     comment = models.TextField(blank=True, help_text='Review comment')
-    room = models.ForeignKey(Room, blank=True, null=True)
-    time = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
         return self.title
