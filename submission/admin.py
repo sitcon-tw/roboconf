@@ -4,7 +4,7 @@ from submission.models import *
 admin.site.register(Score)
 
 class SubmissionAdmin(admin.ModelAdmin):
-    actions = ['make_editing', 'make_accepted', 'make_rejected', 'make_reviewing', 'make_pending']
+    actions = ['make_editing', 'make_accepted', 'make_rejected', 'make_reviewing', 'make_pending', 'make_ended']
     list_filter = ('type', 'status')
 
     def make_editing(self, request, queryset):
@@ -21,5 +21,8 @@ class SubmissionAdmin(admin.ModelAdmin):
 
     def make_pending(self, request, queryset):
         queryset.update(status='P')
+
+    def make_ended(self, request, queryset):
+        queryset.update(status='Z')
 
 admin.site.register(Submission, SubmissionAdmin)
