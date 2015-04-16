@@ -6,6 +6,7 @@ from users.utils import sorted_groups
 from schedule.models import *
 from submission.models import *
 from core.settings.base import SUBMITTER_GROUP_ID
+from django.db.models import Q
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.filter(is_active=True)
@@ -42,5 +43,5 @@ class ActivityViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ActivitySerializer
 
 class SubmissionViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Submission.objects.filter(status='A')
+    queryset = Submission.objects.filter(Q(status='A') | Q(status='Z'))
     serializer_class = SubmissionSerializer
