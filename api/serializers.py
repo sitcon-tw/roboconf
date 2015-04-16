@@ -61,4 +61,4 @@ class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Submission
-        fields = ('url', 'speaker', 'bio', 'avatar', 'title', 'type', 'abstract', 'start', 'end', 'room', 'activity')
+        fields = ('url', 'speaker', 'bio', 'avatar', 'title', 'type', 'abstract', 'start', 'end', 'room', 'activity', 'slides')
