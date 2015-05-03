@@ -1,12 +1,11 @@
  # -*- coding: utf-8 -*-
 
-from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from django.views.decorators.debug import sensitive_variables
 from notifications.utils import send_template_mail, format_address
-from users.utils import generate_password, sorted_categories
+from users.utils import normalize_phone, generate_password, sorted_categories
 from users.models import UserProfile
 
 @sensitive_variables('password')
@@ -55,7 +54,7 @@ def create(request):
 			profile.display_name = request.POST.get('display_name')
 			profile.school = request.POST.get('school')
 			profile.grade = request.POST.get('grade')
-			profile.phone = request.POST.get('phone')
+			profile.phone = normalize_phone(request.POST.get('phone', ''))
 			profile.comment = request.POST.get('comment')
 			profile.save()
 

@@ -78,7 +78,7 @@ def edit(request, username):
         profile.display_name = request.POST.get('display_name')
         profile.school = request.POST.get('school')
         profile.grade = request.POST.get('grade')
-        profile.phone = request.POST.get('phone')
+        profile.phone = normalize_phone(request.POST.get('phone', ''))
         profile.residence = request.POST.get('residence')
         profile.shirt_size = request.POST.get('shirt_size')
         profile.diet = request.POST.get('diet')
