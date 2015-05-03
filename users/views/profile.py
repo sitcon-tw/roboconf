@@ -14,9 +14,9 @@ def profile(request, username):
 				'status': 'success',
 				'user': {
 					'id': user.username,
-					'name': user.profile.name(),
+					'name': user.profile.name,
 					'title': user.profile.title,
-					'avatar': user.profile.avatar(),
+					'avatar': user.profile.avatar,
 				}
 			})
 		return bad_request(request, {'status': 'invalid'})

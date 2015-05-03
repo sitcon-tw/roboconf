@@ -17,7 +17,7 @@ class Command(NoArgsCommand):
 			for watcher in issue.starring.all():
 				send_template_mail(
 					settings.DEFAULT_ISSUE_SENDER,
-					format_address(watcher.profile.name(), watcher.email),
+					format_address(watcher.profile.name, watcher.email),
 					'mail/issue_expired.html',
 					{
 						'issue': issue,
