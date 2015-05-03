@@ -1,13 +1,15 @@
+import md5
+import os.path
 from django.db import models
 from django.db.models import signals
 from django.contrib.auth.models import User, Group
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.utils.timezone import now
 
 def photo_path(instance, filename):
-    return u'photos/{} - {}'.format(
-            instance.display_name,
-            filename)
+    _, ext = os.path.splitext(filename)
+    hash_value = md5.new(instance.display_name + now().isoformat()).hexdigest()
+    return u'photos/{}{}'.format(hash_value, ext)
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile')
@@ -35,7 +37,6 @@ class UserProfile(models.Model):
 
     @property
     def gravatar(self):
-        import md5
         hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
         return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
 
