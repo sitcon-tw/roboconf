@@ -85,11 +85,9 @@ INSTALLED_APPS = (
     'issues',
     'agenda',
     'notifications',
-    'submission',
     'schedule',
     'rest_framework',
     'api',
-    'imagekit',
 )
 
 LOGGING = {
@@ -175,9 +173,5 @@ SUBMISSION_RULE_DOCID = ''
 
 ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
 
-# groups
-
-STAFF_GROUP_NAME = '工作人員'
+# Groups
 STAFF_GROUP_ID = 11
-SUBMITTER_GROUP_NAME = '投稿講者'
-SUBMITTER_GROUP_ID = 16
