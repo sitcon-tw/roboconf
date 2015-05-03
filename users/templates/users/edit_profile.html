@@ -131,7 +131,6 @@
 			<li><a href="{% url 'users:reset_password' %}?id={{ u.id }}"><span class="icon-password iconize"></span> 重設密碼</a></li>
 			<li>
 				<a href="#" onClick="$('#active-form').submit();"><span class="icon-{{ u.is_active|yesno:'deactivate,activate' }} iconize"></span> {{ u.is_active|yesno:'停用帳號,啟用帳號' }}</a>
-					<input type="hidden" name="action" value="{{ u.is_active|yesno:'deactivate,activate' }}" />
 			</li>
 		{% endif %}
 		</ul>
