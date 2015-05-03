@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from users.models import *
 
 def generate_password():
@@ -7,7 +6,7 @@ def generate_password():
 	# Generate a password with length 12
 	return urlsafe_b64encode(urandom(8))[:-1]
 
-GROUP_PRIORITY = [3, 1, 6, 7, 5, 8, 4, 9, 2, 14, 19, 20, 15, 13, 18, 12, 11, 10]	# Sort by team lead -> staff -> consultant
+GROUP_PRIORITY = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]	# Sort by team lead -> staff -> consultant
 def get_user_sorting_key(user):
 	groups = [g.id for g in user.groups.all()]
 	identity = ''.join([str(1 - groups.count(i)) for i in GROUP_PRIORITY])	# Sort by identity first
