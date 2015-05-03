@@ -5,7 +5,6 @@ from users.models import UserProfile
 from users.utils import sorted_groups
 from schedule.models import *
 from submission.models import *
-from core.settings.base import SUBMITTER_GROUP_ID
 from django.db.models import Q
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -14,8 +13,6 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = UserProfile.objects.filter(user__is_active=True)
-    #active_ids = UserProfile.objects.filter(user__is_active=True).value_list('pk')
-    #queryset.exclude(user__group__in=[SUBMITTER_GROUP_ID] and user__submissions__isnull)
     serializer_class = UserProfileSerializer
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):

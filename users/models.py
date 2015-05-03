@@ -58,7 +58,6 @@ class UserProfile(models.Model):
 
 	def is_authorized(self):
 		return self.user.groups.filter(id=settings.STAFF_GROUP_ID).exists()
-		#return self.user.groups.filter(name=settings.STAFF_GROUP_NAME).exists()
 
 	def is_trusted(self):
 		return self.is_authorized() and self.user.has_perm('auth.change_user')

@@ -3,10 +3,8 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 from django.contrib.auth.models import User
-from django import forms
 from notifications.utils import format_address, send_template_mail
 from users.token import generate_uid, generate_token
-from users.models import UserProfile
 
 class PasswordResetForm(DjangoPasswordResetForm):
 	def clean_email(self):
