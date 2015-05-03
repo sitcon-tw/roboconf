@@ -91,18 +91,21 @@
 				<div class="small-4 columns">
 					<select name="residence">
 						<option disabled>所在地</option>
+						{% if not u.profile.residence %}<option value="" selected>（所在地）</option>{% endif %}
 						{% for r in options.residence %}<option{% if u.profile.residence == r %} selected{% endif %}>{{ r }}</option>{% endfor %}
 					</select>
 				</div>
 				<div class="small-4 columns">
 					<select name="shirt_size">
 						<option disabled>衣服尺寸</option>
+						{% if not u.profile.shirt_size %}<option value="" selected>（衣服尺寸）</option>{% endif %}
 						{% for s in options.shirt_size %}<option{% if u.profile.shirt_size == s %} selected{% endif %}>{{ s }}</option>{% endfor %}
 					</select>
 				</div>
 				<div class="small-4 columns">
 					<select name="diet">
 						<option disabled>飲食習慣</option>
+						{% if not u.profile.diet %}<option value="" selected>（飲食習慣）</option>{% endif %}
 						{% for d in options.diet %}<option{% if u.profile.diet == d %} selected{% endif %}>{{ d }}</option>{% endfor %}
 					</select>
 				</div>

@@ -18,9 +18,9 @@ class UserProfile(models.Model):
     grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
     phone = models.CharField(max_length=16, blank=True)
     photo = models.FileField(upload_to=photo_path)
-    bio = models.TextField(max_length=320, help_text='biography')
+    bio = models.TextField(max_length=320, blank=True, help_text='biography')
     residence = models.CharField(max_length=16, blank=True, help_text='residence')
-    shirt_size = models.CharField(max_length=8, default='L', help_text='T-shirt size')
+    shirt_size = models.CharField(max_length=8, blank=True, help_text='T-shirt size')
     diet = models.CharField(max_length=8, blank=True)
 
     comment = models.TextField(blank=True)
