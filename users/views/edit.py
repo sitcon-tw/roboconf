@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.conf import settings
 from users.models import *
 from users.utils import *
 
@@ -76,14 +77,16 @@ def edit(request, username):
 
         profile.display_name = request.POST.get('display_name')
         profile.school = request.POST.get('school')
-        profile.bio = request.POST.get('bio')
         profile.grade = request.POST.get('grade')
         profile.phone = request.POST.get('phone')
+        profile.residence = request.POST.get('residence')
+        profile.shirt_size = request.POST.get('shirt_size')
+        profile.diet = request.POST.get('diet')
 
         if request.FILES.get('photo'):
             profile.photo = request.FILES.get('photo')
 
-        profile.departure = request.POST.get('departure')
+        profile.bio = request.POST.get('bio')
         profile.comment = request.POST.get('comment')
 
         if len(errors) < 1:
@@ -96,6 +99,11 @@ def edit(request, username):
     return render(request, 'users/edit_profile.html', {
         'u': user,
         'categories': sorted_categories if privileged else None,
+        'options': {
+            'residence': settings.RESIDENCE_OPTIONS,
+            'shirt_size': settings.SHIRT_SIZE_OPTIONS,
+            'diet': settings.DIET_OPTIONS,
+        },
         'errors': errors,
         'status': status,
     })

@@ -12,16 +12,19 @@ def photo_path(instance, filename):
     return u'photos/{}{}'.format(hash_value, ext)
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User, related_name='profile')
+    user = models.OneToOneField(User, related_name='profile')
 	display_name = models.CharField(max_length=16, default='Not set')
 	title = models.CharField(max_length=16, default='Not set')
-	school = models.CharField(max_length=32, blank=True, help_text='school or company')
-	bio = models.TextField(max_length=300, help_text='biography')
-	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
-	phone = models.CharField(max_length=16, blank=True)
+    school = models.CharField(max_length=32, blank=True, help_text='school or company')
+    grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
+    phone = models.CharField(max_length=16, blank=True)
 	photo = models.FileField(upload_to=photo_path, blank=True)
-	departure = models.CharField(max_length=10, blank=True, help_text='departure')
-	comment = models.TextField(blank=True)
+    bio = models.TextField(max_length=320, help_text='biography')
+    residence = models.CharField(max_length=16, blank=True, help_text='residence')
+    shirt_size = models.CharField(max_length=8, default='L', help_text='T-shirt size')
+    diet = models.CharField(max_length=8, blank=True)
+
+    comment = models.TextField(blank=True)
 
     def __unicode__(self):
         return '%s - %s' % (self.title, self.user.username)
