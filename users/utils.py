@@ -1,3 +1,4 @@
+import re
 from users.models import *
 
 def generate_password():
@@ -5,6 +6,9 @@ def generate_password():
 	from base64 import urlsafe_b64encode
 	# Generate a password with length 12
 	return urlsafe_b64encode(urandom(8))[:-1]
+
+def normalize_phone(phone):
+	return re.sub(r'[\s\-]+', '', phone)
 
 GROUP_PRIORITY = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]	# Sort by team lead -> staff -> consultant
 def get_user_sorting_key(user):
