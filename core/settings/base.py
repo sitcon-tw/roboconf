@@ -166,10 +166,6 @@ DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-SUBMISSION_START = datetime.datetime.min
-SUBMISSION_END = datetime.datetime.max
-SUBMISSION_RULE_DOCID = ''
-
 ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
 
 # Groups
