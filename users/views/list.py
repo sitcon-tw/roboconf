@@ -65,9 +65,9 @@ def ajax(request):
 		'users': [
 			{
 				'id': u.username,
-				'name': u.profile.name(),
+				'name': u.profile.name,
 				'title': u.profile.title,
-				'avatar': u.profile.avatar(),
+				'avatar': u.profile.avatar,
 			}
 			for u in sorted_users(User.objects.filter(is_active=True, groups=11))
 		],
@@ -122,9 +122,9 @@ def export(request, format=None):
 	for user in sorted_users(users):
 		entity = {
 			'id': user.username,
-			'name': user.profile.name(),
+			'name': user.profile.name,
 			'title': user.profile.title,
-			'avatar': user.profile.avatar(),
+			'avatar': user.profile.avatar,
 			'email': user.email,
 		}
 

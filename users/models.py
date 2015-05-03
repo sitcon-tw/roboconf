@@ -21,47 +21,36 @@ class UserProfile(models.Model):
 	departure = models.CharField(max_length=10, blank=True, help_text='departure')
 	comment = models.TextField(blank=True)
 
-	def __unicode__(self):
-		return '%s - %s' % (self.title, self.user.username)
+    def __unicode__(self):
+        return '%s - %s' % (self.title, self.user.username)
 
-	def name(self):
-		if self.display_name:
-			return self.display_name
-		elif self.user.first_name and self.user.last_name:
-			return '%s %s' % (self.user.last_name, self.user.first_name)
-		else:
-			return self.user.username
+    @property
+    def name(self):
+        if self.display_name:
+            return self.display_name
+        elif self.user.first_name and self.user.last_name:
+            return '%s %s' % (self.user.last_name, self.user.first_name)
+        else:
+            return self.user.username
 
-	def avatar(self):
-		if not self.photo:
-			import md5
-			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
-			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
-		else:
-			return reverse('users:photo_medium', kwargs={'username': self.user.username}, current_app='users')
+    @property
+    def gravatar(self):
+        import md5
+        hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+        return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
 
-	def avatar_small(self):
-		if not self.photo:
-			import md5
-			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
-			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
-		else:
-			return reverse('users:photo_small', kwargs={'username': self.user.username}, current_app='users')
+    @property
+    def avatar(self):
+        if not self.photo:
+            return self.gravatar
+        else:
+            return self.photo.url
 
-	def avatar_full(self):
-		if not self.photo:
-			import md5
-			hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
-			return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
-		else:
-			return self.photo.url
+    def is_authorized(self):
+        return self.user.groups.filter(id=settings.STAFF_GROUP_ID).exists()
 
-	def is_authorized(self):
-		return self.user.groups.filter(id=settings.STAFF_GROUP_ID).exists()
-		#return self.user.groups.filter(name=settings.STAFF_GROUP_NAME).exists()
-
-	def is_trusted(self):
-		return self.is_authorized() and self.user.has_perm('auth.change_user')
+    def is_trusted(self):
+        return self.is_authorized() and self.user.has_perm('auth.change_user')
 
 	def has_submission(self):
 		return True if self.user.submissions.count() > 0 else False
@@ -73,9 +62,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 signals.post_save.connect(create_user_profile, sender=User)
 
 class GroupCategory(models.Model):
-	name = models.CharField(max_length=30)
-	is_visible = models.BooleanField(default=True)
-	groups = models.ManyToManyField(Group, related_name='categories')
+    name = models.CharField(max_length=30)
+    is_visible = models.BooleanField(default=True)
+    groups = models.ManyToManyField(Group, related_name='categories')
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
