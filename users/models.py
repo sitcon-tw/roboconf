@@ -61,10 +61,6 @@ class UserProfile(models.Model):
 	def is_trusted(self):
 		return self.is_authorized() and self.user.has_perm('auth.change_user')
 
-	def has_submission(self):
-		return True if self.user.submissions.count() > 0 else False
-
-
 class GroupCategory(models.Model):
 	name = models.CharField(max_length=30)
 	is_visible = models.BooleanField(default=True)
