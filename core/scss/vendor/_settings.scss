@@ -43,9 +43,9 @@ $body-font-family: "Helvetica Neue", Helvetica, Arial, /* Fallback */
 
 // Colors
 
-$primary-color: #18528e;
+$primary-color: lighten(#18528e, 10%);
 $secondary-color: #e9e9e9;
-$alert-color: #2f322e;
+$alert-color: #af322e;
 $success-color: #58803d;
 
 // Make sure border radius matches unless we want it different.
@@ -1242,7 +1242,7 @@ $topbar-bg-color: #131313;
 
 // Style the top bar dropdown elements
 
-$topbar-dropdown-bg: #333;
+$topbar-dropdown-bg: $topbar-bg-color;
 // $topbar-dropdown-link-color: #fff;
 $topbar-dropdown-link-bg: $topbar-bg-color;
 // $topbar-dropdown-toggle-size: 5px;
@@ -1254,7 +1254,7 @@ $topbar-dropdown-link-bg: $topbar-bg-color;
 // $topbar-link-color: #fff;
 $topbar-link-color-hover: #58cbfb;
 $topbar-link-color-active: $topbar-link-color-hover;
-// $topbar-link-weight: bold;
+$topbar-link-weight: 500;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 $topbar-link-bg-hover: $topbar-bg-color;
@@ -1262,7 +1262,7 @@ $topbar-link-bg-active: $topbar-link-bg-hover;
 
 $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
-// $topbar-dropdown-label-font-weight: bold;
+$topbar-dropdown-label-font-weight: 500;
 $topbar-dropdown-label-font-size: em-calc(13);
 $topbar-dropdown-label-bg: $topbar-dropdown-bg;
 
@@ -1273,8 +1273,8 @@ $topbar-dropdown-label-bg: $topbar-dropdown-bg;
 // $topbar-menu-link-weight: bold;
 // $topbar-menu-link-color: #fff;
 // $topbar-menu-icon-color: #fff;
-// $topbar-menu-link-color-toggled: #888;
-// $topbar-menu-icon-color-toggled: #888;
+$topbar-menu-link-color-toggled: $topbar-link-color-hover;
+$topbar-menu-icon-color-toggled: $topbar-link-color-hover;
 
 // Transitions and breakpoint styles
 
