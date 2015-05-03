@@ -88,13 +88,28 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="departure" placeholder="出發地，平時生活的地區，必填，僅供大會調查統計" maxlength="1000" value="{% if u.profile.departure %}{{ u.profile.departure }}{% endif %}" required />
+				<div class="small-4 columns">
+					<select name="residence">
+						<option disabled>所在地</option>
+						{% for r in options.residence %}<option{% if u.profile.residence == r %} selected{% endif %}>{{ r }}</option>{% endfor %}
+					</select>
+				</div>
+				<div class="small-4 columns">
+					<select name="shirt_size">
+						<option disabled>衣服尺寸</option>
+						{% for s in options.shirt_size %}<option{% if u.profile.shirt_size == s %} selected{% endif %}>{{ s }}</option>{% endfor %}
+					</select>
+				</div>
+				<div class="small-4 columns">
+					<select name="diet">
+						<option disabled>飲食習慣</option>
+						{% for d in options.diet %}<option{% if u.profile.diet == d %} selected{% endif %}>{{ d }}</option>{% endfor %}
+					</select>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<textarea name="bio" placeholder="個人介紹" maxlength="300">{% if u.profile.bio %}{{ u.profile.bio }}{% endif %}</textarea>
+					<textarea name="bio" placeholder="個人介紹" maxlength="300">{{ u.profile.bio }}</textarea>
 				</div>
 			</div>
 			<div class="row">
@@ -122,10 +137,7 @@
 		</ul>
 		<div class="row">
 			<div class="small-12 columns">
-				<h6>個人頭像 <br /><small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h6>
-				<img src="{% if u.profile.photo %}{{ u.profile.photo.url }}{% endif %}">
-				<br />
-				<br />
+				<h6>個人頭像</h6>
 				<input type="file" name="photo" />
 			</div>
 		</div>
