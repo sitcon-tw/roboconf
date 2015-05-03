@@ -75,8 +75,8 @@ def create(request):
 					'groups': [g.name for g in user.groups.all()],
 				}
 
-				sender_address = format_address(request.user.profile.name(), request.user.email)
-				receiver_address = format_address(user.profile.name(), user.email)
+				sender_address = format_address(request.user.profile.name, request.user.email)
+				receiver_address = format_address(user.profile.name, user.email)
 				send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
 
 			status = 'success'

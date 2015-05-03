@@ -30,5 +30,5 @@ class PasswordResetForm(DjangoPasswordResetForm):
 			}
 
 			sender_address = settings.DEFAULT_ACCOUNTS_SENDER
-			receiver_address = format_address(user.profile.name(), user.email)
+			receiver_address = format_address(user.profile.name, user.email)
 			send_template_mail(sender_address, receiver_address, 'mail/user_reset_password.html', context)
