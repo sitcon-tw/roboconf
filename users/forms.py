@@ -10,7 +10,6 @@ from django import forms
 from notifications.utils import format_address, send_template_mail
 from users.models import RegisterToken
 from users.token import generate_uid, generate_token
-from users.models import UserProfile
 
 
 class PasswordResetForm(DjangoPasswordResetForm):
