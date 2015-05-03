@@ -21,7 +21,7 @@ def create(request):
 		receiver_target = request.POST.get('receiver', '').split(',')
 		if 'staff' in receiver_target:
 			for user in User.objects.exclude(email='', is_active=False):
-				receivers[user.email] = user.profile.name()
+				receivers[user.email] = user.profile.name
 
 		if request.POST.get('receivers'):
 			additional_receivers = request.POST.get('receivers').strip().split('\n')
