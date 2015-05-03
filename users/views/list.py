@@ -132,7 +132,7 @@ def export(request, format=None):
 			entity['phone'] = user.profile.phone
 
 		if trusted:
-			entity['departure'] = user.profile.departure
+			entity['residence'] = user.profile.residence
 			entity['model_id'] = user.id
 			entity['last_name'] = user.last_name
 			entity['first_name'] = user.first_name
