@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     bio = models.TextField(max_length=320, help_text='biography')
     residence = models.CharField(max_length=16, blank=True, help_text='residence')
     shirt_size = models.CharField(max_length=8, default='L', help_text='T-shirt size')
-    diet = models.CharField(mex_length=8, blank=True)
+    diet = models.CharField(max_length=8, blank=True)
 
     comment = models.TextField(blank=True)
 
