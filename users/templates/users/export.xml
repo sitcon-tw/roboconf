@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<users>
-{% for user in users %}
-	<user>
-		{% for key, value in user.items %}
+<users>{% for user in users %}
+	<user>{% for key, value in user.items %}
 		<{{ key }}>{{ value }}</{{ key }}>{% endfor %}
-
-	</user>
-{% endfor %}
+	</user>{% endfor %}
 </users>
