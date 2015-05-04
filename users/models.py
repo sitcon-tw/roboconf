@@ -41,7 +41,7 @@ class UserProfile(models.Model):
     @property
     def gravatar(self):
         hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
-        return ('https://secure.gravatar.com/avatar/%s?d=retro' % hash_value)
+        return ('https://secure.gravatar.com/avatar/%s?d=identicon' % hash_value)
 
     @property
     def avatar(self):
