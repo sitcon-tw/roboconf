@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.validators import validate_email
 from django.conf import settings
+from core.imaging import resize_image
 from users.models import *
 from users.utils import *
 
@@ -83,8 +85,17 @@ def edit(request, username):
         profile.shirt_size = request.POST.get('shirt_size')
         profile.diet = request.POST.get('diet')
 
-        if request.FILES.get('photo'):
-            profile.photo = request.FILES.get('photo')
+        photo = request.FILES.get('photo')
+        if photo:
+            if photo.size > settings.AVATAR_FILE_SIZE_LIMIT:
+                errors += ['photo', 'photo_too_large']
+            else:
+                try:
+                    photo_data = resize_image(photo, size=settings.AVATAR_IMAGE_SIZE_LIMIT)
+                    resized_photo = SimpleUploadedFile(name=photo.name, content=photo_data, content_type=photo.content_type)
+                    profile.photo = resized_photo
+                except ValueError:
+                    errors += ['photo', 'photo_invalid']
 
         profile.bio = request.POST.get('bio')
         profile.comment = request.POST.get('comment')
