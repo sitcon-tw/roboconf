@@ -8,7 +8,7 @@ from django.utils.timezone import now
 
 def photo_path(instance, filename):
     _, ext = os.path.splitext(filename)
-    hash_value = md5.new(instance.display_name + now().isoformat()).hexdigest()
+    hash_value = md5.new(instance.display_name.encode('utf8') + now().isoformat()).hexdigest()
     return u'photos/{}{}'.format(hash_value, ext)
 
 class UserProfile(models.Model):
