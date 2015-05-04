@@ -1,20 +1,20 @@
-[SITCON][行政組] 歡迎加入 SITCON 工作人員！
+[SITCON][夏令營] 歡迎加入 SITCON 工作人員！
 =====
-<div style="font-size: 1.2em; font-family: 'Droid Sans', Helvetica, Arial, sans-serif; padding: 1em 0.75em; background: #2d7500;">
+<div style="font-size: 1.2em; font-family: Roboto, Helvetica, Arial, sans-serif; padding: 1em 0.75em; background: #2d7500;">
 	<a href="{{ site_url }}" style="color: #fff; text-decoration: none;">SITCON</a>
 </div>
 <p>Hi {{ receiver.profile.title }} {{ receiver.profile.name }},</p>
 <p>歡迎加入 SITCON 工作人員的行列！SITCON 學生計算機年會致力於降低學生接觸資訊領域的門檻、提供彼此交流與發表研究的平台，同時冀望能夠因此而使學生的聲音被聽見。在開始之前，請容許我們協助您完成相關流程：</p>
 <ol>
-	<li>您於<a href="{{ site_url }}">行政系統</a>的帳號 <strong>{{ receiver.username }}</strong> 已經啟用，臨時密碼為 <em>{{ password }}</em>。請於<a href="{{ site_url }}{% url 'users:login' %}">登入</a>後立即<a href="{{ site_url }}{% url 'users:change_password' %}">修改您的密碼</a>。</li>
+	<li>您於<a href="{{ site_url }}">夏令營行政系統</a>的帳號 <strong>{{ receiver.username }}</strong> 已經啟用，臨時密碼為 <em>{{ password }}</em>。請於<a href="{{ site_url }}{% url 'users:login' %}">登入</a>後立即<a href="{{ site_url }}{% url 'users:change_password' %}">修改您的密碼</a>。</li>
 {% if "工作人員" in groups %}
-	<li>年會籌備的相關事項皆會於 sitcon@googlegroups.com 郵件清單中討論，請到<a href="https://groups.google.com/forum/#!forum/sitcon">這裡</a>申請加入，並設定您的電子郵件偏好。</li>
+	<li>夏令營籌備的相關事項皆會於 sitcon-camp@googlegroups.com 郵件清單中討論，請到<a href="https://groups.google.com/forum/#!forum/sitcon-camp">這裡</a>申請加入，並設定您的電子郵件偏好。</li>
 {% else %}
 	<li>請與您的組長聯絡，確認是否已經加入所屬組別的郵件清單中。</li>
 {% endif %}
 	<li>為了方便聯繫及讓其他工作人員認識你，請至<a href="{{ site_url }}{% url 'users:edit' receiver.username %}">個人檔案</a>填寫您的聯絡電話、系級等資訊。如有茹素、特殊病史、或須指定緊急聯絡人，可填寫於備註欄。</li>
 </ol>
-<p>再次歡迎您加入 SITCON 籌備團隊，讓我們共同努力、期待年會圓滿成功！祝<br/>萬事順心</p>
+<p>再次歡迎您加入 SITCON 籌備團隊，讓我們共同努力、期待夏令營圓滿成功！祝<br/>萬事順心</p>
 <p></p>
 <p>{{ sender.profile.title }} {{ sender.profile.name }}</p>
 <hr/>
