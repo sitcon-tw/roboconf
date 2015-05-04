@@ -41,11 +41,12 @@
 			</ul>
 		{% endif %}
 		<div class="divider"></div>
-			<h5>匯出左列人員</h5>
+			<h5>匯出</h5>
 			<ul class="side-nav">
-				{% for f in formats %}
-				<li><a href="{% url 'users:export' f %}{{ params }}">{{ f }}</a></li>
-				{% endfor %}
+				<li><a href="{% url 'users:export' 'html' %}?{{ params }}">HTML</a></li>
+				<li><a href="{% url 'users:export' 'csv' %}?{{ params }}">CSV</a></li>
+				<li><a href="{% url 'users:export' 'xml' %}?{{ params }}">XML</a></li>
+				<li><a href="{% url 'users:export' 'vcard' %}?{{ params }}">vCard</a></li>
 			</ul>
 	</div>
 </div>
