@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -26,6 +26,10 @@ def detail(request, issue_id):
 		if content: comment(issue, request)
 		if action == 'toggle-state':
 			toggle_state(issue, request)
+
+	if request.method == 'POST':
+		# Redirect to HTTP GET (PRG pattern) to eliminate resubmission
+		return redirect('issues:detail', issue.id)
 
 	return render(request, 'issues/detail.html', {
 		'issue': issue,
