@@ -10,7 +10,7 @@ def generate_password():
 def normalize_phone(phone):
 	return re.sub(r'[\s\-]+', '', phone)
 
-GROUP_PRIORITY = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]	# Sort by team lead -> staff -> consultant
+GROUP_PRIORITY = [6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 1, 2, 3, 4, 5]	# Sort by team lead -> staff -> consultant
 def get_user_sorting_key(user):
 	groups = [g.id for g in user.groups.all()]
 	identity = ''.join([str(1 - groups.count(i)) for i in GROUP_PRIORITY])	# Sort by identity first

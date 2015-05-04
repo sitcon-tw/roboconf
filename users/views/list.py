@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from core.api.decorators import api_endpoint, ajax_required
@@ -28,6 +29,9 @@ def list(request):
 		users = users.filter(is_active=False)
 	elif 'all' not in filters or not trusted:
 		users = users.filter(is_active=True)
+
+	if 'non_staff' in filters:
+		users = users.exclude(groups__in=settings.STAFF_GROUP_ID)
 
 	if groups:
 		to_include, to_exclude = [], []
