@@ -40,7 +40,7 @@ def apply_filter(filters, groups, users=None, trusted=False):
 		users = users.filter(is_active=True)
 
 	if 'non_staff' in filters:
-		users = users.exclude(groups__in=settings.STAFF_GROUP_ID)
+		users = users.exclude(groups=settings.STAFF_GROUP_ID)
 
 	if groups:
 		to_include, to_exclude = [], []
