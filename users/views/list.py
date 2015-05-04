@@ -20,11 +20,20 @@ def list(request):
 	elif not request.user.profile.is_authorized():
 		return redirect('index')
 
-	users = User.objects.all()
 	filters = request.GET.getlist('find')
 	groups = request.GET.get('g')
 	trusted = request.user.profile.is_trusted()
+	users = apply_filter(filters=filters, groups=groups, trusted=trusted)
 
+	return render(request, 'users/list.html', {
+		'users': sorted_users(users),
+		'categories': sorted_categories,
+		'filters': filters,
+		'params': request.GET.urlencode(),
+	})
+
+def apply_filter(filters, groups, users=None, trusted=False):
+	users = users or User.objects.all()
 	if 'disabled' in filters and trusted:
 		users = users.filter(is_active=False)
 	elif 'all' not in filters or not trusted:
@@ -35,7 +44,6 @@ def list(request):
 
 	if groups:
 		to_include, to_exclude = [], []
-
 		for g in groups.split(','):
 			try:
 				g = int(g)
@@ -53,13 +61,7 @@ def list(request):
 		if to_exclude:
 			users = users.exclude(groups__in=to_exclude)
 
-	return render(request, 'users/list.html', {
-		'users': sorted_users(users),
-		'categories': sorted_categories,
-		'filters': filters,
-		'params': "?"+request.GET.urlencode() if request.GET else "",
-		'formats': formats.keys(),
-	})
+	return users
 
 @api_endpoint(public=True)
 @ajax_required(redirect_url='users:list')
@@ -91,38 +93,13 @@ def export(request, format=None):
 		from django.http import Http404
 		raise Http404
 
-	authorized = request.user.profile.is_authorized()
-	users = User.objects.all()
 	filters = request.GET.getlist('find')
 	groups = request.GET.get('g')
+	authorized = request.user.profile.is_authorized()
 	trusted = request.user.profile.is_trusted()
+	users = apply_filter(filters=filters, groups=groups, trusted=trusted)
 
-	if 'disabled' in filters and trusted:
-		users = users.filter(is_active=False)
-	elif 'all' not in filters or not trusted:
-		users = users.filter(is_active=True)
-
-	if groups:
-		to_include, to_exclude = [], []
-
-		for g in groups.split(','):
-			try:
-				g = int(g)
-			except ValueError: pass
-			else:
-				filters.append(g)
-				if g >= 0:
-					to_include.append(g)
-				else:
-					to_exclude.append(-g)
-
-		if to_include:
-			users = users.filter(groups__in=to_include)
-
-		if to_exclude:
-			users = users.exclude(groups__in=to_exclude)
-
-	users_output=[]
+	users_output = []
 	for user in sorted_users(users):
 		entity = {
 			'id': user.username,
@@ -136,18 +113,19 @@ def export(request, format=None):
 			entity['phone'] = user.profile.phone
 
 		if trusted:
-			entity['residence'] = user.profile.residence
 			entity['model_id'] = user.id
 			entity['last_name'] = user.last_name
 			entity['first_name'] = user.first_name
 			entity['school'] = user.profile.school
 			entity['grade'] = user.profile.grade
-			entity['bio'] = user.profile.bio if user.profile.bio else None
+			entity['residence'] = user.profile.residence
+			entity['shirt_size'] = user.profile.shirt_size
+			entity['diet'] = user.profile.diet
+			entity['bio'] = user.profile.bio or None
 			entity['comment'] = user.profile.comment
 			entity['groups'] = ' '.join([str(g.id) for g in user.groups.all()])
 
 		users_output.append(entity)
-
 
 	content_type, template = formats[format or 'html']
 	return render(request, template, { 'users': users_output }, content_type=content_type)
