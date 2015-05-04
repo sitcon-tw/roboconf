@@ -138,9 +138,11 @@
 		{% endif %}
 		</ul>
 		<div class="row">
-			<div class="small-12 columns">
+			<div class="small-12 columns {% if 'photo' in errors %}error{% endif %}">
 				<h6>個人頭像</h6>
 				<input type="file" name="photo" />
+				{% if 'photo_too_large' in errors %}<small>影像檔案太大了，伺服器表示悲傷</small>
+				{% elif 'invalid_photo' in errors %}<small>影像格式太奇怪，伺服器表示悲傷</small>{% endif %}
 			</div>
 		</div>
 	</div>
