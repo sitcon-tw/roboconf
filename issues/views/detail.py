@@ -115,7 +115,7 @@ def comment(issue, request):
 	notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
 	issue.starring.add(request.user)	# Follow after comment
 
-	mentions, extra_receivers = filter_mentions(issue.content)
+	mentions, extra_receivers = filter_mentions(content)
 	mentions -= set((request.user,))
 	for user in mentions:
 		issue.starring.add(user)	# Auto watch
