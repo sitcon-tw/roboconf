@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.utils import timezone
 from issues.models import Issue, IssueHistory, Label
 from issues.utils import send_mail, send_sms, filter_mentions
 from users.utils import sorted_users
-
-ISSUE_MAGIC_TOKEN = '#!'
 
 @login_required
 def detail(request, issue_id):
@@ -105,31 +104,32 @@ def comment(issue, request):
 		return	# Audit fail
 
 	content = request.POST.get('content')
-	if content:
-		urgent = False
-		if content.startswith(ISSUE_MAGIC_TOKEN):
-			content = content[len(ISSUE_MAGIC_TOKEN):]
-			urgent = True
+	urgent = False
+	if not content:
+		return
+	elif content.startswith(settings.ISSUE_MAGIC_TOKEN):
+		content = content[len(settings.ISSUE_MAGIC_TOKEN):]
+		urgent = True
 
-		update(issue=issue, user=request.user, content=content)
-		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
-		issue.starring.add(request.user)	# Follow after comment
+	update(issue=issue, user=request.user, content=content)
+	notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
+	issue.starring.add(request.user)	# Follow after comment
 
-		mentions, extra_receivers = filter_mentions(issue.content)
-		mentions -= set(request.user)
-		for user in mentions:
-			issue.starring.add(user)	# Auto watch
-			send_mail(request.user, user, 'mail/issue_mentioned.html', { 'issue': issue, 'comment': content })
-		for receiver in extra_receivers:
-			send_mail(request.user, receiver, 'mail/issue_mentioned.html', { 'issue': issue, 'comment': content })
+	mentions, extra_receivers = filter_mentions(issue.content)
+	mentions -= set((request.user,))
+	for user in mentions:
+		issue.starring.add(user)	# Auto watch
+		send_mail(request.user, user, 'mail/issue_mentioned.html', { 'issue': issue, 'comment': content })
+	for receiver in extra_receivers:
+		send_mail(request.user, receiver, 'mail/issue_mentioned.html', { 'issue': issue, 'comment': content })
 
-		if urgent:
-			if issue.assignee and issue.assignee not in mentions:
-				mentions.append(issue.assignee)
+	if urgent:
+		if issue.assignee and issue.assignee not in mentions:
+			mentions.append(issue.assignee)
 
-			for mentionee in mentions:
-				if mentionee.profile.phone:
-					send_sms(request.user, mentionee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
+		for mentionee in mentions:
+			if mentionee.profile.phone:
+				send_sms(request.user, mentionee, 'sms/issue_comment.txt', { 'issue': issue, 'comment': content })
 
 def toggle_state(issue, request):
 	if not request.user.has_perm('issues.toggle_issue'):
