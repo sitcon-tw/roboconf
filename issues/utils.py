@@ -1,6 +1,8 @@
+import datetime
 import re
 from django.conf import settings
 from django.db.models import Q
+from django.utils import dateparse
 from notifications.utils import format_address, send_template_mail, send_template_sms
 from users.models import User, Group
 
@@ -32,6 +34,15 @@ def filter_mentions(content):
 	if settings.BROADCAST_MAGIC_TOKEN in mention_tokens:
 		extra_receivers.append(settings.BROADCAST_EMAIL)
 	return set(mentions), extra_receivers
+
+def parse_date(value):
+	if len(value) <= 10:
+		value = dateparse.parse_date(value)
+		if value:
+			value = datetime.datetime.combine(value, settings.ISSUE_DEFAULT_DAYTIME)
+	else:
+		value = dateparse.parse_datetime(value)
+	return value
 
 def is_issue_urgent(issue):
 	# Label 1 stands for urgent in current staff system
