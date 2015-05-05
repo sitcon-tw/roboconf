@@ -115,10 +115,13 @@ def comment(issue, request):
 		notify(issue, request.user, 'mail/issue_general.html', {'issue': issue, 'comment': content})
 		issue.starring.add(request.user)	# Follow after comment
 
-		mentions = filter_mentions(content)
-		for mentionee in mentions:
-			issue.starring.add(mentionee)	# Auto watch
-			send_mail(request.user, mentionee, 'mail/issue_mentioned.html', {'issue': issue, 'comment': content })
+		mentions, extra_receivers = filter_mentions(issue.content)
+		mentions -= set(request.user)
+		for user in mentions:
+			issue.starring.add(user)	# Auto watch
+			send_mail(request.user, user, 'mail/issue_mentioned.html', { 'issue': issue, 'comment': content })
+		for receiver in extra_receivers:
+			send_mail(request.user, receiver, 'mail/issue_mentioned.html', { 'issue': issue, 'comment': content })
 
 		if urgent:
 			if issue.assignee and issue.assignee not in mentions:
