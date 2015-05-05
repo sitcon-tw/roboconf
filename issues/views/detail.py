@@ -107,8 +107,8 @@ def comment(issue, request):
 	urgent = False
 	if not content:
 		return
-	elif content.startswith(settings.ISSUE_MAGIC_TOKEN):
-		content = content[len(settings.ISSUE_MAGIC_TOKEN):]
+	elif content.startswith(settings.URGENT_MAGIC_TOKEN):
+		content = content[len(settings.URGENT_MAGIC_TOKEN):]
 		urgent = True
 
 	update(issue=issue, user=request.user, content=content)
