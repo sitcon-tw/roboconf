@@ -8,6 +8,7 @@ SITE_URL = 'http://staff.sitcon.camp'
 
 DEFAULT_FROM_EMAIL = '"SITCON 夏令營行政系統" <admin@staff.sitcon.camp>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+BROADCAST_EMAIL = 'sitcon-camp@googlegroups.com'
 
 DEFAULT_NOTIFICATION_SENDER = 'SITCON 夏令營行政系統:notifications@staff.sitcon.camp'
 DEFAULT_ACCOUNTS_SENDER =  'SITCON 夏令營行政系統:accounts@staff.sitcon.camp'
