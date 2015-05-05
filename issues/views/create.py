@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
-from django.utils import dateparse
-from django.conf import settings
 from issues.models import Issue, IssueHistory, Label
-from issues.utils import send_mail, filter_mentions
+from issues.utils import send_mail, filter_mentions, parse_date
 from users.utils import sorted_users
-import datetime
 
 @permission_required('issues.add_issue')
 def create(request):
@@ -20,19 +17,16 @@ def create(request):
 		issue.creator = request.user
 
 		due_time = request.POST.get('due_time', '').strip()
-		if len(due_time) > 0:
+		if len(due_time):
 			try:
-				if len(due_time) <= 10:
-					due_time = dateparse.parse_date(due_time)
-					due_time = datetime.datetime.combine(due_time, datetime.time(settings.ISSUE_DEFAULT_DAYTIME)) if due_time else None
-				else:
-					due_time = dateparse.parse_datetime(due_time)
+				due_time = parse_date(due_time)
 			except ValueError:
 				errors.append('date-invalid')
-
-			if due_time: issue.due_time = due_time
 			else:
-				errors.append('date-misformed')
+				if due_time:
+					issue.due_time = due_time
+				else:
+					errors.append('date-misformed')
 
 		assignee = request.POST.get('assignee')
 		if assignee:	# Empty value => not assigned, no need to set
@@ -42,7 +36,7 @@ def create(request):
 			except User.DoesNotExist:
 				assignee = None		# Just in case we're under attack...
 
-		if len(errors) < 1:
+		if not errors:
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
 
