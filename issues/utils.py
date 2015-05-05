@@ -29,7 +29,7 @@ def filter_mentions(content):
 		else:
 			mention_group = Group.objects.filter(name__istartswith=mention).first()
 			if mention_group:
-				mentions.extend(User.objects.filter(group=mention_group))
+				mentions.extend(User.objects.filter(groups=mention_group))
 	if settings.BROADCAST_MAGIC_TOKEN in mention_tokens:
 		extra_receivers.append(settings.BROADCAST_EMAIL)
 	return set(mentions), extra_receivers
