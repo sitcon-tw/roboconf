@@ -38,7 +38,7 @@ def create(request):
 			issue.starring.add(request.user)	# Auto watch
 
 			mentions, extra_receivers = filter_mentions(issue.content)
-			mentions -= set(request.user)
+			mentions -= set((request.user,))
 			for user in mentions:
 				issue.starring.add(user)	# Auto watch
 				send_mail(request.user, user, 'mail/issue_created.html', {'issue': issue})
