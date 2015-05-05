@@ -176,6 +176,7 @@ SUBMISSION_END = datetime.datetime.max
 SUBMISSION_RULE_DOCID = ''
 
 ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
+ISSUE_DEFAULT_DAYTIME = datetime.time(hour=17)
 
 AVATAR_FILE_SIZE_LIMIT = 2 * (1024 * 1024)
 AVATAR_IMAGE_SIZE_LIMIT = 512
