@@ -8,7 +8,8 @@ def send_mail(sender, receiver, template_name, context):
 	context['sender'] = sender
 	context['receiver'] = receiver
 	sender = settings.USER_ISSUE_SENDER.format(sender.profile.name)
-	receiver = format_address(receiver.profile.name, receiver.email)
+	if isinstance(receiver, User):
+		receiver = format_address(receiver.profile.name, receiver.email)
 	return send_template_mail(sender, receiver, template_name, context)
 
 def send_sms(sender, receiver, template_name, context):
@@ -18,7 +19,7 @@ def send_sms(sender, receiver, template_name, context):
 
 def filter_mentions(content):
 	mention_tokens = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', content))
-	mentions = []
+	mentions, extra_receivers = [], []
 	for mention in mention_tokens:
 		try:
 		mentionee = User.objects.filter(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention)).first()
@@ -28,7 +29,9 @@ def filter_mentions(content):
 			mention_group = Group.objects.filter(name__istartswith=mention).first()
 			if mention_group:
 				mentions.extend(User.objects.filter(group=mention_group))
-	return set(mentions)
+	if settings.BROADCAST_MAGIC_TOKEN in mention_tokens:
+		extra_receivers.append(settings.BROADCAST_EMAIL)
+	return set(mentions), extra_receivers
 
 def is_issue_urgent(issue):
 	# Label 1 stands for urgent in current staff system
