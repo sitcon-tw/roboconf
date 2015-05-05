@@ -24,7 +24,7 @@ def create(request):
 			try:
 				if len(due_time) <= 10:
 					due_time = dateparse.parse_date(due_time)
-					due_time = datetime.datetime.combine(due_time, datetime.time()) if due_time else None
+					due_time = datetime.datetime.combine(due_time, datetime.time(settings.ISSUE_DEFAULT_DAYTIME)) if due_time else None
 				else:
 					due_time = dateparse.parse_datetime(due_time)
 			except ValueError:
