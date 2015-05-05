@@ -10,7 +10,6 @@ def create(request):
 	errors = []
 
 	if 'submit' in request.POST:
-
 		issue = Issue()
 		issue.title = request.POST['title']
 		issue.content = request.POST['content']
@@ -56,7 +55,6 @@ def create(request):
 			if due_time:
 				IssueHistory.objects.create(issue=issue, user=request.user,
 											mode=IssueHistory.SET_DUE, content=due_time)
-
 
 			# Add or remove labels has history so we don't worry on history creation
 			for label_id in request.POST.getlist('labels'):
