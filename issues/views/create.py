@@ -20,18 +20,16 @@ def create(request):
 		if len(due_time):
 			try:
 				due_time = parse_date(due_time)
-			except ValueError:
-				errors.append('date-invalid')
-			else:
 				if due_time:
 					issue.due_time = due_time
 				else:
 					errors.append('date-misformed')
+			except ValueError:
+				errors.append('date-invalid')
 
 		assignee = request.POST.get('assignee')
 		if assignee:	# Empty value => not assigned, no need to set
 			try:
-				assignee = request.POST.get('assignee')
 				issue.assignee = User.objects.get(id=assignee)
 			except User.DoesNotExist:
 				assignee = None		# Just in case we're under attack...
