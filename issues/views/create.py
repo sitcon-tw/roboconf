@@ -46,15 +46,13 @@ def create(request):
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
 
-			mentions = filter_mentions(issue.content)
-			users = list(User.objects.filter(is_active=True, groups__id=settings.STAFF_GROUP_ID))
-			for user in users:
-				if user == request.user:
-					continue
-				elif user in mentions:
-					issue.starring.add(user)	# Auto watch
-
+			mentions, extra_receivers = filter_mentions(issue.content)
+			mentions -= set(request.user)
+			for user in mentions:
+				issue.starring.add(user)	# Auto watch
 				send_mail(request.user, user, 'mail/issue_created.html', {'issue': issue})
+			for receiver in extra_receivers:
+				send_mail(request.user, receiver, 'mail/issue_created.html', {'issue': issue})
 
 			if assignee:
 				IssueHistory.objects.create(issue=issue, user=request.user,
