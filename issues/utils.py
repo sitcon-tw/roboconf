@@ -23,7 +23,6 @@ def filter_mentions(content):
 	mention_tokens = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', content))
 	mentions, extra_receivers = [], []
 	for mention in mention_tokens:
-		try:
 		mentionee = User.objects.filter(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention)).first()
 		if mentionee:
 			mentions.append(mentionee)
