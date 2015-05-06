@@ -1,0 +1,12 @@
+
+os.environ['DJANGO_SECRET_KEY'] = 'SITCON@ac$y^oladi3%h9-352-xa!y^*5zxd&+2gw#o@pul09p3m=jl2'
+os.environ['DATABASE_NAME'] = 'okgpkfxoeliwkx'
+os.environ['DATABASE_USER'] = 'ddj4rbguqa64f3'
+os.environ['DATABASE_PASSWORD'] = '_cVNGTtGw4ZRVuk5n9XHBhl6gE'
+os.environ['EMAIL_HOST'] = 'smtp.mandrillapp.com'
+os.environ['EMAIL_PORT'] = '587'
+os.environ['EMAIL_HOST_USER'] = 'app16849871@heroku.com'
+os.environ['EMAIL_HOST_PASSWORD'] = '3D7XcUPShL775usgZnfZjA'
+os.environ['SMS_API_KEY'] = 'e35f4dcb'
+os.environ['SMS_API_SECRET'] = '932214a6'
+
