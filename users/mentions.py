@@ -6,7 +6,7 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.util import etree, AtomicString
 
-MENTION_RE = r'(@[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+)'
+MENTION_RE = u'(@[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+)'
 
 class MentionPattern(Pattern):
     def __init__(self):
