@@ -12,7 +12,7 @@ class MentionPattern(Pattern):
     def __init__(self):
         super(MentionPattern, self).__init__(MENTION_RE)
 
-    def handleMatch(m):
+    def handleMatch(self, m):
         token = m.group(2)[1:]
         user = User.objects.filter(Q(username__istartswith=token) | Q(profile__display_name__iexact=token)).first()
         if user:
