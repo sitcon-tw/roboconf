@@ -20,7 +20,7 @@ def send_sms(sender, receiver, template_name, context):
 	return send_template_sms('', receiver.profile.phone, template_name, context)
 
 def filter_mentions(content):
-	mention_tokens = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', content))
+	mention_tokens = set(re.findall(r'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff_\\-]+', content))
 	mentions, extra_receivers = [], []
 	for mention in mention_tokens:
 		mentionee = User.objects.filter(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention)).first()
