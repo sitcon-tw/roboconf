@@ -8,6 +8,7 @@ inline = m.Markdown(
 		'markdown.extensions.tables',
 		'mdx_del_ins',
 		'mdx_linkify.mdx_linkify',
+		'users.mentions',
 	],
 )
 
@@ -20,8 +21,9 @@ docs = m.Markdown(
 		'markdown.extensions.tables',
 		'markdown.extensions.toc',
 		'markdown.extensions.nl2br',
-		'mdx_del_ins', 
+		'mdx_del_ins',
 		'mdx_linkify.mdx_linkify',
+		'users.mentions',
 	],
 )
 
