@@ -27,10 +27,33 @@ docs = m.Markdown(
 	],
 )
 
+INLINE_TAGS = (
+    'a', 'abbr', 'acronym',
+    'b', 'blockquote', 'br',
+    'code',
+	'del',
+    'em',
+	'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr',
+    'i', 'img', 'ins',
+    'li',
+    'ol',
+	'p', 'pre',
+    'strong',
+	'table', 'td', 'tbody', 'th', 'thead', 'tr',
+    'ul',
+)
+
+INLINE_ATTRIBUTES = {
+	'*': ['class'],
+	'a': ['href', 'title'],
+	'img': ['src', 'alt', 'width', 'height'],
+}
+
 def render_inline(text, autoescape=True):
+	text = inline.convert(text)
 	if autoescape:
-		text = bleach.clean(text)
-	return inline.convert(text)
+		text = bleach.clean(text, tags=INLINE_TAGS, attributes=INLINE_ATTRIBUTES)
+	return text
 
 def render_document(text):
 	docs.reset()
