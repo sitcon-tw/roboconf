@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from issues.models import Issue, IssueHistory, Label
-from issues.utils import send_mail, filter_mentions, parse_date
+from issues.utils import send_mail, parse_date
+from users.mentions import filter_mentions
 from users.utils import sorted_users
 
 @permission_required('issues.add_issue')
@@ -37,13 +39,14 @@ def create(request):
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
 
-			mentions, extra_receivers = filter_mentions(issue.content)
+			mentions, _ = filter_mentions(issue.content)
 			mentions -= set((request.user,))
 			for user in mentions:
 				issue.starring.add(user)	# Auto watch
 				send_mail(request.user, user, 'mail/issue_created.html', {'issue': issue})
-			for receiver in extra_receivers:
-				send_mail(request.user, receiver, 'mail/issue_created.html', {'issue': issue})
+
+			# Broadcast new issues automatically
+			send_mail(request.user, settings.BROADCAST_EMAIL, 'mail/issue_created.html', {'issue': issue})
 
 			if assignee:
 				IssueHistory.objects.create(issue=issue, user=request.user,
