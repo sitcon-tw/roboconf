@@ -13,6 +13,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+SITE_NAME = 'Roboconf'
+SITE_TITLE = 'Roboconf'
+
 SITE_URL = ''
 PROJECT_PATH = '/'.join(os.path.dirname(os.path.abspath(__file__)).split('/')[0:-2])
 
