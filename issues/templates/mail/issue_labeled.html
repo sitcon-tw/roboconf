@@ -6,12 +6,12 @@ Re: [#{{ issue.id }}] {{ issue.title }}
 {{ sender.profile.name }}
 {% if removed_labels %}
 	移除標籤
-	{% for label in removed_labels %}<a href="{{ site_url }}{% url 'issues:list' %}?label={{ label.id }}" style="background: #{{ label.color }}; display: inline-block; padding: 0.2em 0.5em; margin: 0 0.25em;">「{{ label.name }}」</a>{{ forloop.last|yesno:',、' }}{% endfor %}
+	{% for label in removed_labels %}<a href="{{ site.url }}{% url 'issues:list' %}?label={{ label.id }}" style="background: #{{ label.color }}; display: inline-block; padding: 0.2em 0.5em; margin: 0 0.25em;">「{{ label.name }}」</a>{{ forloop.last|yesno:',、' }}{% endfor %}
 {% endif %}
 {% if added_labels %}
 	{{ removed_labels|yesno:'，同時,' }}套用標籤
-	{% for label in added_labels %}<a href="{{ site_url }}{% url 'issues:list' %}?label={{ label.id }}" style="background: #{{ label.color }}; display: inline-block; padding: 0.2em 0.5em; margin: 0 0.25em;">「{{ label.name }}」</a>{{ forloop.last|yesno:',、' }}{% endfor %}。
+	{% for label in added_labels %}<a href="{{ site.url }}{% url 'issues:list' %}?label={{ label.id }}" style="background: #{{ label.color }}; display: inline-block; padding: 0.2em 0.5em; margin: 0 0.25em;">「{{ label.name }}」</a>{{ forloop.last|yesno:',、' }}{% endfor %}。
 {% endif %}
 </div>
 <hr/>
-<p style="font-size: 0.8em;">在 {{ site_name }}<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
+<p style="font-size: 0.8em;">在 {{ site.name }}<a href="{{ site.url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>

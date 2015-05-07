@@ -7,11 +7,11 @@
 	{{ comment|markdown }}
 {% elif issue.is_open %}
 	{{ sender.profile.name }}
-	對 <a href="{{ site_url }}{% url 'issues:detail' issue.id %}">#{{ issue.id }}</a> 提出復議。
+	對 <a href="{{ site.url }}{% url 'issues:detail' issue.id %}">#{{ issue.id }}</a> 提出復議。
 {% else %}
 	{{ sender.profile.name }}
-	已將 <a href="{{ site_url }}{% url 'issues:detail' issue.id %}">#{{ issue.id }}</a> 結案。
+	已將 <a href="{{ site.url }}{% url 'issues:detail' issue.id %}">#{{ issue.id }}</a> 結案。
 {% endif %}
 </div>
 <hr/>
-<p style="font-size: 0.8em;">在 {{ site_name }}<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
+<p style="font-size: 0.8em;">在 {{ site.name }}<a href="{{ site.url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>

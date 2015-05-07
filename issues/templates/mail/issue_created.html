@@ -6,4 +6,4 @@
 	{{ issue.content|markdown }}
 </div>
 <hr/>
-<p style="font-size: 0.8em;">在 {{ site_name }}<a href="{{ site_url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
+<p style="font-size: 0.8em;">在 {{ site.name }}<a href="{{ site.url }}{% url 'issues:detail' issue.id %}">檢視此議題</a>。</p>
