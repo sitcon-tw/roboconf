@@ -1,6 +1,7 @@
 {% load markdown %}{% load dateutils %}
 Re: [#{{ issue.id }}] {{ issue.title }}
 =====
+<h1 style="font-size: 1.5rem;">#{{ issue.id}}: {{ issue.title }}</h1>
 <div style="margin: 0.5em auto;">
 	已於{{ issue.due_time|smartdate }}逾時。
 </div>
