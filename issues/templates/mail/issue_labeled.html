@@ -2,13 +2,13 @@
 Re: [#{{ issue.id }}] {{ issue.title }}
 =====
 <div style="margin: 0.5em auto;">
-{% if old_labels %}
+{% if labels_to_remove %}
 	移除標籤
-	{% for label in old_labels %}<b>「{{ label.name }}」</b>{{ forloop.last|yesno:',、' }}{% endfor %}
+	{% for label in labels_to_remove %}<b>「{{ label.name }}」</b>{{ forloop.last|yesno:',、' }}{% endfor %}
 {% endif %}
-{% if new_labels %}
-	{{ old_labels|yesno:'，同時,' }}套用標籤
-	{% for label in new_labels %}<b>「{{ label.name }}」</b>{{ forloop.last|yesno:',、' }}{% endfor %}。
+{% if labels_to_add %}
+	{{ labels_to_remove|yesno:'，同時,' }}套用標籤
+	{% for label in labels_to_add %}<b>「{{ label.name }}」</b>{{ forloop.last|yesno:',、' }}{% endfor %}。
 {% endif %}
 </div>
 <hr/>
