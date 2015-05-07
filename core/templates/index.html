@@ -1,5 +1,5 @@
 {% extends 'core/master.html' %}
-{% block title %}SITCON{% endblock %}
+{% block title %}{{ site_title }}{% endblock %}
 {% block content %}
 <div class="row">
 	{% if user.is_authenticated %}
@@ -31,7 +31,7 @@
 	</div>
 	{% else %}
 	<div class="large-6 small-9 small-centered has-quote columns">
-		<h3 class="text-center">SITCON 夏令營行政系統</h3>
+		<h3 class="text-center">{{ site_name }}</h3>
 		<p class="quote">
 			<p>據說同時是個別名<a href="https://github.com/sitcon-tw/staff.sitcon.org"><abbr title="Roboconf">蘿蔔坑</abbr></a>的開源計劃。</p>
 			<p>必須<a href="{% url 'users:login' %}">登入</a>後才能完整使用此系統的所有功能；如果是工作人員，請向行政組索取帳號。</p>

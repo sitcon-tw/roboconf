@@ -6,6 +6,9 @@ import datetime
 ALLOWED_HOSTS = ['staff.sitcon.camp']
 SITE_URL = 'http://staff.sitcon.camp'
 
+SITE_NAME = 'SITCON 夏令營行政系統'
+SITE_TITLE = 'SITCON 夏令營'
+
 DEFAULT_FROM_EMAIL = '"SITCON 夏令營行政系統" <admin@staff.sitcon.camp>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 BROADCAST_EMAIL = 'sitcon-camp@googlegroups.com'

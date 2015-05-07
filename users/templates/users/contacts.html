@@ -6,7 +6,7 @@
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表" data-tooltip></a>
 	</div>
 	<div class="large-{{ show_details|yesno:'11,9' }} columns">
-		<h3>SITCON 工作人員通訊錄</h3>
+		<h3>{{ site_title }} 工作人員通訊錄</h3>
 		<table class="user-contacts main">
 			<thead><tr>
 				<th>職稱</th>
