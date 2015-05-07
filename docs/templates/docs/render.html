@@ -5,8 +5,8 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>{{ node.name }} ‧ {{ site_title }}</title>
-	<meta name="description" content="文件「{{ node.name }}」，由 {{ site_name }} 提供。" />
+	<title>{{ node.name }} ‧ {{ site.title }}</title>
+	<meta name="description" content="文件「{{ node.name }}」，由 {{ site.name }} 提供。" />
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" href="{% static 'css/doc.css' %}" />
 	<link rel="shortcut icon" href="{% static 'img/SITCON.ico' %}" />
@@ -18,7 +18,7 @@
 	<div class="content">
 		<article class="cinshui">{{ text|safe }}</article>
 		<footer>
-			<a href="{{ site_url }}" class="logo" title="本文件由 {{ site_name }} 提供">{{ site_title }}</a>
+			<a href="{{ site.url }}" class="logo" title="本文件由 {{ site.name }} 提供">{{ site.title }}</a>
 		</footer>
 	</div>
 </div>
