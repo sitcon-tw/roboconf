@@ -84,24 +84,24 @@ def set_label(issue, request):
 	new_labels &= set(all_labels.keys())
 
 	# Calculate difference
-	labels_to_remove = old_labels - new_labels
-	labels_to_add = new_labels - old_labels
+	labels_to_remove = [all_labels[l] for l in (old_labels - new_labels)]
+	labels_to_add = [all_labels[l] for l in (new_labels - old_labels)]
 
 	# Remove old labels
-	for label_id in labels_to_remove:
-		issue.labels.remove(all_labels[label_id])
-		update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
+	for label in labels_to_remove:
+		issue.labels.remove(label)
+		update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label.id)
 
 	# Add new labels
-	for label_id in labels_to_add:
-		issue.labels.add(all_labels[label_id])
-		update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
+	for label in labels_to_add:
+		issue.labels.add(label)
+		update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label.id)
 
 	issue.save()
 	notify(issue, request.user, 'mail/issue_labeled.html', {
 		'issue': issue,
-		'labels_to_remove': [all_labels[l] for l in labels_to_remove],
-		'labels_to_add': [all_labels[l] for l in labels_to_add],
+		'removed_labels': labels_to_remove,
+		'added_labels': labels_to_add,
 	})
 
 def comment(issue, request):
