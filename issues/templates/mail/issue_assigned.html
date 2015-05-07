@@ -1,7 +1,9 @@
 {% load markdown %}
 {{ new_topic|yesno:',Re: ' }}[#{{ issue.id }}] {{ issue.title }}
 =====
+<h1 style="font-size: 1.5rem;">#{{ issue.id }}: {{ issue.title }}</h1>
 <div style="margin: 0.5em auto;">
+{{ sender.profile.name }}
 	{% if issue.assignee %}
 	已指派給 {% if issue.assignee == receiver %}你{% else %}<a href="{{ site_url }}{% url 'users:profile' issue.assignee.username %}">{{ issue.assignee.profile.name }}</a>{% endif %}。
 	{% else %}
