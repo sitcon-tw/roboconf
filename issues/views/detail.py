@@ -71,36 +71,37 @@ def set_label(issue, request):
 	if not (issue.assignee == request.user or request.user.has_perm('issues.label_issue')):
 		return	# Audit fail
 
-	old_labels = [l.id for l in issue.labels.all()]
-	new_labels = []
+	old_labels = set(l.id for l in issue.labels.all())
+	new_labels = set()
 
 	for label_str in request.POST.getlist('labels'):
 		try:
 			new_labels.append(int(label_str))
 		except ValueError: pass
 
-	# Remove unused labels
-	labels_to_remove = [l for l in old_labels if l not in new_labels]
-	labels_to_add = [l for l in new_labels if l not in old_labels]
+	# Sanitize new labels list
+	all_labels = { l.id : l for l in Label.objects.all() }
+	new_labels &= set(all_labels.keys())
 
-	# * Old labels won't have integrity issues so eliminate try block
+	# Calculate difference
+	labels_to_remove = old_labels - new_labels
+	labels_to_add = new_labels - old_labels
+
+	# Remove old labels
 	for label_id in labels_to_remove:
-		issue.labels.remove(Label.objects.get(id=label_id))
+		issue.labels.remove(all_labels[label_id])
 		update(issue=issue, user=request.user, mode=IssueHistory.UNLABEL, content=label_id)
 
 	# Add new labels
 	for label_id in labels_to_add:
-		try:
-			issue.labels.add(Label.objects.get(id=label_id))
-			update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
-		except Label.DoesNotExist:
-			pass
+		issue.labels.add(all_labels[label_id])
+		update(issue=issue, user=request.user, mode=IssueHistory.LABEL, content=label_id)
 
 	issue.save()
 	notify(issue, request.user, 'mail/issue_labeled.html', {
 		'issue': issue,
-		'old_labels': Label.objects.filter(id__in=labels_to_remove),
-		'new_labels': Label.objects.filter(id__in=labels_to_add),
+		'labels_to_remove': [all_labels[l] for l in labels_to_remove],
+		'labels_to_add': [all_labels[l] for l in labels_to_add],
 	})
 
 def comment(issue, request):
