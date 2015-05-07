@@ -97,7 +97,11 @@ def set_label(issue, request):
 			pass
 
 	issue.save()
-	notify(issue, request.user, 'mail/issue_labeled.html', {'issue': issue, 'old_labels': old_labels, 'new_labels': new_labels})
+	notify(issue, request.user, 'mail/issue_labeled.html', {
+		'issue': issue,
+		'old_labels': Label.objects.filter(id__in=labels_to_remove),
+		'new_labels': Label.objects.filter(id__in=labels_to_add),
+	})
 
 def comment(issue, request):
 	if not request.user.has_perm('issues.comment_issue'):
