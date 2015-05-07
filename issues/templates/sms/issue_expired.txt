@@ -1,2 +1,2 @@
-{% load markdown %}{% load dateutils %}
-SITCON #{{ issue.id }}「{{ issue.title|truncatechars:40 }}」已於{{ issue.due_time|smartdate }}逾時，請即處理。
+{% load dateutils %}
+{{ site_title }} #{{ issue.id }}「{{ issue.title|truncatechars:40 }}」已於{{ issue.due_time|smartdate }}逾時，請即處理。
