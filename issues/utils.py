@@ -1,5 +1,6 @@
 import datetime
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.utils import dateparse
 from notifications.utils import format_address, send_template_mail, send_template_sms
 
@@ -26,5 +27,4 @@ def parse_date(value):
 	return value
 
 def is_issue_urgent(issue):
-	# Label 1 stands for urgent in current staff system
 	return issue.labels.filter(id=settings.URGENT_ISSUE_ID).exists()
