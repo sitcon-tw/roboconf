@@ -35,37 +35,39 @@ def create(request):
 			except User.DoesNotExist:
 				assignee = None		# Just in case we're under attack...
 
+		labels = []
+		for label_id in request.POST.getlist('labels'):
+			try:
+				labels.append(Label.objects.get(id=label_id))
+			except Label.DoesNotExist: pass
+
 		if not errors:
 			issue.save()	# Need to save before we can enforce N to N relationship
 			issue.starring.add(request.user)	# Auto watch
 
+			# Add or remove labels has history so we don't worry on history creation
+			issue.labels.add(*labels)
+
 			mentions, _ = filter_mentions(issue.content)
-			mentions -= set((request.user,))
+			if assignee:
+				mentions.add(issue.assignee)
+			mentions.discard(request.user)
+
 			for user in mentions:
 				issue.starring.add(user)	# Auto watch
-				send_mail(request.user, user, 'mail/issue_created.html', {'issue': issue})
+				send_mail(request.user, user, 'mail/issue_created.html', { 'issue': issue })
 
 			# Broadcast new issues automatically
-			send_mail(request.user, settings.BROADCAST_EMAIL, 'mail/issue_created.html', {'issue': issue})
+			send_mail(request.user, settings.BROADCAST_EMAIL, 'mail/issue_created.html', { 'issue': issue })
 
 			if assignee:
 				IssueHistory.objects.create(issue=issue, user=request.user,
 											mode=IssueHistory.ASSIGN, content=assignee)
 
-				issue.starring.add(issue.assignee)	# Auto watch
-				send_mail(request.user, issue.assignee, 'mail/issue_assigned.html', {'issue': issue, 'new_topic': True})
-
 			if due_time:
 				IssueHistory.objects.create(issue=issue, user=request.user,
 											mode=IssueHistory.SET_DUE, content=due_time)
 
-			# Add or remove labels has history so we don't worry on history creation
-			for label_id in request.POST.getlist('labels'):
-				try:
-					issue.labels.add(Label.objects.get(id=label_id))
-				except Label.DoesNotExist: pass
-
-			issue.save()	# Now save the labels
 			return redirect('issues:detail', issue.id)
 
 	return render(request, 'issues/create.html', {
