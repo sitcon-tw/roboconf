@@ -1,4 +1,4 @@
-from django.conf import settings
+from core.context_processors import site_url
 from django.template.loader import render_to_string
 from email.utils import formataddr
 from notifications.models import Message
@@ -27,6 +27,7 @@ def send_template_mail(sender, receiver, template_name, context, autosave=True):
 
 	context['sender_address'] = sender
 	context['receiver_address'] = receiver
+	context.update(site_url(None))
 	raw_content = render_to_string(template_name, context).strip()
 
 	subject, _, content = raw_content.partition('\n=====\n')
@@ -44,6 +45,7 @@ def send_template_sms(sender, receiver, template_name, context, autosave=True):
 
 	context['sender_address'] = sender
 	context['receiver_address'] = receiver
+	context.update(site_url(None))
 
 	content = render_to_string(template_name, context).strip()
 	message.content = content
