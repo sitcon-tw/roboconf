@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from issues.models import Issue, IssueHistory, Label
-from issues.utils import send_mail, send_sms, filter_mentions
+from issues.utils import send_mail, send_sms
+from users.mentions import filter_mentions
 from users.utils import sorted_users
 
 @login_required
