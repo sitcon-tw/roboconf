@@ -3,10 +3,10 @@
 =====
 <h1 style="font-size: 1.5em;">
 	#{{ issue.id }}: {{ issue.title }}
-	{% for label in issue.labels.all %}<span style="background: #{{ label.color }}; border-radius: 3px; color: #fff; display: inline-block; font-size: 0.6rem; margin: 0 0.1rem; padding: 0.15rem 0.35rem;">{{ label.name }}</span>{% endfor %}
+	{% for label in issue.labels.all %}<span style="background: #{{ label.color }}; border-radius: 3px; color: #fff; display: inline-block; font-size: 0.6rem; margin: 0 0.1rem; padding: 0.15rem 0.35rem;">{{ label.name }}</span> {% endfor %}
 </h1>
 <div style="font-size: 0.6em;">
-	{{ issue.creator.profile.name }} 於 {{ issue.creation_time|date:"H:i" }} 建立{% if issue.assignee %}，指派給 <a href="{{ site.url }}{% url 'users:profile' issue.assignee.username %}">{{ issue.assignee.profile.name }}</a>{% endif %}{% if issue.due_time %}，於 {{ issue.due_time|date:"Y-m-d H:i" }} 到期{% endif %}
+	<a href="{{ site.url }}{% url 'users:profile' issue.creator.username %}">{{ issue.creator.profile.name }}</a> 於 {{ issue.creation_time|date:"H:i" }} 建立{% if issue.assignee %}，指派給 <a href="{{ site.url }}{% url 'users:profile' issue.assignee.username %}">{{ issue.assignee.profile.name }}</a>{% endif %}{% if issue.due_time %}，於 {{ issue.due_time|date:"Y-m-d H:i" }} 到期{% endif %}
 </div>
 <div style="margin: 0.5em auto;">
 	{{ issue.content|markdown }}
