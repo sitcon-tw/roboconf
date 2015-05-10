@@ -77,7 +77,7 @@ def set_label(issue, request):
 
 	for label_str in request.POST.getlist('labels'):
 		try:
-			new_labels.append(int(label_str))
+			new_labels.add(int(label_str))
 		except ValueError: pass
 
 	# Sanitize new labels list
