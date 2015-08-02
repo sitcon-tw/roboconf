@@ -49,17 +49,16 @@ def create(request):
 		user.set_password(password)
 
 		if len(errors) < 1:
-			user.save()		# Save the user first in order to create relational objects
+			user.save()
 
-			profile = UserProfile(user=user)
-			profile.title = request.POST.get('title')
-			profile.display_name = request.POST.get('display_name')
-			profile.school = request.POST.get('school')
-			profile.bio = request.POST.get('bio')
-			profile.grade = request.POST.get('grade')
-			profile.phone = request.POST.get('phone')
-			profile.comment = request.POST.get('comment')
-			profile.save()
+			user.profile.title = request.POST.get('title')
+			user.profile.display_name = request.POST.get('display_name')
+			user.profile.school = request.POST.get('school')
+			user.profile.bio = request.POST.get('bio')
+			user.profile.grade = request.POST.get('grade')
+			user.profile.phone = request.POST.get('phone')
+			user.profile.comment = request.POST.get('comment')
+			user.profile.save()
 
 			for group_id in request.POST.getlist('groups'):
 				try:
@@ -131,11 +130,15 @@ def submitter_create(request):
 			user.save()
 
 			try:
-				profile = CommiterProfileForm(request.POST, request.FILES)
-				profile = profile.save(commit=False)
-				profile.user = user
-				profile.title = u'投稿講者'
-				profile.save()
+				user.profile.display_name = request.POST.get('display_name')
+				user.profile.school = request.POST.get('school')
+				user.profile.bio = request.POST.get('bio')
+				user.profile.grade = request.POST.get('grade')
+				user.profile.phone = request.POST.get('phone')
+				user.profile.photo = request.FILES['photo']
+				user.profile.comment = request.POST.get('comment')
+				user.profile.title = u'投稿講者'
+				user.profile.save()
 			except:
 				errors += ['invalid_profile']
 				user.delete()

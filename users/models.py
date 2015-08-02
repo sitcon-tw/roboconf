@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import signals
 from django.contrib.auth.models import User, Group
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -10,13 +11,13 @@ def photo_path(instance, filename):
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile')
-	display_name = models.CharField(max_length=16)
-	title = models.CharField(max_length=16)
+	display_name = models.CharField(max_length=16, default='Not set')
+	title = models.CharField(max_length=16, default='Not set')
 	school = models.CharField(max_length=32, blank=True, help_text='school or company')
 	bio = models.TextField(max_length=300, help_text='biography')
 	grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
 	phone = models.CharField(max_length=16, blank=True)
-	photo = models.FileField(upload_to=photo_path)
+	photo = models.FileField(upload_to=photo_path, blank=True)
 	departure = models.CharField(max_length=10, blank=True, help_text='departure')
 	comment = models.TextField(blank=True)
 
@@ -65,6 +66,11 @@ class UserProfile(models.Model):
 	def has_submission(self):
 		return True if self.user.submissions.count() > 0 else False
 
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+signals.post_save.connect(create_user_profile, sender=User)
 
 class GroupCategory(models.Model):
 	name = models.CharField(max_length=30)
