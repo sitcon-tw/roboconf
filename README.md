@@ -24,6 +24,29 @@ For Heroku and PostgreSQL targets,
 
 [Compass](compass-style.org) and [Fabric](http://fabfile.org) powers site theming and automating respectively.
 
+Development
+-----------
+It is recommended to use `virtualenv`.
+
+	cd staff.sitcon.org
+	virtualenv venv
+	. venv/bin/activate # if you use bash
+
+Install dependencies.
+
+Note: if you're in a development environment you can delete `psycopg2` dependency and set environment variable `DEBUG=1`, then it'll use sqlite.
+
+	pip install -r requirements.txt
+
+Set debug
+
+	export DEBUG=1 # bash
+
+Load database schema and initial data
+
+	python manage.py syncdb
+	python manage.py loaddata */fixtures/*.json
+
 Naming
 ------
 "Roboconf" pronounces familiar with 蘿蔔坑 (redish pit), from the Mandarin idiom "each redish has its own pit". Literally it stands for "robot-assisted conference" in English.
@@ -31,6 +54,7 @@ Naming
 Developers
 ----------
 * [RSChiang](https://github.com/rschiang)
+* [Pellaeon Lin](https://github.com/pellaeon)
 
 Contributing
 ------------
