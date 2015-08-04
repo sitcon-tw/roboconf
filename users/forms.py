@@ -8,12 +8,6 @@ from notifications.utils import format_address, send_template_mail
 from users.token import generate_uid, generate_token
 from users.models import UserProfile
 
-class CommiterProfileForm(forms.ModelForm):
-	class Meta:
-		model = UserProfile
-		fields = '__all__'
-		exclude = ('user', 'title')
-
 class PasswordResetForm(DjangoPasswordResetForm):
 	def clean_email(self):
 		email = self.cleaned_data['email']

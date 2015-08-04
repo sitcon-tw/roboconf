@@ -6,7 +6,6 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from django.views.decorators.debug import sensitive_variables
 from notifications.utils import send_template_mail, format_address
-from users.forms import CommiterProfileForm
 from users.utils import generate_password, sorted_categories
 from users.models import UserProfile
 
