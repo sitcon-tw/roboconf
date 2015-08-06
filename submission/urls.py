@@ -11,5 +11,4 @@ urlpatterns = patterns('',
         url(r'^edit/(\d+)$', views.edit, name='edit'),
         url(r'^view/partial/(\d+)$', views.view_partial, name='view_partial'),
         url(r'^view/(\d+)$', views.view, name='view'),
-        url(r'^api/all$', views.all, name='api_all'),
     )
