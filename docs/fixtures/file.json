@@ -1,0 +1,15 @@
+[
+{
+    "fields": {
+        "name": "Submission rule",
+        "parent": 0,
+        "is_archived": false,
+        "current_revision": 1,
+        "last_modified": "2015-01-31T05:46:57.294Z",
+        "starring": [],
+        "permissions": []
+    },
+    "model": "docs.file",
+    "pk": 1
+}
+]

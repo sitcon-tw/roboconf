@@ -1,0 +1,16 @@
+[
+{
+    "fields": {
+        "name": "All",
+        "parent": null,
+        "is_archived": false,
+        "last_modified": "2015-01-28T09:10:36.764Z",
+        "starring": [],
+        "permissions": [
+            1
+        ]
+    },
+    "model": "docs.folder",
+    "pk": 0
+}
+]

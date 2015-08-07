@@ -1,0 +1,10 @@
+[
+{
+    "fields": {
+        "text": "asdfasdf",
+        "format": "M"
+    },
+    "model": "docs.blobtext",
+    "pk": 1
+}
+]
