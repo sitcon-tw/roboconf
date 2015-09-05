@@ -85,7 +85,6 @@ INSTALLED_APPS = (
     'issues',
     'agenda',
     'notifications',
-    'submission',
     'schedule',
     'rest_framework',
     'api',
