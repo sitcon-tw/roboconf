@@ -38,7 +38,7 @@ LOGIN_URL = 'users:login'
 ALLOWED_HOSTS = ['*']
 
 TIME_ZONE = 'Asia/Taipei'
-LANGUAGE_CODE = 'zh-tw'
+LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 USE_I18N = True    # TODO: Implement internationalization
