@@ -11,7 +11,7 @@ SITE_TITLE = 'SITCON'
 
 DEFAULT_FROM_EMAIL = '"SITCON 行政系統" <admin@staff.sitcon.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-BROADCAST_EMAIL = 'sitcon-camp@googlegroups.com'
+BROADCAST_EMAIL = 'sitcon@googlegroups.com'
 
 DEFAULT_NOTIFICATION_SENDER = 'SITCON 行政系統:notifications@staff.sitcon.org'
 DEFAULT_ACCOUNTS_SENDER =  'SITCON 行政系統:accounts@staff.sitcon.org'
