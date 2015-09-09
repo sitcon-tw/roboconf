@@ -1252,9 +1252,9 @@ $topbar-dropdown-link-bg: lighten(#111, 5%);
 // Set the link colors and styles for top-level nav
 
 // $topbar-link-color: #fff;
-// $topbar-link-color-hover: #fff;
+$topbar-link-color-hover: #fff;
 // $topbar-link-color-active: #fff;
-// $topbar-link-weight: bold;
+$topbar-link-weight: 500;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 $topbar-link-bg-hover: darken($topbar-bg-color, 10%);
@@ -1262,7 +1262,7 @@ $topbar-link-bg-active: $topbar-link-bg-hover;
 
 $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
-// $topbar-dropdown-label-font-weight: bold;
+$topbar-dropdown-label-font-weight: 500;
 $topbar-dropdown-label-font-size: em-calc(13);
 $topbar-dropdown-label-bg: $topbar-dropdown-bg;
 
@@ -1273,8 +1273,8 @@ $topbar-dropdown-label-bg: $topbar-dropdown-bg;
 // $topbar-menu-link-weight: bold;
 // $topbar-menu-link-color: #fff;
 // $topbar-menu-icon-color: #fff;
-// $topbar-menu-link-color-toggled: #888;
-// $topbar-menu-icon-color-toggled: #888;
+$topbar-menu-link-color-toggled: $topbar-link-color-hover;
+$topbar-menu-icon-color-toggled: $topbar-link-color-hover;
 
 // Transitions and breakpoint styles
 
