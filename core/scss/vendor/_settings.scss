@@ -30,7 +30,7 @@ $body-font-family: "Helvetica Neue", Helvetica, Arial, /* Fallback */
 					"Pingfang TC", "LiHei Pro", /* OS X */
 					"Microsoft Jhenghei", /* Windows */
 					sans-serif;
-// $body-font-weight: normal;
+$body-font-weight: 300;
 // $body-font-style: normal;
 
 // Font-smoothing
@@ -137,10 +137,7 @@ $success-color: #597cb0;
 
 // Control header font styles
 
-$header-font-family: "Helvetica Neue", Helvetica, Arial, /* Fallback */
-					"LantingHei TC", "Apple LiGothic", /* OS X */
-					"Microsoft Jhenghei", /* Windows */
-					sans-serif;
+$header-font-family: $body-font-family;
 $header-font-weight: 600;
 // $header-font-style: normal;
 // $header-font-color: #222;
@@ -353,7 +350,7 @@ $code-font-family: Consolas, Inconsolata, 'Source Code Pro', Monaco, monospace;
 // We use these to control button border styles.
 
 // $button-border-width: 1px;
-// $button-border-style: solid;
+$button-border-style: none;
 
 // We use this to set the default radius used throughout the core.
 
