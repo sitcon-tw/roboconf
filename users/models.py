@@ -5,31 +5,31 @@ from django.db.models import signals
 from django.contrib.auth.models import User, Group
 from django.conf import settings
 from django.utils.timezone import now
+from django.core.urlresolvers import reverse
+from django.utils.crypto import get_random_string
+
 
 def photo_path(instance, filename):
-    _, ext = os.path.splitext(filename)
-    hash_value = md5.new(instance.display_name.encode('utf8') + now().isoformat()).hexdigest()
-    return u'photos/{}{}'.format(hash_value, ext)
+    return u'photos/{} - {}'.format(
+        instance.display_name,
+        filename)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    display_name = models.CharField(max_length=16)
-    title = models.CharField(max_length=16)
-    school = models.CharField(max_length=32, default='', help_text='school or company')
-    grade = models.CharField(max_length=32, default='', help_text='department and grade / position')
-    phone = models.CharField(max_length=16, default='')
-    photo = models.FileField(upload_to=photo_path)
-    bio = models.TextField(max_length=320, default='', help_text='biography')
-    residence = models.CharField(max_length=16, default='', help_text='residence')
-    shirt_size = models.CharField(max_length=8, default='', help_text='T-shirt size')
-    diet = models.CharField(max_length=8, default='')
-
-    comment = models.TextField(default='')
+    display_name = models.CharField(max_length=16, default='Not set')
+    title = models.CharField(max_length=16, default='Not set')
+    school = models.CharField(max_length=32, blank=True, help_text='school or company')
+    bio = models.TextField(max_length=300, help_text='biography')
+    grade = models.CharField(max_length=32, blank=True, help_text='department and grade / position')
+    phone = models.CharField(max_length=16, blank=True)
+    photo = models.FileField(upload_to=photo_path, blank=True)
+    departure = models.CharField(max_length=10, blank=True, help_text='departure')
+    comment = models.TextField(blank=True)
 
     def __unicode__(self):
         return '%s - %s' % (self.title, self.user.username)
 
-    @property
     def name(self):
         if self.display_name:
             return self.display_name
@@ -72,3 +72,16 @@ class GroupCategory(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class RegisterToken(models.Model):
+    """
+    valid:  flag for current token can use or not
+    user:   after registration, the token will link to the user.
+            Team leader can trace the usage of tokens.
+    group:  User registered by token is belongs to.
+    """
+    token = models.CharField(max_length=12, default=get_random_string)
+    group = models.ForeignKey(GroupCategory)
+    valid = models.BooleanField(default=True)
+    user = models.ForeignKey(User, default=None, null=True)
