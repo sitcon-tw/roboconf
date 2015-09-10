@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import signals
 from django.contrib.auth.models import User, Group
 from django.conf import settings
+from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 
 def photo_path(instance, filename):
@@ -72,3 +73,15 @@ class GroupCategory(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class RegisterToken(models.Model):
+    """
+    valid:  flag for current token can use or not
+    user:   after registration, the token will link to the user.
+            Team leader can trace the usage of tokens.
+    group:  User registered by token is belongs to.
+    """
+    token = models.CharField(max_length=12, default=get_random_string)
+    group = models.ForeignKey(GroupCategory)
+    valid = models.BooleanField(default=True)
+    user = models.ForeignKey(User, default=None, null=True)
