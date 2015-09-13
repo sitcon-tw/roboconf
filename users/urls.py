@@ -3,6 +3,9 @@ from users import views
 
 urlpatterns = patterns('',
         url(r'^$', views.list, name='list'),
+        url(r'^reg$', views.reg_list_token, name='reg_list_token'),
+        url(r'^reg/add$', views.reg_add_token, name='reg_add_token'),
+        url(r'^reg/form/(?P<token>[0-9A-Za-z]+)$', views.reg_form, name='reg_form'),
         url(r'^login$', views.login, name='login'),
         url(r'^logout$', views.logout, name='logout'),
         url(r'^new$', views.create, name='create'),
