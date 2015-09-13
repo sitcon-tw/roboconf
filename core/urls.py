@@ -5,6 +5,8 @@ from core.shortcuts import redirect_static
 from django.contrib import admin
 admin.autodiscover()
 
+from core import settings
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'roboconf.views.home', name='home'),
@@ -29,4 +31,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^backend/', include(admin.site.urls)),
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes':True}),
 )
