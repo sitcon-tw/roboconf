@@ -9,7 +9,9 @@ def reg_list_token(request):
     pass
 
 def reg_add_token(request):
-    pass
+    return render(request, 'users/reg_add_token.html', {
+        'categories': sorted_categories,
+    })
 
 def reg_form(request):
     pass
