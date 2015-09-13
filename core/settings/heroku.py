@@ -8,7 +8,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 DATABASES = {
-	'default': dj_database_url.config()
+    'default': dj_database_url.config()
 }
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')

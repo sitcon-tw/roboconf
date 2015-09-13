@@ -10,26 +10,26 @@ from docs.utils import *
 # DO NOT INCLUDE IN PRODUCTION USE
 
 def all(model):
-	return model.objects.all()
+    return model.objects.all()
 
-def user(id=1):		# Admin account
-	return User.objects.get(id=id)
+def user(id=1):        # Admin account
+    return User.objects.get(id=id)
 
-def folder(id=0):	# Root folder
-	return Folder.objects.get(id=id)
+def folder(id=0):    # Root folder
+    return Folder.objects.get(id=id)
 
 def file(id):
-	return File.objects.get(id=id)
+    return File.objects.get(id=id)
 
 def permobj(id):
-	return Permission.objects.get(id=id)
+    return Permission.objects.get(id=id)
 
 def rev(id):
-	return Revision.objects.get(id=id)
+    return Revision.objects.get(id=id)
 
 def btext(id):
-	return BlobText.objects.get(id=id)
+    return BlobText.objects.get(id=id)
 
 def sql(statement):
-	cursor = connection.cursor()
-	cursor.execute(statement)
+    cursor = connection.cursor()
+    cursor.execute(statement)

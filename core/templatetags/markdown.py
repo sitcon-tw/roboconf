@@ -6,4 +6,4 @@ register = template.Library()
 
 @register.filter(needs_autoescape=True)
 def markdown(value, autoescape=None):
-	return mark_safe(render_inline(value, autoescape=autoescape))
+    return mark_safe(render_inline(value, autoescape=autoescape))

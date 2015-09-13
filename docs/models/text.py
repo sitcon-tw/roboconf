@@ -2,30 +2,30 @@ from django.db import models
 
 class BlobText(models.Model):
 
-	class Meta:
-		app_label = 'docs'
+    class Meta:
+        app_label = 'docs'
 
-	TEXT = ' '
-	MARKDOWN = 'M'
-	HTML = '<'
-	BLOB = 'B'
+    TEXT = ' '
+    MARKDOWN = 'M'
+    HTML = '<'
+    BLOB = 'B'
 
-	FORMAT_CHOICES = (
-			(TEXT, 'Plain text'),
-			(MARKDOWN, 'Markdown text'),
-			(HTML, 'HTML document'),
-			(BLOB, 'Binary content'),
-		)
+    FORMAT_CHOICES = (
+            (TEXT, 'Plain text'),
+            (MARKDOWN, 'Markdown text'),
+            (HTML, 'HTML document'),
+            (BLOB, 'Binary content'),
+        )
 
-	FORMAT_ENUMERATION = (
-			(TEXT, 'text'),
-			(MARKDOWN, 'markdown'),
-			(HTML, 'html'),
-			(BLOB, 'blob'),
-		)
+    FORMAT_ENUMERATION = (
+            (TEXT, 'text'),
+            (MARKDOWN, 'markdown'),
+            (HTML, 'html'),
+            (BLOB, 'blob'),
+        )
 
-	text = models.TextField()
-	format = models.CharField(max_length=1, choices=FORMAT_CHOICES, default=TEXT)
+    text = models.TextField()
+    format = models.CharField(max_length=1, choices=FORMAT_CHOICES, default=TEXT)
 
-	def __unicode__(self):
-		return '%s (%d)' % (self.format, len(self.text))
+    def __unicode__(self):
+        return '%s (%d)' % (self.format, len(self.text))

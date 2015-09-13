@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
 def index(request):
-	context = {}
+    context = {}
 
-	if request.user.is_authenticated():
-		context['issues'] = request.user.assigned_issues.filter(is_open=True).all()
+    if request.user.is_authenticated():
+        context['issues'] = request.user.assigned_issues.filter(is_open=True).all()
 
-	return render(request, 'index.html', context)
+    return render(request, 'index.html', context)
