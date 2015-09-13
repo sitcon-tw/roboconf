@@ -10,7 +10,7 @@ from users.models import *
 from users.utils import *
 
 @login_required
-def edit(request, username):
+def edit(request, username, fancy=False):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user')
 
@@ -107,7 +107,8 @@ def edit(request, username):
         else:
             status = 'error'
 
-    return render(request, 'users/edit_profile.html', {
+    render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
+    return render(request, render_template_url, {
         'u': user,
         'categories': sorted_categories if privileged else None,
         'options': {

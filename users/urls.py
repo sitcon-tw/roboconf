@@ -18,4 +18,5 @@ urlpatterns = patterns('',
         url(r'^me$', views.me, name='me'),
         url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)$', views.profile, name='profile'),
         url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)/edit$', views.edit, name='edit'),
+        url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)/edit/fancy$', views.edit, name='edit fancy', kwargs={'fancy': True}),
     )
