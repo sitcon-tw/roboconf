@@ -39,16 +39,16 @@ def makeExtension(**kwargs):
     return MentionExtension(**kwargs)
 
 def filter_mentions(content):
-	mention_tokens = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff_\\-]+', content))
-	mentions, extra_receivers = set(), set()
-	for mention in mention_tokens:
-		mentionee = User.objects.filter(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention)).first()
-		if mentionee:
-			mentions.add(mentionee)
-		else:
-			mention_group = Group.objects.filter(name__istartswith=mention).first()
-			if mention_group:
-				mentions.update(User.objects.filter(groups=mention_group))
-	if settings.BROADCAST_MAGIC_TOKEN in mention_tokens:
-		extra_receivers.add(settings.BROADCAST_EMAIL)
-	return mentions, extra_receivers
+    mention_tokens = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff_\\-]+', content))
+    mentions, extra_receivers = set(), set()
+    for mention in mention_tokens:
+        mentionee = User.objects.filter(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention)).first()
+        if mentionee:
+            mentions.add(mentionee)
+        else:
+            mention_group = Group.objects.filter(name__istartswith=mention).first()
+            if mention_group:
+                mentions.update(User.objects.filter(groups=mention_group))
+    if settings.BROADCAST_MAGIC_TOKEN in mention_tokens:
+        extra_receivers.add(settings.BROADCAST_EMAIL)
+    return mentions, extra_receivers

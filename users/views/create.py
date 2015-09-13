@@ -12,166 +12,166 @@ from users.models import UserProfile
 @sensitive_variables('password')
 @permission_required('auth.add_user')
 def create(request):
-	errors = []
-	status = ''
+    errors = []
+    status = ''
 
-	if 'submit' in request.POST:
-		user = User()
+    if 'submit' in request.POST:
+        user = User()
 
-		username = request.POST.get('username')
-		if username:
-			if User.objects.filter(username=username).count() < 1:
-				user.username = username
-			else:
-				errors += ['username', 'username_already_taken']
-		else:
-			errors += ['username', 'invalid_username']
+        username = request.POST.get('username')
+        if username:
+            if User.objects.filter(username=username).count() < 1:
+                user.username = username
+            else:
+                errors += ['username', 'username_already_taken']
+        else:
+            errors += ['username', 'invalid_username']
 
-		from django.core.validators import validate_email
-		from django.core.exceptions import ValidationError
-		email = request.POST.get('email')
-		try:
-			validate_email(email)
+        from django.core.validators import validate_email
+        from django.core.exceptions import ValidationError
+        email = request.POST.get('email')
+        try:
+            validate_email(email)
 
-			if User.objects.filter(email=email).count() < 1:
-				user.email = email
-			else:
-				errors += ['email', 'email_already_taken']
+            if User.objects.filter(email=email).count() < 1:
+                user.email = email
+            else:
+                errors += ['email', 'email_already_taken']
 
-		except ValidationError:
-			errors += ['email', 'invalid_email']
+        except ValidationError:
+            errors += ['email', 'invalid_email']
 
-		user.first_name = request.POST.get('first_name')
-		user.last_name = request.POST.get('last_name')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
 
-		password = generate_password()
-		user.set_password(password)
+        password = generate_password()
+        user.set_password(password)
 
-		if len(errors) < 1:
-			user.save()
+        if len(errors) < 1:
+            user.save()
 
-			user.profile.title = request.POST.get('title')
-			user.profile.display_name = request.POST.get('display_name')
-			user.profile.school = request.POST.get('school')
-			user.profile.bio = request.POST.get('bio')
-			user.profile.grade = request.POST.get('grade')
-			user.profile.phone = request.POST.get('phone')
-			user.profile.comment = request.POST.get('comment')
-			user.profile.save()
+            user.profile.title = request.POST.get('title')
+            user.profile.display_name = request.POST.get('display_name')
+            user.profile.school = request.POST.get('school')
+            user.profile.bio = request.POST.get('bio')
+            user.profile.grade = request.POST.get('grade')
+            user.profile.phone = request.POST.get('phone')
+            user.profile.comment = request.POST.get('comment')
+            user.profile.save()
 
-			for group_id in request.POST.getlist('groups'):
-				try:
-					user.groups.add(Group.objects.get(id=group_id))
-				except Group.DoesNotExist: pass
+            for group_id in request.POST.getlist('groups'):
+                try:
+                    user.groups.add(Group.objects.get(id=group_id))
+                except Group.DoesNotExist: pass
 
-			user.save()		# Save the groups information
+            user.save()        # Save the groups information
 
-			if request.POST.get('send_welcome_letter'):
-				context = {
-					'sender': request.user,
-					'receiver': user,
-					'password': password,
-					'groups': [g.name for g in user.groups.all()],
-				}
+            if request.POST.get('send_welcome_letter'):
+                context = {
+                    'sender': request.user,
+                    'receiver': user,
+                    'password': password,
+                    'groups': [g.name for g in user.groups.all()],
+                }
 
-				sender_address = format_address(request.user.profile.name, request.user.email)
-				receiver_address = format_address(user.profile.name, user.email)
-				send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
+                sender_address = format_address(request.user.profile.name, request.user.email)
+                receiver_address = format_address(user.profile.name, user.email)
+                send_template_mail(sender_address, receiver_address, 'mail/user_welcome.html', context)
 
-			status = 'success'
-		else:
-			status = 'error'
+            status = 'success'
+        else:
+            status = 'error'
 
-	return render(request, 'users/create.html', {
-		'categories': sorted_categories(),
-		'errors': errors,
-		'status': status,
-	})
+    return render(request, 'users/create.html', {
+        'categories': sorted_categories(),
+        'errors': errors,
+        'status': status,
+    })
 
 @sensitive_variables('password')
 def submitter_create(request):
-	errors = []
-	status = ''
+    errors = []
+    status = ''
 
-	if 'submit' in request.POST:
-		user = User()
+    if 'submit' in request.POST:
+        user = User()
 
-		username = request.POST.get('username')
-		if username:
-			if User.objects.filter(username=username).count() < 1:
-				user.username = username
-			else:
-				errors += ['username', 'username_already_taken']
-		else:
-			errors += ['username', 'invalid_username']
+        username = request.POST.get('username')
+        if username:
+            if User.objects.filter(username=username).count() < 1:
+                user.username = username
+            else:
+                errors += ['username', 'username_already_taken']
+        else:
+            errors += ['username', 'invalid_username']
 
-		from django.core.validators import validate_email
-		from django.core.exceptions import ValidationError
-		email = request.POST.get('email')
-		try:
-			validate_email(email)
+        from django.core.validators import validate_email
+        from django.core.exceptions import ValidationError
+        email = request.POST.get('email')
+        try:
+            validate_email(email)
 
-			if User.objects.filter(email=email).count() < 1:
-				user.email = email
-			else:
-				errors += ['email', 'email_already_taken']
+            if User.objects.filter(email=email).count() < 1:
+                user.email = email
+            else:
+                errors += ['email', 'email_already_taken']
 
-		except ValidationError:
-			errors += ['email', 'invalid_email']
+        except ValidationError:
+            errors += ['email', 'invalid_email']
 
-		user.first_name = request.POST.get('first_name')
-		user.last_name = request.POST.get('last_name')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
 
-		password = generate_password()
-		user.set_password(password)
+        password = generate_password()
+        user.set_password(password)
 
-		if len(errors) < 1:
-			user.save()
+        if len(errors) < 1:
+            user.save()
 
-			try:
-				user.profile.display_name = request.POST.get('display_name')
-				user.profile.school = request.POST.get('school')
-				user.profile.bio = request.POST.get('bio')
-				user.profile.grade = request.POST.get('grade')
-				user.profile.phone = request.POST.get('phone')
-				user.profile.photo = request.FILES['photo']
-				user.profile.comment = request.POST.get('comment')
-				user.profile.title = u'投稿講者'
-				user.profile.save()
-			except:
-				errors += ['invalid_profile']
-				user.delete()
-				status = 'error'
+            try:
+                user.profile.display_name = request.POST.get('display_name')
+                user.profile.school = request.POST.get('school')
+                user.profile.bio = request.POST.get('bio')
+                user.profile.grade = request.POST.get('grade')
+                user.profile.phone = request.POST.get('phone')
+                user.profile.photo = request.FILES['photo']
+                user.profile.comment = request.POST.get('comment')
+                user.profile.title = u'投稿講者'
+                user.profile.save()
+            except:
+                errors += ['invalid_profile']
+                user.delete()
+                status = 'error'
 
-				return render(request, 'users/submitter_create.html', {
-					'errors': errors,
-					'status': status,
-					'saved': request.POST,
-				})
+                return render(request, 'users/submitter_create.html', {
+                    'errors': errors,
+                    'status': status,
+                    'saved': request.POST,
+                })
 
-			user.groups.add(Group.objects.get(id=settings.SUBMITTER_GROUP_ID))
+            user.groups.add(Group.objects.get(id=settings.SUBMITTER_GROUP_ID))
 
-			context = {
-				'sender': request.user,
-				'receiver': user,
-				'password': password,
-			}
+            context = {
+                'sender': request.user,
+                'receiver': user,
+                'password': password,
+            }
 
-			sender_address = settings.SUBMITTER_ACCOUNTS_SENDER
-			receiver_address = format_address(user.profile.display_name, user.email)
-			send_template_mail(sender_address, receiver_address, 'mail/submitter_welcome.html', context)
+            sender_address = settings.SUBMITTER_ACCOUNTS_SENDER
+            receiver_address = format_address(user.profile.display_name, user.email)
+            send_template_mail(sender_address, receiver_address, 'mail/submitter_welcome.html', context)
 
-			status = 'success'
-		else:
-			status = 'error'
+            status = 'success'
+        else:
+            status = 'error'
 
-	if status == 'success':
-		return render(request, 'users/login.html', {
-			'status': status,
-		})
-	else:
-		return render(request, 'users/submitter_create.html', {
-			'errors': errors,
-			'status': status,
-			'saved': request.POST,
-		})
+    if status == 'success':
+        return render(request, 'users/login.html', {
+            'status': status,
+        })
+    else:
+        return render(request, 'users/submitter_create.html', {
+            'errors': errors,
+            'status': status,
+            'saved': request.POST,
+        })
