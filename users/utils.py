@@ -1,4 +1,5 @@
 from users.models import *
+from core.settings import *
 
 def generate_password():
     from os import urandom

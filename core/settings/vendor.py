@@ -30,6 +30,8 @@ ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
 
 # Non-enforcing options
 
+GROUP_PRIORITY = [3, 1, 6, 7, 5, 8, 4, 9, 2, 14, 19, 20, 15, 13, 18, 12, 11, 10]    # Sort by team lead -> staff -> consultant
+
 RESIDENCE_OPTIONS = (
     '基隆市', '臺北市', '新北市', '桃園市',
     '新竹市', '新竹縣', '苗栗縣', '臺中市',
