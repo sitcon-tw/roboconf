@@ -1,0 +1,41 @@
+{% extends 'core/master.html' %}
+{% block title %}人員{{ block.super }}{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="large-9 columns">
+		<table class="large-12">
+			<tr>
+				<td class="large-2">Token</td>
+				<td class="large-4">組別</td>
+				<td class="large-3">狀態</td>
+				<td class="large-1">連結</td>
+			</tr>
+		{% for t in tokens %}
+			<tr>
+				<td><a href="{% url 'users:reg_edit_token' t.token %}" >{{ t.token }}</a></td>
+				<td>{% for g in t.groups.all %}{{ g.name }}{% if not forloop.last %}, {% else %}{% endif %}{% endfor %}</td>
+				<td>{% if not t.user and t.valid %}已啟用{% elif t.user %}已被 <a href="{% url 'users:profile' t.user.username %}">{{ t.user.profile.name }}</a> 註冊 {% else %}未啟用{% endif %}</td>
+				<td><a href="{% url 'users:reg_form' t.token %}" >{{ t.token }}</a></td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+	<div class="large-3 columns main-side-nav">
+		<ul class="side-nav users-actions">
+			<li><a href="{% url 'users:reg_add_token' %}" class="radius button" style="color: #fff;">新增 Token</a></li>
+		</ul>
+		<div class="divider"></div>
+		{% for c, groups in categories.items %}
+			{% if c.is_visible or user.is_staff %}
+			<h5>篩選{{ c.name }}</h5>
+			<ul class="side-nav">
+			{% for g in groups %}
+				<li{% if g.id in filters %} class="active"{% endif %}><a href="{% url 'users:reg_list_token' %}?g={{ g.id }}">{{ g.name }}</a></li>
+			{% endfor %}
+				<li{% if 'disabled' in filters %} class="active"{% endif %}><a href="{% url 'users:reg_list_token' %}?find=disabled">停用的 Token</a></li>
+			</ul>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
