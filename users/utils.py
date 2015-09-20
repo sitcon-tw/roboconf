@@ -7,7 +7,6 @@ def generate_password():
     # Generate a password with length 12
     return urlsafe_b64encode(urandom(8))[:-1]
 
-GROUP_PRIORITY = [3, 1, 6, 7, 5, 8, 4, 9, 2, 14, 19, 20, 15, 13, 18, 12, 11, 10]    # Sort by team lead -> staff -> consultant
 def get_user_sorting_key(user):
     groups = [g.id for g in user.groups.all()]
     identity = ''.join([str(1 - groups.count(i)) for i in GROUP_PRIORITY])    # Sort by identity first
@@ -18,8 +17,17 @@ def get_user_sorting_key(user):
 def sorted_users(users):
     return sorted(users, key=get_user_sorting_key)
 
+def sorted_tokens(tokens):
+    return sorted(tokens, key=get_token_sorting_key)
+
 def sorted_groups(groups):
     return sorted(groups, key=get_group_sorting_key)
+
+def get_token_sorting_key(token):
+    groups = [g.id for g in token.groups.all()]
+    identity = ''.join([str(1 - groups.count(i)) for i in GROUP_PRIORITY])    # Sort by identity first
+    name = token.token
+    return ''.join((identity, name))
 
 def get_group_sorting_key(group):
     try:
