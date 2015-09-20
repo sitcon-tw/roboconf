@@ -84,4 +84,4 @@ class RegisterToken(models.Model):
     token = models.CharField(max_length=12, default=get_random_string)
     group = models.ForeignKey(GroupCategory)
     valid = models.BooleanField(default=True)
-    user = models.ForeignKey(User, default=None, null=True)
+    user = models.ForeignKey(User, default=None, null=True, blank=True)
