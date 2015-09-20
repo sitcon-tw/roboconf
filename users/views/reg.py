@@ -24,9 +24,29 @@ def reg_list_token(request):
         'params': request.GET.urlencode(),
     })
 
+@permission_required('auth.add_user')
 def reg_add_token(request):
+    if not request.user.is_authenticated():
+        from django.contrib.auth.views import redirect_to_login
+        return redirect_to_login(request.path)
+    elif not request.user.profile.is_authorized() and not request.user.profile.is_trusted():
+        return redirect('index')
+    status = ''
+
+    if 'submit' in request.POST:
+        number = request.POST.get('number')
+        for tn in range(0, int(number)):
+            token = RegisterToken()
+            token.save()
+            for group_id in request.POST.getlist('groups'):
+                try:
+                    token.groups.add(Group.objects.get(id=group_id))
+                except Group.DoesNotExist: pass
+            token.save()
+
     return render(request, 'users/reg_add_token.html', {
         'categories': sorted_categories,
+        'status': status,
     })
 
 def reg_form(request):
