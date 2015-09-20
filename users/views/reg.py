@@ -52,6 +52,9 @@ def reg_add_token(request):
 def reg_form(request):
     pass
 
+def reg_edit_token(request):
+    pass
+
 def apply_filter(filters, groups, tokens=None):
     tokens = tokens or RegisterToken.objects.all()
 
