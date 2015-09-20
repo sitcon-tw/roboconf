@@ -10,10 +10,10 @@
 {% endif %}
 <div class="row">
 	<div class="large-1 avatars columns">
-		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表" data-tooltip></a>
+		<a class="right iconize icon-back has-tip" href="{% url 'users:reg_list_token' %}" title="回到 Token 列表" data-tooltip></a>
 	</div>
 	<div class="large-8 columns">
-		<form action="{% url 'users:create' %}" method="POST" class="profile-main">
+		<form action="{% url 'users:reg_add_token' %}" method="POST" class="profile-main">
 		{% csrf_token %}
 			<div class="row field-header">
 				<div class="small-12 columns">
@@ -22,7 +22,7 @@
 			</div>
 			<div class="row">
 				<div class="small-4 columns">
-					<input type="tel" name="number" id="number" maxlength="10" placeholder="數量" required />
+					<input type="number" name="number" id="number" maxlength="10" placeholder="數量" required />
 				</div>
 				<div class="small-8 columns">
 					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">選取組別</a></label>
