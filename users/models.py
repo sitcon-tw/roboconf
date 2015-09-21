@@ -82,6 +82,6 @@ class RegisterToken(models.Model):
     group:  User registered by token is belongs to.
     """
     token = models.CharField(max_length=12, default=get_random_string)
-    groups = models.ManyToManyField(GroupCategory, related_name='tokens')
+    groups = models.ManyToManyField(Group, related_name='tokens')
     valid = models.BooleanField(default=True)
     user = models.ForeignKey(User, default=None, null=True, blank=True)

@@ -40,8 +40,9 @@ def reg_add_token(request):
             token.save()
             for group_id in request.POST.getlist('groups'):
                 try:
-                    token.groups.add(Group.objects.get(id=group_id))
+                    token.groups.add(Group.objects.get(id=int(group_id)))
                 except Group.DoesNotExist: pass
+                except ValueError: pass
             token.save()
 
     return render(request, 'users/reg_add_token.html', {
