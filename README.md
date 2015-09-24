@@ -49,6 +49,7 @@ Naming
 
 Developers
 ----------
+* [松鼠](https://github.com/azdjk532)
 * [RSChiang](https://github.com/rschiang)
 * [dv](https://github.com/wdv4758h)
 * [pcchou](https://github.com/pcchou)
