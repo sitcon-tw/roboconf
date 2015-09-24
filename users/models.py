@@ -18,14 +18,15 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     display_name = models.CharField(max_length=16)
     title = models.CharField(max_length=16)
-    school = models.CharField(max_length=32, default='', help_text='school or company')
-    grade = models.CharField(max_length=32, default='', help_text='department and grade / position')
-    phone = models.CharField(max_length=16, default='')
+    school = models.CharField(max_length=32, default='', help_text='school or company', blank=True)
+    grade = models.CharField(max_length=32, default='', help_text='department and grade / position', blank=True)
+    phone = models.CharField(max_length=16, default='', blank=True)
     photo = models.FileField(upload_to=photo_path)
-    bio = models.TextField(max_length=320, default='', help_text='biography')
-    residence = models.CharField(max_length=16, default='', help_text='residence')
-    shirt_size = models.CharField(max_length=8, default='', help_text='T-shirt size')
-    diet = models.CharField(max_length=8, default='')
+    bio = models.TextField(max_length=320, default='', help_text='biography', blank=True)
+
+    residence = models.CharField(max_length=16, default='', help_text='residence', blank=True)
+    shirt_size = models.CharField(max_length=8, default='', help_text='T-shirt size', blank=True)
+    diet = models.CharField(max_length=8, default='', blank=True)
 
     comment = models.TextField(default='')
 
