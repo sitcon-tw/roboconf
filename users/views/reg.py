@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
+from django.http import HttpResponse, HttpResponseForbidden
+from django.db import transaction
+
 from users.models import RegisterToken
 from users.utils import sorted_users, sorted_tokens, sorted_categories
-from django.http import HttpResponse
+from users.forms import RegisterForm
+
 
 def reg_list_token(request):
     if not request.user.is_authenticated():
@@ -50,10 +54,31 @@ def reg_add_token(request):
         'status': status,
     })
 
-def reg_form(request):
-    pass
 
-def reg_edit_token(request):
+def reg_form(request, token=None):
+    try:
+        reg_token = RegisterToken.objects.get(token=token)
+        if not reg_token.valid:
+            return HttpResponseForbidden()
+    except:
+        return HttpResponseForbidden()
+
+    if request.method == 'GET':
+        return render(request, 'users/reg_form.html', {
+            "token": token,
+        })
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+        with transaction.atomic():
+            form.save()
+            reg_token.valid = False
+            reg_token.user = form.instance
+            reg_token.save()
+
+    return redirect('users:edit fancy', username=form.instance.username)
+
+
+def reg_edit_token(request, token=None):
     pass
 
 def apply_filter(filters, groups, tokens=None):

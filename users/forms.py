@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
+from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from notifications.utils import format_address, send_template_mail
@@ -34,3 +35,17 @@ class PasswordResetForm(DjangoPasswordResetForm):
             sender_address = settings.DEFAULT_ACCOUNTS_SENDER
             receiver_address = format_address(user.profile.name, user.email)
             send_template_mail(sender_address, receiver_address, 'mail/user_reset_password.html', context)
+
+class RegisterForm(DjangoUserCreationForm):
+    class Meta:
+        model = User
+        fields = ("email", )
+
+    def save(self, commit=True):
+        user = super(DjangoUserCreationForm, self).save(commit=False)
+        user.username = self.cleaned_data['username']
+        user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+        return user
