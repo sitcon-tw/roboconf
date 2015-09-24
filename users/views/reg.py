@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User
 from django.http import HttpResponse, HttpResponseForbidden
 from django.db import transaction
 
-from users.models import RegisterToken
+from users.models import RegisterToken, UserProfile
 from users.utils import sorted_users, sorted_tokens, sorted_categories
 from users.forms import RegisterForm
 
@@ -74,6 +75,16 @@ def reg_form(request, token=None):
             reg_token.valid = False
             reg_token.user = form.instance
             reg_token.save()
+
+            p = UserProfile()
+            p.user = form.instance
+            p.save()
+
+            for g in reg_token.groups.all():
+                g.user_set.add(form.instance)
+
+            form.instance.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, form.instance)
 
     return redirect('users:edit fancy', username=form.instance.username)
 
