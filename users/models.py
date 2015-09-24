@@ -7,10 +7,12 @@ from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 
+
 def photo_path(instance, filename):
     _, ext = os.path.splitext(filename)
     hash_value = md5.new(instance.display_name.encode('utf8') + now().isoformat()).hexdigest()
     return u'photos/{}{}'.format(hash_value, ext)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
@@ -74,6 +76,7 @@ class GroupCategory(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class RegisterToken(models.Model):
     """
     valid:  flag for current token can use or not
@@ -81,6 +84,7 @@ class RegisterToken(models.Model):
             Team leader can trace the usage of tokens.
     group:  User registered by token is belongs to.
     """
+    title = models.CharField(max_length=255, default="")
     token = models.CharField(max_length=12, default=get_random_string)
     groups = models.ManyToManyField(Group, related_name='tokens')
     valid = models.BooleanField(default=True)
