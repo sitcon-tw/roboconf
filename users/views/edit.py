@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -37,7 +37,7 @@ def edit(request, username, fancy=False):
         except UserProfile.DoesNotExist:
             profile = UserProfile(user=user)
 
-        if privileged:
+        if privileged and not fancy:
             username = request.POST.get('username')
             if username != user.username:
                 if username:
@@ -65,17 +65,18 @@ def edit(request, username, fancy=False):
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
 
-        email = request.POST.get('email', '')
-        if email != user.email:
-            try:
-                validate_email(email)
+        if not fancy:
+            email = request.POST.get('email', '')
+            if email != user.email:
+                try:
+                    validate_email(email)
 
-                if User.objects.filter(email=email).count() < 1:
-                    user.email = email
-                else:
-                    errors += ['email', 'email_already_taken']
-            except ValidationError:
-                errors += ['email', 'invalid_email']
+                    if User.objects.filter(email=email).count() < 1:
+                        user.email = email
+                    else:
+                        errors += ['email', 'email_already_taken']
+                except ValidationError:
+                    errors += ['email', 'invalid_email']
 
         profile.display_name = request.POST.get('display_name')
         profile.school = request.POST.get('school')
@@ -107,15 +108,18 @@ def edit(request, username, fancy=False):
         else:
             status = 'error'
 
-    render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
-    return render(request, render_template_url, {
-        'u': user,
-        'categories': sorted_categories if privileged else None,
-        'options': {
-            'residence': settings.RESIDENCE_OPTIONS,
-            'shirt_size': settings.SHIRT_SIZE_OPTIONS,
-            'diet': settings.DIET_OPTIONS,
-        },
-        'errors': errors,
-        'status': status,
-    })
+    if fancy and status == 'success':
+        return redirect("index")
+    else:
+        render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
+        return render(request, render_template_url, {
+            'u': user,
+            'categories': sorted_categories if privileged else None,
+            'options': {
+                'residence': settings.RESIDENCE_OPTIONS,
+                'shirt_size': settings.SHIRT_SIZE_OPTIONS,
+                'diet': settings.DIET_OPTIONS,
+            },
+            'errors': errors,
+            'status': status,
+        })

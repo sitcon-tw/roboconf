@@ -8,7 +8,7 @@
 	<a href="#" class="close">&times;</a>
 </div>
 {% endif %}
-<form action="{% url 'users:edit' u.username %}" method="POST" enctype="multipart/form-data" class="profile-main">
+<form action="{% url 'users:edit fancy' u.username %}" method="POST" enctype="multipart/form-data" class="profile-main">
 <div class="row">
 	<div class="large-1 avatars columns">
 		<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}"
@@ -17,49 +17,22 @@
 	</div>
 	<div class="large-8 columns">
 		{% csrf_token %}
+			<div class="divider"></div>
 			<div class="row">
-				<div class="small-12 columns {% if 'username' in errors %}error{% endif %}">
-				{% if perms.auth.change_user %}
-					<input type="text" name="username" id="username" maxlength="30" placeholder="帳號" value="{{ u.username }}" required />
-					{% if 'invalid_username' in errors %}<small>無效的帳號名稱。</small>
-					{% elif 'username_already_taken' in errors %}<small>帳號名稱已被使用。</small>{% endif %}
-				{% else %}
-					<h4><span class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</span></h4>
-				{% endif %}
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-8 columns">
-				{% if perms.auth.change_user %}
-					<input type="text" name="title" maxlength="16" placeholder="職稱" value="{{ u.profile.title }}" />
-				{% else %}
-					<h5>{{ u.profile.title }}</h5>
-				{% endif %}
-				</div>
-				<div class="small-4 columns">
-				{% with groups=u.groups.all %}
-				{% if perms.auth.change_user %}
-					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">{% for g in groups %}{{ g.name }}{% if not forloop.last %}、{% endif %}{% empty %}選取組別{% endfor %}</a></label>
-					<ul id="groups_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
-					{% for c, c_groups in categories.items %}
-						<h6>{{ c.name }}</h6>
-						{% for g in c_groups %}
-						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" data-label="{{ g.name }}" {% if g in groups %}checked{% endif %} />{{ g.name }}</label></li>
-						{% endfor %}
-					{% endfor %}
-					</ul>
-				{% else %}
-					{% for g in groups %}{{ g.name }}{% if not forloop.last %}、{% endif %}{% endfor %}
-				{% endif %}
-				{% endwith %}
+				<div class="small-12 columns">
+					<h4>{{ u.profile.title }} <span class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</span></h4>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
+					<h5>顯示名稱 <small>我們該如何稱呼您呢？</small></h5>
 					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" value="{{ u.profile.display_name }}" />
 				</div>
 			</div>
 			<div class="row">
+				<div class="small-12 columns">
+					<h5>姓名 <small>您的本名，我們不會告訴任何人！</small></h5>
+				</div>
 				<div class="small-6 columns">
 					<input type="text" name="last_name" maxlength="30" placeholder="姓" value="{{ u.last_name }}" />
 				</div>
@@ -68,6 +41,9 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="small-12 columns">
+					<h5>學校/系級 <small>您目前就讀的學校全稱！</small></h5>
+				</div>
 				<div class="small-6 columns">
 					<input type="text" name="school" maxlength="30" placeholder="學校" value="{{ u.profile.school }}" />
 				</div>
@@ -76,15 +52,20 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns {% if 'email' in errors %}error{% endif %}">
-					<input type="text" name="email" placeholder="電子郵件信箱" value="{{ u.email }}" required />
-					{% if 'invalid_email' in errors %}<small>無效的電子郵件地址。</small>
-					{% elif 'email_already_taken' in errors %}<small>電子郵件信箱已被使用。如須協助，請聯繫行政組。</small>{% endif %}
+				<div class="small-12 columns">
+					<h5>電話號碼 <small>不包含連字號 (eg: 0987-654-321)</small></h5>
+					<input type="text" name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
+				<div class="small-4 columns">
+					<h5>出發地<br><small>填寫縣市即可！</small></h5>
+				</div>
+				<div class="small-4 columns">
+					<h5>衣服尺寸<br><small>您的<a href="https://lh3.googleusercontent.com/dyR2NXgez5We2PMbFs2ldgCi7VBZw_xJe7N9vGHtSOwE0xPrHz3mtemOT_OJaQVq1OhI">衣服尺寸</a>是？</small></h5>
+				</div>
+				<div class="small-4 columns">
+					<h5>飲食習慣<br><small>若有會過敏的食材，請在備註欄位補充！</small></h5>
 				</div>
 			</div>
 			<div class="row">
@@ -94,8 +75,7 @@
 						{% if not u.profile.residence %}<option value="" selected>（所在地）</option>{% endif %}
 						{% for r in options.residence %}<option{% if u.profile.residence == r %} selected{% endif %}>{{ r }}</option>{% endfor %}
 					</select>
-				</div>
-				<div class="small-4 columns">
+				</div> <div class="small-4 columns">
 					<select name="shirt_size">
 						<option disabled>衣服尺寸</option>
 						{% if not u.profile.shirt_size %}<option value="" selected>（衣服尺寸）</option>{% endif %}
@@ -109,34 +89,27 @@
 						{% for d in options.diet %}<option{% if u.profile.diet == d %} selected{% endif %}>{{ d }}</option>{% endfor %}
 					</select>
 				</div>
+
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
+					<h5>個人介紹</h5>
 					<textarea name="bio" placeholder="個人介紹" maxlength="300">{{ u.profile.bio }}</textarea>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
+					<h5>備註 <small>有其他想要告訴我們的，請補充在這邊唷 ( ´ ▽ ` )ﾉ</small></h5>
 					<textarea name="comment" placeholder="備註">{{ u.profile.comment }}</textarea>
 				</div>
 			</div>
 			<div class="button-row">
 				<div class="right">
-					<input type="submit" class="radius button" name="submit" value="更新" />
+					<input type="submit" class="radius button" name="submit" value="登錄" />
 				</div>
 			</div>
 	</div>
 	<div class="large-3 columns">
-		<ul class="side-nav users-actions">
-		{% if user == u %}
-			<li><a href="{% url 'users:change_password' %}"><span class="icon-password iconize"></span> 變更密碼</a></li>
-		{% elif perms.auth.change_user %}
-			<li><a href="{% url 'users:reset_password' %}?id={{ u.id }}"><span class="icon-password iconize"></span> 重設密碼</a></li>
-			<li>
-				<a href="#" onClick="$('#active-form').submit();"><span class="icon-{{ u.is_active|yesno:'deactivate,activate' }} iconize"></span> {{ u.is_active|yesno:'停用帳號,啟用帳號' }}</a>
-			</li>
-		{% endif %}
-		</ul>
 		<div class="row">
 			<div class="small-12 columns {% if 'photo' in errors %}error{% endif %}">
 				<h6>個人頭像</h6>
@@ -149,7 +122,7 @@
 </div>
 </form>
 
-<form class="hide" id="active-form" action="{% url 'users:edit' u.username %}" method="POST">
+<form class="hide" id="active-form" action="{% url 'users:edit fancy' u.username %}" method="POST">
 	{% csrf_token %}
 	<input type="hidden" name="action" value="{{ u.is_active|yesno:'deactivate,activate' }}" />
 </form>
