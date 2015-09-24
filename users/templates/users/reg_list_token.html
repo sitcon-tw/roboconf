@@ -33,6 +33,7 @@
 				<li{% if g.id in filters %} class="active"{% endif %}><a href="{% url 'users:reg_list_token' %}?g={{ g.id }}">{{ g.name }}</a></li>
 			{% endfor %}
 				<li{% if 'disabled' in filters %} class="active"{% endif %}><a href="{% url 'users:reg_list_token' %}?find=disabled">停用的 Token</a></li>
+				<li{% if 'all' in filters %} class="active"{% endif %}><a href="{% url 'users:reg_list_token' %}?find=all">全部 Token</a></li>
 			</ul>
 			{% endif %}
 		{% endfor %}
