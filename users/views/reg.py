@@ -2,13 +2,16 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from django.http import HttpResponse, HttpResponseForbidden
 from django.db import transaction
+from django.contrib.auth import login
+from django.core.exceptions import ObjectDoesNotExist
 
 from users.models import RegisterToken, UserProfile
 from users.utils import sorted_users, sorted_tokens, sorted_categories
 from users.forms import RegisterForm
+from django.contrib.auth.forms import UserCreationForm
 
 
 def reg_list_token(request):
@@ -60,37 +63,48 @@ def reg_form(request, token=None):
     try:
         reg_token = RegisterToken.objects.get(token=token)
         if not reg_token.valid:
-            return HttpResponseForbidden()
-    except:
-        return HttpResponseForbidden()
-
-    if request.method == 'GET':
+            return render(request, 'users/reg_form.html', {
+                "token": token,
+                "error_token": "used_token",
+            })
+    except ObjectDoesNotExist:
         return render(request, 'users/reg_form.html', {
             "token": token,
+            "error_token": "invalid_token",
         })
-    form = RegisterForm(request.POST)
-    if form.is_valid():
-        with transaction.atomic():
-            form.save()
-            reg_token.valid = False
-            reg_token.user = form.instance
-            reg_token.save()
 
-            p = UserProfile()
-            p.user = form.instance
-            p.save()
-
-            for g in reg_token.groups.all():
-                g.user_set.add(form.instance)
-
-            form.instance.backend = 'django.contrib.auth.backends.ModelBackend'
+    error = []
+    if request.method == 'POST' and not error:
+        form = RegisterForm(request.POST)
+        form.instance.backend = 'django.contrib.auth.backends.ModelBackend'
+        if form.is_valid():
+            with transaction.atomic():
+                form.save()
+                reg_token.valid = False
+                reg_token.user = form.instance
+                reg_token.save()
+                p = UserProfile()
+                p.user = form.instance
+                p.save()
+                for g in reg_token.groups.all():
+                    g.user_set.add(form.instance)
             login(request, form.instance)
+            return redirect('users:edit fancy', username=form.instance.username)
+        else:
+            if "username" in form.errors:
+                error.append("error_username")
+            if "email" in form.errors:
+                error.append("error_email")
 
-    return redirect('users:edit fancy', username=form.instance.username)
+    return render(request, 'users/reg_form.html', {
+        "token": token,
+        "error": error,
+    })
 
 
 def reg_edit_token(request, token=None):
     pass
+
 
 def apply_filter(filters, groups, tokens=None):
     tokens = tokens or RegisterToken.objects.all()
@@ -105,7 +119,8 @@ def apply_filter(filters, groups, tokens=None):
         for g in groups.split(','):
             try:
                 g = int(g)
-            except ValueError: pass
+            except ValueError:
+                pass
             else:
                 filters.append(g)
                 if g >= 0:

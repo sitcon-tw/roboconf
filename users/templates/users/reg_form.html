@@ -1,15 +1,21 @@
 {% extends 'core/master.html' %}
 {% block title %}註冊{{ block.super }}{% endblock %}\
 {% block content %}
-{% if error %}
-<div class="radius {% if error == 'invalid_login' %}alert{% else %}secondary{% endif %} alert-box" data-alert>
-	{% if error == 'invalid_token' %}不正確的註冊連結
-	{% elif error == 'token_disabled' %}帳號已停用。請聯繫行政組以取得協助。
-	{% elif error == 'used_username' %}帳號已停用。請聯繫行政組以取得協助。
-	{% else %}發生不明錯誤，請回報行政組處理。（{{ error }}）{% endif %}
+{% if error_token %}
+<div class="row">
+    <div class="large-6 small-9 small-centered columns">
+        <div class="login-panel">{{error_token}}</div>
+    </div>
+</div>
+{% else %}
+{% for e in error %}
+<div class="radius alert alert-box" data-alert>
+    {% if e == 'error_username'%}這個帳號不給用，換個帳號吧。
+    {% elif e == 'error_email' %}Email 怪怪的，再檢查一下吧。
+    {% endif %}
 	<a href="#" class="close">&times;</a>
 </div>
-{% endif %}
+{% endfor %}
 <div class="row">
 	<div class="large-6 small-9 small-centered columns">
 		<div class="login-panel">
@@ -38,4 +44,5 @@
 		</div>
 	</div>
 </div>
+{% endif %}
 {% endblock %}
