@@ -1,5 +1,5 @@
 {% extends 'core/master.html' %}
-{% block title %}人員{{ block.super }}{% endblock %}
+{% block title %}登錄系統{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="large-9 columns">
@@ -14,7 +14,7 @@
 			<tr>
 				<td><a href="{% url 'users:reg_edit_token' t.token %}" >{{ t.token }}</a></td>
 				<td>{% for g in t.groups.all %}{{ g.name }}{% if not forloop.last %}, {% else %}{% endif %}{% endfor %}</td>
-				<td>{% if not t.user and t.valid %}已啟用{% elif t.user %}已被 <a href="{% url 'users:profile' t.user.username %}">{{ t.user.profile.name }}</a> 註冊 {% else %}未啟用{% endif %}</td>
+				<td>{% if not t.user and t.valid %}已啟用{% elif t.user %}已被 <a href="{% url 'users:profile' t.user.username %}">{{ t.user.username }}</a> 註冊 {% else %}未啟用{% endif %}</td>
 				<td><a href="{% url 'users:reg_form' t.token %}" >{{ t.token }}</a></td>
 			</tr>
 		{% endfor %}
