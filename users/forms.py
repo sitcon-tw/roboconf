@@ -39,13 +39,10 @@ class PasswordResetForm(DjangoPasswordResetForm):
 class RegisterForm(DjangoUserCreationForm):
     class Meta:
         model = User
-        fields = ("email", )
+        fields = ("username", "email", )
 
     def save(self, commit=True):
-        user = super(DjangoUserCreationForm, self).save(commit=False)
-        user.username = self.cleaned_data['username']
-        user.email = self.cleaned_data['email']
-        user.set_password(self.cleaned_data['password1'])
+        user = super(RegisterForm, self).save(commit=False)
         if commit:
             user.save()
         return user
