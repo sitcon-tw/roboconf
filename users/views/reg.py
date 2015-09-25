@@ -3,22 +3,17 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
-from django.http import HttpResponse, HttpResponseForbidden
 from django.db import transaction
-from django.contrib.auth import login
 from django.core.exceptions import ObjectDoesNotExist
 
 from users.models import RegisterToken, UserProfile
 from users.utils import sorted_users, sorted_tokens, sorted_categories
-from users.forms import RegisterForm
-from django.contrib.auth.forms import UserCreationForm
+from users.forms import RegisterForm, TokenEditForm
 
 
+@login_required
 def reg_list_token(request):
-    if not request.user.is_authenticated():
-        from django.contrib.auth.views import redirect_to_login
-        return redirect_to_login(request.path)
-    elif not request.user.profile.is_authorized() and not request.user.profile.is_trusted():
+    if not request.user.profile.is_authorized() and not request.user.profile.is_trusted():
         return redirect('index')
 
     filters = request.GET.getlist('find')
@@ -32,12 +27,11 @@ def reg_list_token(request):
         'params': request.GET.urlencode(),
     })
 
+
+@login_required
 @permission_required('auth.add_user')
 def reg_add_token(request):
-    if not request.user.is_authenticated():
-        from django.contrib.auth.views import redirect_to_login
-        return redirect_to_login(request.path)
-    elif not request.user.profile.is_authorized() and not request.user.profile.is_trusted():
+    if not request.user.profile.is_authorized() and not request.user.profile.is_trusted():
         return redirect('index')
     status = ''
 
@@ -49,8 +43,10 @@ def reg_add_token(request):
             for group_id in request.POST.getlist('groups'):
                 try:
                     token.groups.add(Group.objects.get(id=int(group_id)))
-                except Group.DoesNotExist: pass
-                except ValueError: pass
+                except Group.DoesNotExist:
+                    pass
+                except ValueError:
+                    pass
             token.save()
 
     return render(request, 'users/reg_add_token.html', {
@@ -59,19 +55,31 @@ def reg_add_token(request):
     })
 
 
+def reg_edit_token(request, token=None):
+    status, obj = check_token_status(request, token)
+    if not status:
+        return obj  # Retuen a template
+    reg_token = obj
+
+    if request.method == 'POST':
+        form = TokenEditForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('users:reg_list_token')
+        else:
+            print("error")
+
+    return render(request, 'users/reg_edit_token.html', {
+        'categories': sorted_categories,
+        "token": reg_token,
+    })
+
+
 def reg_form(request, token=None):
-    try:
-        reg_token = RegisterToken.objects.get(token=token)
-        if not reg_token.valid:
-            return render(request, 'users/reg_form.html', {
-                "token": token,
-                "error_token": "used_token",
-            })
-    except ObjectDoesNotExist:
-        return render(request, 'users/reg_form.html', {
-            "token": token,
-            "error_token": "invalid_token",
-        })
+    status, obj = check_token_status(request, token)
+    if not status:
+        return obj  # Retuen a template
+    reg_token = obj
 
     error = []
     if request.method == 'POST' and not error:
@@ -100,10 +108,6 @@ def reg_form(request, token=None):
         "token": token,
         "error": error,
     })
-
-
-def reg_edit_token(request, token=None):
-    pass
 
 
 def apply_filter(filters, groups, tokens=None):
@@ -136,3 +140,18 @@ def apply_filter(filters, groups, tokens=None):
 
     return tokens
 
+
+def check_token_status(request, token):
+    try:
+        reg_token = RegisterToken.objects.get(token=token)
+        if not reg_token.valid:
+            return (False, render(request, 'users/reg_form.html', {
+                "token": token,
+                "error_token": "used_token",
+            }))
+    except ObjectDoesNotExist:
+        return (False, render(request, 'users/reg_form.html', {
+            "token": token,
+            "error_token": "invalid_token",
+        }))
+    return (True, reg_token)

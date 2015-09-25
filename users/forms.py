@@ -5,9 +5,12 @@ from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetFo
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+
 from notifications.utils import format_address, send_template_mail
+from users.models import RegisterToken
 from users.token import generate_uid, generate_token
 from users.models import UserProfile
+
 
 class PasswordResetForm(DjangoPasswordResetForm):
     def clean_email(self):
@@ -36,13 +39,20 @@ class PasswordResetForm(DjangoPasswordResetForm):
             receiver_address = format_address(user.profile.name, user.email)
             send_template_mail(sender_address, receiver_address, 'mail/user_reset_password.html', context)
 
+
 class RegisterForm(DjangoUserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", )
+        fields = ('username', 'email', )
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         if commit:
             user.save()
         return user
+
+
+class TokenEditForm(forms.models.ModelForm):
+    class Meta:
+        model = RegisterToken
+        fields = ('title', 'groups', 'valid', )

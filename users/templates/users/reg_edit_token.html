@@ -1,0 +1,72 @@
+{% extends 'core/master.html' %}
+{% block title %}登錄 Token 新增{{ block.super }}{% endblock %}
+{% block content %}
+{% if status %}
+<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
+	{% if status == 'success' %}Token 編輯成功。
+	{% else %}儲存資料時發生錯誤，請修正下列欄位。{% endif %}
+	<a href="#" class="close">&times;</a>
+</div>
+{% endif %}
+<div class="row">
+	<div class="large-1 avatars columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'users:reg_list_token' %}" title="回到 Token 列表" data-tooltip></a>
+	</div>
+	<div class="large-8 columns">
+		<form action="{% url 'users:reg_edit_token' token.token %}" method="POST" class="profile-main">
+		{% csrf_token %}
+			<div class="row field-header">
+				<div class="small-12 columns">
+                    <h6>Edit Token <small>{{ token.token }}</small></h6>
+				</div>
+			</div>
+            <div class="row">
+                <div class="small-8 columns">
+                    <label for="title">Title
+                        <input type="text" id="title" name="title" value="{{ token.title }}"/></label>
+                </div>
+            </div>
+			<div class="row">
+				<div class="small-12 columns">
+					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">選取組別</a></label>
+					<ul id="groups_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
+					{% for c, groups in categories.items %}
+						<h6>{{ c.name }}</h6>
+						{% for g in groups %}
+						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" data-label="{{ g.name }}" {% if g in token.groups.all %} checked {% endif %}/>{{ g.name }}</label></li>
+						{% endfor %}
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+            <div class="row">
+                <div class="small-8 columns">
+                    <label for="valid">Valid Token:
+                        <input type="checkbox" value="True" name="valid" id="valid" {% if token.valid %} checked {% endif %}/>
+                    </label>
+                </div>
+            </div>
+			<div class="button-row">
+				<div class="right">
+					<input type="submit" class="radius button" name="submit" value="新增 Token" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="large-3 columns text">
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.group_checkbox').change(function() {
+		var sel = [];
+		$('.group_checkbox:checked').each(function (index,e) {
+			sel.push($.trim($(e).data('label')));
+		});
+		$('#groups_label').text(sel.length ? sel.join('、') : $('#groups_label').data('default-content'));
+	});
+});
+</script>
+{% endblock %}
