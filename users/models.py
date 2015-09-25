@@ -15,10 +15,9 @@ def photo_path(instance, filename):
 
 
 class abilities(models.Model):
-    english = models.BooleanField(default=False)
-    japanese = models.BooleanField(default=False)
-    taiwanese = models.BooleanField(default=False)
-    cantonese = models.BooleanField(default=False)
+    medical = models.BooleanField(default=False)
+    legal = models.BooleanField(default=False)
+    pr = models.BooleanField(default=False)
 
 
 class language(models.Model):
