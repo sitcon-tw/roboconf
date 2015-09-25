@@ -45,8 +45,8 @@ class UserProfile(models.Model):
     accom = models.IntegerField(choices=((0, 'Not needed'), (1, 'Either'), (2, 'Needed')), help_text='need for accommodation', null=True, blank=True, default=None)
     roommate = models.ForeignKey(User, help_text='requested roommate', default=None, null=True, blank=True, related_name='+')
     cel_dinner = models.NullBooleanField(help_text='need for celebratory dinner', blank=True, null=True)
-    language = models.ForeignKey(language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
-    abilities = models.ForeignKey(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
+    language = models.OneToOneField(language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
+    abilities = models.OneToOneField(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
     prev_worker = models.BooleanField(help_text='if is previously a SITCON worker', default=False)
 
     comment = models.TextField(default='')
