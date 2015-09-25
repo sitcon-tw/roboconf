@@ -13,6 +13,17 @@ def photo_path(instance, filename):
     hash_value = md5.new(instance.display_name.encode('utf8') + now().isoformat()).hexdigest()
     return u'photos/{}{}'.format(hash_value, ext)
 
+class abilities(models.Model):
+    english = models.BooleanField(default=False)
+    japanese = models.BooleanField(default=False)
+    taiwanese = models.BooleanField(default=False)
+    cantonese = models.BooleanField(default=False)
+
+class language(models.Model):
+    english = models.BooleanField(default=False)
+    japanese = models.BooleanField(default=False)
+    taiwanese = models.BooleanField(default=False)
+    cantonese = models.BooleanField(default=False)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
@@ -27,6 +38,14 @@ class UserProfile(models.Model):
     residence = models.CharField(max_length=16, default='', help_text='residence', blank=True)
     shirt_size = models.CharField(max_length=8, default='', help_text='T-shirt size', blank=True)
     diet = models.CharField(max_length=8, default='', blank=True)
+    transportation = models.CharField(max_length=64, default='', help_text='way to transport', blank=True)
+    transportation_fee = models.CharField(max_length=64, default='', help_text='transportation fee', blank=True)
+    accom = models.IntegerFieldField(choices=((0, 'Not needed'), (1, 'Either'), (2, 'Needed')), help_text='need for accommodation', null=True, blank=True, default=None)
+    roommate = models.ForeignKey(User, help_text='requested roommate', default=None, null=True, blank=True, related_name='+')
+    cel_dinner = models.BooleanField(help_text='need for celebratory dinner', blank=True)
+    language = models.ForeignKey(language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
+    abilities = models.ForeignKey(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
+    prev_worker = models.BooleanField(blank=True, help_text='if is previously a SITCON worker', default=None, null=True)
 
     comment = models.TextField(default='')
 
