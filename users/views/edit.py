@@ -110,6 +110,18 @@ def edit(request, username, fancy=False):
         else:
             status = 'error'
 
+    try:
+        lang_options = [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField]
+    except AttributeError:
+        user.profile.language = language()
+        lang_options = [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField]
+
+    try:
+        abil_options = [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in language._meta.fields if type(f) == BooleanField]
+    except AttributeError:
+        user.profile.abilities = abilities()
+        abil_options = [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField]
+
     if fancy and status == 'success':
         return redirect("index")
     else:
@@ -123,8 +135,8 @@ def edit(request, username, fancy=False):
                 'diet': settings.DIET_OPTIONS,
                 'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.all()],
-                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
-                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
+                'language': lang_options,
+                'abilities': abil_options,
             },
             'errors': errors,
             'status': status,
