@@ -30,14 +30,14 @@ class language(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    display_name = models.CharField(max_length=16)
+    display_name = models.CharField(max_length=16, blank=True)
     title = models.CharField(max_length=16)
     sex = models.IntegerField(choices=((0, 'not known'), (1, 'male'), (2, 'female'), (9, 'not applicable')), help_text='', blank=True, null=True)
     twenty = models.BooleanField(help_text='if age >= 20', default=True)
     school = models.CharField(max_length=32, default='', help_text='school or company', blank=True)
     grade = models.CharField(max_length=32, default='', help_text='department and grade / position', blank=True)
     phone = models.CharField(max_length=16, default='', blank=True)
-    photo = models.FileField(upload_to=photo_path)
+    photo = models.FileField(upload_to=photo_path, blank=True)
     bio = models.TextField(max_length=320, default='', help_text='biography', blank=True)
 
     residence = models.CharField(max_length=16, default='', help_text='residence', blank=True)
@@ -55,7 +55,7 @@ class UserProfile(models.Model):
     abilities = models.OneToOneField(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
     prev_worker = models.BooleanField(help_text='if is previously a SITCON worker', default=False)
 
-    comment = models.TextField(default='')
+    comment = models.TextField(default='', blank=True)
 
     def __unicode__(self):
         return '%s - %s' % (self.title, self.user.username)
