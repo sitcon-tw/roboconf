@@ -39,15 +39,11 @@ def edit(request, username, fancy=False):
     except UserProfile.DoesNotExist:
         profile = UserProfile(user=user)
 
-    try:
-        user.profile.language
-    except AttributeError:
+    if not user.profile.language:
         user.profile.language = language()
         user.profile.language.save()
 
-    try:
-        user.profile.abilities
-    except AttributeError:
+    if not user.profile.abilities:
         user.profile.abilities = abilities()
         user.profile.abilities.save()
 
