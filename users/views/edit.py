@@ -108,6 +108,8 @@ def edit(request, username, fancy=False):
         profile.roommate = User.objects.get(id=request.POST.get('roommate'))
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
+        profile.language.other = request.POST.get('language_other')
+        profile.abilities.other = request.POST.get('abilities_other')
 
         photo = request.FILES.get('photo')
         if photo:

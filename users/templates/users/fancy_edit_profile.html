@@ -217,10 +217,12 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					{% for n, vn, v in options.language %}<label><input type="checkbox" name="language" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label><br>{% endfor %}
+					{% for n, vn, v in options.language %}<label><input type="checkbox" name="language" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label>{% endfor %}
+					<input type="text" name="language_other" maxlength="64" placeholder="其他語言" value="{{ u.profile.language.other }}" />
 				</div>
 				<div class="small-6 columns">
-					{% for n, vn, v in options.abilities %}<label><input type="checkbox" name="abilities" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label><br>{% endfor %}
+					{% for n, vn, v in options.abilities %}<label><input type="checkbox" name="abilities" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label>{% endfor %}
+					<input type="text" name="abilities_other" maxlength="64" placeholder="其他技能" value="{{ u.profile.abilities.other }}" />
 				</div>
 			</div>
 			<div class="row">
