@@ -94,6 +94,9 @@ def edit(request, username, fancy=False):
                     errors += ['email', 'invalid_email']
 
         profile.display_name = request.POST.get('display_name')
+        profile.gender = int(request.POST.get('gender'))
+        profile.twenty = False if request.POST.get('twenty') == 'False' else True
+        profile.personal_id = request.POST.get('personal_id')
         profile.school = request.POST.get('school')
         profile.grade = request.POST.get('grade')
         profile.phone = request.POST.get('phone')
@@ -171,6 +174,7 @@ def edit(request, username, fancy=False):
                 'shirt_size': settings.SHIRT_SIZE_OPTIONS,
                 'diet': settings.DIET_OPTIONS,
                 'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
+                'gender': [(1, u'男'), (2, u'女'), (9, u'其他')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.all().exclude(id=user.id)],
                 'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
                 'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],

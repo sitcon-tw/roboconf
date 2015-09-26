@@ -11,8 +11,7 @@
 <form action="{% url 'users:edit fancy' u.username %}" method="POST" enctype="multipart/form-data" class="profile-main">
 	<div class="row">
 		<div class="large-1 avatars columns">
-			<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}"
-																   title="{% if not u.profile.photo %}請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照{% endif %}" {% if not u.profile.photo %}data-tooltip{% endif %} />
+			<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" title="{% if not u.profile.photo %}請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照{% endif %}" {% if not u.profile.photo %}data-tooltip{% endif %} />
 			<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
 		</div>
 		<div class="large-8 columns">
@@ -49,6 +48,33 @@
 				</div>
 				<div class="small-6 columns">
 					<input type="text" name="grade" maxlength="30" placeholder="系級" value="{{ u.profile.grade }}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-2 columns">
+					<h5>性別</h5>
+				</div>
+				<div class="small-5 columns">
+					<h5>身份證字號 <br><small>若有住宿需求記得填寫，我們不會外流的！</small></h5>
+				</div>
+				<div class="small-5 columns">
+					<h5>出生日期 <br><small>以身分證上登記的為準，請選擇一個符合您的描述。</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-2 columns">
+					<select name="gender">
+						<option disabled>性別</option>
+						{% if not u.profile.gender %}<option value="" selected>（性別）</option>{% endif %}
+						{% for g, n in options.gender %}<option value="{{ g }}"{% if u.profile.gender == g %} selected{% endif %}>{{ n }}</option>{% endfor %}
+					</select>
+				</div>
+				<div class="small-5 columns">
+					<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />
+				</div>
+				<div class="small-5 columns">
+					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1996 年 2 月 27 號（含）前出生</input></label>
+					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1996 年 2 月 27 號後出生，<br>且已經獲得家長同意參加 SITCON</input></label>
 				</div>
 			</div>
 			<div class="row">
@@ -100,25 +126,29 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<div class="large switch radius">
-						<input id="transportation_aid_f" name="transportation_aid" type="radio" value="False" {% if u.profile.transportation_aid %}checked{% endif %}>
-						<label for="transportation_aid_f" onclick="" style="padding-left: 10px">是</label>
+					<div class="large-4">
+						<div class="large switch radius">
+							<input id="transportation_aid_f" name="transportation_aid" type="radio" value="False" {% if u.profile.transportation_aid %}checked{% endif %}>
+							<label for="transportation_aid_f" onclick="" style="padding-left: 10px">是</label>
 
-						<input id="transportation_aid_t" name="transportation_aid" type="radio" value="True" {% if not u.profile.transportation_aid %}checked{% endif %}>
-						<label for="transportation_aid_t" onclick="" style="padding-right: 10px">否</label>
+							<input id="transportation_aid_t" name="transportation_aid" type="radio" value="True" {% if not u.profile.transportation_aid %}checked{% endif %}>
+							<label for="transportation_aid_t" onclick="" style="padding-right: 10px">否</label>
 
-						<span></span>
+							<span></span>
+						</div>
 					</div>
 				</div>
 				<div class="small-6 columns">
-					<div class="large switch radius">
-						<input id="transportation_hr_f" name="transportation_hr" type="radio" value="True" {% if u.profile.transportation_hr %}checked{% endif %}>
-						<label for="transportation_hr_f" onclick="" style="padding-left: 10px">是</label>
+					<div class="large-4">
+						<div class="large switch radius">
+							<input id="transportation_hr_f" name="transportation_hr" type="radio" value="True" {% if u.profile.transportation_hr %}checked{% endif %}>
+							<label for="transportation_hr_f" onclick="" style="padding-left: 10px">是</label>
 
-						<input id="transportation_hr_t" name="transportation_hr" type="radio" value="False" {% if not u.profile.transportation_hr %}checked{% endif %}>
-						<label for="transportation_hr_t" onclick="" style="padding-right: 10px">否</label>
+							<input id="transportation_hr_t" name="transportation_hr" type="radio" value="False" {% if not u.profile.transportation_hr %}checked{% endif %}>
+							<label for="transportation_hr_t" onclick="" style="padding-right: 10px">否</label>
 
-						<span></span>
+							<span></span>
+						</div>
 					</div>
 				</div>
 			</div>
