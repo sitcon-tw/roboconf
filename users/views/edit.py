@@ -40,12 +40,16 @@ def edit(request, username, fancy=False):
         profile = UserProfile(user=user)
 
     if not user.profile.language:
-        user.profile.language = language()
-        user.profile.language.save()
+        lang = language()
+        lang.save()
+        user.profile.language = lang
+        user.profile.save()
 
     if not user.profile.abilities:
-        user.profile.abilities = abilities()
-        user.profile.abilities.save()
+        abil = abilities()
+        abil.save()
+        user.profile.abilities = abil
+        user.profile.save()
 
     if request.POST.get('submit'):
         if privileged and not fancy:
