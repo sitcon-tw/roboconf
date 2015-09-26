@@ -209,10 +209,18 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<h5>語言能力</h5>
+					<h5>語言能力 <small>若您具備下列語言之基本溝通能力，請勾選</small></h5>
 				</div>
 				<div class="small-6 columns">
-					<h5>特殊技能</h5>
+					<h5>特殊技能 <small>您有其他特殊技能嗎</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					{% for n, vn, v in options.language %}<label><input type="checkbox" name="language" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label><br>{% endfor %}
+				</div>
+				<div class="small-6 columns">
+					{% for n, vn, v in options.abilities %}<label><input type="checkbox" name="abilities" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label><br>{% endfor %}
 				</div>
 			</div>
 			<div class="row">
