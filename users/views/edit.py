@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.validators import validate_email
+from django.db.models.fields import BooleanField
 from django.conf import settings
 from core.imaging import resize_image
 from users.models import *
@@ -121,7 +122,9 @@ def edit(request, username, fancy=False):
                 'shirt_size': settings.SHIRT_SIZE_OPTIONS,
                 'diet': settings.DIET_OPTIONS,
                 'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
-                'roommate': [(u.id, u.profile.title + " " + u.profile.display_name + " (" + u.username + ")") for u in User.objects.all()],
+                'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.all()],
+                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
+                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
             },
             'errors': errors,
             'status': status,
