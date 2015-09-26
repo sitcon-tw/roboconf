@@ -18,14 +18,14 @@ class abilities(models.Model):
     medical = models.BooleanField(default=False)
     legal = models.BooleanField(default=False)
     pr = models.BooleanField(default=False)
-
+    other = models.CharField(max_length=64, default='', help_text='other special abilities')
 
 class language(models.Model):
     english = models.BooleanField(default=False)
     japanese = models.BooleanField(default=False)
     taiwanese = models.BooleanField(default=False)
     cantonese = models.BooleanField(default=False)
-
+    other = models.CharField(max_length=64, default='', help_text='other language abilities')
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
