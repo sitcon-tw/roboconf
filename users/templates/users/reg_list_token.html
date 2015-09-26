@@ -6,9 +6,10 @@
 		<table class="large-12">
 			<tr>
 				<td class="large-2">Token</td>
-				<td class="large-1">職稱</td>
+				<td class="large-2">職稱</td>
 				<td class="large-4">組別</td>
 				<td class="large-3">狀態</td>
+				<td class="large-1">網址</td>
 			</tr>
 		{% for t in tokens %}
 			<tr>
@@ -16,7 +17,7 @@
                 <td>{{ t.title }}</td>
 				<td>{% for g in t.groups.all %}{{ g.name }}{% if not forloop.last %}, {% else %}{% endif %}{% endfor %}</td>
 				<td>{% if not t.user and t.valid %}已啟用{% elif t.user %}已被 <a href="{% url 'users:profile' t.user.username %}">{{ t.user.username }}</a> 註冊 {% else %}未啟用{% endif %}</td>
-				<!--<td><a href="{% url 'users:reg_form' t.token %}" >{{ t.token }}</a></td>-->
+				<td><a href="{% url 'users:reg_form' t.token %}" >註冊</a></td>
 			</tr>
 		{% endfor %}
 		</table>

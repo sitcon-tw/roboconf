@@ -37,8 +37,10 @@ def reg_add_token(request):
 
     if 'submit' in request.POST:
         number = request.POST.get('number')
+        title = request.POST.get('title')
         for tn in range(0, int(number)):
             token = RegisterToken()
+            token.title = title
             token.save()
             for group_id in request.POST.getlist('groups'):
                 try:
@@ -55,7 +57,12 @@ def reg_add_token(request):
     })
 
 
+@login_required
+@permission_required('auth.add_user')
 def reg_edit_token(request, token=None):
+    if not request.user.profile.is_authorized() and not request.user.profile.is_trusted():
+        return redirect('index')
+
     status, obj = check_token_status(request, token)
     if not status:
         return obj  # Retuen a template
