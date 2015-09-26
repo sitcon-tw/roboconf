@@ -204,6 +204,7 @@
 			</div>
 			<div class="row">
 				<div class="small-4 columns">
+					<div class="large-6">
 					<div class="large switch radius">
 						<input id="certificate_f" name="certificate" type="radio" value="False" {% if u.profile.certificate %}checked{% endif %}>
 						<label for="certificate_f" onclick="" style="padding-left: 10px">是</label>
@@ -213,8 +214,10 @@
 
 						<span></span>
 					</div>
+					</div>
 				</div>
 				<div class="small-4 columns">
+					<div class="large-6">
 					<div class="large switch radius">
 						<input id="cel_dinner_f" name="cel_dinner" type="radio" value="False" {% if u.profile.cel_dinner %}checked{% endif %}>
 						<label for="cel_dinner_f" onclick="" style="padding-left: 10px">是</label>
@@ -224,16 +227,19 @@
 
 						<span></span>
 					</div>
+					</div>
 				</div>
 				<div class="small-4 columns">
-					<div class="large switch radius">
-						<input id="prev_worker_f" name="prev_worker" type="radio" value="False" {% if u.profile.prev_worker %}checked{% endif %}>
-						<label for="prev_worker_f" onclick="" style="padding-left: 10px">是</label>
+					<div class="large-6">
+						<div class="large switch radius">
+							<input id="prev_worker_f" name="prev_worker" type="radio" value="False" {% if u.profile.prev_worker %}checked{% endif %}>
+							<label for="prev_worker_f" onclick="" style="padding-left: 10px">是</label>
 
-						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" {% if not u.profile.prev_worker %}checked{% endif %}>
-						<label for="prev_worker_t" onclick="" style="padding-right: 10px">否</label>
+							<input id="prev_worker_t" name="prev_worker" type="radio" value="True" {% if not u.profile.prev_worker %}checked{% endif %}>
+							<label for="prev_worker_t" onclick="" style="padding-right: 10px">否</label>
 
-						<span></span>
+							<span></span>
+						</div>
 					</div>
 				</div>
 			</div>
