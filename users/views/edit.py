@@ -32,13 +32,26 @@ def edit(request, username, fancy=False):
         user.save()
         status = 'success'
 
-    if request.POST.get('submit'):
-        profile = None
-        try:
-            profile = user.profile
-        except UserProfile.DoesNotExist:
-            profile = UserProfile(user=user)
+    profile = None
 
+    try:
+        profile = user.profile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=user)
+
+    try:
+        user.profile.language
+    except AttributeError:
+        user.profile.language = language()
+        user.profile.language.save()
+
+    try:
+        user.profile.abilities
+    except AttributeError:
+        user.profile.abilities = abilities()
+        user.profile.abilities.save()
+
+    if request.POST.get('submit'):
         if privileged and not fancy:
             username = request.POST.get('username')
             if username != user.username:
@@ -106,21 +119,11 @@ def edit(request, username, fancy=False):
         if len(errors) < 1:
             user.save()
             profile.save()
+            profile.language.save()
+            profile.abilities.save()
             status = 'success'
         else:
             status = 'error'
-
-    try:
-        lang_options = [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField]
-    except AttributeError:
-        user.profile.language = language()
-        lang_options = [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField]
-
-    try:
-        abil_options = [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in language._meta.fields if type(f) == BooleanField]
-    except AttributeError:
-        user.profile.abilities = abilities()
-        abil_options = [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField]
 
     if fancy and status == 'success':
         return redirect("index")
@@ -135,8 +138,8 @@ def edit(request, username, fancy=False):
                 'diet': settings.DIET_OPTIONS,
                 'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.all().exclude(id=user.id)],
-                'language': lang_options,
-                'abilities': abil_options,
+                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
+                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
             },
             'errors': errors,
             'status': status,
