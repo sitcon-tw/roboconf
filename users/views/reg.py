@@ -100,6 +100,7 @@ def reg_form(request, token=None):
                 reg_token.save()
                 p = UserProfile()
                 p.user = form.instance
+                p.title = reg_token.title
                 p.save()
                 for g in reg_token.groups.all():
                     g.user_set.add(form.instance)
