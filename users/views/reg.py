@@ -113,6 +113,7 @@ def reg_form(request, token=None):
 
     return render(request, 'users/reg_form.html', {
         "token": token,
+        "title": reg_token.title,
         "error": error,
     })
 
