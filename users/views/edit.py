@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -119,6 +120,8 @@ def edit(request, username, fancy=False):
                 'residence': settings.RESIDENCE_OPTIONS,
                 'shirt_size': settings.SHIRT_SIZE_OPTIONS,
                 'diet': settings.DIET_OPTIONS,
+                'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
+                'roommate': [(u.id, u.profile.title + " " + u.profile.display_name + " (" + u.username + ")") for u in User.objects.all()],
             },
             'errors': errors,
             'status': status,

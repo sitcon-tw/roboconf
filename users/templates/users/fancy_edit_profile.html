@@ -9,28 +9,28 @@
 </div>
 {% endif %}
 <form action="{% url 'users:edit fancy' u.username %}" method="POST" enctype="multipart/form-data" class="profile-main">
-<div class="row">
-	<div class="large-1 avatars columns">
-		<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}"
-		title="{% if not u.profile.photo %}請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照{% endif %}" {% if not u.profile.photo %}data-tooltip{% endif %} />
-		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
-	</div>
-	<div class="large-8 columns">
-		{% csrf_token %}
+	<div class="row">
+		<div class="large-1 avatars columns">
+			<img class="avatar medium has-tip" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}"
+																   title="{% if not u.profile.photo %}請至 Gravatar 替換{% if user == u %}你的{% endif %}大頭照{% endif %}" {% if not u.profile.photo %}data-tooltip{% endif %} />
+			<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表"></a>
+		</div>
+		<div class="large-8 columns">
+			{% csrf_token %}
 			<div class="divider"></div>
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="columns">
 					<h4>{{ u.profile.title }} <span class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</span></h4>
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="columns">
 					<h5>顯示名稱 <small>我們該如何稱呼您呢？</small></h5>
 					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" value="{{ u.profile.display_name }}" />
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="columns">
 					<h5>姓名 <small>您的本名，我們不會告訴任何人！</small></h5>
 				</div>
 				<div class="small-6 columns">
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="columns">
 					<h5>學校/系級 <small>您目前就讀的學校全稱！</small></h5>
 				</div>
 				<div class="small-6 columns">
@@ -52,8 +52,8 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
-					<h5>電話號碼 <small>不包含連字號 (eg: 0987-654-321)</small></h5>
+				<div class="columns">
+					<h5>電話號碼 <small>不包含連字號 (eg: 0987654321)</small></h5>
 					<input type="text" name="phone" placeholder="電話號碼" value="{{ u.profile.phone }}" />
 				</div>
 			</div>
@@ -89,16 +89,140 @@
 						{% for d in options.diet %}<option{% if u.profile.diet == d %} selected{% endif %}>{{ d }}</option>{% endfor %}
 					</select>
 				</div>
-
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="small-6 columns">
+					<h5>是否需要交通補助 <small>請記得填寫下面的問題！</small></h5>
+				</div>
+				<div class="small-6 columns">
+					<h5>交通時間是否大於一小時</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<div class="large switch radius">
+						<input id="transportation_aid_f" name="transportation_aid" type="radio" value="False" {% if u.profile.transportation_aid %}checked{% endif %}>
+						<label for="transportation_aid_f" onclick="" style="padding-left: 10px">是</label>
+
+						<input id="transportation_aid_t" name="transportation_aid" type="radio" value="True" {% if not u.profile.transportation_aid %}checked{% endif %}>
+						<label for="transportation_aid_t" onclick="" style="padding-right: 10px">否</label>
+
+						<span></span>
+					</div>
+				</div>
+				<div class="small-6 columns">
+					<div class="large switch radius">
+						<input id="transportation_hr_f" name="transportation_hr" type="radio" value="True" {% if u.profile.transportation_hr %}checked{% endif %}>
+						<label for="transportation_hr_f" onclick="" style="padding-left: 10px">是</label>
+
+						<input id="transportation_hr_t" name="transportation_hr" type="radio" value="False" {% if not u.profile.transportation_hr %}checked{% endif %}>
+						<label for="transportation_hr_t" onclick="" style="padding-right: 10px">否</label>
+
+						<span></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<h5>預估交通方式</h5>
+				</div>
+				<div class="small-6 columns">
+					<h5>預估交通費用 <br><small>請注意：由於預算關係，我們只能補助部分金額。</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<textarea name="transportation" placeholder="預估交通方式" maxlength="64">{{ u.profile.transportation }}</textarea>
+				</div>
+				<div class="small-6 columns">
+					<textarea name="transportation" placeholder="預估交通費用" maxlength="64">{{ u.profile.transportation }}</textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<h5>是否需要住宿 <br><small>除特殊需求之外，住宿順序將按照出發地遠近來安排，因床位有限，所以雙北不保證一定可以住哦！</small></h5>
+				</div>
+				<div class="small-6 columns">
+					<h5>希望的室友 <br><small>住宿小組將在可行範圍內協助，請事先講好以免發生爭執，彼此都要填寫對方的資料哦！</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<select name="accom">
+						<option disabled>是否需要住宿</option>
+						{% for i, a in options.accom %}<option value="{{ i }}"{% if u.profile.accom == i %} selected{% endif %}>{{ a }}</option>{% endfor %}
+					</select>
+				</div>
+				<div class="small-6 columns">
+					<select name="roommate">
+						<option disabled>希望的室友</option>
+						{% if not u.profile.roommate %}<option value="" selected>（希望的室友）</option>{% endif %}
+						{% for i, r in options.roommate %}<option value="{{ i }}"{% if u.profile.roommate.id == i %} selected{% endif %}>{{ r }}</option>{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<h5>是否需要感謝狀 <small>（將印本名）</small></h5>
+				</div>
+				<div class="small-4 columns">
+					<h5>是否出席慶功宴</h5>
+				</div>
+				<div class="small-4 columns">
+					<h5>是否曾是 SITCON 工人</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<div class="large switch radius">
+						<input id="certificate_f" name="certificate" type="radio" value="False" {% if u.profile.certificate %}checked{% endif %}>
+						<label for="certificate_f" onclick="" style="padding-left: 10px">是</label>
+
+						<input id="certificate_t" name="certificate" type="radio" value="True" {% if not u.profile.certificate %}checked{% endif %}>
+						<label for="certificate_t" onclick="" style="padding-right: 10px">否</label>
+
+						<span></span>
+					</div>
+				</div>
+				<div class="small-4 columns">
+					<div class="large switch radius">
+						<input id="cel_dinner_f" name="cel_dinner" type="radio" value="False" {% if u.profile.cel_dinner %}checked{% endif %}>
+						<label for="cel_dinner_f" onclick="" style="padding-left: 10px">是</label>
+
+						<input id="cel_dinner_t" name="cel_dinner" type="radio" value="True" {% if not u.profile.cel_dinner %}checked{% endif %}>
+						<label for="cel_dinner_t" onclick="" style="padding-right: 10px">否</label>
+
+						<span></span>
+					</div>
+				</div>
+				<div class="small-4 columns">
+					<div class="large switch radius">
+						<input id="prev_worker_f" name="prev_worker" type="radio" value="False" {% if u.profile.prev_worker %}checked{% endif %}>
+						<label for="prev_worker_f" onclick="" style="padding-left: 10px">是</label>
+
+						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" {% if not u.profile.prev_worker %}checked{% endif %}>
+						<label for="prev_worker_t" onclick="" style="padding-right: 10px">否</label>
+
+						<span></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<h5>語言能力</h5>
+				</div>
+				<div class="small-6 columns">
+					<h5>特殊技能</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns">
 					<h5>個人介紹</h5>
 					<textarea name="bio" placeholder="個人介紹" maxlength="300">{{ u.profile.bio }}</textarea>
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="columns">
 					<h5>備註 <small>有其他想要告訴我們的，請補充在這邊唷 ( ´ ▽ ` )ﾉ</small></h5>
 					<textarea name="comment" placeholder="備註">{{ u.profile.comment }}</textarea>
 				</div>
@@ -108,18 +232,18 @@
 					<input type="submit" class="radius button" name="submit" value="登錄" />
 				</div>
 			</div>
-	</div>
-	<div class="large-3 columns">
-		<div class="row">
-			<div class="small-12 columns {% if 'photo' in errors %}error{% endif %}">
-				<h6>個人頭像</h6>
-				<input type="file" name="photo" />
-				{% if 'photo_too_large' in errors %}<small>影像檔案太大了，伺服器表示悲傷</small>
-				{% elif 'invalid_photo' in errors %}<small>影像格式太奇怪，伺服器表示悲傷</small>{% endif %}
+		</div>
+		<div class="large-3 columns">
+			<div class="row">
+				<div class="columns {% if 'photo' in errors %}error{% endif %}">
+					<h6>個人頭像</h6>
+					<input type="file" name="photo" />
+					{% if 'photo_too_large' in errors %}<small>影像檔案太大了，伺服器表示悲傷</small>
+					{% elif 'invalid_photo' in errors %}<small>影像格式太奇怪，伺服器表示悲傷</small>{% endif %}
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </form>
 
 <form class="hide" id="active-form" action="{% url 'users:edit fancy' u.username %}" method="POST">
