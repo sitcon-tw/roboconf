@@ -134,7 +134,7 @@ def edit(request, username, fancy=False):
                 'shirt_size': settings.SHIRT_SIZE_OPTIONS,
                 'diet': settings.DIET_OPTIONS,
                 'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
-                'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.all()],
+                'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.all().exclude(id=user.id)],
                 'language': lang_options,
                 'abilities': abil_options,
             },
