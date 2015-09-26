@@ -100,6 +100,14 @@ def edit(request, username, fancy=False):
         profile.residence = request.POST.get('residence')
         profile.shirt_size = request.POST.get('shirt_size')
         profile.diet = request.POST.get('diet')
+        profile.transportation_aid = False if request.POST.get('transportation_aid') == 'False' else True
+        profile.transportation_hr = False if request.POST.get('transportation_hr') == 'False' else True
+        profile.transportation = request.POST.get('transportation')
+        profile.transportation_fee = request.POST.get('transportation_fee')
+        profile.accom = int(request.POST.get('accom'))
+        profile.roommate = User.objects.get(id=request.POST.get('roommate'))
+        profile.certificate = False if request.POST.get('certificate') == 'False' else True
+        profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
 
         photo = request.FILES.get('photo')
         if photo:
@@ -112,6 +120,30 @@ def edit(request, username, fancy=False):
                     profile.photo = resized_photo
                 except ValueError:
                     errors += ['photo', 'photo_invalid']
+
+        data = dict(request.POST.lists())
+
+        try:
+            data['language']
+        except KeyError:
+            pass
+        else:
+            for f in [f.name for f in language._meta.fields if type(f) == BooleanField]:
+                if f not in data['language']:
+                    setattr(user.profile.language, f, False)
+                else:
+                    setattr(user.profile.language, f, True)
+
+        try:
+            data['abilities']
+        except KeyError:
+            pass
+        else:
+            for f in [f.name for f in abilities._meta.fields if type(f) == BooleanField]:
+                if f not in data['abilities']:
+                    setattr(user.profile.abilities, f, False)
+                else:
+                    setattr(user.profile.abilities, f, True)
 
         profile.bio = request.POST.get('bio')
         profile.comment = request.POST.get('comment')
