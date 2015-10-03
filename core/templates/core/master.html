@@ -41,7 +41,7 @@
 					</a>
 					<ul class="dropdown">
 						<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>
-						<li><a href="{% url 'users:edit' user.username %}">帳號設定</a></li>
+						<li><a href="{% url 'users:edit fancy' user.username %}">帳號設定</a></li>
 						{% if user.is_staff %}<li><a href="/backend/">系統設定</a></li>{% endif %}
 						<li class="divider"></li>
 						<li><a href="https://github.com/sitcon-tw/staff.sitcon.org/issues/new">回報問題</a></li>
