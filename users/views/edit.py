@@ -94,7 +94,8 @@ def edit(request, username, fancy=False):
                     errors += ['email', 'invalid_email']
 
         profile.display_name = request.POST.get('display_name')
-        profile.gender = int(request.POST.get('gender'))
+        if request.POST.get('gender'):
+            profile.gender = int(request.POST.get('gender'))
         profile.twenty = False if request.POST.get('twenty') == 'False' else True
         profile.personal_id = request.POST.get('personal_id')
         profile.school = request.POST.get('school')
@@ -107,7 +108,8 @@ def edit(request, username, fancy=False):
         profile.transportation_hr = False if request.POST.get('transportation_hr') == 'False' else True
         profile.transportation = request.POST.get('transportation')
         profile.transportation_fee = request.POST.get('transportation_fee')
-        profile.accom = int(request.POST.get('accom'))
+        if request.POST.get('accom'):
+            profile.accom = int(request.POST.get('accom'))
         if request.POST.get('roommate'): profile.roommate = User.objects.get(id=request.POST.get('roommate'))
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
