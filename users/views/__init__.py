@@ -8,3 +8,4 @@ from edit import edit
 from account import change_password
 from account import reset_password, reset_password_confirm
 from reg import reg_list_token, reg_add_token, reg_edit_token, reg_form
+import photo
