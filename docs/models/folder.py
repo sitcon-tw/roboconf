@@ -11,13 +11,13 @@ class Folder(models.Model):
         ordering = ['name']
 
     name = models.CharField(max_length=256)
-    parent = models.ForeignKey('self', null=True, related_name='folders')
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='folders')
     last_modified = models.DateTimeField(editable=False, default=now)
     permissions = models.ManyToManyField('Permission', related_name='folderperm+')
 
     # == Version control ==
     is_archived = models.BooleanField(default=False)
-    starring = models.ManyToManyField(User, related_name='starred_folders')
+    starring = models.ManyToManyField(User, null=True, blank=True, related_name='starred_folders')
 
     # == Linkbacks from other models ==
     # folders (OneToManyField to self)
