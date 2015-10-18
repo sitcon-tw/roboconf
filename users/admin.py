@@ -5,7 +5,6 @@ from django.contrib.auth.admin import UserAdmin
 
 admin.site.register(UserProfile)
 admin.site.register(GroupCategory)
-admin.site.register(RegisterToken)
 admin.site.register(language)
 admin.site.register(abilities)
 
@@ -21,3 +20,9 @@ class MyUserAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, MyUserAdmin)
+
+class RegisterTokenAdmin(admin.ModelAdmin):
+    list_display = ('token', 'title', 'valid', 'user')
+    list_filter = ('valid',)
+
+admin.site.register(RegisterToken, RegisterTokenAdmin)

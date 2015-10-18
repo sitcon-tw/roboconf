@@ -118,3 +118,6 @@ class RegisterToken(models.Model):
     groups = models.ManyToManyField(Group, related_name='tokens')
     valid = models.BooleanField(default=True)
     user = models.ForeignKey(User, default=None, null=True, blank=True)
+
+    def __unicode__(self):
+        return '%s - %s' % (self.title, self.token)
