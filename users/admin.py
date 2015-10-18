@@ -11,6 +11,7 @@ admin.site.register(abilities)
 
 class MyUserAdmin(UserAdmin):
     actions = ['disable', 'enable']
+    list_display = ('username', 'last_name', 'first_name', 'email', 'is_active', 'is_staff')
 
     def disable(self, request, queryset):
         queryset.update(is_active=False)
