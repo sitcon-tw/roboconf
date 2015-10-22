@@ -97,24 +97,35 @@ def edit(request, username, fancy=False):
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))
         profile.twenty = False if request.POST.get('twenty') == 'False' else True
-        profile.personal_id = request.POST.get('personal_id')
-        profile.school = request.POST.get('school')
-        profile.grade = request.POST.get('grade')
-        profile.phone = request.POST.get('phone')
-        profile.residence = request.POST.get('residence')
-        profile.shirt_size = request.POST.get('shirt_size')
-        profile.diet = request.POST.get('diet')
+        if request.POST.get('personal_id'):
+            profile.personal_id = request.POST.get('personal_id')
+        if request.POST.get('school'):
+            profile.school = request.POST.get('school')
+        if request.POST.get('grade'):
+            profile.grade = request.POST.get('grade')
+        if request.POST.get('phone'):
+            profile.phone = request.POST.get('phone')
+        if request.POST.get('residence'):
+            profile.residence = request.POST.get('residence')
+        if request.POST.get('shirt_size'):
+            profile.shirt_size = request.POST.get('shirt_size')
+        if request.POST.get('diet'):
+            profile.diet = request.POST.get('diet')
         profile.transportation_aid = False if request.POST.get('transportation_aid') == 'False' else True
         profile.transportation_hr = False if request.POST.get('transportation_hr') == 'False' else True
-        profile.transportation = request.POST.get('transportation')
-        profile.transportation_fee = request.POST.get('transportation_fee')
+        if request.POST.get('transportation'):
+            profile.transportation = request.POST.get('transportation')
+        if request.POST.get('transportation_fee'):
+            profile.transportation_fee = request.POST.get('transportation_fee')
         if request.POST.get('accom'):
             profile.accom = int(request.POST.get('accom'))
         if request.POST.get('roommate'): profile.roommate = User.objects.get(id=request.POST.get('roommate'))
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
-        profile.language.other = request.POST.get('language_other')
-        profile.abilities.other = request.POST.get('abilities_other')
+        if request.POST.get('language_other'):
+            profile.language.other = request.POST.get('language_other')
+        if request.POST.get('abilities_other'):
+            profile.abilities.other = request.POST.get('abilities_other')
 
         photo = request.FILES.get('photo')
         if photo:
