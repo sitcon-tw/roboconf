@@ -177,7 +177,22 @@ def edit(request, username, fancy=False):
             status = 'error'
 
     if fancy and status == 'success':
-        return redirect("index")
+        render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
+        return render(request, render_template_url, {
+            'u': user,
+            'categories': sorted_categories if privileged else None,
+            'options': {
+                'residence': settings.RESIDENCE_OPTIONS,
+                'shirt_size': settings.SHIRT_SIZE_OPTIONS,
+                'diet': settings.DIET_OPTIONS,
+                'accom': [(0, u'不需要'), (1, u'皆可'), (2, u'需要')],
+                'gender': [(1, u'男'), (2, u'女'), (9, u'其他')],
+                'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
+                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
+                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
+            },
+            'status': status,
+        })
     else:
         render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
         return render(request, render_template_url, {
