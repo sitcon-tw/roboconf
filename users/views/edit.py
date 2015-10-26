@@ -121,6 +121,7 @@ def edit(request, username, fancy=False):
             profile.accom = int(request.POST.get('accom'))
         if request.POST.get('roommate'): profile.roommate = User.objects.get(id=request.POST.get('roommate'))
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
+        profile.cel_dinner = False if request.POST.get('cel_dinner') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
         if request.POST.get('language_other'):
             profile.language.other = request.POST.get('language_other')
