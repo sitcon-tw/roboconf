@@ -145,7 +145,8 @@ def edit(request, username, fancy=False):
         try:
             data['language']
         except KeyError:
-            pass
+            for f in [f.name for f in language._meta.fields if type(f) == BooleanField]:
+                setattr(user.profile.language, f, False)
         else:
             for f in [f.name for f in language._meta.fields if type(f) == BooleanField]:
                 if f not in data['language']:
@@ -156,7 +157,8 @@ def edit(request, username, fancy=False):
         try:
             data['abilities']
         except KeyError:
-            pass
+            for f in [f.name for f in abilities._meta.fields if type(f) == BooleanField]:
+                setattr(user.profile.abilities, f, False)
         else:
             for f in [f.name for f in abilities._meta.fields if type(f) == BooleanField]:
                 if f not in data['abilities']:
