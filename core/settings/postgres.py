@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 from .base import *
-from .vendor import *
 
 DEBUG = False
 TEMPLATE_DEBUG = False
@@ -16,13 +15,3 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-
-SMS_API_KEY = os.environ.get('SMS_API_KEY')
-SMS_API_SECRET = os.environ.get('SMS_API_SECRET')

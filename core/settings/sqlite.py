@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
 from .base import *
-from .vendor import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True

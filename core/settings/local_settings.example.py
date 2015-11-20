@@ -1,13 +1,36 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
+# Copy and rename this file to local_settings.py,
+# fill these settings, leave blank if not used, don't delete the lines
+
+# DEVELOPERS: names, secrets and site customizable details should be kept here
 
 import datetime
 
-ALLOWED_HOSTS = ['staff.sitcon.org']
-SITE_URL = 'https://staff.sitcon.org'
+SECRET_KEY = 'change this!'
+
+ALLOWED_HOSTS = ['*']
+SITE_URL = ''
+
+ADMINS = (
+    ('SITCON Developers', 'sitcon-dev@googlegroups.com'),
+)
+
+MANAGERS = ADMINS
 
 SITE_NAME = 'SITCON 行政系統'
 SITE_TITLE = 'SITCON'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+SMS_API_KEY = ''
+SMS_API_SECRET = ''
+
+DEFAULT_SMS_SENDER = 'ROBOCONF'
+DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
 DEFAULT_FROM_EMAIL = '"SITCON 行政系統" <admin@staff.sitcon.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
@@ -20,15 +43,16 @@ DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.org'
 SUBMITTER_ACCOUNTS_SENDER = 'SITCON:accounts@staff.sitcon.org'
 USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
 
-DEFAULT_SMS_SENDER = 'SITCON'
-
 SUBMISSION_START = datetime.datetime(2014, 12, 5, 12, 0, 0)
 SUBMISSION_END = datetime.datetime(2015, 1, 31, 6, 38, 0)
 SUBMISSION_RULE_DOCID = 'MUY'
 
-ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
+STAFF_GROUP_NAME = '工作人員'
+STAFF_GROUP_ID = 1
+SUBMITTER_GROUP_NAME = '投稿講者'
+SUBMITTER_GROUP_ID = 2
 
-# Non-enforcing options
+URGENT_ISSUE_ID = 2
 
 GROUP_PRIORITY = [3, 1, 6, 7, 5, 8, 4, 9, 2, 14, 19, 20, 15, 13, 18, 12, 11, 10]    # Sort by team lead -> staff -> consultant
 

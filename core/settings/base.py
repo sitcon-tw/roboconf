@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# Django settings for Roboconf.
+# DEVELOPERS: Django or server related settings which are mostly the same across sites should be kept here
+from __future__ import unicode_literals
 import os
 import datetime
 from django.conf import global_settings
@@ -7,16 +8,6 @@ from django.conf import global_settings
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    ('SITCON Developers', 'sitcon-dev@googlegroups.com'),
-)
-
-MANAGERS = ADMINS
-
-SITE_NAME = 'Roboconf'
-SITE_TITLE = 'Roboconf'
-
-SITE_URL = ''
 PROJECT_PATH = '/'.join(os.path.dirname(os.path.abspath(__file__)).split('/')[0:-2])
 
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
@@ -38,7 +29,6 @@ STATICFILES_FINDERS = (
 )
 
 LOGIN_URL = 'users:login'
-ALLOWED_HOSTS = ['*']
 
 TIME_ZONE = 'Asia/Taipei'
 LANGUAGE_CODE = 'zh-tw'
@@ -47,8 +37,6 @@ SITE_ID = 1
 USE_I18N = True    # TODO: Implement internationalization
 USE_L10N = True
 USE_TZ = True
-
-SECRET_KEY = 'roboconf'
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'core.context_processors.site_url',
@@ -93,6 +81,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'imagekit',
+    'debug_toolbar',
 )
 
 LOGGING = {
@@ -126,7 +115,7 @@ LOGGING = {
         },
         'file': {
             'level': 'DEBUG',
-            'filename': '/var/log/roboconf.log',
+            'filename': 'roboconf.log',
             'formatter': 'verbose',
             'class': 'logging.FileHandler'
         },
@@ -151,32 +140,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [],
 }
 
-EMAIL_HOST = ''
-EMAIL_PORT = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = 'Roboconf <roboconf@example.org>'
-SERVER_EMAIL = DEFAULT_FROM_EMAIL
-BROADCAST_EMAIL = 'sitcon@googlegroups.com'
-
-DEFAULT_NOTIFICATION_SENDER = 'Roboconf:roboconf@example.org'
-DEFAULT_ACCOUNTS_SENDER = DEFAULT_NOTIFICATION_SENDER
-DEFAULT_ISSUE_SENDER = DEFAULT_NOTIFICATION_SENDER
-
-SUBMITTER_ACCOUNTS_SENDER = DEFAULT_ACCOUNTS_SENDER
-USER_ISSUE_SENDER = DEFAULT_ISSUE_SENDER
-
-
-SMS_API_KEY = ''
-SMS_API_SECRET = ''
-DEFAULT_SMS_SENDER = 'ROBOCONF'
-DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SUBMISSION_START = datetime.datetime.min
-SUBMISSION_END = datetime.datetime.max
-SUBMISSION_RULE_DOCID = ''
 
 ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
 ISSUE_DEFAULT_DAYTIME = datetime.time(hour=17)
@@ -184,12 +149,7 @@ ISSUE_DEFAULT_DAYTIME = datetime.time(hour=17)
 AVATAR_FILE_SIZE_LIMIT = 2 * (1024 * 1024)
 AVATAR_IMAGE_SIZE_LIMIT = 512
 
-# Groups
-STAFF_GROUP_ID = 1
-SUBMITTER_GROUP_NAME = '投稿講者'
-SUBMITTER_GROUP_ID = 16
-
-URGENT_ISSUE_ID = 2
-
 BROADCAST_MAGIC_TOKEN = 'All'
 URGENT_MAGIC_TOKEN = '#!'
+
+from .local_settings import *
