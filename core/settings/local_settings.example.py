@@ -9,6 +9,10 @@ import datetime
 
 SECRET_KEY = 'change this!'
 
+DATABASE_NAME = ''
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+
 ALLOWED_HOSTS = ['*']
 SITE_URL = ''
 
