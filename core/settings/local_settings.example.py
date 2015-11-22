@@ -47,6 +47,57 @@ DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.org'
 SUBMITTER_ACCOUNTS_SENDER = 'SITCON:accounts@staff.sitcon.org'
 USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.security.DisallowedHost': {
+            'handlers': ['file'],
+            'propagate': False,
+        }
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'filename': 'roboconf.log',
+            'formatter': 'verbose',
+            'class': 'logging.FileHandler'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s %(name)s: %(module)s %(process)d %(thread)d %(message)s'
+        }
+    },
+}
+
 SUBMISSION_START = datetime.datetime(2014, 12, 5, 12, 0, 0)
 SUBMISSION_END = datetime.datetime(2015, 1, 31, 6, 38, 0)
 SUBMISSION_RULE_DOCID = 'MUY'
