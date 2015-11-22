@@ -13,7 +13,6 @@ PROJECT_PATH = '/'.join(os.path.dirname(os.path.abspath(__file__)).split('/')[0:
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
