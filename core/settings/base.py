@@ -81,7 +81,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'imagekit',
-    'debug_toolbar',
 )
 
 LOGGING = {
