@@ -44,7 +44,6 @@ DEFAULT_NOTIFICATION_SENDER = 'SITCON 行政系統:notifications@staff.sitcon.or
 DEFAULT_ACCOUNTS_SENDER =  'SITCON 行政系統:accounts@staff.sitcon.org'
 DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.org'
 
-SUBMITTER_ACCOUNTS_SENDER = 'SITCON:accounts@staff.sitcon.org'
 USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
 
 LOGGING = {
@@ -98,14 +97,8 @@ LOGGING = {
     },
 }
 
-SUBMISSION_START = datetime.datetime(2014, 12, 5, 12, 0, 0)
-SUBMISSION_END = datetime.datetime(2015, 1, 31, 6, 38, 0)
-SUBMISSION_RULE_DOCID = 'MUY'
-
 STAFF_GROUP_NAME = '工作人員'
 STAFF_GROUP_ID = 1
-SUBMITTER_GROUP_NAME = '投稿講者'
-SUBMITTER_GROUP_ID = 2
 
 URGENT_ISSUE_ID = 2
 
