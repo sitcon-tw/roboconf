@@ -81,10 +81,18 @@ INSTALLED_APPS = (
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        ],
     'DEFAULT_PERMISSION_CLASSES': [],
 }
 
+OAUTH2_PROVIDER = {
+    'SCOPES': {
+        'read_personal_data': 'Read username, first_name, last_name, email, groups and other public fields',
+    }
+}
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
