@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),
     url(r'^api/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),# not used since we don't need authentication to access API
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^400$', 'django.views.defaults.bad_request'),
     url(r'^403$', 'django.views.defaults.permission_denied'),
     url(r'^404$', 'django.views.defaults.page_not_found'),

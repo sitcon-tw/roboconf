@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 
 ROOT_URLCONF = 'core.urls'
@@ -75,6 +76,8 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'imagekit',
+    'oauth2_provider',
+    'corsheaders',
 )
 
 REST_FRAMEWORK = {
