@@ -19,6 +19,8 @@
 	<div class="large-6 small-9 small-centered columns">
 		<div class="login-panel">
 			<h3>登入</h3>
+			<!-- TODO style -->
+			<a href="{% url 'social:begin' 'sitcon' %}?next={{ request.path }}">工作人員登入</a>
 			<form class="users-login" action="{% url 'users:login' %}" method="POST">
 			{% csrf_token %}
 				<div class="row"><div class="large-12 columns">

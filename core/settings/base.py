@@ -36,6 +36,8 @@ USE_TZ = True
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'core.context_processors.site_url',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 TEMPLATE_LOADERS = (
@@ -52,6 +54,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'users.sitcon_oauth2_authbackend.SITCONOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 ROOT_URLCONF = 'core.urls'
@@ -77,6 +84,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'imagekit',
+    'social.apps.django_app.default',
 )
 
 REST_FRAMEWORK = {
@@ -95,5 +103,10 @@ AVATAR_IMAGE_SIZE_LIMIT = 512
 
 BROADCAST_MAGIC_TOKEN = 'All'
 URGENT_MAGIC_TOKEN = '#!'
+
+SITCON_OAUTH2_AUTHORIZATION_URL = 'https://staff.sitcon.org/o/authorize'
+SITCON_OAUTH2_ACCESS_TOKEN_URL = 'https://staff.sitcon.org/o/token/'
+SITCON_OAUTH2_REVOKE_TOKEN_URL = 'https://staff.sitcon.org/o/revoke_token'
+SITCON_OAUTH2_USER_DATA_URL = 'https://staff.sitcon.org/api/me'
 
 from .local_settings import *

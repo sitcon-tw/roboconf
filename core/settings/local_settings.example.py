@@ -47,6 +47,9 @@ DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.org'
 SUBMITTER_ACCOUNTS_SENDER = 'SITCON:accounts@staff.sitcon.org'
 USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
 
+SOCIAL_AUTH_SITCON_KEY = ''
+SOCIAL_AUTH_SITCON_SECRET = ''
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
