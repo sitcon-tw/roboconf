@@ -23,4 +23,18 @@ class SITCONOAuth2(BaseOAuth2):
     REVOKE_TOKEN_URL = settings.SITCON_OAUTH2_REVOKE_TOKEN_URL
     REVOKE_TOKEN_METHOD = 'DELETE'
     USER_DATA_URL = settings.SITCON_OAUTH2_USER_DATA_URL
-    EXTRA_DATA = []
+    EXTRA_DATA = [
+        ('refresh_token', 'refresh_token', True),
+        ('expires_in', 'expires'),
+        ('access_type', 'access_type', True),
+    ]
+
+    def user_data(self, access_token, *args, **kwargs):
+        params = {
+                'access_token': access_token,
+                }
+        return self.get_json(self.USER_DATA_URL, params=params)[0] # get_json returns a list, caller `do_auth()` needs dict
+
+    def get_user_details(self, response):
+        print repr(response)
+        return None
