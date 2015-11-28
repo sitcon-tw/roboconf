@@ -16,6 +16,7 @@ class SITCONOAuth2(BaseOAuth2):
     """SITCON OAuth2 authentication backend"""
     name = 'sitcon'
     RESPONSE_TYPE = 'code'
+    ID_KEY = 'username'
     SCOPE_SEPARATOR = ','
     AUTHORIZATION_URL = settings.SITCON_OAUTH2_AUTHORIZATION_URL
     ACCESS_TOKEN_URL = settings.SITCON_OAUTH2_ACCESS_TOKEN_URL
@@ -37,4 +38,9 @@ class SITCONOAuth2(BaseOAuth2):
 
     def get_user_details(self, response):
         print repr(response)
-        return None
+        return {
+                'username': response['username'],
+                'email': response['email'],
+                'first_name': response['first_name'],
+                'last_name': response['last_name']
+                }
