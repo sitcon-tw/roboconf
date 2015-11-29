@@ -18,9 +18,7 @@
 <div class="row">
 	<div class="large-6 small-9 small-centered columns">
 		<div class="login-panel">
-			<h3>登入</h3>
-			<!-- TODO style -->
-			<a href="{% url 'social:begin' 'sitcon' %}?next=/">工作人員登入</a>
+			<h3>投稿者</h3>
 			<form class="users-login" action="{% url 'users:login' %}" method="POST">
 			{% csrf_token %}
 				<div class="row"><div class="large-12 columns">
@@ -35,11 +33,24 @@
 				</div></div>
 				<div class="row"><div class="large-12 columns">
 					<input type="submit" name="submit" value="登入" class="right secondary radius button" />
+					<a href="{% url 'users:submitter_create' %}" class="secondary radius button">註冊</a>
 				</div></div>
 				{% if redirect_url %}
 				<input type="hidden" name="next" value="{{ redirect_url }}" />
 				{% endif %}
 			</form>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="large-6 small-9 small-centered columns">
+		<div class="login-panel">
+			<h3>工作人員</h3>
+			<div class="users-login">
+				<div class="row"><div class="large-12 columns">
+					<a href="{% url 'social:begin' 'sitcon' %}?next=/" class="right secondary radius button">使用 SITCON OAuth 登入</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
