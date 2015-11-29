@@ -29,6 +29,7 @@ def login(request):
 
     url = request.REQUEST.get('next')
     context['redirect_url'] = url
+    context['oauth'] = url.startswith('/o/')
     return render(request, 'users/login.html', context)
 
 def logout(request):

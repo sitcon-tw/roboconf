@@ -18,7 +18,7 @@
 <div class="row">
 	<div class="large-6 small-9 small-centered columns">
 		<div class="login-panel">
-			<h3>登入</h3>
+			<h3>{% if oauth %}SITCON 行政系統 OAuth {% endif %}登入</h3>
 			<form class="users-login" action="{% url 'users:login' %}" method="POST">
 			{% csrf_token %}
 				<div class="row"><div class="large-12 columns">
