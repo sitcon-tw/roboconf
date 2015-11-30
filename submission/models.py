@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from users.models import User
 from schedule.models import Room
 
@@ -69,10 +69,10 @@ class SubmissionFile(models.Model):
 class Score(models.Model):
     submission  = models.ForeignKey(Submission, related_name='scores')
     user        = models.ForeignKey(User)
-    audience    = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
-    cool        = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
-    expression  = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
-    difficulty  = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
+    audience    = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    cool        = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    expression  = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    difficulty  = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
 
     class Meta:
         unique_together = ('submission', 'user')
