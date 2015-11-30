@@ -6,6 +6,7 @@
 # DEVELOPERS: names, secrets and site customizable details should be kept here
 
 from __future__ import unicode_literals
+from future.utils import bytes_to_native_str as n
 import datetime
 
 SECRET_KEY = 'change this!'
@@ -27,7 +28,7 @@ SITE_NAME = 'SITCON 投稿系統'
 SITE_TITLE = 'SITCON'
 
 EMAIL_HOST = 'localhost'
-EMAIL_PORT = '25'
+EMAIL_PORT = n(b'1025')
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
