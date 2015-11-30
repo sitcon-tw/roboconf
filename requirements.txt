@@ -11,4 +11,5 @@ djangorestframework==3.0.4
 Wand==0.4.1
 Pillow==2.7.0
 django-imagekit==3.2.5
+python-social-auth
 future
