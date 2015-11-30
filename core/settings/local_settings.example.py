@@ -5,6 +5,7 @@
 
 # DEVELOPERS: names, secrets and site customizable details should be kept here
 
+from __future__ import unicode_literals
 import datetime
 
 SECRET_KEY = 'change this!'
