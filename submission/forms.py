@@ -5,7 +5,7 @@ class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
         fields = '__all__'
-        exclude = ('status',)
+        exclude = ('status', 'user', 'comment')
 
 class SubmissionFileForm(forms.ModelForm):
     class Meta:
