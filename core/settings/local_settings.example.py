@@ -22,7 +22,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-SITE_NAME = 'SITCON 行政系統'
+SITE_NAME = 'SITCON 投稿系統'
 SITE_TITLE = 'SITCON'
 
 EMAIL_HOST = 'localhost'
@@ -36,16 +36,16 @@ SMS_API_SECRET = ''
 DEFAULT_SMS_SENDER = 'ROBOCONF'
 DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
-DEFAULT_FROM_EMAIL = '"SITCON 行政系統" <admin@staff.sitcon.org>'
+DEFAULT_FROM_EMAIL = '"SITCON 投稿系統" <admin@cfp.sitcon.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 BROADCAST_EMAIL = 'sitcon@googlegroups.com'
 
-DEFAULT_NOTIFICATION_SENDER = 'SITCON 行政系統:notifications@staff.sitcon.org'
-DEFAULT_ACCOUNTS_SENDER =  'SITCON 行政系統:accounts@staff.sitcon.org'
-DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.org'
+DEFAULT_NOTIFICATION_SENDER = 'SITCON 投稿系統:notifications@cfp.sitcon.org'
+DEFAULT_ACCOUNTS_SENDER =  'SITCON 投稿系統:accounts@cfp.sitcon.org'
+DEFAULT_ISSUE_SENDER = 'SITCON 投稿系統:issues@cfp.sitcon.org'
 
-SUBMITTER_ACCOUNTS_SENDER = 'SITCON:accounts@staff.sitcon.org'
-USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
+SUBMITTER_ACCOUNTS_SENDER = 'SITCON 投稿系統: submissions@cfp.sitcon.org'
+USER_ISSUE_SENDER = '{0} (SITCON):issues@cfp.sitcon.org'
 
 SOCIAL_AUTH_SITCON_KEY = ''
 SOCIAL_AUTH_SITCON_SECRET = ''
