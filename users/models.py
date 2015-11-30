@@ -88,8 +88,8 @@ class UserProfile(models.Model):
     def is_trusted(self):
         return self.is_authorized() and self.user.has_perm('auth.change_user')
 
-	def has_submission(self):
-		return True if self.user.submissions.count() > 0 else False
+    def has_submission(self):
+        return True if self.user.submissions.count() > 0 else False
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
