@@ -15,7 +15,7 @@ def all(model):
 def user(id=1):        # Admin account
     return User.objects.get(id=id)
 
-def folder(id=0):    # Root folder
+def folder(id=1):    # Root folder
     return Folder.objects.get(id=id)
 
 def file(id):
