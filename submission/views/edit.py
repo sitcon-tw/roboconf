@@ -19,8 +19,6 @@ def edit(request, submission_id):
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
         if not ( instance.status=='E' or instance.status=='Z' ):
             raise Http404
-    elif request.user.has_perm('submission.review'):
-        instance = get_object_or_404(Submission, id=submission_id)
     else:
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
