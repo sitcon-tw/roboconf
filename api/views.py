@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, generics, permissions
+from rest_framework.response import Response
 from api.serializers import *
 from users.models import UserProfile
 from users.utils import sorted_groups
@@ -16,16 +17,15 @@ class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserProfileSerializer
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-    def get_queryset(self):
-        return sorted_groups(Group.objects.all())
+    def list(self, request):
+        serializer = GroupSerializer(sorted_groups(self.queryset), many=True, context={ 'request': request } )
+        return Response(serializer.data)
 
-class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = GroupSerializer
-
-    def get_queryset(self):
-        return sorted_groups(Group.objects.filter(categories__id=2))
+class StaffGroupViewSet(GroupViewSet):
+    queryset = Group.objects.filter(categories__id=2)
 
 class Me(generics.ListAPIView):
     serializer_class = UserPrivateSerializer
