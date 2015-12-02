@@ -27,7 +27,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Group
-        fields = ('url', 'name', 'users')
+        fields = ('url', 'pk', 'name', 'users')
 
     def get_users(self, group):
         users = sorted_users(User.objects.filter(groups=group).filter(is_active=True))
