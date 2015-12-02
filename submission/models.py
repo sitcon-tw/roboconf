@@ -43,7 +43,6 @@ class Submission(models.Model):
     user = models.ForeignKey(User, related_name='submissions')
     title = models.CharField(max_length=40, unique=True)
     type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
-    avatar = models.CharField(max_length=1000, blank=True, help_text='link to custom avatar image') #TODO remove
     abstract = models.TextField(max_length=500)
     details = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
