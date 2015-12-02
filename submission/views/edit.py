@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.http import Http404
 from core.formatting import render_document
 from docs.node import Node
@@ -46,7 +47,7 @@ def edit(request, submission_id):
 
             return redirect('submission:list')
         else:
-            pass
+            raise ValidationError(sub.errors.as_data())
 
     context = {
             'user': request.user,

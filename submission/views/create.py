@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.http import Http404
 from submission.forms import SubmissionForm
@@ -36,6 +37,6 @@ def create(request):
 
             return redirect('submission:list')
         else:
-            pass
+            raise ValidationError(sub.errors.as_data())
 
     return render(request, 'submission/create.html', context)
