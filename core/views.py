@@ -1,9 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+@login_required
 def index(request):
     context = {}
-
-    if request.user.is_authenticated():
-        context['issues'] = request.user.assigned_issues.filter(is_open=True).all()
+    context['issues'] = request.user.assigned_issues.filter(is_open=True).all()
 
     return render(request, 'index.html', context)
