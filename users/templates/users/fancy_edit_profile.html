@@ -170,7 +170,7 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<h5>是否需要住宿 <br><small>除特殊需求之外，住宿順序將按照出發地遠近來安排，因床位有限，所以雙北不保證一定可以住哦！</small></h5>
+					<h5>是否需要住宿 <br><small>除特殊需求之外，住宿順序將按照出發地遠近來安排，因床位有限，所以不保證一定可以住哦！</small></h5>
 				</div>
 			</div>
 			<div class="row">
@@ -187,9 +187,6 @@
 				</div>
 				<div class="small-4 columns">
 					<h5>是否出席慶功宴</h5>
-				</div>
-				<div class="small-4 columns">
-					<h5>是否曾是 SITCON 工人</h5>
 				</div>
 			</div>
 			<div class="row">
@@ -218,37 +215,6 @@
 						<span></span>
 					</div>
 					</div>
-				</div>
-				<div class="small-4 columns">
-					<div class="large-6">
-						<div class="large switch radius">
-							<input id="prev_worker_t" name="prev_worker" type="radio" value="True" {% if u.profile.prev_worker %}checked{% endif %}>
-							<label for="prev_worker_f" onclick="" style="padding-left: 10px">是</label>
-
-							<input id="prev_worker_f" name="prev_worker" type="radio" value="False" {% if not u.profile.prev_worker %}checked{% endif %}>
-							<label for="prev_worker_t" onclick="" style="padding-right: 10px">否</label>
-
-							<span></span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
-					<h5>語言能力 <small>若您具備下列語言之基本溝通能力，請勾選</small></h5>
-				</div>
-				<div class="small-6 columns">
-					<h5>特殊技能 <small>您有其他特殊技能嗎</small></h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
-					{% for n, vn, v in options.language %}<label><input type="checkbox" name="language" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label>{% endfor %}
-					<input type="text" name="language_other" maxlength="64" placeholder="其他語言" value="{{ u.profile.language.other }}" />
-				</div>
-				<div class="small-6 columns">
-					{% for n, vn, v in options.abilities %}<label><input type="checkbox" name="abilities" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label>{% endfor %}
-					<input type="text" name="abilities_other" maxlength="64" placeholder="其他技能" value="{{ u.profile.abilities.other }}" />
 				</div>
 			</div>
 			<div class="row">
