@@ -1,4 +1,5 @@
 {% extends 'core/master.html' %}
+{% load staticfiles %}
 {% block title %}新增投稿{{ block.super }}{% endblock %}
 {% block content %}
 {% if errors %}
@@ -72,13 +73,14 @@
 </div>
 {% endblock %}
 {% block scripts %}
+<script type="text/javascript" src="{% static 'js/east_asian_width.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function countchar( input, msg, atleast, atmost) {
 		var fullcnt=0;
 		var halfcnt=0;
 		for (var i = 0, len = input.val().length; i < len; i++) {
-		if ( input.val()[i].match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/) ) {
+		if ( east_asian_width(input.val()[i]) >= 2 ) {
 		fullcnt++;
 		} else {
 		halfcnt++;
