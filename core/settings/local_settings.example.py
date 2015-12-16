@@ -47,7 +47,7 @@ DEFAULT_ACCOUNTS_SENDER =  'SITCON 投稿系統:accounts@cfp.sitcon.org'
 DEFAULT_ISSUE_SENDER = 'SITCON 投稿系統:issues@cfp.sitcon.org'
 
 SUBMITTER_ACCOUNTS_SENDER = 'SITCON 投稿系統: submissions@cfp.sitcon.org'
-USER_ISSUE_SENDER = '{0} (SITCON):issues@cfp.sitcon.org'
+USER_ISSUE_SENDER = u'{0} (SITCON):issues@cfp.sitcon.org'
 
 SOCIAL_AUTH_SITCON_KEY = ''
 SOCIAL_AUTH_SITCON_SECRET = ''
