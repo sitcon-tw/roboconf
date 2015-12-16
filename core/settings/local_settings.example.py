@@ -44,7 +44,7 @@ DEFAULT_NOTIFICATION_SENDER = 'SITCON 行政系統:notifications@staff.sitcon.or
 DEFAULT_ACCOUNTS_SENDER =  'SITCON 行政系統:accounts@staff.sitcon.org'
 DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.org'
 
-USER_ISSUE_SENDER = '{0} (SITCON):issues@staff.sitcon.org'
+USER_ISSUE_SENDER = u'{0} (SITCON):issues@staff.sitcon.org'
 
 LOGGING = {
     'version': 1,
