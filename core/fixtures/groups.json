@@ -1,46 +1,19 @@
 [
 {
     "fields": {
-        "name": "\u884c\u653f\u7d44",
-        "permissions": [
-            31,
-            48,
-            60
-        ]
-    },
-    "model": "auth.group",
-    "pk": 3
-},
-{
-    "fields": {
-        "name": "\u6295\u7a3f\u8b1b\u8005",
-        "permissions": [
-            63,
-            64,
-            65,
-            67,
-            68,
-            69
-        ]
-    },
-    "model": "auth.group",
-    "pk": 2
-},
-{
-    "fields": {
         "name": "\u5de5\u4f5c\u4eba\u54e1",
         "permissions": [
-            38,
-            39,
-            40,
-            28,
-            31,
-            29,
-            30,
-            50,
-            53,
-            51,
-            56
+            [ "add_blobtext", "docs", "blobtext" ],
+            [ "change_blobtext", "docs", "blobtext" ],
+            [ "delete_blobtext", "docs", "blobtext" ],
+            [ "add_file", "docs", "file" ],
+            [ "archive", "docs", "file" ],
+            [ "change_file", "docs", "file" ],
+            [ "delete_file", "docs", "file" ],
+            [ "add_issue", "issues", "issue" ],
+            [ "assign_issue", "issues", "issue" ],
+            [ "change_issue", "issues", "issue" ],
+            [ "comment_issue", "issues", "issue" ]
         ]
     },
     "model": "auth.group",
@@ -48,9 +21,64 @@
 },
 {
     "fields": {
+        "name": "\u6295\u7a3f\u8b1b\u8005",
+        "permissions": [
+            [ "add_submission", "submission", "submission" ],
+            [ "change_submission", "submission", "submission" ],
+            [ "delete_submission", "submission", "submission" ],
+            [ "add_submissionfile", "submission", "submissionfile" ],
+            [ "change_submissionfile", "submission", "submissionfile" ],
+            [ "delete_submissionfile", "submission", "submissionfile" ]
+        ]
+    },
+    "model": "auth.group",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "\u884c\u653f\u7d44",
+        "permissions": [
+            [ "add_group", "auth", "group" ],
+            [ "change_group", "auth", "group" ],
+            [ "delete_group", "auth", "group" ],
+            [ "add_permission", "auth", "permission" ],
+            [ "change_permission", "auth", "permission" ],
+            [ "delete_permission", "auth", "permission" ],
+            [ "add_user", "auth", "user" ],
+            [ "change_user", "auth", "user" ],
+            [ "delete_user", "auth", "user" ],
+            [ "add_blobtext", "docs", "blobtext" ],
+            [ "change_blobtext", "docs", "blobtext" ],
+            [ "delete_blobtext", "docs", "blobtext" ],
+            [ "add_file", "docs", "file" ],
+            [ "archive", "docs", "file" ],
+            [ "change_file", "docs", "file" ],
+            [ "delete_file", "docs", "file" ],
+            [ "add_folder", "docs", "folder" ],
+            [ "change_folder", "docs", "folder" ],
+            [ "delete_folder", "docs", "folder" ],
+            [ "add_permalink", "docs", "permalink" ],
+            [ "change_permalink", "docs", "permalink" ],
+            [ "delete_permalink", "docs", "permalink" ],
+            [ "add_permission", "docs", "permission" ],
+            [ "change_permission", "docs", "permission" ],
+            [ "delete_permission", "docs", "permission" ],
+            [ "add_revision", "docs", "revision" ],
+            [ "change_revision", "docs", "revision" ],
+            [ "delete_revision", "docs", "revision" ],
+            [ "change_label", "issues", "label" ],
+            [ "add_message", "notifications", "message" ]
+        ]
+    },
+    "model": "auth.group",
+    "pk": 3
+},
+{
+    "fields": {
         "name": "\u8b70\u7a0b\u7d44",
         "permissions": [
-            66
+            [ "change_submission", "submission", "submission" ],
+            [ "review", "submission", "submission" ]
         ]
     },
     "model": "auth.group",
