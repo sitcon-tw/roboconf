@@ -1,3 +1,6 @@
+from core.settings import STAFF_GROUP_ID
+from django.contrib.auth.models import Group
+
 def save_profile(backend, user, response, *args, **kwargs):
     if backend.name == 'sitcon':
         #for ( key, value ) in response['profile'].items():
@@ -15,3 +18,8 @@ def save_profile(backend, user, response, *args, **kwargs):
         user.profile.save()
     else:
         raise NotImplementedError
+
+def add_to_staffgroup(backend, user, response, *args, **kwargs):
+    staffgroup = Group.objects.get(pk=STAFF_GROUP_ID)
+    staffgroup.user_set.add(user)
+    staffgroup.save()
