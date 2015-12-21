@@ -79,6 +79,7 @@
         "permissions": [
             [ "change_submission", "submission", "submission" ],
             [ "review", "submission", "submission" ]
+            [ "view_total_score", "submission", "score" ]
         ]
     },
     "model": "auth.group",

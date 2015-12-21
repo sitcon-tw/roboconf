@@ -1,6 +1,5 @@
 def save_profile(backend, user, response, *args, **kwargs):
     if backend.name == 'sitcon':
-        print repr(user.profile)
         #for ( key, value ) in response['profile'].items():
         #    if key in ('bio', 'display_name', 'title'):
         #        setattr(user.profile, key, value)

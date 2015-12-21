@@ -75,6 +75,9 @@ class Score(models.Model):
 
     class Meta:
         unique_together = ('submission', 'user')
+        permissions = (
+                ('view_total_score', 'View total score'),
+                )
 
     def __unicode__(self):
         return self.submission.title+" ["+str(self.audience)+" "+str(self.cool)+" "+\
