@@ -83,6 +83,15 @@ Make media folder
 	mkdir media
 	chmod www-data:www-data media
 
+Note on Python <2.7.9
+---------------------
+
+If you use Python <2.7.9, you need to install these extra packages for SSL SNI support, which OAuth client needs:
+
+	pip install pyOpenSSL ndg-httpsclient
+
+Ref: [https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/18579484#18579484](https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/18579484#18579484)
+
 Naming
 ------
 "Roboconf" pronounces familiar with 蘿蔔坑 (redish pit), from the Mandarin idiom "each redish has its own pit". Literally it stands for "robot-assisted conference" in English.
