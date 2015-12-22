@@ -75,9 +75,10 @@ INSTALLED_APPS = (
     'notifications',
     'rest_framework',
     'api',
-    'imagekit',
     'oauth2_provider',
+    'imagekit',
     'corsheaders',
+    'debug_toolbar',
 )
 
 REST_FRAMEWORK = {
