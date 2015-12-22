@@ -13,21 +13,6 @@
 },
 {
     "fields": {
-        "name": "\u6295\u7a3f\u8b1b\u8005",
-        "permissions": [
-            63,
-            64,
-            65,
-            67,
-            68,
-            69
-        ]
-    },
-    "model": "auth.group",
-    "pk": 2
-},
-{
-    "fields": {
         "name": "\u5de5\u4f5c\u4eba\u54e1",
         "permissions": [
             38,
@@ -46,14 +31,4 @@
     "model": "auth.group",
     "pk": 1
 },
-{
-    "fields": {
-        "name": "\u8b70\u7a0b\u7d44",
-        "permissions": [
-            66
-        ]
-    },
-    "model": "auth.group",
-    "pk": 4
-}
 ]
