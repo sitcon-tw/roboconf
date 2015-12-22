@@ -78,7 +78,6 @@ INSTALLED_APPS = (
     'oauth2_provider',
     'imagekit',
     'corsheaders',
-    'debug_toolbar',
 )
 
 REST_FRAMEWORK = {
