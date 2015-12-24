@@ -18,13 +18,11 @@
                 <h4>詳細說明</h4>
 				<p>{{ submission.details|linebreaks }}</p>
 				<h4>附加檔案</h4>
-                <div class="small-12 columns">
-                    <h4>目前檔案</h4>
+				<ul>
                     {% for file in submission.files.all %}
                         <li><a href="{{ file.url }}">{{ file.name }}</a></li>
                     {% endfor %}
-                    <br/>
-                </div>
+                </ul>
                 <h4>簡報連結</h4>
 				<p>{{ submission.slides|linebreaks }}</p>
             </div>
