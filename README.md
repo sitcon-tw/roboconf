@@ -18,7 +18,7 @@ You could safely remove these packages if you’re not targeting PostgreSQL data
 * dj-database-url
 * psycopg2
 
-[Compass](compass-style.org) and [Fabric](http://fabfile.org) powers site theming and automating respectively.
+[Compass](http://compass-style.org) and [Fabric](http://fabfile.org) powers site theming and automating respectively.
 
 Development
 -----------
@@ -82,6 +82,16 @@ Make media folder
 
 	mkdir media
 	chmod www-data:www-data media
+
+Compiling SCSS
+--------------
+Install relevant rubygems
+
+	gem install compass zurb-foundation
+
+Compile SCSS to CSS:
+
+	compass compile --sass-dir core/scss/ --css-dir core/static/css/ --require zurb-foundation
 
 Naming
 ------
