@@ -22,7 +22,7 @@ def get_score(submission_id, user_id):
 def score(request):
     if request.user.has_perm('submission.review'):
 
-        submissions = Submission.objects.order_by('type', 'id')
+        submissions = Submission.objects.order_by('type', 'id').exclude(user=request.user)
         total = submissions.count()
         scores = [ get_score(s.id, request.user.id) for s in submissions ]
 
