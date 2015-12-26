@@ -13,7 +13,11 @@
 		{% for submission in submissions %}
 			<li class="issue-entry">
 				<h4>
+					{% if expired %}
+					<a href="{% url 'submission:view' submission.id %}">{{ submission.title }}</a>
+					{% else %}
 					<a href="{% url 'submission:edit' submission.id %}">{{ submission.title }}</a>
+					{% endif %}
 				</h4>
 			</li>
 		{% endfor %}
