@@ -26,6 +26,7 @@ def profile(request, username):
 
     return render(request, 'users/profile.html', {
         'u': user,
+        'show_detail': user == request.user or request.user.has_perm('view_profile_detail'),
     })
 
 @login_required

@@ -29,6 +29,11 @@ class language(models.Model):
     other = models.CharField(max_length=64, default='', help_text='other language abilities', blank=True)
 
 class UserProfile(models.Model):
+    class Meta:
+        permissions = (
+                ('view_profile_detail', 'View profile detail'),#TODO fixture
+            )
+
     user = models.OneToOneField(User, related_name='profile')
     display_name = models.CharField(max_length=16, blank=True)
     title = models.CharField(max_length=16)

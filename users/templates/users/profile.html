@@ -25,8 +25,40 @@
 		</ul>
 	</div>
 	<div class="large-4 columns">
-		<h5 class="section-header">參加的聚會</h5>
-		<p></p>
+		{% if show_detail %}
+		<h5 class="section-header">個人資料細節</h5>
+		<table class="main">
+			<!-- TODO icons -->
+			<tr>
+				<td>年滿 20 歲</td>
+				<td>{% if u.profile.twenty %}<span class="icon-checkmark iconize"></span>是{% else %}<span class="icon-cross iconize"</span>否{% endif %}</td>
+			</tr>
+			<tr>
+				<td>居住地</td>
+				<td>{{ u.profile.residence }}</td>
+			</tr>
+			<tr>
+				<td>衣服尺寸</td>
+				<td>{{ u.profile.shirt_size }}</td>
+			</tr>
+			<tr>
+				<td>飲食</td>
+				<td>{{ u.profile.diet }}</td>
+			</tr>
+			<tr>
+				<td>交通補助</td>
+				<td>{% if u.profile.transportation_aid %}{{ u.profile.transportation_fee }}{% else %}不需要{% endif %}</td>
+			</tr>
+			<tr>
+				<td>慶功宴</td>
+				<td>{% if u.profile.cel_dinner %}<span class="icon-checkmark iconize"></span>參加{% else %}<span class="icon-cross iconize"></span>不參加{% endif %}</td>
+			</tr>
+			<tr>
+				<td>感謝狀</td>
+				<td>{% if u.profile.certificate %}<span class="icon-checkmark iconize"></span>需要{% else %}<span class="icon-cross iconize"></span>不需要{% endif %}</td>
+			</tr>
+		</table>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
