@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.http import Http404
+from django.http import HttpResponseForbidden
 from core.formatting import render_document
 from docs.node import Node
 from submission.forms import SubmissionForm
@@ -19,7 +19,7 @@ def edit(request, submission_id):
     if SUBMISSION_END < datetime.datetime.now():
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
         if not ( instance.status=='E' or instance.status=='Z' ):
-            raise Http404
+            raise HttpResponseForbidden
     else:
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
