@@ -7605,7 +7605,7 @@ table .detail-column {
   font-weight: normal;
   font-style: normal;
 }
-/* line 23, ../../scss/_icons.scss */
+/* line 26, ../../scss/_icons.scss */
 .iconize {
   font-family: 'IcoMoon' !important;
   speak: none;
@@ -7617,181 +7617,191 @@ table .detail-column {
   -webkit-font-smoothing: antialiased;
 }
 
-/* line 25, ../../scss/_icons.scss */
+/* line 28, ../../scss/_icons.scss */
 .icon-back:before {
   content: '\21a9';
 }
 
-/* line 26, ../../scss/_icons.scss */
+/* line 29, ../../scss/_icons.scss */
 .icon-add:before {
   content: '+';
 }
 
-/* line 27, ../../scss/_icons.scss */
+/* line 30, ../../scss/_icons.scss */
 .icon-remove:before {
   content: '−';
 }
 
-/* line 28, ../../scss/_icons.scss */
+/* line 31, ../../scss/_icons.scss */
 .icon-issue-open:before {
   content: '\2191';
   color: #3f3;
 }
 
-/* line 29, ../../scss/_icons.scss */
+/* line 32, ../../scss/_icons.scss */
 .icon-issue-expired:before {
   content: '\ff01';
   color: #f33;
 }
 
-/* line 30, ../../scss/_icons.scss */
+/* line 33, ../../scss/_icons.scss */
 .icon-issue-closed:before {
   content: '\2193';
   color: #666;
 }
 
-/* line 31, ../../scss/_icons.scss */
+/* line 34, ../../scss/_icons.scss */
 .icon-archive:before {
   content: '\5c01';
 }
 
-/* line 32, ../../scss/_icons.scss */
+/* line 35, ../../scss/_icons.scss */
 .icon-user:before {
   content: '\4eba';
 }
 
-/* line 33, ../../scss/_icons.scss */
+/* line 36, ../../scss/_icons.scss */
 .icon-tag:before {
   content: '\6a19';
 }
 
-/* line 34, ../../scss/_icons.scss */
+/* line 37, ../../scss/_icons.scss */
 .icon-tags:before {
   content: '\7c64';
 }
 
-/* line 35, ../../scss/_icons.scss */
+/* line 38, ../../scss/_icons.scss */
 .icon-clock:before {
   content: '\6642';
 }
 
-/* line 36, ../../scss/_icons.scss */
+/* line 39, ../../scss/_icons.scss */
 .icon-email:before {
   content: '\4fe1';
 }
 
-/* line 37, ../../scss/_icons.scss */
+/* line 40, ../../scss/_icons.scss */
 .icon-profile:before {
   content: '\4eba';
 }
 
-/* line 38, ../../scss/_icons.scss */
+/* line 41, ../../scss/_icons.scss */
 .icon-contacts:before {
   content: '\7c3f';
 }
 
-/* line 39, ../../scss/_icons.scss */
+/* line 42, ../../scss/_icons.scss */
 .icon-star:before {
   content: '\2606';
 }
 
-/* line 40, ../../scss/_icons.scss */
+/* line 43, ../../scss/_icons.scss */
 .icon-unstar:before {
   content: '\2605';
 }
 
-/* line 41, ../../scss/_icons.scss */
+/* line 44, ../../scss/_icons.scss */
 .icon-edit:before {
   content: '\7b46';
 }
 
-/* line 42, ../../scss/_icons.scss */
+/* line 45, ../../scss/_icons.scss */
 .icon-delete:before {
   content: '\68c4';
 }
 
-/* line 43, ../../scss/_icons.scss */
+/* line 46, ../../scss/_icons.scss */
 .icon-school:before {
   content: '\5bb6';
 }
 
-/* line 44, ../../scss/_icons.scss */
+/* line 47, ../../scss/_icons.scss */
 .icon-phone:before {
   content: '\260e';
 }
 
-/* line 45, ../../scss/_icons.scss */
+/* line 48, ../../scss/_icons.scss */
 .icon-folder:before {
   content: '\9589';
 }
 
-/* line 46, ../../scss/_icons.scss */
+/* line 49, ../../scss/_icons.scss */
 .icon-share:before {
   content: '\4eab';
 }
 
-/* line 47, ../../scss/_icons.scss */
+/* line 50, ../../scss/_icons.scss */
 .icon-move:before {
   content: '\21aa';
 }
 
-/* line 48, ../../scss/_icons.scss */
+/* line 51, ../../scss/_icons.scss */
 .icon-info:before {
   content: 'i';
 }
 
-/* line 49, ../../scss/_icons.scss */
+/* line 52, ../../scss/_icons.scss */
 .icon-file:before {
   content: '\6587';
 }
 
-/* line 50, ../../scss/_icons.scss */
+/* line 53, ../../scss/_icons.scss */
 .icon-new:before {
   content: '\65b0';
 }
 
-/* line 51, ../../scss/_icons.scss */
+/* line 54, ../../scss/_icons.scss */
 .icon-upload:before {
   content: '\4f48';
 }
 
-/* line 52, ../../scss/_icons.scss */
+/* line 55, ../../scss/_icons.scss */
 .icon-link:before {
   content: '\93c8';
 }
 
-/* line 53, ../../scss/_icons.scss */
+/* line 56, ../../scss/_icons.scss */
 .icon-comment:before {
   content: '\8a71';
 }
 
-/* line 54, ../../scss/_icons.scss */
+/* line 57, ../../scss/_icons.scss */
 .icon-password:before {
   content: '\9470';
 }
 
-/* line 55, ../../scss/_icons.scss */
+/* line 58, ../../scss/_icons.scss */
 .icon-activate:before {
   content: '\2191';
 }
 
-/* line 56, ../../scss/_icons.scss */
+/* line 59, ../../scss/_icons.scss */
 .icon-deactivate:before {
   content: '\2193';
 }
 
-/* line 57, ../../scss/_icons.scss */
+/* line 60, ../../scss/_icons.scss */
+.icon-check-mark:before {
+  content: '\2611';
+}
+
+/* line 61, ../../scss/_icons.scss */
+.icon-cross-mark:before {
+  content: '\2612';
+}
+
+/* line 62, ../../scss/_icons.scss */
 .button .iconize {
   font-size: 16px;
   vertical-align: middle;
 }
 
-/* line 58, ../../scss/_icons.scss */
+/* line 63, ../../scss/_icons.scss */
 .issue-meta .action-button .iconize {
   font-size: 14px;
 }
 
-/* line 60, ../../scss/_icons.scss */
+/* line 65, ../../scss/_icons.scss */
 .treeview .folder:before {
   content: '\9589';
   color: #8f8f8f;
@@ -7806,42 +7816,42 @@ table .detail-column {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
 }
-/* line 66, ../../scss/_icons.scss */
+/* line 71, ../../scss/_icons.scss */
 .treeview .folder.active:before {
   content: '\958b';
 }
 
-/* line 69, ../../scss/_icons.scss */
+/* line 74, ../../scss/_icons.scss */
 .docs-list .iconize {
   font-size: 16px;
   color: #8f8f8f;
 }
-/* line 71, ../../scss/_icons.scss */
+/* line 76, ../../scss/_icons.scss */
 .docs-list .iconize.icon-file {
   color: #4285f4;
 }
-/* line 72, ../../scss/_icons.scss */
+/* line 77, ../../scss/_icons.scss */
 .docs-list .iconize.icon-sheet {
   color: #0f9d58;
 }
-/* line 73, ../../scss/_icons.scss */
+/* line 78, ../../scss/_icons.scss */
 .docs-list .iconize.icon-slide {
   color: #ff7537;
 }
-/* line 74, ../../scss/_icons.scss */
+/* line 79, ../../scss/_icons.scss */
 .docs-list .iconize.icon-image {
   color: #db4437;
 }
-/* line 75, ../../scss/_icons.scss */
+/* line 80, ../../scss/_icons.scss */
 .docs-list .iconize.icon-pdf {
   color: #fb6249;
 }
-/* line 77, ../../scss/_icons.scss */
+/* line 82, ../../scss/_icons.scss */
 .docs-list a[data-checked="checked"] .icon-star:before {
   content: '\2605';
 }
 
-/* line 79, ../../scss/_icons.scss */
+/* line 84, ../../scss/_icons.scss */
 form.custom .assignee-field .custom.dropdown .current:before {
   content: '\4eba';
   font-family: 'IcoMoon';
