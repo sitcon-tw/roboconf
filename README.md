@@ -91,7 +91,11 @@ Install relevant rubygems
 
 Compile SCSS to CSS:
 
-	compass compile --sass-dir core/scss/ --css-dir core/static/css/ --require zurb-foundation
+	compass compile --force --sass-dir core/scss/ --css-dir core/static/css/ --require zurb-foundation
+
+Alternatively, you can use Fab to compile:
+
+	fab compass:compile
 
 Naming
 ------
