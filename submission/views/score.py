@@ -22,7 +22,7 @@ def get_score(submission_id, user_id):
 def score(request):
     if request.user.has_perm('submission.review'):
 
-        submissions = Submission.objects.order_by('type', 'id').exclude(user=request.user)
+        submissions = Submission.objects.filter(type__in=[u'L', u'S']).order_by('type', 'id').exclude(user=request.user)
         total = submissions.count()
         scores = [ get_score(s.id, request.user.id) for s in submissions ]
 
@@ -64,7 +64,7 @@ def score_save(request):
 @login_required
 def score_total(request):
     if request.user.has_perm('submission.view_total_score'):
-        submissions = Submission.objects.filter(
+        submissions = Submission.objects.filter(type__in=[u'L', u'S']).filter(
                                 scores__audience__gt=0,
                                 scores__cool__gt=0,
                                 scores__expression__gt=0,
