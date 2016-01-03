@@ -84,8 +84,12 @@
         <div class="row">
             <div>
                 <h4>投稿類型</h4>
+                {% if submission.type == 'K' %}
+                <span>Keynote</span>
+                {% else %}
                 <label for="type_S"><input type="radio" name="type" value="S" id="type_S" {% if submission.type == 'S'%}checked{% endif %} /><span>Short Talk</span></label>
                 <label for="type_L"><input type="radio" name="type" value="L" id="type_L" {% if submission.type == 'L'%}checked{% endif %} /><span>Talk</span></label>
+                {% endif %}
             </div>
         </div>
         <div class="row">
