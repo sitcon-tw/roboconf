@@ -38,8 +38,10 @@
     <div class="row">
       <div>
         <ul class="side-nav users-actions">
-          {% if s.user == user and expired and s.status == 'E' %}
-          <li><a href="{% url 'submission:edit' %}"><span class="icon-edit iconize"></span> 編輯投稿</a></li>
+          {% if submission.user == user and expired and submission.status == 'E' %}
+          <li><a href="{% url 'submission:edit' submission.id %}"><span class="icon-edit iconize"></span> 編輯投稿</a></li>
+          {% elif submission.user == user and not expired %}
+          <li><a href="{% url 'submission:edit' submission.id %}"><span class="icon-edit iconize"></span> 編輯投稿</a></li>
           {% endif %}
         </ul>
       </div>

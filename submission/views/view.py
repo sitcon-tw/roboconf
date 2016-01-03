@@ -3,8 +3,10 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.conf import settings
+from core.settings.base import SUBMISSION_END
 from core.formatting import render_document
 from submission.models import Submission
+import datetime
 
 @login_required
 def view(request, submission_id):
@@ -15,6 +17,7 @@ def view(request, submission_id):
 
     context = {
             'submission': instance,
+            'expired': (SUBMISSION_END < datetime.datetime.now() )
             }
 
     return render(request, 'submission/view.html', context)
