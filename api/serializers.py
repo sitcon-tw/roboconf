@@ -15,7 +15,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'profile', 'groups')
+        fields = ('pk', 'url', 'profile', 'groups')
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     users = serializers.SerializerMethodField()
@@ -45,20 +45,18 @@ class ActivitySerializer(serializers.HyperlinkedModelSerializer):
     room = serializers.CharField(source='room.fullname')
     title = serializers.CharField(source='submission.title')
     abstract = serializers.CharField(source='submission.abstract')
-    speaker = serializers.CharField(source='submission.user.profile.display_name')
+    speaker = UserSerializer(source='submission.user')
 
     class Meta:
         model = Activity
         fields = ('url', 'description', 'start', 'end', 'room', 'title', 'abstract', 'speaker', 'submission')
 
 class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
-    speaker = serializers.CharField(source='user.profile.display_name')
-    bio = serializers.CharField(source='user.profile.bio')
-    avatar = serializers.CharField(source='user.profile.avatar')
+    speaker = UserSerializer(source='user')
     start = serializers.DateTimeField(source='activity.timeslot.start')
     end = serializers.DateTimeField(source='activity.timeslot.end')
     room = serializers.CharField(source='activity.room.fullname')
 
     class Meta:
         model = Submission
-        fields = ('url', 'speaker', 'bio', 'avatar', 'title', 'type', 'abstract', 'start', 'end', 'room', 'activity', 'slides')
+        fields = ('url', 'speaker', 'title', 'type', 'abstract', 'start', 'end', 'room', 'activity', 'slides')
