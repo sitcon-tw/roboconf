@@ -26,7 +26,7 @@ def custom_size_raw(request, key, width, height):
 
     context = {
         'size': '{}x{}'.format(width, height),
-        'image': photo
+        'image': profile.photo
     }
 
     s = '''
