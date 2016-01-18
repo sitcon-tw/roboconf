@@ -134,8 +134,8 @@ def edit(request, username, fancy=False):
                 errors += ['photo', 'photo_too_large']
             else:
                 try:
-                    photo_data = resize_image(photo, size=settings.AVATAR_IMAGE_SIZE_LIMIT)
-                    resized_photo = SimpleUploadedFile(name=photo.name, content=photo_data, content_type=photo.content_type)
+                    image_data, mime  = resize_image(photo, size=settings.AVATAR_IMAGE_SIZE_LIMIT)
+                    resized_photo = SimpleUploadedFile(name=photo.name, content=image_data, content_type=mime)
                     profile.photo = resized_photo
                 except ValueError:
                     errors += ['photo', 'photo_invalid']
