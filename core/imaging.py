@@ -14,4 +14,4 @@ def resize_image(image_file, size):
         if image.width > size:
             image.resize(width=size, height=size)
 
-        return image.make_blob()
+        return (image.make_blob(), image.mimetype)
