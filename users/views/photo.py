@@ -4,10 +4,12 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.template import Context, Template
+from django.views.decorators.cache import cache_page
 from core.api.decorators import api_endpoint
 from core.imaging import resize_image
 from users.models import UserProfile
 
+@cache_page(60 * 60 * 24 * 14)
 @api_endpoint(public=True)
 def general(request, username_or_pk, size_p=None):
     size = size_p if size_p else 400
