@@ -13,7 +13,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'profile', 'groups')
+        fields = ('pk', 'url', 'profile', 'groups')
 
 class UserPrivateSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer()
