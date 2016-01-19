@@ -18,7 +18,7 @@ def general(request, username_or_pk, size_p=None):
         try:
             profile = UserProfile.objects.get(user__pk=username_or_pk)
         except ObjectDoesNotExist:
-            raise Http404('User with pk %d not found' % username_or_pk)
+            raise Http404('User with pk %d not found' % int(username_or_pk))
     else:
         try:
             profile = UserProfile.objects.get(user__username=username_or_pk)
