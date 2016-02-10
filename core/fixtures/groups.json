@@ -78,8 +78,9 @@
         "name": "\u8b70\u7a0b\u7d44",
         "permissions": [
             [ "change_submission", "submission", "submission" ],
-            [ "review", "submission", "submission" ]
-            [ "view_total_score", "submission", "score" ]
+            [ "review", "submission", "submission" ],
+            [ "view_total_score", "submission", "score" ],
+            [ "change_user", "auth", "user" ]
         ]
     },
     "model": "auth.group",
