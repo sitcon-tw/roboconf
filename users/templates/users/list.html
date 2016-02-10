@@ -23,6 +23,13 @@
 			<li><a href="{% url 'users:contacts' %}"><span class="icon-contacts iconize"></span> 檢視通訊錄</a></li>
 		</ul>
 		<div class="divider"></div>
+		<h5>依投稿狀態篩選</h5>
+		<ul class="side-nav">
+			<li{% if 'accepted' in submission %} class="active"{% endif %}><a href="{% url 'users:list' %}?submission=accepted">入選</a></li>
+			<li{% if 'editing' in submission %} class="active"{% endif %}><a href="{% url 'users:list' %}?submission=editing">編輯中</a></li>
+			<li{% if 'rejected' in submission %} class="active"{% endif %}><a href="{% url 'users:list' %}?submission=rejected">未入選</a></li>
+			<li{% if 'none' in submission %} class="active"{% endif %}><a href="{% url 'users:list' %}?submission=none">未投稿</a></li>
+		</ul>
 		{% for c, groups in categories.items %}
 			{% if c.is_visible or user.is_staff %}
 			<h5>篩選{{ c.name }}</h5>

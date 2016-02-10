@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
 from users.utils import sorted_users, sorted_categories
+from submission.models import Submission
 
 formats = {
     'html': ('text/html', 'users/export.html'),
@@ -22,8 +23,9 @@ def list(request):
 
     filters = request.GET.getlist('find')
     groups = request.GET.get('g')
+    submission = request.GET.getlist('submission')
     trusted = request.user.profile.is_trusted()
-    users = apply_filter(filters=filters, groups=groups, trusted=trusted)
+    users = apply_filter(filters=filters, groups=groups, submission=submission, trusted=trusted)
 
     return render(request, 'users/list.html', {
         'users': sorted_users(users),
@@ -32,7 +34,7 @@ def list(request):
         'params': request.GET.urlencode(),
     })
 
-def apply_filter(filters, groups, users=None, trusted=False):
+def apply_filter(filters, groups, users=None, submission=None, trusted=False):
     users = users or User.objects.all()
     if 'disabled' in filters and trusted:
         users = users.filter(is_active=False)
@@ -60,6 +62,21 @@ def apply_filter(filters, groups, users=None, trusted=False):
 
         if to_exclude:
             users = users.exclude(groups__in=to_exclude)
+
+    if 'accepted' in submission:
+        _submissions = Submission.objects.filter(status='A')
+        _u_pks = [ s.user.pk for s in _submissions ]
+        users = users.filter(pk__in=_u_pks)
+    elif 'editing' in submission:
+        _submissions = Submission.objects.filter(status='E')
+        _u_pks = [ s.user.pk for s in _submissions ]
+        users = users.filter(pk__in=_u_pks)
+    elif 'rejected' in submission:
+        _submissions = Submission.objects.filter(status='R')
+        _u_pks = [ s.user.pk for s in _submissions ]
+        users = users.filter(pk__in=_u_pks)
+    elif 'none' in submission:
+        users = users.filter(submissions__isnull=True)
 
     return users
 
