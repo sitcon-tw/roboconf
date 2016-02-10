@@ -112,9 +112,10 @@ def export(request, format=None):
 
     filters = request.GET.getlist('find')
     groups = request.GET.get('g')
+    submission = request.GET.getlist('submission')
     authorized = request.user.profile.is_authorized()
     trusted = request.user.profile.is_trusted()
-    users = apply_filter(filters=filters, groups=groups, trusted=trusted)
+    users = apply_filter(filters=filters, groups=groups, submission=submission, trusted=trusted)
 
     users_output = []
     for user in sorted_users(users):
