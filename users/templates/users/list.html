@@ -55,6 +55,7 @@
 				<li><a href="{% url 'users:export' 'csv' %}?{{ params }}">CSV</a></li>
 				<li><a href="{% url 'users:export' 'xml' %}?{{ params }}">XML</a></li>
 				<li><a href="{% url 'users:export' 'vcard' %}?{{ params }}">vCard</a></li>
+				{% if perms.users.export_photo %}<li><a href="{% url 'users:export_photo' %}?{{ params }}">大頭照</a></li>{% endif %}
 			</ul>
 	</div>
 </div>

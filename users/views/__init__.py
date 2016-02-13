@@ -1,6 +1,6 @@
 from list import ajax as default
 from auth import login, logout
-from list import list, contacts, export
+from list import list, contacts, export, export_photo
 from profile import profile, me
 from create import create
 from create import submitter_create

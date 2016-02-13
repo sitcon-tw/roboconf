@@ -80,7 +80,8 @@
             [ "change_submission", "submission", "submission" ],
             [ "review", "submission", "submission" ],
             [ "view_total_score", "submission", "score" ],
-            [ "change_user", "auth", "user" ]
+            [ "change_user", "auth", "user" ],
+            [ "export_photo", "users", "userprofile" ]
         ]
     },
     "model": "auth.group",

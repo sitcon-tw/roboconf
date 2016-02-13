@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
+from core.settings.base import PROJECT_PATH
 from users.utils import sorted_users, sorted_categories
 from submission.models import Submission
+
+import os
+import zipfile
+import StringIO
 
 formats = {
     'html': ('text/html', 'users/export.html'),
@@ -147,3 +153,43 @@ def export(request, format=None):
 
     content_type, template = formats[format or 'html']
     return render(request, template, { 'users': users_output }, content_type=content_type)
+
+@permission_required('users.export_photo')
+def export_photo(request):
+    filters = request.GET.getlist('find')
+    groups = request.GET.get('g')
+    submission = request.GET.getlist('submission')
+    authorized = request.user.profile.is_authorized()
+    trusted = request.user.profile.is_trusted()
+    users = apply_filter(filters=filters, groups=groups, submission=submission, trusted=trusted)
+
+    # copied from: https://stackoverflow.com/a/12951461/446391
+    # Folder name in ZIP archive which contains the above files
+    # E.g [thearchive.zip]/somefiles/file2.txt
+    # FIXME: Set this to something better
+    zip_filename = "profile_photo_export.zip"
+
+    # Open StringIO to grab in-memory ZIP contents
+    s = StringIO.StringIO()
+
+    # The zip compressor
+    zf = zipfile.ZipFile(s, "w")
+
+    export_count = 0
+    for user in users:
+        if user.profile.photo:
+            # Calculate path for file in zip
+            fdir, fname = os.path.split(user.profile.photo.url)
+
+            # Add file, at correct path
+            zf.write(os.path.join(PROJECT_PATH, user.profile.photo.url[1:]), fname)
+
+    # Must close zip for all contents to be written
+    zf.close()
+
+    # Grab ZIP file from in-memory, make response with correct MIME-type
+    resp = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
+    # ..and correct content-disposition
+    resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+
+    return resp
