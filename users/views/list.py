@@ -182,7 +182,7 @@ def export_photo(request):
             fdir, fname = os.path.split(user.profile.photo.url)
 
             # Add file, at correct path
-            zf.write(os.path.join(PROJECT_PATH, user.profile.photo.url[1:]), fname)
+            zf.write(os.path.join(PROJECT_PATH, user.profile.photo.url[1:]), "%s - %s" % (user.profile.display_name, fname))
 
     # Must close zip for all contents to be written
     zf.close()
