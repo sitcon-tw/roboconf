@@ -84,8 +84,12 @@
         <div class="row">
             <div>
                 <h4>投稿類型</h4>
+                {% if submission.type == 'K' %}
+                <span>Keynote</span>
+                {% else %}
                 <label for="type_S"><input type="radio" name="type" value="S" id="type_S" {% if submission.type == 'S'%}checked{% endif %} /><span>Short Talk</span></label>
                 <label for="type_L"><input type="radio" name="type" value="L" id="type_L" {% if submission.type == 'L'%}checked{% endif %} /><span>Talk</span></label>
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -98,13 +102,14 @@
 </div>
 {% endblock %}
 {% block scripts %}
+<script type="text/javascript" src="{% static 'js/east_asian_width.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function countchar( input, msg, atleast, atmost) {
 		var fullcnt=0;
 		var halfcnt=0;
 		for (var i = 0, len = input.val().length; i < len; i++) {
-		if ( input.val()[i].match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/) ) {
+		if ( east_asian_width(input.val()[i]) >= 2 ) {
 		fullcnt++;
 		} else {
 		halfcnt++;

@@ -1,65 +1,40 @@
 import re
-from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.template import Context, Template
+from django.views.decorators.cache import cache_page
 from core.api.decorators import api_endpoint
+from core.imaging import resize_image
 from users.models import UserProfile
 
-def custom_size_raw(request, username, width, height):
-    # check user
-    user = get_object_or_404(User, username=username)
+@cache_page(60 * 60 * 24 * 14)
+@api_endpoint(public=True)
+def general(request, username_or_pk, size_p=None):
+    size = size_p if size_p else 400
+    size = int(request.GET.get('size')) if request.GET.get('size') else size
+    if re.match(r'\d+', username_or_pk):
+        try:
+            profile = UserProfile.objects.get(user__pk=username_or_pk)
+        except ObjectDoesNotExist:
+            raise Http404('User with pk %d not found' % int(username_or_pk))
+    else:
+        try:
+            profile = UserProfile.objects.get(user__username=username_or_pk)
+        except ObjectDoesNotExist:
+            raise Http404('User with username %s not found' % username_or_pk)
 
-    # check profile
-    profile = get_object_or_404(UserProfile, user=user)
+    if not profile.photo:
+        return HttpResponseRedirect(profile.gravatar+'&s='+str(size))
 
-    photo = profile.photo
-
-    # check photo
-    if not photo:
-        raise Http404
-
-    context = {
-        'size': '{}x{}'.format(width, height),
-        'image': photo
-    }
-
-    s = '''
-        {% load imagekit %}
-
-        {% thumbnail size image %}
-        '''
-
-    t = Template(s)
-    c = Context(context)
-    url = re.search(r"src=\"(.*?)\"", t.render(c)).groups()[0]
-
-    return redirect(url)
-
-def custom_size_html(request, username, width, height):
-    # check user
-    user = get_object_or_404(User, username=username)
-
-    # check profile
-    profile = get_object_or_404(UserProfile, user=user)
-
-    photo = profile.photo
-
-    # check photo
-    if not photo:
-        raise Http404
-
-    context = {
-        'size': '{}x{}'.format(width, height),
-        'image': photo
-    }
-
-    return render(request, 'users/photo.html', context)
+    image_data, mime = resize_image(profile.photo, size=size)
+    return HttpResponse(content=image_data, content_type=mime)
 
 @api_endpoint(public=True)
-def medium(request, username):
-    return custom_size_raw(request, username, 400, 400)
+def medium(request, username_or_pk):
+    return general(request, username_or_pk, 400)
 
 @api_endpoint(public=True)
-def small(request, username):
-    return custom_size_raw(request, username, 100, 100)
+def small(request, username_or_pk):
+    return general(request, username_or_pk, 100)

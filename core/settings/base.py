@@ -36,6 +36,8 @@ USE_TZ = True
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'core.context_processors.site_url',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 TEMPLATE_LOADERS = (
@@ -52,6 +54,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'users.sitcon_oauth2_authbackend.SITCONOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 ROOT_URLCONF = 'core.urls'
@@ -77,6 +84,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'imagekit',
+    'social.apps.django_app.default',
 )
 
 REST_FRAMEWORK = {
@@ -84,6 +92,19 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [],
 }
 
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'users.oauth_pipeline.save_profile',
+    'users.oauth_pipeline.add_to_staffgroup',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+    )
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -95,5 +116,10 @@ AVATAR_IMAGE_SIZE_LIMIT = 512
 
 BROADCAST_MAGIC_TOKEN = 'All'
 URGENT_MAGIC_TOKEN = '#!'
+
+SITCON_OAUTH2_AUTHORIZATION_URL = 'https://staff.sitcon.org/o/authorize'
+SITCON_OAUTH2_ACCESS_TOKEN_URL = 'https://staff.sitcon.org/o/token/'
+SITCON_OAUTH2_REVOKE_TOKEN_URL = 'https://staff.sitcon.org/o/revoke_token'
+SITCON_OAUTH2_USER_DATA_URL = 'https://staff.sitcon.org/api/me'
 
 from .local_settings import *

@@ -14,7 +14,7 @@
                         <th rowspan="2">類型</th>
                         <th rowspan="2">投稿者</th>
                         <th rowspan="2">狀態</th>
-                        <th rowspan="1" colspan="4">評分</th>
+                        <th rowspan="1" colspan="4">評分 (0~100)</th>
                         <th rowspan="2">動作</th>
                     </tr>
                     <tr>
@@ -48,7 +48,7 @@
                             <input id="submission-{{ s.id }}-audience"
                                    type="number"
                                    min="0"
-                                   max="10"
+                                   max="100"
                                    value="{% if score.audience %}{{ score.audience }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
@@ -56,7 +56,7 @@
                             <input id="submission-{{ s.id }}-cool"
                                    type="number"
                                    min="0"
-                                   max="10"
+                                   max="100"
                                    value="{% if score.cool %}{{ score.cool }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
@@ -64,7 +64,7 @@
                             <input id="submission-{{ s.id }}-expression"
                                    type="number"
                                    min="0"
-                                   max="10"
+                                   max="100"
                                    value="{% if score.expression %}{{ score.expression }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
@@ -72,14 +72,14 @@
                             <input id="submission-{{ s.id }}-difficulty"
                                    type="number"
                                    min="0"
-                                   max="10"
+                                   max="100"
                                    value="{% if score.difficulty %}{{ score.difficulty }}{% else %}0{% endif %}"
                                    style="max-width: 60px;">
                         </td>
                         <td><a class="score-save" data-id="{{ s.id }}">儲存</a></td>
                     </tr>
                     <tr class="hide" id="submission-{{ s.id }}-tr">
-                        <td colspan="0">
+                        <td colspan="9">
                             <div id="submission-{{ s.id }}"></div>
                         </td>
                     </tr>

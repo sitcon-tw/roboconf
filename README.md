@@ -30,9 +30,7 @@ It is recommended to use `virtualenv`.
 
 Install dependencies.
 
-Note: if you're in a development environment you can delete `psycopg2` dependency and set environment variable `DEBUG=1`, then it'll use sqlite.
-
-	pip install -r requirements.txt
+	pip install -r requirements-dev.txt
 
 Set debug
 
@@ -42,6 +40,57 @@ Load database schema and initial data
 
 	python manage.py syncdb
 	python manage.py loaddata */fixtures/*.json
+
+_Note: currently there are problems with loaddata on `master` branch, see commit 5d8436149cf22f0_
+
+Production Deployment
+---------------------
+We recommend using PostgreSQL. Create a role and a database then grant all privileges to that role:
+
+	sudo -u postgres psql
+
+	CREATE ROLE roboconf WITH LOGIN PASSWORD 'foobar';
+	CREATE DATABASE roboconf;
+	GRANT ALL PRIVILEGES ON DATABASE roboconf to roboconf;
+
+It is recommended to use `virtualenv`.
+
+	cd staff.sitcon.org
+	virtualenv venv
+	. venv/bin/activate # if you use bash
+
+Install dependencies.
+
+	pip install -r requirements.txt
+
+Copy example settings
+
+	cp core/settings/local_settings.example.py core/settings/local_settings.py
+
+	...
+
+Load database schema and initial data
+
+	python manage.py syncdb
+	python manage.py loaddata */fixtures/*.json
+
+_Note: currently there are problems with loaddata on `master` branch, see commit 5d8436149cf22f0_
+
+	python manage.py collectstatic
+
+Make media folder
+
+	mkdir media
+	chmod www-data:www-data media
+
+Note on Python <2.7.9
+---------------------
+
+If you use Python <2.7.9, you need to install these extra packages for SSL SNI support, which OAuth client needs:
+
+	pip install pyOpenSSL ndg-httpsclient
+
+Ref: [https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/18579484#18579484](https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/18579484#18579484)
 
 Naming
 ------

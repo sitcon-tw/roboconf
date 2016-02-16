@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from users.models import User
 from schedule.models import Room
 
@@ -43,7 +43,6 @@ class Submission(models.Model):
     user = models.ForeignKey(User, related_name='submissions')
     title = models.CharField(max_length=40, unique=True)
     type = models.CharField(max_length=1, choices=SUBMISSION_TYPES, default=SHORT)
-    avatar = models.CharField(max_length=1000, blank=True, help_text='link to custom avatar image')
     abstract = models.TextField(max_length=500)
     details = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
@@ -69,13 +68,16 @@ class SubmissionFile(models.Model):
 class Score(models.Model):
     submission  = models.ForeignKey(Submission, related_name='scores')
     user        = models.ForeignKey(User)
-    audience    = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
-    cool        = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
-    expression  = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
-    difficulty  = models.PositiveIntegerField(validators=[MaxValueValidator(10),])
+    audience    = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    cool        = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    expression  = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    difficulty  = models.PositiveIntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
 
     class Meta:
         unique_together = ('submission', 'user')
+        permissions = (
+                ('view_total_score', 'View total score'),
+                )
 
     def __unicode__(self):
         return self.submission.title+" ["+str(self.audience)+" "+str(self.cool)+" "+\

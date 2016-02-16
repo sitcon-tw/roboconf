@@ -2,42 +2,26 @@
 {% block title %}{{ site.title }}{% endblock %}
 {% block content %}
 <div class="row">
-	{% if user.is_authenticated %}
 	<div class="large-3 columns">
 		<img class="avatar large" src="{{ user.profile.avatar }}" alt="{{ user.profile.name }}" />
 		<h4>{{ user.profile.name }}</h4>
 		<h5 class="subheader">{{ user.profile.title }}</h5>
 	</div>
-	<div class="large-5 columns">
-		<h5 class="section-header"><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
+	<div class="large-9 columns">
+		<h5 class="section-header"><a href="{% url 'submission:list' %}">我的投稿</a></h5>
 		<ul class="issue-list">
-		{% for issue in issues %}
+		{% for submission in submissions %}
 			<li class="issue-entry">
-				<div class="issue-id">#{{ issue.id }}</div>
 				<h4>
-					<span class="issue-icon iconize icon-{% if issue.is_open %}{{ issue.is_expired|yesno:'issue-expired,issue-open' }}{% else %}issue-closed{% endif %}"></span>
-					<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
-					<span class="labels">{% for label in issue.labels.all %}
-						<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
-					{% endfor %}</span>
+					{% if expired %}
+					<a href="{% url 'submission:view' submission.id %}">{{ submission.title }}</a>
+					{% else %}
+					<a href="{% url 'submission:edit' submission.id %}">{{ submission.title }}</a>
+					{% endif %}
 				</h4>
 			</li>
 		{% endfor %}
 		</ul>
 	</div>
-	<div class="large-4 columns">
-		<h5 class="section-header">聚會概覽</h5>
-		<p></p>
-	</div>
-	{% else %}
-	<div class="large-6 small-9 small-centered has-quote columns">
-		<h3 class="text-center">{{ site.name }}</h3>
-		<p class="quote">
-			<p>據說同時是個別名<a href="https://github.com/sitcon-tw/staff.sitcon.org"><abbr title="Roboconf">蘿蔔坑</abbr></a>的開源計劃。</p>
-			<p>必須<a href="{% url 'users:login' %}">登入</a>後才能完整使用此系統的所有功能；如果是工作人員，請向行政組索取帳號。<wbr>欲投稿請<big><a href="{% url 'users:submitter_create' %}">到此註冊</a></big>先~</p>
-			<p>找的是學生計算機年會的網站？請拜訪 <a href="http://sitcon.org/">SITCON.org</a>。</p>
-		</p>
-	</div>
-	{% endif %}
 </div>
 {% endblock %}

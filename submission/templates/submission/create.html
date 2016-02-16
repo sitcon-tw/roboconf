@@ -1,6 +1,14 @@
 {% extends 'core/master.html' %}
+{% load staticfiles %}
 {% block title %}新增投稿{{ block.super }}{% endblock %}
 {% block content %}
+{% if errors %}
+{% for name, err in errors %}
+<div class="radius secondary alert-box" data-alert>
+	{{ name }}: {{ err }}
+</div>
+{% endfor %}
+{% endif %}
 <form action="{% url 'submission:create' %}" method="POST" enctype="multipart/form-data" class="submission-main">
 <div class="row">
     <div class="large-1 avatars columns">
@@ -18,7 +26,8 @@
                 </div>
 				<h4>摘要 <small><em id="abstract-text-count"></em></small></h4>
                 <div class="small-12 columns">
-                    <textarea name="abstract" placeholder="摘要" maxlength="500" required>{{ submission.abstract.value }}</textarea>
+					<!-- TODO set height: initial; in app.css so that rows=8 takes effect-->
+                    <textarea name="abstract" placeholder="摘要" maxlength="500" rows="8" required>{{ submission.abstract.value }}</textarea>
                 </div>
 				<hr/>
 				<p>以下資料為選填，但強烈建議您填寫，讓審稿委員更瞭解您的稿件，以增加入選機率</p>
@@ -64,13 +73,14 @@
 </div>
 {% endblock %}
 {% block scripts %}
+<script type="text/javascript" src="{% static 'js/east_asian_width.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function countchar( input, msg, atleast, atmost) {
 		var fullcnt=0;
 		var halfcnt=0;
 		for (var i = 0, len = input.val().length; i < len; i++) {
-		if ( input.val()[i].match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/) ) {
+		if ( east_asian_width(input.val()[i]) >= 2 ) {
 		fullcnt++;
 		} else {
 		halfcnt++;

@@ -3,64 +3,80 @@
 {% block title %}檢視投稿{{ block.super }}{% endblock %}
 {% block content %}
 <div class="row">
-    <div class="large-1 avatars columns">
-        <a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
+  <div class="large-1 avatars columns">
+    <a class="right iconize icon-back has-tip" href="{% url 'submission:list' %}" title="回到投稿列表" data-tooltip></a>
+  </div>
+  <div class="large-8 columns">
+    <div class="row collapse">
+      <h4>投稿者 {{ submission.user.profile.display_name }}</h4>
     </div>
-    <div class="large-8 columns">
-            <div class="row collapse">
-                <h4>投稿者 {{ submission.user.profile.display_name }}</h4>
-            </div>
-            <div class="row collapse">
-                <h4>標題</h4>
-				<p>{{ submission.title }}</p>
-                <h4>摘要</h4>
-				<p>{{ submission.abstract }}</p>
-                <h4>詳細說明</h4>
-				<p>{{ submission.details|linebreaks }}</p>
-				<h4>附加檔案</h4>
-                <div class="small-12 columns">
-                    <h4>目前檔案</h4>
-                    {% for file in submission.files.all %}
-                        <li><a href="{{ file.url }}">{{ file.name }}</a></li>
-                    {% endfor %}
-                    <br/>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="small-12 columns">
-                    <h4>狀態：{% if submission.status == 'A' %}噫！中了！
-						{% elif submission.status == 'R' %}沒上QQ
-						{% elif submission.status == 'P' %}待審查
-						{% elif submission.status == 'V' %}審查中
-						{% elif submission.status == 'E' %}待修正
-						{% elif submission.status == 'Z' %}演講結束
-						{% endif %}
-					</h4>
-				</div>
-            </div>
-            <div class="row collapse">
-                <h4>審稿評論</h4>
-                {{ submission.comment }}
-            </div>
-        </form>
+    <div class="row collapse">
+      <h4>標題</h4>
+      <p>{{ submission.title }}</p>
+      <h4>摘要</h4>
+      <p>{{ submission.abstract|linebreaks }}</p>
+      <h4>詳細說明</h4>
+      <p>{{ submission.details|linebreaks }}</p>
+      <h4>附加檔案</h4>
+      <ul>
+        {% for file in submission.files.all %}
+        <li><a href="{{ file.url }}">{{ file.name }}</a></li>
+        {% endfor %}
+      </ul>
+      <h4>簡報連結</h4>
+      <p>{{ submission.slides|linebreaks }}</p>
     </div>
-    <div class="large-3 columns main-side-nav">
-        <div class="row">
-            <div>
-                <h4>投稿類型</h4>
-				{% if submission.type == 'S'%}
-				<p>Short Talk</p>
-				{% elif submission.type == 'L'%}
-				<p>Talk</p>
-				{% endif %}
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <h4>大頭照</h4>
-				<img src="{% if submission.user.profile.photo %}{{ submission.user.profile.photo.url }}{% else %}{{ submission.user.profile.avatar }}{% endif %}"/>
-            </div>
-        </div>
+    <div class="row collapse">
     </div>
+    <div class="row collapse">
+      <h4>審稿評論</h4>
+      {{ submission.comment }}
+    </div>
+    </form>
+  </div>
+  <div class="large-3 columns main-side-nav">
+    <div class="row">
+      <div>
+        <ul class="side-nav users-actions">
+          {% if submission.user == user and expired and submission.status == 'E' %}
+          <li><a href="{% url 'submission:edit' submission.id %}"><span class="icon-edit iconize"></span> 編輯投稿</a></li>
+          {% elif submission.user == user and not expired %}
+          <li><a href="{% url 'submission:edit' submission.id %}"><span class="icon-edit iconize"></span> 編輯投稿</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div>
+        <h4>狀態：{% if submission.status == 'A' %}噫！中了！
+          {% elif submission.status == 'R' %}沒上QQ
+          {% elif submission.status == 'P' %}待審查
+          {% elif submission.status == 'V' %}審查中
+          {% elif submission.status == 'E' %}待修正
+          {% elif submission.status == 'Z' %}演講結束
+          {% endif %}
+        </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <h4>投稿類型</h4>
+        {% if submission.type == 'S'%}
+        <p>Short Talk</p>
+        {% elif submission.type == 'L'%}
+        <p>Talk</p>
+        {% elif submission.type == 'K'%}
+        <p>Keynote</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <h4>大頭照</h4>
+        <img src="{% if submission.user.profile.photo %}{{ submission.user.profile.photo.url }}{% else %}{{ submission.user.profile.avatar }}{% endif %}"/>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

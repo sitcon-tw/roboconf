@@ -9,8 +9,8 @@
 		<section class="top-bar-section">
 			<ul class="left">
                 {% if user.is_authenticated %}
-				<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
                 {% if user.profile.is_authorized %}
+				<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
 				<li><a href="{% url 'docs:main' %}">文件</a></li>
 				<li><a href="#">聚會</a></li>
 				<li><a href="{% url 'agenda:main' %}">時間表</a></li>
@@ -24,7 +24,9 @@
 					<a href="{% url 'submission:list' %}">投稿</a>
 					<ul class="dropdown">
 						<li><a href="{% url 'submission:score' %}">評分</a></li>
+						{% if perms.submission.view_total_score %}
 						<li><a href="{% url 'submission:score_total' %}">總分</a></li>
+						{% endif %}
 					</ul>
 				</li>
 				{% else %}

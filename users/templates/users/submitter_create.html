@@ -13,7 +13,7 @@
 		{% csrf_token %}
 			<div class="row field-header">
 				<div class="small-12 columns">
-					<h6>帳號資訊</h6>
+					<h5>帳號資訊</h5>
 				</div>
 			</div>
 			<div class="row">
@@ -39,13 +39,13 @@
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
-					<h6>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h6>
+					<h5>個人頭像 <small>請提供解析度 1000x1000 以上之 JPG/PNG 圖檔</small></h5>
 					<input type="file" name="photo" required />
 				</div>
 			</div>
 			<div class="row field-header">
 				<div class="small-12 columns">
-					<h6>個人檔案資訊</h6>
+					<h5>個人檔案資訊 <small>不會公開，僅供大會聯絡及印製感謝狀使用</small></h5>
 				</div>
 			</div>
 			<div class="row">
@@ -65,21 +65,161 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="phone" placeholder="電話號碼" value="{{ saved.phone }}" required />
+				<div class="small-2 columns">
+					<h5>性別</h5>
+				</div>
+				<div class="small-5 columns">
+					<h5>身份證字號 <br><small>若有住宿需求記得填寫，我們不會外流的！</small></h5>
+				</div>
+				<div class="small-5 columns">
+					<h5>出生日期 <br><small>以身分證上登記的為準，請選擇一個符合您的描述。</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-2 columns">
+					<select name="gender">
+						<option disabled>性別</option>
+						{% if not u.profile.gender %}<option value="" selected>（性別）</option>{% endif %}
+						{% for g, n in options.gender %}<option value="{{ g }}"{% if u.profile.gender == g %} selected{% endif %}>{{ n }}</option>{% endfor %}
+					</select>
+				</div>
+				<div class="small-5 columns">
+					<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />
+				</div>
+				<div class="small-5 columns">
+					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1996 年 2 月 27 號（含）前出生</input></label>
+					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1996 年 2 月 27 號後出生，<br>且已經獲得家長同意參加 SITCON</input></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns">
+					<h5>電話號碼 <small>不包含連字號 (eg: 0987654321)</small></h5>
+					<input type="text" name="phone" placeholder="電話號碼" value="" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<h5>出發地</h5>
+				</div>
+				<div class="small-4 columns">
+					<h5>衣服尺寸<br><small>您的<a href="https://lh3.googleusercontent.com/dyR2NXgez5We2PMbFs2ldgCi7VBZw_xJe7N9vGHtSOwE0xPrHz3mtemOT_OJaQVq1OhI">衣服尺寸</a>是？</small></h5>
+				</div>
+				<div class="small-4 columns">
+					<h5>飲食習慣<br><small>若有會過敏的食材，請在備註欄位補充！</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<select name="residence">
+						<option disabled>所在地</option>
+						<option value="" selected>（所在地）</option>
+						{% for r in options.residence %}<option>{{ r }}</option>{% endfor %}
+					</select>
+				</div> <div class="small-4 columns">
+					<select name="shirt_size">
+						<option disabled>衣服尺寸</option>
+						<option value="" selected>（衣服尺寸）</option>
+						{% for s in options.shirt_size %}<option>{{ s }}</option>{% endfor %}
+					</select>
+				</div>
+				<div class="small-4 columns">
+					<select name="diet">
+						<option disabled>飲食習慣</option>
+						<option value="" selected>（飲食習慣）</option>
+						{% for d in options.diet %}<option>{{ d }}</option>{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<h5>是否需要交通補助 <small>請記得填寫下面的問題！</small></h5>
+				</div>
+				<div class="small-6 columns">
+					<h5>交通時間是否大於一小時</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<div class="large-4">
+						<div class="large switch radius">
+							<input id="transportation_aid_t" name="transportation_aid" type="radio" value="True">
+							<label for="transportation_aid_f" onclick="" style="padding-left: 10px">是</label>
+
+							<input id="transportation_aid_f" name="transportation_aid" type="radio" value="False" checked>
+							<label for="transportation_aid_t" onclick="" style="padding-right: 10px">否</label>
+
+							<span></span>
+						</div>
+					</div>
+				</div>
+				<div class="small-6 columns">
+					<div class="large-4">
+						<div class="large switch radius">
+							<input id="transportation_hr_t" name="transportation_hr" type="radio" value="True">
+							<label for="transportation_hr_f" onclick="" style="padding-left: 10px">是</label>
+
+							<input id="transportation_hr_f" name="transportation_hr" type="radio" value="False" checked>
+							<label for="transportation_hr_t" onclick="" style="padding-right: 10px">否</label>
+
+							<span></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<h5>預估交通方式 <br><small>請寫出主要使用的交通工具</small></h5>
+				</div>
+				<div class="small-6 columns">
+					<h5>預估交通費用 <br><small>由於預算關係，我們將以客運最低價格來補貼。</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<textarea name="transportation" placeholder="預估交通方式" maxlength="64">{{ u.profile.transportation }}</textarea>
+				</div>
+				<div class="small-6 columns">
+					<textarea name="transportation_fee" placeholder="預估交通費用" maxlength="64">{{ u.profile.transportation }}</textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<h5>是否需要住宿 <br><small>除特殊需求之外，住宿順序將按照出發地遠近來安排，因床位有限，所以不保證一定可以住哦！</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<select name="accom">
+						<option disabled>是否需要住宿</option>
+						{% for i, a in options.accom %}<option value="{{ i }}"{% if u.profile.accom == i %} selected{% endif %}>{{ a }}</option>{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<h5>是否出席慶功宴 <br><small>年會當天晚上會有慶功宴，歡迎講者一同參加，今年預計吃熱炒！</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<div class="large-4">
+					<div class="large switch radius">
+						<input id="cel_dinner_t" name="cel_dinner" type="radio" value="True">
+						<label for="cel_dinner_f" onclick="" style="padding-left: 10px">是</label>
+
+						<input id="cel_dinner_f" name="cel_dinner" type="radio" value="False" checked>
+						<label for="cel_dinner_t" onclick="" style="padding-right: 10px">否</label>
+
+						<span></span>
+					</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-12 columns">
+					<h5>個人介紹 <small>含標點符號 50 ~ 100 全形字，公開於講者海報及網站</small></h5>
 					<textarea name="bio" placeholder="個人介紹" maxlength="300" value="{{ saved.bio }}" required></textarea>
 				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<input type="text" name="departure" placeholder="出發地，平時生活的地區，僅供大會調查統計，可以待入選之後再填"
-					maxlength="10" value="{{ saved.departure }}" />
-				</div>
-				<!-- TODO 出發地、大頭照-->
 			</div>
 			<div class="row">
 				<div class="small-12 columns">

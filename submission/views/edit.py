@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.conf import settings
-from django.http import Http404
+from django.core.exceptions import ValidationError
+from django.http import HttpResponseForbidden
 from core.formatting import render_document
 from docs.node import Node
 from submission.forms import SubmissionForm
@@ -18,9 +19,7 @@ def edit(request, submission_id):
     if SUBMISSION_END < datetime.datetime.now():
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
         if not ( instance.status=='E' or instance.status=='Z' ):
-            raise Http404
-    elif request.user.has_perm('submission.review'):
-        instance = get_object_or_404(Submission, id=submission_id)
+            return HttpResponseForbidden
     else:
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
@@ -48,7 +47,7 @@ def edit(request, submission_id):
 
             return redirect('submission:list')
         else:
-            pass
+            raise ValidationError(sub.errors.as_data())
 
     context = {
             'user': request.user,

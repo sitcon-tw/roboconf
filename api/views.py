@@ -9,7 +9,9 @@ from core.settings.base import SUBMITTER_GROUP_ID
 from django.db.models import Q
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.filter(is_active=True)
+    _submissions = Submission.objects.filter(status__in=['A', 'Z'])
+    _u_pks = [ s.user.pk for s in _submissions ]
+    queryset = User.objects.filter(pk__in=_u_pks)
     serializer_class = UserSerializer
 
 class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
@@ -17,18 +19,6 @@ class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     #active_ids = UserProfile.objects.filter(user__is_active=True).value_list('pk')
     #queryset.exclude(user__group__in=[SUBMITTER_GROUP_ID] and user__submissions__isnull)
     serializer_class = UserProfileSerializer
-
-class GroupViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = GroupSerializer
-
-    def get_queryset(self):
-        return sorted_groups(Group.objects.all())
-
-class StaffGroupViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = GroupSerializer
-
-    def get_queryset(self):
-        return sorted_groups(Group.objects.filter(categories__id=2))
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()

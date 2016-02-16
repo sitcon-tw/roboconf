@@ -9,7 +9,7 @@ from docs.node import Node
 @login_required
 def main(request):
     from docs.models import Folder
-    node = Node(nodeobj=Folder.objects.get(id=0))
+    node = Node(nodeobj=Folder.objects.get(id=1))
     return redirect('docs:view', node.nid())
 
 def view(request, nidb64):

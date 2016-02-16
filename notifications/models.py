@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 
+import threading
+
+
 class Message(models.Model):
     EMAIL = '@'
     SMS = '+'
@@ -22,7 +25,7 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         super(Message, self).save(*args, **kwargs)
-        self.send()
+        threading.Thread(target=self.send).start()
 
     def send(self, **kwargs):
         if self.method == Message.EMAIL:
