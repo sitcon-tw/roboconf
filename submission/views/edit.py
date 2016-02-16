@@ -19,7 +19,7 @@ def edit(request, submission_id):
     if SUBMISSION_END < datetime.datetime.now():
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
         if not ( instance.status=='E' or instance.status=='Z' ):
-            raise HttpResponseForbidden
+            return HttpResponseForbidden
     else:
         instance = get_object_or_404(Submission, id=submission_id, user=request.user)
 
