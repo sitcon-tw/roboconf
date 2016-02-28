@@ -36,6 +36,12 @@ Set debug
 
 	export DEBUG=1 # bash
 
+Copy example settings
+
+	cp core/settings/local_settings.example.py core/settings/local_settings.py
+
+	...
+
 Load database schema and initial data
 
 	python manage.py syncdb
@@ -62,12 +68,6 @@ It is recommended to use `virtualenv`.
 Install dependencies.
 
 	pip install -r requirements.txt
-
-Copy example settings
-
-	cp core/settings/local_settings.example.py core/settings/local_settings.py
-
-	...
 
 Load database schema and initial data
 
