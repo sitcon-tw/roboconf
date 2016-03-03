@@ -1,5 +1,9 @@
 staff.sitcon.org
 ================
+
+![travis](https://img.shields.io/travis/sitcon/staff.sitcon.org.svg)
+![coveralls](https://coveralls.io/repos/sitcon/staff.sitcon.org/badge.svg)
+
 SITCON Internal Tracking & Conference Operation Network (Codename Roboconf) for Students' Information Technology CONference (SITCON). The website is used to operate though SITCON's administration process since 2014.
 
 Proposed Functionalities
