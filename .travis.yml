@@ -11,6 +11,7 @@ install:
     - "pip install -U pytest pytest-cov pytest-django coveralls"
     - "pip install -r requirements.txt"
     - "pip freeze"
+    - "cp core/settings/local_settings.example.py core/settings/local_settings.py"
 
 script:
     - py.test
