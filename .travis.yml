@@ -1,0 +1,25 @@
+language: python
+
+python:
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "nightly"
+
+install:
+    - "pip install -U pip"
+    - "pip install -U pytest coveralls"
+    - "pip install -r requirements.txt"
+    - "pip freeze"
+
+script:
+    - py.test
+
+after_success:
+    - coveralls
+
+matrix:
+    allow_failures:
+        - python: "3.4"
+        - python: "3.5"
+        - python: "nightly"
