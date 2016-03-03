@@ -8,7 +8,7 @@ python:
 
 install:
     - "pip install -U pip"
-    - "pip install -U pytest pytest-cov coveralls"
+    - "pip install -U pytest pytest-cov pytest-django coveralls"
     - "pip install -r requirements.txt"
     - "pip freeze"
 
