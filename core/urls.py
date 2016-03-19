@@ -17,9 +17,6 @@ urlpatterns = [
     url(r'^favicon.ico$', redirect_static('img/SITCON.ico'), name='favicon'),
     url(r'^users$', 'users.views.default'),
     url(r'^users/', include('users.urls', namespace='users')),
-    url(r'^docs/', include('docs.urls', namespace='docs')),
-    url(r'^issues/', include('issues.urls', namespace='issues')),
-    url(r'^agenda/', include('agenda.urls', namespace='agenda')),
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),
     url(r'^api/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),# not used since we don't need authentication to access API

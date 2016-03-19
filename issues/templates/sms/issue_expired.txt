@@ -1,2 +1,0 @@
-{% load dateutils %}
-{{ site.title }} #{{ issue.id }}「{{ issue.title|truncatechars:40 }}」已於{{ issue.due_time|smartdate }}逾時，請即處理。

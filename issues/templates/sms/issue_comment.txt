@@ -1,2 +1,0 @@
-{% load markdown %}
-[#{{ issue.id }}] {{ sender.profile.name }}：{{ comment|markdown|striptags|truncatechars:50 }}
