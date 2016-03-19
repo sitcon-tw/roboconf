@@ -106,7 +106,7 @@ def reg_form(request, token=None):
                 for g in reg_token.groups.all():
                     g.user_set.add(form.instance)
             login(request, form.instance)
-            return redirect('users:edit fancy', username=form.instance.username)
+            return redirect('users:edit', username=form.instance.username)
         else:
             if "username" in form.errors:
                 error.append("error_username")

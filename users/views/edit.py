@@ -12,7 +12,7 @@ from users.models import *
 from users.utils import *
 
 @login_required
-def edit(request, username, fancy=False):
+def edit(request, username):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user')
 
@@ -52,46 +52,9 @@ def edit(request, username, fancy=False):
         user.profile.save()
 
     if request.POST.get('submit'):
-        if privileged and not fancy:
-            username = request.POST.get('username')
-            if username != user.username:
-                if username:
-                    if User.objects.filter(username=username).count() < 1:
-                        user.username = username
-                    else:
-                        errors += ['username', 'username_already_taken']
-                else:
-                    errors += ['username', 'invalid_username']
-
-            groups = request.POST.getlist('groups')
-            old_groups = user.groups.all()
-            for group in old_groups:
-                if group.id not in groups:
-                    user.groups.remove(group)
-
-            for group_id in groups:
-                try:
-                    if group_id not in old_groups:
-                        user.groups.add(Group.objects.get(id=group_id))
-                except Group.DoesNotExist: pass
-
-            profile.title = request.POST.get('title')
 
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
-
-        if not fancy:
-            email = request.POST.get('email', '')
-            if email != user.email:
-                try:
-                    validate_email(email)
-
-                    if User.objects.filter(email=email).count() < 1:
-                        user.email = email
-                    else:
-                        errors += ['email', 'email_already_taken']
-                except ValidationError:
-                    errors += ['email', 'invalid_email']
 
         profile.display_name = request.POST.get('display_name')
         if request.POST.get('gender'):
@@ -178,8 +141,8 @@ def edit(request, username, fancy=False):
         else:
             status = 'error'
 
-    if fancy and status == 'success':
-        render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
+    if status == 'success':
+        render_template_url = 'users/edit_profile.html'
         return render(request, render_template_url, {
             'u': user,
             'categories': sorted_categories if privileged else None,
@@ -196,7 +159,7 @@ def edit(request, username, fancy=False):
             'status': status,
         })
     else:
-        render_template_url = 'users/edit_profile.html' if not fancy else 'users/fancy_edit_profile.html'
+        render_template_url = 'users/edit_profile.html'
         return render(request, render_template_url, {
             'u': user,
             'categories': sorted_categories if privileged else None,
