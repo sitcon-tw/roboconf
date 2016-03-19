@@ -7,28 +7,58 @@
 		<img class="avatar large" src="{{ user.profile.avatar }}" alt="{{ user.profile.name }}" />
 		<h4>{{ user.profile.name }}</h4>
 		<h5 class="subheader">{{ user.profile.title }}</h5>
+		<ul class="profile-meta">
+			{% if user.profile.school %}<li><span class="icon-school iconize"></span> {{ user.profile.school }} {{ user.profile.grade }}</li>{% endif %}
+			{% if user.profile.phone %}<li><span class="icon-phone iconize"></span> {{ user.profile.phone }}</li>{% endif %}
+			{% if user.email %}<li><span class="icon-email iconize"></span> {{ user.email }}</li>{% endif %}
+		</ul>
+		<div class="profile-actions">
+		{% if user == u or perms.auth.change_user %}
+			<a href="{% url 'users:edit' user.username %}" class="small secondary radius button">編輯</a>
+		{% endif %}
+		</div>
 	</div>
 	<div class="large-5 columns">
-		<h5 class="section-header"><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
+		<h5 class="section-header">個人介紹</h5>
+		<p>{{ user.profile.bio|linebreaks }}</p>
 		<ul class="issue-list">
-		{% for issue in issues %}
-			<li class="issue-entry">
-				<div class="issue-id">#{{ issue.id }}</div>
-				<h4>
-					<span class="issue-icon iconize icon-{% if issue.is_open %}{{ issue.is_expired|yesno:'issue-expired,issue-open' }}{% else %}issue-closed{% endif %}"></span>
-					<a href="{% url 'issues:detail' issue.id %}">{{ issue.title }}</a>
-					<span class="labels">{% for label in issue.labels.all %}
-						<span class="radius label" style="background: #{{ label.color }};">{{ label.name }}</span>
-					{% endfor %}</span>
-				</h4>
-			</li>
-		{% endfor %}
 		</ul>
 	</div>
 	<div class="large-4 columns">
-		<h5 class="section-header">聚會概覽</h5>
-		<p></p>
-	</div>
+		{% if show_detail %}
+		<h5 class="section-header">個人資料細節</h5>
+		<table class="main">
+			<!-- TODO icons -->
+			<tr>
+				<td>年滿 20 歲</td>
+				<td>{% if user.profile.twenty %}<span class="icon-checkmark iconize"></span>是{% else %}<span class="icon-cross iconize"</span>否{% endif %}</td>
+			</tr>
+			<tr>
+				<td>居住地</td>
+				<td>{{ user.profile.residence }}</td>
+			</tr>
+			<tr>
+				<td>衣服尺寸</td>
+				<td>{{ user.profile.shirt_size }}</td>
+			</tr>
+			<tr>
+				<td>飲食</td>
+				<td>{{ user.profile.diet }}</td>
+			</tr>
+			<tr>
+				<td>交通補助</td>
+				<td>{% if user.profile.transportation_aid %}{{ user.profile.transportation_fee }}{% else %}不需要{% endif %}</td>
+			</tr>
+			<tr>
+				<td>慶功宴</td>
+				<td>{% if user.profile.cel_dinner %}<span class="icon-checkmark iconize"></span>參加{% else %}<span class="icon-cross iconize"></span>不參加{% endif %}</td>
+			</tr>
+			<tr>
+				<td>感謝狀</td>
+				<td>{% if user.profile.certificate %}<span class="icon-checkmark iconize"></span>需要{% else %}<span class="icon-cross iconize"></span>不需要{% endif %}</td>
+			</tr>
+		</table>
+		{% endif %}
 	{% else %}
 	<div class="large-6 small-9 small-centered has-quote columns">
 		<h3 class="text-center">{{ site.name }}</h3>
