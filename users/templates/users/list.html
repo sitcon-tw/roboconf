@@ -6,9 +6,9 @@
 		<ul class="user-list large-block-grid-4">
 		{% for u in users %}
 			<li class="user-item">
-				<a href="{% if perms.auth.add_user %}{% url 'users:edit fancy' u.username %}{% else %}{% url 'users:profile' u.username %}{% endif %}">
+				<a href="{% url 'users:profile' u.username %}">
 					<img class="avatar medium" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
-					<h4>{{ u.profile.name }}</h4>
+					<div><h4 style="display: inline-block;">{{ u.profile.name }}</h4> {% if perms.auth.add_user %}<a href="{% url 'users:edit' u.username %}"><span class="icon-edit iconize" ></span></a>{% endif %}</div>
 					<h4 class="subheader">{{ u.profile.title }}</h4>
 				</a>
 			</li>
