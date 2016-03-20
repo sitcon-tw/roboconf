@@ -25,7 +25,6 @@
 		</ul>
 	</div>
 	<div class="large-4 columns">
-		{% if show_detail %}
 		<h5 class="section-header">個人資料細節</h5>
 		<table class="main">
 			<!-- TODO icons -->
@@ -58,7 +57,6 @@
 				<td>{% if user.profile.certificate %}<span class="icon-checkmark iconize"></span>需要{% else %}<span class="icon-cross iconize"></span>不需要{% endif %}</td>
 			</tr>
 		</table>
-		{% endif %}
 	{% else %}
 	<div class="large-6 small-9 small-centered has-quote columns">
 		<h3 class="text-center">{{ site.name }}</h3>
