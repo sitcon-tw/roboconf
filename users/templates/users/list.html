@@ -8,7 +8,7 @@
 			<li class="user-item">
 				<a href="{% url 'users:profile' u.username %}">
 					<img class="avatar medium" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
-					<div><h4 style="display: inline-block;">{{ u.profile.name }}</h4> {% if perms.auth.add_user %}<a href="{% url 'users:edit' u.username %}"><span class="icon-edit iconize" ></span></a>{% endif %}</div>
+					<div><h4 style="display: inline-block;">{{ u.profile.name }}</h4> {% if perms.auth.change_user or u == user %}<a href="{% url 'users:edit' u.username %}"><span class="icon-edit iconize" ></span></a>{% endif %}</div>
 					<h4 class="subheader">{{ u.profile.title }}</h4>
 				</a>
 			</li>
