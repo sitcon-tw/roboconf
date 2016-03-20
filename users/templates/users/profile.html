@@ -20,7 +20,6 @@
 	<div class="large-5 columns">
 		<h5 class="section-header">個人介紹</h5>
 		<p>{{ u.profile.bio|linebreaks }}</p>
-		<h5><a href="{% url 'issues:assigned' u.id %}">待辦事項</a></h5>
 		<ul class="issue-list">
 		</ul>
 	</div>
