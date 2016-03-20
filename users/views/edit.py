@@ -53,10 +53,13 @@ def edit(request, username):
 
     if request.POST.get('submit'):
 
+        profile.display_name = request.POST.get('display_name')
+        if privileged:
+            profile.title = request.POST.get('title')
+
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
 
-        profile.display_name = request.POST.get('display_name')
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))
         profile.twenty = False if request.POST.get('twenty') == 'False' else True
