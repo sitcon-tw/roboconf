@@ -76,8 +76,8 @@ def edit(request, username):
         profile.twenty = False if request.POST.get('twenty') == 'False' else True
         if request.POST.get('personal_id'):
             profile.personal_id = request.POST.get('personal_id')
-        if request.POST.get('organziation'):
-            profile.organization = request.POST.get('organziation')
+        if request.POST.get('organization'):
+            profile.organization = request.POST.get('organization')
         if request.POST.get('slack'):
             profile.slack = request.POST.get('slack')
         if request.POST.get('redmine'):
