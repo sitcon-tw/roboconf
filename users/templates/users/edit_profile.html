@@ -158,6 +158,14 @@
 						{% for i, a in options.accom %}<option value="{{ i }}"{% if u.profile.accom == i %} selected{% endif %}>{{ a }}</option>{% endfor %}
 					</select>
 				</div>
+				<div class="small-6 columns">
+					<h5>希望的室友 <br><small>住宿小組將在可行範圍內協助，請事先講好以免發生爭執，彼此都要填寫對方的資料哦！</small></h5>
+					<select name="roommate">
+						<option disabled>希望的室友</option>
+						{% if not u.profile.roommate %}<option value="" selected>（希望的室友）</option>{% endif %}
+						{% for i, r in options.roommate %}<option value="{{ i }}"{% if u.profile.roommate.id == i %} selected{% endif %}>{{ r }}</option>{% endfor %}
+					</select>
+				</div>
 			</div>
 			<div class="row">
 				<div class="small-4 columns">
