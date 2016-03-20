@@ -52,14 +52,21 @@
 			</div>
 			<div class="row">
 				<div class="columns">
-					<h5>學校/系級 <small>您目前就讀的學校全稱！</small></h5>
+					<h5>單位/社群 <small>服務單位/公司/所屬社群/學校</small></h5>
 				</div>
-				<div class="small-6 columns">
-					<input type="text" name="school" maxlength="30" placeholder="學校" value="{{ u.profile.school }}" />
+				<div class="columns">
+					<input type="text" name="organization" maxlength="60" placeholder="單位/社群" value="{{ u.profile.organization }}" />
 				</div>
-				<div class="small-6 columns">
-					<input type="text" name="grade" maxlength="30" placeholder="系級" value="{{ u.profile.grade }}" />
-				</div>
+			</div>
+			<div class="row">
+					<div class="small-6 columns">
+						<h5>Slack 使用者名稱<br><small>您在 <a href="http://coscup.slack.com/" tabindex="-1">COSCUP Slack</a> 上的使用者名稱</small></h5>
+						<input type="text" name="slack" maxlength="30" placeholder="Slack 使用者名稱" value="{{ u.profile.slack }}" />
+					</div>
+					<div class="small-6 columns">
+						<h5>Redmine 使用者名稱<br><small>您在 <a href="http://issues.coscup.org/" tabindex="-1">COSCUP 工作事項追蹤系統</a> 上的使用者名稱</small></h5>
+						<input type="text" name="redmine" maxlength="30" placeholder="Redmine 使用者名稱" value="{{ u.profile.redmine }}" />
+					</div>
 			</div>
 			<div class="row">
 				<div class="small-2 columns">
@@ -84,8 +91,8 @@
 					<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />
 				</div>
 				<div class="small-5 columns">
-					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1996 年 2 月 27 號（含）前出生</input></label>
-					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1996 年 2 月 27 號後出生，<br>且已經獲得家長同意參加 SITCON</input></label>
+					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1996 年 8 月 20 號（含）前出生</input></label>
+					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1996 年 8 月 20 號後出生，<br>且已經獲得家長同意參加 COSCUP。</input></label>
 				</div>
 			</div>
 			<div class="row">
@@ -104,7 +111,7 @@
 					</select>
 				</div>
 				<div class="small-4 columns">
-					<h5>衣服尺寸<br><small>您的<a href="https://lh3.googleusercontent.com/dyR2NXgez5We2PMbFs2ldgCi7VBZw_xJe7N9vGHtSOwE0xPrHz3mtemOT_OJaQVq1OhI" tabindex="-1">衣服尺寸</a>是？</small></h5>
+					<h5>衣服尺寸<br><small>您的<a href="" tabindex="-1">衣服尺寸</a>是？</small></h5>
 					<select name="shirt_size">
 						<option disabled>衣服尺寸</option>
 						{% if not u.profile.shirt_size %}<option value="" selected>（衣服尺寸）</option>{% endif %}
@@ -187,7 +194,7 @@
 					</label>
 				</div>
 				<div class="small-4 columns">
-					<h5>是否曾是 SITCON 工人</h5>
+					<h5>是否曾是 COSCUP 工人</h5>
 					<label for="prev_worker_t" style="display: inline-block;" onclick="">
 						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.prev_worker %}checked{% endif %}>是
 					</label>

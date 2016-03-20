@@ -8,7 +8,7 @@
 		<h4>{{ user.profile.name }}</h4>
 		<h5 class="subheader">{{ user.profile.title }}</h5>
 		<ul class="profile-meta">
-			{% if user.profile.school %}<li><span class="icon-school iconize"></span> {{ user.profile.school }} {{ user.profile.grade }}</li>{% endif %}
+			{% if user.profile.organization %}<li><span class="icon-school iconize"></span> {{ user.profile.organization }}</li>{% endif %}
 			{% if user.profile.phone %}<li><span class="icon-phone iconize"></span> {{ user.profile.phone }}</li>{% endif %}
 			{% if user.email %}<li><span class="icon-email iconize"></span> {{ user.email }}</li>{% endif %}
 		</ul>

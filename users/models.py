@@ -39,8 +39,9 @@ class UserProfile(models.Model):
 
     display_name = models.CharField(max_length=16, blank=True)
     title = models.CharField(max_length=16)
-    school = models.CharField(max_length=32, default='', help_text='school or company', blank=True)
-    grade = models.CharField(max_length=32, default='', help_text='department and grade / position', blank=True)
+    organization = models.CharField(max_length=32, default='', help_text='organization/community/school/company', blank=True)
+    redmine = models.CharField(max_length=32, default='', help_text='redmine id', blank=True)
+    slack = models.CharField(max_length=32, default='', help_text='slack nick', blank=True)
     gender = models.IntegerField(choices=((1, 'Male'), (2, 'Female'), (9, 'Other')), help_text='', blank=True, null=True)
     personal_id = models.CharField(max_length=16, blank=True, default='')
     twenty = models.BooleanField(help_text='if age >= 20', default=True)

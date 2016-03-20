@@ -30,7 +30,7 @@
 				</td>
 				{% if show_details %}
 				<td>{{ u.last_name }} {{ u.first_name }}</td>
-				<td>{{ u.profile.school }} {{ u.profile.grade|truncatechars:12 }}</td>
+				<td>{{ u.profile.organization }} {{ u.profile.grade|truncatechars:12 }}</td>
 				{% endif %}
 				{% if authorized %}
 				<td>{% if u.profile.phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
