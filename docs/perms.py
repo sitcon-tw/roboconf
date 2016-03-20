@@ -1,4 +1,4 @@
-from models import Permission
+from .models import Permission
 
 PRIORITY = (
         Permission.VIEW,

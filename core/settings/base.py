@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # DEVELOPERS: Django or server related settings which are mostly the same across sites should be kept here
-from __future__ import unicode_literals
+
 import os
 import datetime
 from django.conf import global_settings
@@ -34,9 +34,9 @@ USE_I18N = True    # TODO: Implement internationalization
 USE_L10N = True
 USE_TZ = True
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + [
     'core.context_processors.site_url',
-)
+]
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
