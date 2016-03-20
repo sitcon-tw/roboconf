@@ -1,6 +1,7 @@
 from django.core.management.base import NoArgsCommand
 from django.conf import settings
-from urllib2 import urlopen, URLError
+from urllib.request import urlopen
+from urllib.error import URLError
 
 class Command(NoArgsCommand):
     help = "Monitor site activities periodically."

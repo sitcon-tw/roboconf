@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import md5
 import os.path
+from hashlib import md5
 from django.db import models
 from django.db.models import signals
 from django.contrib.auth.models import User, Group
@@ -12,20 +12,20 @@ from django.utils.timezone import now
 def photo_path(instance, filename):
     _, ext = os.path.splitext(filename)
     hash_value = md5.new(instance.display_name.encode('utf8') + now().isoformat()).hexdigest()
-    return u'photos/{}{}'.format(hash_value, ext)
+    return 'photos/{}{}'.format(hash_value, ext)
 
 
 class abilities(models.Model):
-    medical = models.BooleanField(default=False, verbose_name=u'醫療')
-    legal = models.BooleanField(default=False, verbose_name=u'法律')
-    pr = models.BooleanField(default=False, verbose_name=u'公關')
+    medical = models.BooleanField(default=False, verbose_name='醫療')
+    legal = models.BooleanField(default=False, verbose_name='法律')
+    pr = models.BooleanField(default=False, verbose_name='公關')
     other = models.CharField(max_length=64, default='', help_text='other special abilities', blank=True)
 
 class language(models.Model):
-    english = models.BooleanField(default=False, verbose_name=u'英語')
-    japanese = models.BooleanField(default=False, verbose_name=u'日語')
-    taiwanese = models.BooleanField(default=False, verbose_name=u'台語')
-    cantonese = models.BooleanField(default=False, verbose_name=u'粵語')
+    english = models.BooleanField(default=False, verbose_name='英語')
+    japanese = models.BooleanField(default=False, verbose_name='日語')
+    taiwanese = models.BooleanField(default=False, verbose_name='台語')
+    cantonese = models.BooleanField(default=False, verbose_name='粵語')
     other = models.CharField(max_length=64, default='', help_text='other language abilities', blank=True)
 
 class UserProfile(models.Model):
@@ -77,7 +77,7 @@ class UserProfile(models.Model):
 
     @property
     def gravatar(self):
-        hash_value = md5.new(self.user.email.strip().lower()).hexdigest()
+        hash_value = md5(self.user.email.strip().lower().encode()).hexdigest()
         return ('https://secure.gravatar.com/avatar/%s?d=identicon' % hash_value)
 
     @property

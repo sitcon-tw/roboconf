@@ -79,7 +79,7 @@ class IssueHistory(models.Model):
     content = models.TextField()
 
     def __unicode__(self):
-        return '%s: %s' % (self.mode, unicode(self.timestamp))
+        return '%s: %s' % (self.mode, str(self.timestamp))
 
     def content_as_user(self):    # TODO: Add mode control
         try:

@@ -8,8 +8,8 @@ def to_email_address(nsaddr):
 
 def format_address(name, addr):
     return '%s:%s' % (
-        unicode(name if name is not None else '').strip().replace(':', '-'),
-        unicode(addr if addr is not None else '').strip()
+        str(name if name is not None else '').strip().replace(':', '-'),
+        str(addr if addr is not None else '').strip()
     )
 
 def parse_address(nsaddr):
