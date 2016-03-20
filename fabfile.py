@@ -21,7 +21,7 @@ def compass(action):
         local("compass watch")
     elif action == 'compile':
         commands = ["-r %s" % i for i in Compass.require]
-        commands += ["--%s %s" % (k.replace('_', '-'), v) for k, v in Compass.arguments.iteritems()]
+        commands += ["--%s %s" % (k.replace('_', '-'), v) for k, v in Compass.arguments.items()]
         local("compass compile " + ' '.join(commands))
     else:
         local("compass " + action)

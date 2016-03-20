@@ -7,7 +7,7 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.util import etree, AtomicString
 
-MENTION_RE = u'(@[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff_\\-]+)'
+MENTION_RE = '(@[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff_\\-]+)'
 
 class MentionPattern(Pattern):
     def __init__(self):
@@ -39,7 +39,7 @@ def makeExtension(**kwargs):
     return MentionExtension(**kwargs)
 
 def filter_mentions(content):
-    mention_tokens = set(re.findall(u'(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff_\\-]+', content))
+    mention_tokens = set(re.findall('(?<=@)[0-9A-Za-z\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff_\\-]+', content))
     mentions, extra_receivers = set(), set()
     for mention in mention_tokens:
         mentionee = User.objects.filter(Q(username__istartswith=mention) | Q(profile__display_name__iexact=mention)).first()

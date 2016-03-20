@@ -27,7 +27,7 @@ def login(request):
     else:
         context['error'] = request.GET.get('status')
 
-    url = request.REQUEST.get('next')
+    url = request.POST.get('next')
     context['redirect_url'] = url
     context['oauth'] = url.startswith('/o/') if url else False
     return render(request, 'users/login.html', context)

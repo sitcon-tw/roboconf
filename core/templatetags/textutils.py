@@ -8,7 +8,7 @@ def formateach(iterable, format):
 
 @register.filter
 def escapecsv(iterable):
-    return [r'"%s"' % unicode(i).replace(r'"', r'""') for i in iterable]
+    return [r'"%s"' % str(i).replace(r'"', r'""') for i in iterable]
 
 @register.filter
 def escapevcard(str):

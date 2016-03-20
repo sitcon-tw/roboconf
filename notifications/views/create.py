@@ -33,7 +33,7 @@ def create(request):
                     receivers[entry] = ''
 
         # TODO: Reimplement batch sending
-        for email, name in receivers.iteritems():
+        for email, name in receivers.items():
             send_template_mail(
                 sender,
                 format_address(name, email),
