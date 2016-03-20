@@ -19,14 +19,25 @@
 			<div class="divider"></div>
 			<div class="row">
 				<div class="columns">
-					<h4>{{ u.profile.title }} <span class="has-tip" title="請聯繫行政組以更改你的登入帳號">{{ u.username }}</span> <small>{{ u.email }}</small></h4>
+					<h4>{{ u.profile.title }} <span class="has-tip" title="{% if perms.auth.change_user %}請至 Django 後台更改登入帳號{% else %}請聯繫行政組以更改你的登入帳號{% endif %}">{{ u.username }}</span> <small>{{ u.email }}</small></h4>
 				</div>
 			</div>
 			<div class="row">
+				{% if perms.auth.change_user %}
+				<div class="small-6 columns">
+					<h5>顯示名稱 <small>我們該如何稱呼您呢？</small></h5>
+					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" value="{{ u.profile.display_name }}" />
+				</div>
+				<div class="small-6 columns">
+					<h5>職稱 <small>組+股+職稱，有多則加「兼」（此項只有人事可見）</small></h5>
+					<input type="text" name="title" maxlength="16" placeholder="顯示名稱" value="{{ u.profile.title }}" />
+				</div>
+				{% else %}
 				<div class="columns">
 					<h5>顯示名稱 <small>我們該如何稱呼您呢？</small></h5>
 					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" value="{{ u.profile.display_name }}" />
 				</div>
+				{% endif %}
 			</div>
 			<div class="row">
 				<div class="columns">
@@ -86,22 +97,14 @@
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>出發地<br><small>填寫縣市即可！</small></h5>
-				</div>
-				<div class="small-4 columns">
-					<h5>衣服尺寸<br><small>您的<a href="https://lh3.googleusercontent.com/dyR2NXgez5We2PMbFs2ldgCi7VBZw_xJe7N9vGHtSOwE0xPrHz3mtemOT_OJaQVq1OhI">衣服尺寸</a>是？</small></h5>
-				</div>
-				<div class="small-4 columns">
-					<h5>飲食習慣<br><small>若有會過敏的食材，請在備註欄位補充！</small></h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-4 columns">
 					<select name="residence">
 						<option disabled>所在地</option>
 						{% if not u.profile.residence %}<option value="" selected>（所在地）</option>{% endif %}
 						{% for r in options.residence %}<option{% if u.profile.residence == r %} selected{% endif %}>{{ r }}</option>{% endfor %}
 					</select>
-				</div> <div class="small-4 columns">
+				</div>
+				<div class="small-4 columns">
+					<h5>衣服尺寸<br><small>您的<a href="https://lh3.googleusercontent.com/dyR2NXgez5We2PMbFs2ldgCi7VBZw_xJe7N9vGHtSOwE0xPrHz3mtemOT_OJaQVq1OhI">衣服尺寸</a>是？</small></h5>
 					<select name="shirt_size">
 						<option disabled>衣服尺寸</option>
 						{% if not u.profile.shirt_size %}<option value="" selected>（衣服尺寸）</option>{% endif %}
@@ -109,6 +112,7 @@
 					</select>
 				</div>
 				<div class="small-4 columns">
+					<h5>飲食習慣<br><small>若有會過敏的食材，請在備註欄位補充！</small></h5>
 					<select name="diet">
 						<option disabled>飲食習慣</option>
 						{% if not u.profile.diet %}<option value="" selected>（飲食習慣）</option>{% endif %}
@@ -119,13 +123,6 @@
 			<div class="row">
 				<div class="small-6 columns">
 					<h5>是否需要交通補助 <small>請記得填寫下面的問題！</small></h5>
-				</div>
-				<div class="small-6 columns">
-					<h5>交通時間是否大於一小時</h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
 					<label for="transportation_aid_t" style="display: inline-block;" onclick="">
 						<input id="transportation_aid_t" name="transportation_aid" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.transportation_aid %}checked{% endif %}>是
 					</label>
@@ -134,6 +131,7 @@
 					</label>
 				</div>
 				<div class="small-6 columns">
+					<h5>交通時間是否大於一小時</h5>
 					<label for="transportation_hr_t" style="display: inline-block;" onclick="">
 						<input id="transportation_hr_t" name="transportation_hr" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.transportation_hr %}checked{% endif %}>是
 					</label>
@@ -145,26 +143,16 @@
 			<div class="row">
 				<div class="small-6 columns">
 					<h5>預估交通方式 <br><small>請寫出主要使用的交通工具</small></h5>
-				</div>
-				<div class="small-6 columns">
-					<h5>預估交通費用 <br><small>由於預算關係，我們將以客運最低價格來補貼。</small></h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
 					<textarea name="transportation" placeholder="預估交通方式" maxlength="64">{{ u.profile.transportation }}</textarea>
 				</div>
 				<div class="small-6 columns">
+					<h5>預估交通費用 <br><small>由於預算關係，我們將以客運最低價格來補貼。</small></h5>
 					<textarea name="transportation_fee" placeholder="預估交通費用" maxlength="64">{{ u.profile.transportation_fee }}</textarea>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
 					<h5>是否需要住宿 <br><small>除特殊需求之外，住宿順序將按照出發地遠近來安排，因床位有限，所以雙北不保證一定可以住哦！</small></h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
 					<select name="accom">
 						<option disabled>是否需要住宿</option>
 						{% for i, a in options.accom %}<option value="{{ i }}"{% if u.profile.accom == i %} selected{% endif %}>{{ a }}</option>{% endfor %}
@@ -174,16 +162,6 @@
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>是否需要感謝狀 <small>（將印本名）</small></h5>
-				</div>
-				<div class="small-4 columns">
-					<h5>是否出席慶功宴</h5>
-				</div>
-				<div class="small-4 columns">
-					<h5>是否曾是 SITCON 工人</h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-4 columns">
 					<label for="certificate_t" style="display: inline-block;" onclick="">
 						<input id="certificate_t" name="certificate" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.certificate %}checked{% endif %}>是
 					</label>
@@ -192,6 +170,7 @@
 					</label>
 				</div>
 				<div class="small-4 columns">
+					<h5>是否出席慶功宴</h5>
 					<label for="cel_dinner_t" style="display: inline-block;" onclick="">
 						<input id="cel_dinner_t" name="cel_dinner" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.cel_dinner %}checked{% endif %}>是
 					</label>
@@ -200,6 +179,7 @@
 					</label>
 				</div>
 				<div class="small-4 columns">
+					<h5>是否曾是 SITCON 工人</h5>
 					<label for="prev_worker_t" style="display: inline-block;" onclick="">
 						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.prev_worker %}checked{% endif %}>是
 					</label>
@@ -211,17 +191,11 @@
 			<div class="row">
 				<div class="small-6 columns">
 					<h5>語言能力 <small>若您具備下列語言之基本溝通能力，請勾選</small></h5>
-				</div>
-				<div class="small-6 columns">
-					<h5>特殊技能 <small>您有其他特殊技能嗎</small></h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
 					{% for n, vn, v in options.language %}<label><input type="checkbox" name="language" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label>{% endfor %}
 					<input type="text" name="language_other" maxlength="64" placeholder="其他語言" value="{{ u.profile.language.other }}" />
 				</div>
 				<div class="small-6 columns">
+					<h5>特殊技能 <small>您有其他特殊技能嗎</small></h5>
 					{% for n, vn, v in options.abilities %}<label><input type="checkbox" name="abilities" value="{{ n }}"{% if v %} checked{% endif %}>{{ vn }}</input></label>{% endfor %}
 					<input type="text" name="abilities_other" maxlength="64" placeholder="其他技能" value="{{ u.profile.abilities.other }}" />
 				</div>
