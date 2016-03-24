@@ -19,7 +19,7 @@
 			<div class="divider"></div>
 			<div class="row">
 				<div class="columns">
-					<h4>{{ u.profile.title }} <span class="has-tip" title="{% if perms.auth.change_user %}請至 Django 後台更改登入帳號{% else %}請聯繫行政組以更改你的登入帳號{% endif %}">{{ u.username }}</span> <small>{{ u.email }}</small></h4>
+					<h4>{{ u.profile.title }} <span class="has-tip" title="{% if privileged %}請至 Django 後台更改登入帳號{% else %}請聯繫行政組以更改你的登入帳號{% endif %}">{{ u.username }}</span> <small><span class="has-tip" title="{% if privileged %}請至 Django 後台更改 email{% else %}請聯繫行政組以更改你的 email{% endif %}">{{ u.email }}</span></small></h4>
 				</div>
 			</div>
 			<div class="row">
