@@ -20,7 +20,7 @@ class Message(models.Model):
     creation_time = models.DateTimeField(editable=False, default=timezone.now)
     is_sent = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s[%s] %s" % (self.method, self.receiver, self.subject)
 
     def save(self, *args, **kwargs):

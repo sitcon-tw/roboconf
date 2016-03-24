@@ -26,5 +26,5 @@ class Revision(models.Model):
     # == Linkbacks from other models ==
     # derived_revision (OneToManyField to self)
 
-    def __unicode__(self):
+    def __str__(self):
         return '[%s] %s: %s' % (self.timestamp.isoformat(), self.user, self.comment)

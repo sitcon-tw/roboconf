@@ -63,7 +63,7 @@ class UserProfile(models.Model):
 
     comment = models.TextField(default='', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s - %s' % (self.title, self.user.username)
 
     @property
@@ -104,7 +104,7 @@ class GroupCategory(models.Model):
     is_visible = models.BooleanField(default=True)
     groups = models.ManyToManyField(Group, related_name='categories')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -121,5 +121,5 @@ class RegisterToken(models.Model):
     valid = models.BooleanField(default=True)
     user = models.ForeignKey(User, default=None, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s - %s' % (self.title, self.token)

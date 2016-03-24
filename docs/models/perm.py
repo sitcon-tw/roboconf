@@ -77,7 +77,7 @@ class Permission(models.Model):
         PER_USER: 'USER',
     }
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s:%s %s%s %s' % (
                 self.__key__(),
                 Permission.EFFECT_NAMES.get(self.effect, '?'),

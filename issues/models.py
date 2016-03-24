@@ -11,7 +11,7 @@ class Label(models.Model):
     name = models.CharField(max_length=32)
     color = models.CharField(max_length=6)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -36,7 +36,7 @@ class Issue(models.Model):
     # depends_on = models.ManyToManyField('self', symmetrical=False, related_name='required_by')
     content = models.TextField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def is_expired(self):
@@ -78,7 +78,7 @@ class IssueHistory(models.Model):
     mode = models.CharField(max_length=1, editable=False, choices=MODE_CHOICES, default=COMMENT)
     content = models.TextField()
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s: %s' % (self.mode, str(self.timestamp))
 
     def content_as_user(self):    # TODO: Add mode control

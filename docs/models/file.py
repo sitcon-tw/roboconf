@@ -27,5 +27,5 @@ class File(models.Model):
     # == Linkbacks from other models ==
     # revisions (OneToManyField to Revision)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
