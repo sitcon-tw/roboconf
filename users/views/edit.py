@@ -57,6 +57,17 @@ def edit(request, username):
         if privileged:
             profile.title = request.POST.get('title')
 
+            groups = request.POST.getlist('groups')
+            old_groups = user.groups.all()
+            for group in old_groups:
+                if group.id not in groups:
+                    user.groups.remove(group)
+            for group_id in groups:
+                try:
+                    if group_id not in old_groups:
+                        user.groups.add(Group.objects.get(id=group_id))
+                except GroupDoesNotExist: pass
+
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
 
