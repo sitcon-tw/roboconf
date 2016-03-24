@@ -23,5 +23,5 @@ class Folder(models.Model):
     # folders (OneToManyField to self)
     # files (OneToManyField to File)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

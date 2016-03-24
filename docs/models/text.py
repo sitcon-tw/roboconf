@@ -27,5 +27,5 @@ class BlobText(models.Model):
     text = models.TextField()
     format = models.CharField(max_length=1, choices=FORMAT_CHOICES, default=TEXT)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (%d)' % (self.format, len(self.text))
