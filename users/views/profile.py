@@ -8,6 +8,8 @@ from core.api.views import *
 @api_endpoint(public=True)
 def profile(request, username):
     user = get_object_or_404(User, username=username)
+    privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+
     if request.is_ajax():
         if user.is_active:
             return render_json(request, {
@@ -26,6 +28,7 @@ def profile(request, username):
 
     return render(request, 'users/profile.html', {
         'u': user,
+        'privileged': privileged,
         'show_detail': user == request.user or request.user.has_perm('view_profile_detail'),
     })
 

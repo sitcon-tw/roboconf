@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="row">
-				{% if perms.auth.change_user %}
+				{% if privileged %}
 				<div class="small-6 columns">
 					<h5>顯示名稱 <small>我們該如何稱呼您呢？</small></h5>
 					<input type="text" name="display_name" maxlength="16" placeholder="顯示名稱" value="{{ u.profile.display_name }}" />
