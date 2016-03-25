@@ -12,7 +12,7 @@
 			{% if u.email %}<li><span class="icon-email iconize"></span> {{ u.email }}</li>{% endif %}
 		</ul>
 		<div class="profile-actions">
-		{% if user == u or perms.auth.change_user %}
+		{% if privileged and not u == user %}
 			<a href="{% url 'users:edit' u.username %}" class="small secondary radius button">編輯</a>
 		{% endif %}
 		</div>

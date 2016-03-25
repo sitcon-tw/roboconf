@@ -24,9 +24,14 @@ def list(request):
     groups = request.GET.get('g')
     trusted = request.user.profile.is_trusted()
     users = apply_filter(filters=filters, groups=groups, trusted=trusted)
+    users = sorted_users(users)
+
+    for i, user in enumerate(users):
+        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+        users[i] = (user, privileged)
 
     return render(request, 'users/list.html', {
-        'users': sorted_users(users),
+        'users': users,
         'categories': sorted_categories,
         'filters': filters,
         'params': request.GET.urlencode(),

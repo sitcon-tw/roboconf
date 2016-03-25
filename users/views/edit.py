@@ -14,7 +14,7 @@ from users.utils import *
 @login_required
 def edit(request, username):
     user = get_object_or_404(User, username=username)
-    privileged = request.user.has_perm('auth.change_user')
+    privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
 
     if not (user == request.user or privileged):
         from django.core.exceptions import PermissionDenied
@@ -161,6 +161,7 @@ def edit(request, username):
         render_template_url = 'users/edit_profile.html'
         return render(request, render_template_url, {
             'u': user,
+            'privileged': privileged,
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,
@@ -178,6 +179,7 @@ def edit(request, username):
         render_template_url = 'users/edit_profile.html'
         return render(request, render_template_url, {
             'u': user,
+            'privileged': privileged,
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,
