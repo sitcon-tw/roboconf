@@ -37,33 +37,38 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     photo = models.FileField(upload_to=photo_path, blank=True)
 
-    display_name = models.CharField(max_length=16, blank=True)
-    title = models.CharField(max_length=16)
-    organization = models.CharField(max_length=32, default='', help_text='organization/community/school/company', blank=True)
+    display_name = models.CharField(max_length=32, blank=True)
+    title = models.CharField(max_length=32)
+    organization = models.CharField(max_length=64, default='', help_text='organization/community/school/company', blank=True)
+    phone = models.CharField(max_length=16, default='', blank=True)
     redmine = models.CharField(max_length=32, default='', help_text='redmine id', blank=True)
     slack = models.CharField(max_length=32, default='', help_text='slack nick', blank=True)
-    gender = models.IntegerField(choices=((1, 'Male'), (2, 'Female'), (9, 'Other')), help_text='', blank=True, null=True)
-    personal_id = models.CharField(max_length=16, blank=True, default='')
     twenty = models.BooleanField(help_text='if age >= 20', default=True)
-    phone = models.CharField(max_length=16, default='', blank=True)
-    residence = models.CharField(max_length=16, default='', help_text='residence', blank=True)
+    certificate = models.NullBooleanField(help_text='need for certificate', blank=True, null=True)
+    cel_dinner = models.NullBooleanField(help_text='need for celebratory dinner', blank=True, null=True)
+    prev_worker = models.BooleanField(help_text='if is previously a COSCUP worker', default=False)
+    residence = models.CharField(max_length=32, default='', help_text='residence', blank=True)
     shirt_size = models.CharField(max_length=8, default='', help_text='T-shirt size', blank=True)
     diet = models.CharField(max_length=8, default='', blank=True)
     transportation_aid = models.BooleanField(help_text='if need transportation fee aid', default=False)
     transportation_hr = models.BooleanField(help_text='if transportation time >= 1hr', default=False)
-    transportation = models.CharField(max_length=64, default='', help_text='transportation method', blank=True)
-    transportation_fee = models.CharField(max_length=64, default='', help_text='transportation fee', blank=True)
+    transportation = models.CharField(max_length=128, default='', help_text='transportation method', blank=True)
+    transportation_fee = models.CharField(max_length=128, default='', help_text='transportation fee', blank=True)
     accom = models.IntegerField(choices=((0, 'Not needed'), (1, 'Either'), (2, 'Needed')), help_text='need for accommodation', default=0)
-    roommate = models.ForeignKey(User, help_text='requested roommate', default=None, null=True, blank=True, related_name='+')
-    certificate = models.NullBooleanField(help_text='need for certificate', blank=True, null=True)
-    cel_dinner = models.NullBooleanField(help_text='need for celebratory dinner', blank=True, null=True)
-    prev_worker = models.BooleanField(help_text='if is previously a SITCON worker', default=False)
+    roommate = models.CharField(max_length=32, default='', help_text='requested roommate', blank=True)
+    gender = models.IntegerField(choices=((1, 'Male'), (2, 'Female'), (9, 'Other')), help_text='', blank=True, null=True)
+    personal_id = models.CharField(max_length=16, blank=True, default='')
+    volunteering_proof = models.BooleanField(help_text='need for volunteering proof application', default=False)
+    volunteering_work_done = models.CharField(max_length=256, default='', help_text='work done for the conf., for volunteering proof application', blank=True)
+    volunteering_duration = models.CharField(max_length=8, default='', help_text='volunteering duration, for volunteering proof application', blank=True)
+    volunteering_time = models.CharField(max_length=32, default='', help_text='volunteering timespan, for volunteering proof application', blank=True)
+    birthday = models.CharField(max_length=10, default='', help_text='birthday, for volunteering proof application', blank=True)
     language = models.OneToOneField(language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
     abilities = models.OneToOneField(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
-    bio = models.TextField(max_length=320, default='', help_text='biography', blank=True)
-    comment = models.TextField(default='', blank=True)
+    bio = models.TextField(max_length=512, default='', help_text='biography', blank=True)
+    comment = models.TextField(max_length=512, default='', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s - %s' % (self.title, self.user.username)
 
     @property
@@ -104,7 +109,7 @@ class GroupCategory(models.Model):
     is_visible = models.BooleanField(default=True)
     groups = models.ManyToManyField(Group, related_name='categories')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 

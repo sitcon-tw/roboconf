@@ -115,7 +115,8 @@ RESIDENCE_OPTIONS = (
 )
 
 SHIRT_SIZE_OPTIONS = (
-    'XS', 'S', 'M', 'L', 'XL', '2XL',
+   '男XS', '男S', '男M', '男L', '男XL', '男2XL', '男3XL',
+   '女S', '女M', '女L', '女XL'
 )
 
 DIET_OPTIONS = (
