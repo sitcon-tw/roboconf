@@ -12,11 +12,6 @@
 			{% if user.profile.phone %}<li><span class="icon-phone iconize"></span> {{ user.profile.phone }}</li>{% endif %}
 			{% if user.email %}<li><span class="icon-email iconize"></span> {{ user.email }}</li>{% endif %}
 		</ul>
-		<div class="profile-actions">
-		{% if user == u or perms.auth.change_user %}
-			<a href="{% url 'users:edit' user.username %}" class="small secondary radius button">編輯</a>
-		{% endif %}
-		</div>
 	</div>
 	<div class="large-5 columns">
 		<h5 class="section-header">個人介紹</h5>
