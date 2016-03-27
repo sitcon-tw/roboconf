@@ -21,7 +21,7 @@
 				<th>Email</th>
 			</tr></thead>
 			<tbody>
-			{% for u in users %}
+			{% for u, allow_phone in users %}
 			<tr>
 				<td>{{ u.profile.title }}</td>
 				<td>
@@ -32,8 +32,8 @@
 				<td>{{ u.last_name }} {{ u.first_name }}</td>
 				<td>{{ u.profile.organization }} {{ u.profile.grade|truncatechars:12 }}</td>
 				{% endif %}
-				{% if authorized %}
-				<td>{% if u.profile.phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
+				{% if authorized%}
+				<td>{% if u.profile.phone and allow_phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}
 				<td>{{ u.email|urlize }}</td>
 			</tr>

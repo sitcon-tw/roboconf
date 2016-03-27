@@ -8,7 +8,7 @@
 		<h5 class="subheader">{{ u.profile.title }}</h5>
 		<ul class="profile-meta">
 			{% if u.profile.organization %}<li><span class="icon-school iconize"></span> {{ u.profile.organization }}</li>{% endif %}
-			{% if u.profile.phone %}<li><span class="icon-phone iconize"></span> {{ u.profile.phone }}</li>{% endif %}
+			{% if u.profile.phone and allow_phone %}<li><span class="icon-phone iconize"></span> {{ u.profile.phone }}</li>{% endif %}
 			{% if u.email %}<li><span class="icon-email iconize"></span> {{ u.email }}</li>{% endif %}
 		</ul>
 		<div class="profile-actions">

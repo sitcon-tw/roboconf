@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
 from users.utils import sorted_users, sorted_categories
+from users.models import GroupCategory
 
 formats = {
     'html': ('text/html', 'users/export.html'),
@@ -86,8 +87,17 @@ def ajax(request):
 
 @login_required
 def contacts(request):
+    team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
+    users = sorted_users(User.objects.filter(is_active=True))
+
+    for i, user in enumerate(users):
+        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+        same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
+        allow_phone = privileged or same_team or user.groups.filter(pk__in=settings.TEAM_SUBLEADER_GROUP_IDS)
+        users[i] = (user, allow_phone)
+
     return render(request, 'users/contacts.html', {
-        'users': sorted_users(User.objects.filter(is_active=True)),
+        'users': users,
         'authorized': request.user.profile.is_authorized(),
         'show_details': request.GET.get('details') and request.user.profile.is_trusted(),
     })
