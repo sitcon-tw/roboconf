@@ -11,10 +11,7 @@
 			<thead><tr>
 				<th>職稱</th>
 				<th>名稱</th>
-				{% if show_details %}
-				<th>本名</th>
-				<th>學校</th>
-				{% endif %}
+				<th>Slack</th>
 				{% if authorized %}
 				<th>電話</th>
 				{% endif %}
@@ -28,11 +25,8 @@
 					<img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
 					<a href="{% url 'users:profile' u.username %}">{{ u.profile.name }}</a>
 				</td>
-				{% if show_details %}
-				<td>{{ u.last_name }} {{ u.first_name }}</td>
-				<td>{{ u.profile.organization }} {{ u.profile.grade|truncatechars:12 }}</td>
-				{% endif %}
-				{% if authorized%}
+				<td><a href="https://coscup.slack.com/messages/@{{u.profile.slack}}">{{ u.profile.slack }}</a></td>
+				{% if authorized %}
 				<td>{% if u.profile.phone and allow_phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}
 				<td>{{ u.email|urlize }}</td>
