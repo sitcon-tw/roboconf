@@ -122,10 +122,12 @@ class RegisterToken(models.Model):
             Team leader can trace the usage of tokens.
     group:  User registered by token is belongs to.
     """
-    title = models.CharField(max_length=255, default="")
+    title = models.CharField(max_length=255, default="", blank=True, null=True)
     token = models.CharField(max_length=12, default=get_random_string)
     groups = models.ManyToManyField(Group, related_name='tokens')
     valid = models.BooleanField(default=True)
+    username = models.CharField(max_length=255, default="", blank=True, null=True)
+    email = models.CharField(max_length=255, default="", blank=True, null=True)
     user = models.ForeignKey(User, default=None, null=True, blank=True)
 
     def __unicode__(self):
