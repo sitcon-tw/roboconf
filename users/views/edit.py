@@ -74,14 +74,10 @@ def edit(request, username):
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))
         profile.twenty = False if request.POST.get('twenty') == 'False' else True
-        if request.POST.get('personal_id'):
-            profile.personal_id = request.POST.get('personal_id')
-        if request.POST.get('organization'):
-            profile.organization = request.POST.get('organization')
-        if request.POST.get('slack'):
-            profile.slack = request.POST.get('slack')
-        if request.POST.get('redmine'):
-            profile.redmine = request.POST.get('redmine')
+        profile.personal_id = request.POST.get('personal_id')
+        profile.organization = request.POST.get('organization')
+        profile.slack = request.POST.get('slack')
+        profile.redmine = request.POST.get('redmine')
         if request.POST.get('phone'):
             profile.phone = request.POST.get('phone')
         if request.POST.get('residence'):
@@ -92,20 +88,16 @@ def edit(request, username):
             profile.diet = request.POST.get('diet')
         profile.transportation_aid = False if request.POST.get('transportation_aid') == 'False' else True
         profile.transportation_hr = False if request.POST.get('transportation_hr') == 'False' else True
-        if request.POST.get('transportation'):
-            profile.transportation = request.POST.get('transportation')
-        if request.POST.get('transportation_fee'):
-            profile.transportation_fee = request.POST.get('transportation_fee')
+        profile.transportation = request.POST.get('transportation')
+        profile.transportation_fee = request.POST.get('transportation_fee')
         if request.POST.get('accom'):
             profile.accom = int(request.POST.get('accom'))
-        if request.POST.get('roommate'): profile.roommate = User.objects.get(id=request.POST.get('roommate'))
+        profile.roommate = request.POST.get('roommate')
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
         profile.cel_dinner = False if request.POST.get('cel_dinner') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
-        if request.POST.get('language_other'):
-            profile.language.other = request.POST.get('language_other')
-        if request.POST.get('abilities_other'):
-            profile.abilities.other = request.POST.get('abilities_other')
+        profile.language.other = request.POST.get('language_other')
+        profile.abilities.other = request.POST.get('abilities_other')
 
         photo = request.FILES.get('photo')
         if photo:
