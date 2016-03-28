@@ -59,8 +59,8 @@ class UserProfile(models.Model):
     prev_worker = models.BooleanField(help_text='if is previously a SITCON worker', default=False)
     language = models.OneToOneField(language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
     abilities = models.OneToOneField(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
-    bio = models.TextField(max_length=320, default='', help_text='biography', blank=True)
-    comment = models.TextField(default='', blank=True)
+    bio = models.TextField(max_length=512, default='', help_text='biography', blank=True, null=True)
+    comment = models.TextField(max_length=512, default='', blank=True, null=True)
 
     lead_team = models.ForeignKey(Group, help_text='leading team', default=None, null=True, blank=True, related_name='leader')
 
