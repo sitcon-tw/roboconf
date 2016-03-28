@@ -27,7 +27,7 @@ def list(request):
     users = sorted_users(users)
 
     for i, user in enumerate(users):
-        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+        privileged = request.user.has_perm('auth.change_user')# or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
         users[i] = (user, privileged)
 
     return render(request, 'users/list.html', {
