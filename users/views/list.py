@@ -32,6 +32,7 @@ def list(request):
 
     return render(request, 'users/list.html', {
         'users': users,
+        'query_string': request.META["QUERY_STRING"],
         'categories': sorted_categories,
         'filters': filters,
         'params': request.GET.urlencode(),
@@ -86,6 +87,18 @@ def ajax(request):
 
 @login_required
 def contacts(request):
+    if not request.user.is_authenticated():
+        from django.contrib.auth.views import redirect_to_login
+        return redirect_to_login(request.path)
+    elif not request.user.profile.is_authorized():
+        return redirect('index')
+
+    filters = request.GET.getlist('find')
+    groups = request.GET.get('g')
+    trusted = request.user.profile.is_trusted()
+    users = apply_filter(filters=filters, groups=groups, trusted=trusted)
+    users = sorted_users(users)
+
     return render(request, 'users/contacts.html', {
         'users': sorted_users(User.objects.filter(is_active=True)),
         'authorized': request.user.profile.is_authorized(),
