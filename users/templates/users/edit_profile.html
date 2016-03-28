@@ -187,7 +187,7 @@
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>身份證字號 <small>僅供住宿登記之用</small></h5>
-					<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />
+					{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏，請洽行政組修改">{{ u.profile.personal_id|length }} 位數</span>{% else %}<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />{% endif %}
 				</div>
 				<div class="small-3 columns end">
 					<h5>性別 <small>僅供住宿分配之用</small></h5>
@@ -213,7 +213,7 @@
 				</div>
 				<div class="small-4 columns">
 					<h5>出生年月日<br><small>僅供服務時數證明檔案使用。</small></h5>
-					<input type="text" name="birthday" maxlength="10" placeholder="出生年月日 （例：1995/12/31）" value="{{ u.profile.birthday }}" />
+					{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏，請洽行政組修改">{{ u.profile.birthday|length }} 位數</span>{% else %}<input type="text" name="birthday" maxlength="10" placeholder="出生年月日 （例：1995/12/31）" value="{{ u.profile.birthday }}" />{% endif %}
 				</div>
 				<div class="small-4 columns">
 					<h5>服務時數<br><small>舉頭三尺有組長，請依實際服務狀況填寫</small></h5>

@@ -34,6 +34,7 @@ def profile(request, username):
     return render(request, 'users/profile.html', {
         'u': user,
         'allow_phone': privileged or same_team or user.profile.lead_team,
+        'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
         'privileged': privileged,
         'show_detail': user == request.user or privileged or request.user.has_perm('view_profile_detail'),
     })

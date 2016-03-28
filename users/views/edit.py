@@ -154,6 +154,7 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,
@@ -172,6 +173,7 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,

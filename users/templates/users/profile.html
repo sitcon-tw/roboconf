@@ -75,7 +75,7 @@
 			</tr>
 			<tr>
 				<td>身份證字號</td>
-				<td>{{ u.profile.personal_id }}</td>
+				<td>{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏">{{ u.profile.personal_id|length }} 位數</span>{% else %}{{ u.profile.personal_id }}{% endif %}</td>
 			</tr>
 			<tr>
 				<td>性別</td>
@@ -87,7 +87,7 @@
 			</tr>
 			<tr>
 				<td>出生年月日</td>
-				<td>{{ u.profile.birthday }}</td>
+				<td>{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏">{{ u.profile.birthday|length }} 位數</span>{% else %}{{ u.profile.birthday }}{% endif %}</td>
 			</tr>
 			<tr>
 				<td>服務時數</td>
