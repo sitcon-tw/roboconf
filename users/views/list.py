@@ -108,6 +108,10 @@ def export(request, format=None):
         from django.http import Http404
         raise Http404
 
+    if not request.user.has_perm('auth.change_user'):
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied
+
     filters = request.GET.getlist('find')
     groups = request.GET.get('g')
     authorized = request.user.profile.is_authorized()
