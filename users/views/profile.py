@@ -35,7 +35,7 @@ def profile(request, username):
         'u': user,
         'allow_phone': privileged or same_team or user.profile.lead_team,
         'privileged': privileged,
-        'show_detail': user == request.user or request.user.has_perm('view_profile_detail'),
+        'show_detail': user == request.user or privileged or request.user.has_perm('view_profile_detail'),
     })
 
 @login_required
