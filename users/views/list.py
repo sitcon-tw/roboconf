@@ -7,6 +7,8 @@ from core.api.views import render_json
 from users.utils import sorted_users, sorted_categories
 from users.models import GroupCategory
 
+team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
+
 formats = {
     'html': ('text/html', 'users/export.html'),
     'csv': ('text/csv', 'users/export.csv'),
@@ -33,6 +35,7 @@ def list(request):
 
     return render(request, 'users/list.html', {
         'users': users,
+        'query_string': request.META["QUERY_STRING"],
         'categories': sorted_categories,
         'filters': filters,
         'params': request.GET.urlencode(),
@@ -87,8 +90,17 @@ def ajax(request):
 
 @login_required
 def contacts(request):
-    team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
-    users = sorted_users(User.objects.filter(is_active=True))
+    if not request.user.is_authenticated():
+        from django.contrib.auth.views import redirect_to_login
+        return redirect_to_login(request.path)
+    elif not request.user.profile.is_authorized():
+        return redirect('index')
+
+    filters = request.GET.getlist('find')
+    groups = request.GET.get('g')
+    trusted = request.user.profile.is_trusted()
+    users = apply_filter(filters=filters, groups=groups, trusted=trusted)
+    users = sorted_users(users)
 
     for i, user in enumerate(users):
         privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
