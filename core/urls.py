@@ -14,7 +14,7 @@ urlpatterns = [
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^$', 'core.views.index', name='index'),
-    url(r'^favicon.ico$', redirect_static('img/SITCON.ico'), name='favicon'),
+    url(r'^favicon.ico$', redirect_static('img/favicon.ico'), name='favicon'),
     url(r'^users$', 'users.views.default'),
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),

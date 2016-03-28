@@ -1,17 +1,17 @@
 @charset "UTF-8";
-/* line 264, ../../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 264, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
 meta.foundation-mq-small {
   font-family: "only screen and (min-width: 768px)";
   width: 768px;
 }
 
-/* line 269, ../../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 269, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
 meta.foundation-mq-medium {
   font-family: "only screen and (min-width:1280px)";
   width: 1280px;
 }
 
-/* line 274, ../../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 274, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
 meta.foundation-mq-large {
   font-family: "only screen and (min-width:1440px)";
   width: 1440px;
@@ -1946,12 +1946,12 @@ article.cinshui img, article.cinshui video, article.cinshui embed {
   max-width: 62.5em;
   *zoom: 1;
 }
-/* line 121, ../../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 121, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
 .page:before, .page:after {
   content: " ";
   display: table;
 }
-/* line 122, ../../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 122, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
 .page:after {
   clear: both;
 }
