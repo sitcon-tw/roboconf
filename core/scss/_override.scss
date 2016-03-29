@@ -2,11 +2,10 @@ body {
 	padding-top: 2.8125em; // JavaScript will override this
 }
 
-
 .top-bar .logo {
 	display: block;
 	margin-bottom: 5px;	// Hack to make logo align to text. Real height is 45px
-	width: 90px; height: 45px;
+	width: 80px; height: 40px;
 	text-indent: -200000px;
 	text-align: left;
 	overflow: hidden;
@@ -15,8 +14,8 @@ body {
 	@import 'compass/css3/background-size';
 	@include background-size(contain);
 
+//	.no-svg & { background-image: url('/static/img/SITCON.png'); }
 }
-a { color: #f39c12; }
 img.avatar { border-radius: 3px; }
 img.avatar.small { width: 1.6em; height: 1.6em; }
 img.avatar.medium { max-width: 3.2em; max-height: 3.2em; }
@@ -38,7 +37,7 @@ table.main { width: 100%; }
 	input { margin: 0 0.5em 0 0; }
 	label { font-size: 1em; }
 	&.with-ticks label { padding: 0.3125em 0.625em; }
-	.iconize { color: #424242; }
+	.iconize { color: #2d7500; }
 }
 ul.f-dropdown h6 { line-height: 2; margin: 0; padding: 0.125em 0.5em; color: #555; }
 .main-side-nav>.side-nav, h5+.side-nav { padding: 0; }
