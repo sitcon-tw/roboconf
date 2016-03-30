@@ -17,20 +17,20 @@
 		{% endif %}
 		</div>
 	</div>
-	<div class="large-5 columns">
+	<div class="large-{% if show_detail %}4{% else %}9{% endif %} columns">
 		<h5 class="section-header">個人介紹</h5>
 		<p>{{ u.profile.bio|linebreaks }}</p>
 		<h5><a href="{% url 'issues:assigned' u.id %}">待辦事項</a></h5>
 		<ul class="issue-list">
 		</ul>
 	</div>
-	<div class="large-4 columns">
-		{% if show_detail %}
+	{% if show_detail %}
+	<div class="large-5 columns">
 		<h5 class="section-header">個人資料細節</h5>
-		<table class="main">
+		<table class="main" style="table-layout: fixed;">
 			<!-- TODO icons -->
 			<tr>
-				<td>姓名</td>
+				<td style="width: 25%">姓名</td>
 				<td>{{ u.last_name }}{{ u.first_name }}</td>
 			</tr>
 			<tr>
@@ -87,7 +87,7 @@
 			</tr>
 			{% endif %}
 		</table>
-		{% endif %}
 	</div>
+	{% endif %}
 </div>
 {% endblock %}
