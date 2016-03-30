@@ -4,17 +4,7 @@
 {% block content %}
 <div class="row">
 	<div class="large-6 small-9 small-centered has-quote columns">
-		<img class="situation" src="{% static 'img/situations/handler_404.jpg' %}" alt="404 Page Not Found">
 		<h3 class="text-center">噢噢，找不到頁面</h3>
-		<p class="quote">
-			{% spaceless %}
-			{% with i='1111122234'|make_list|random %}
-				{% ifequal i '1' %}<q>完全沒有網頁啊，完全沒有網頁！</q>{% endifequal %}
-				{% ifequal i '2' %}<q>看我把網頁變不見！</q>{% endifequal %}
-				{% ifequal i '3' %}<q>◢▆▅▄▃ 就跟你說了╰(〒皿〒)╯沒有網頁啦 ▃▄▅▆◣</q>{% endifequal %}
-				{% ifequal i '4' %}<q>丹丹愛吃水煎包，404啥全是毛；<wbr>工作人員添口福，吃了以後起泡泡！</q>{% endifequal %}
-			{% endwith %}
-			{% endspaceless %}
 			如果這是誤會，何不<a href="https://github.com/sitcon-tw/staff.sitcon.org/issues/new">回報問題</a>給行政組？
 		</p>
 	</div>

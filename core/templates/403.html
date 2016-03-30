@@ -4,17 +4,8 @@
 {% block content %}
 <div class="row">
 	<div class="large-6 small-9 small-centered has-quote columns">
-		<img class="situation" src="{% static 'img/situations/handler_403.jpg' %}" alt="403 Permission Denied">
 		<h3 class="text-center">啊嗚，拒絕存取！</h3>
 		<p class="quote">
-			{% spaceless %}
-			{% with i='1111122234'|make_list|random %}
-				{% ifequal i '1' %}<q>雲端是片薄薄的玻璃，工人在這頭，便當在那頭。</q>{% endifequal %}
-				{% ifequal i '2' %}<q>人生最遙遠的距離，莫過筷子與雲端便當。</q>{% endifequal %}
-				{% ifequal i '3' %}<q>看得到吃不到，這就是數位無敵黨證的厲害。🍊</q>{% endifequal %}
-				{% ifequal i '4' %}<q>入侵便當自為法所不許，其行為於法無效⋯⋯咦？</q>{% endifequal %}
-			{% endwith %}
-			{% endspaceless %}
 			如果這是誤會，何不<a href="https://github.com/sitcon-tw/staff.sitcon.org/issues/new">回報問題</a>給行政組？
 		</p>
 	</div>
