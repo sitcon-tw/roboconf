@@ -38,9 +38,9 @@ def reg_add_token(request):
     if 'submit' in request.POST:
         number = int(request.POST.get('number'))
         title = request.POST.get('title')
-        usernames = ','.split(request.POST.get('usernames'))
+        usernames = request.POST.get('usernames').split(",")
         usernames += [''] * (number - len(usernames))
-        emails = ','.split(request.POST.get('emails'))
+        emails = request.POST.get('emails').split(",")
         emails += [''] * (number - len(emails))
         for tn in range(0,number):
             token = RegisterToken()
