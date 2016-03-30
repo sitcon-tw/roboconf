@@ -103,6 +103,7 @@ def reg_form(request, token=None):
                 u = form.instance
                 u.profile.title = reg_token.title
                 u.save()
+                u.profile.save()
                 for g in reg_token.groups.all():
                     g.user_set.add(form.instance)
             login(request, form.instance)
