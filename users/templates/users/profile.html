@@ -78,10 +78,6 @@
 				<td>{{ u.profile.roommate }}</td>
 			</tr>
 			<tr>
-				<td>身份證字號</td>
-				<td>{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏">{{ u.profile.personal_id|length }} 位數</span>{% else %}{{ u.profile.personal_id }}{% endif %}</td>
-			</tr>
-			<tr>
 				<td>性別</td>
 				<td>{{ u.profile.gender }}</td>
 			</tr>
