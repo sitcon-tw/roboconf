@@ -7,8 +7,6 @@ from core.api.views import render_json
 from users.utils import sorted_users, sorted_categories
 from users.models import GroupCategory
 
-team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
-
 formats = {
     'html': ('text/html', 'users/export.html'),
     'csv': ('text/csv', 'users/export.csv'),
@@ -101,6 +99,7 @@ def contacts(request):
     trusted = request.user.profile.is_trusted()
     users = apply_filter(filters=filters, groups=groups, trusted=trusted)
     users = sorted_users(users)
+    team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
 
     for i, user in enumerate(users):
         privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
