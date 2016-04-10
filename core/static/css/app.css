@@ -1609,13 +1609,13 @@ td {
 /* Default Link Styles */
 /* line 152, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_type.scss */
 a {
-  color: #1c9446;
+  color: #256023;
   text-decoration: none;
   line-height: inherit;
 }
 /* line 157, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_type.scss */
 a:hover, a:focus {
-  color: #187f3c;
+  color: #1e4d1d;
 }
 /* line 160, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_type.scss */
 a img {
@@ -2022,13 +2022,13 @@ button, .button {
   padding-bottom: 0.8125em;
   padding-left: 1.5em;
   font-size: 1em;
-  background-color: #1c9446;
-  border-color: #146932;
+  background-color: #256023;
+  border-color: #173b16;
   color: #fff;
 }
 /* line 121, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button:hover, button:focus, .button:hover, .button:focus {
-  background-color: #146932;
+  background-color: #173b16;
 }
 /* line 132, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button:hover, button:focus, .button:hover, .button:focus {
@@ -2118,8 +2118,8 @@ button.right-align, .button.right-align {
 }
 /* line 188, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button.disabled, button[disabled], .button.disabled, .button[disabled] {
-  background-color: #1c9446;
-  border-color: #146932;
+  background-color: #256023;
+  border-color: #173b16;
   color: #fff;
   cursor: default;
   opacity: 0.6;
@@ -2128,7 +2128,7 @@ button.disabled, button[disabled], .button.disabled, .button[disabled] {
 }
 /* line 121, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #146932;
+  background-color: #173b16;
 }
 /* line 132, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
@@ -2136,7 +2136,7 @@ button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[dis
 }
 /* line 145, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #1c9446;
+  background-color: #256023;
 }
 /* line 189, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_buttons.scss */
 button.disabled.secondary, button[disabled].secondary, .button.disabled.secondary, .button[disabled].secondary {
@@ -2961,7 +2961,7 @@ label.error {
 }
 /* line 79, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_split-buttons.scss */
 .split.button span {
-  border-left-color: #105428;
+  border-left-color: #10280f;
 }
 /* line 116, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_split-buttons.scss */
 .split.button span {
@@ -4155,7 +4155,7 @@ label.error {
 /* line 72, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .contain-to-grid {
   width: 100%;
-  background: #1c9446;
+  background: #256023;
 }
 /* line 76, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .contain-to-grid .top-bar {
@@ -4195,7 +4195,7 @@ label.error {
   height: 45px;
   line-height: 45px;
   position: relative;
-  background: #1c9446;
+  background: #256023;
   margin-bottom: 0;
 }
 /* line 115, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
@@ -4298,7 +4298,7 @@ label.error {
 }
 /* line 212, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar.expanded .title-area {
-  background: #1c9446;
+  background: #256023;
 }
 /* line 215, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar.expanded .toggle-topbar a {
@@ -4350,14 +4350,14 @@ label.error {
 }
 /* line 269, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li > a.button {
-  background: #1c9446;
+  background: #256023;
   font-size: 0.8125em;
   padding-right: 15px;
   padding-left: 15px;
 }
 /* line 274, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li > a.button:hover {
-  background: #146932;
+  background: #173b16;
 }
 /* line 278, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li > a.button.secondary {
@@ -4385,12 +4385,12 @@ label.error {
 }
 /* line 300, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li:hover > a {
-  background: #146932;
+  background: #173b16;
   color: #fff;
 }
 /* line 306, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li.active > a {
-  background: #146932;
+  background: #173b16;
   color: #fff;
 }
 /* line 313, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
@@ -4480,7 +4480,7 @@ label.error {
 @media only screen and (min-width: 940px) {
   /* line 389, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar {
-    background: #1c9446;
+    background: #256023;
     *zoom: 1;
     overflow: visible;
   }
@@ -4517,7 +4517,7 @@ label.error {
   }
   /* line 409, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar.expanded {
-    background: #1c9446;
+    background: #256023;
   }
 
   /* line 412, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
@@ -4550,18 +4550,18 @@ label.error {
   }
   /* line 435, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar-section li.hover > a:not(.button) {
-    background: #146932;
+    background: #173b16;
     color: #fff;
   }
   /* line 440, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar-section li a:not(.button) {
     padding: 0 15px;
     line-height: 45px;
-    background: #1c9446;
+    background: #256023;
   }
   /* line 444, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar-section li a:not(.button):hover {
-    background: #146932;
+    background: #173b16;
   }
   /* line 452, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar-section .has-dropdown > a {
@@ -4636,7 +4636,7 @@ label.error {
   }
   /* line 526, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .top-bar-section .has-form {
-    background: #1c9446;
+    background: #256023;
     padding: 0 15px;
     height: 45px;
   }
@@ -4652,12 +4652,12 @@ label.error {
 
   /* line 548, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .no-js .top-bar-section ul li:hover > a {
-    background: #146932;
+    background: #173b16;
     color: #fff;
   }
   /* line 554, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
   .no-js .top-bar-section ul li:active > a {
-    background: #146932;
+    background: #173b16;
     color: #fff;
   }
   /* line 562, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_top-bar.scss */
@@ -5514,8 +5514,8 @@ label.error {
   position: relative;
   padding: 0.6875em 1.3125em 0.75em 0.6875em;
   font-size: 0.875em;
-  background-color: #1c9446;
-  border-color: #146932;
+  background-color: #256023;
+  border-color: #173b16;
   color: #fff;
 }
 /* line 97, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_alert-boxes.scss */
@@ -5592,7 +5592,7 @@ label.error {
 .breadcrumbs > * a,
 .breadcrumbs > * span {
   text-transform: uppercase;
-  color: #1c9446;
+  color: #256023;
 }
 /* line 69, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs > *.current {
@@ -5934,7 +5934,7 @@ kbd {
   position: relative;
   padding: 0.1875em 0.625em 0.25em;
   font-size: 0.875em;
-  background-color: #1c9446;
+  background-color: #256023;
   color: #fff;
 }
 /* line 77, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_labels.scss */
@@ -6021,14 +6021,14 @@ ul.pagination li.unavailable:hover a, ul.pagination li.unavailable a:focus {
 }
 /* line 57, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_pagination.scss */
 ul.pagination li.current a {
-  background: #1c9446;
+  background: #256023;
   color: #fff;
   font-weight: bold;
   cursor: default;
 }
 /* line 63, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_pagination.scss */
 ul.pagination li.current a:hover, ul.pagination li.current a:focus {
-  background: #1c9446;
+  background: #256023;
 }
 /* line 110, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_pagination.scss */
 ul.pagination li {
@@ -6082,10 +6082,10 @@ ul.pagination li {
 .panel.callout {
   border-style: solid;
   border-width: 1px;
-  border-color: #146932;
+  border-color: #173b16;
   margin-bottom: 1.25em;
   padding: 1.25em;
-  background: #1c9446;
+  background: #256023;
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
 }
@@ -6189,7 +6189,7 @@ ul.pagination li {
 }
 /* line 54, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_progress-bars.scss */
 .progress .meter {
-  background: #1c9446;
+  background: #256023;
   height: 100%;
   display: block;
 }
@@ -6249,7 +6249,7 @@ ul.pagination li {
 /* line 43, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_side-nav.scss */
 .side-nav li a {
   display: block;
-  color: #1c9446;
+  color: #256023;
 }
 /* line 48, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_side-nav.scss */
 .side-nav li.active > a:first-child {
@@ -6301,7 +6301,7 @@ ul.pagination li {
   -webkit-border-radius: 1000px;
   border-radius: 1000px;
   font-weight: bold;
-  background: #1c9446;
+  background: #256023;
   padding: 0.1875em 0.5625em;
   cursor: default;
   color: #fff;
@@ -6629,8 +6629,8 @@ table tfoot tr td {
 }
 /* line 31, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_thumbs.scss */
 .th:hover, .th:focus {
-  -webkit-box-shadow: 0 0 6px 1px rgba(28, 148, 70, 0.5);
-  box-shadow: 0 0 6px 1px rgba(28, 148, 70, 0.5);
+  -webkit-box-shadow: 0 0 6px 1px rgba(37, 96, 35, 0.5);
+  box-shadow: 0 0 6px 1px rgba(37, 96, 35, 0.5);
 }
 /* line 49, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_thumbs.scss */
 .th.radius {
@@ -6654,8 +6654,8 @@ a.th {
 }
 /* line 35, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_tooltips.scss */
 .has-tip:hover, .has-tip:focus {
-  border-bottom: dotted 1px #0c3e1d;
-  color: #1c9446;
+  border-bottom: dotted 1px #081608;
+  color: #256023;
 }
 /* line 41, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_tooltips.scss */
 .has-tip.tip-left, .has-tip.tip-right {
@@ -6692,8 +6692,8 @@ a.th {
 }
 /* line 71, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_tooltips.scss */
 .tooltip.opened {
-  color: #1c9446 !important;
-  border-bottom: dotted 1px #0c3e1d !important;
+  color: #256023 !important;
+  border-bottom: dotted 1px #081608 !important;
 }
 
 /* line 77, ../../../../../../../var/lib/gems/2.1.0/gems/zurb-foundation-4.3.2/scss/foundation/components/_tooltips.scss */
@@ -6871,127 +6871,136 @@ body {
 }
 
 /* line 5, ../../scss/_override.scss */
+.top-bar, .top-bar-section, .top-bar-section > ul > li, .top-bar-section > ul > li > a:not(.button), div.contain-to-grid.fixed {
+  background-color: #1c9446;
+}
+
+/* line 9, ../../scss/_override.scss */
 .top-bar .logo {
   display: block;
   margin-bottom: 5px;
-  width: 80px;
+  width: 90px;
   height: 40px;
   text-indent: -200000px;
   text-align: left;
   overflow: hidden;
-  background: url("/static/img/logo.png") center no-repeat;
+  background: url("/static/img/logo.svg") center no-repeat;
   background-size: contain;
   background-size: contain;
   background-size: contain;
   background-size: contain;
 }
+/* line 21, ../../scss/_override.scss */
+.no-svg .top-bar .logo {
+  background-image: url("/static/img/logo.png");
+}
 
-/* line 19, ../../scss/_override.scss */
+/* line 23, ../../scss/_override.scss */
 img.avatar {
   border-radius: 3px;
 }
 
-/* line 20, ../../scss/_override.scss */
+/* line 24, ../../scss/_override.scss */
 img.avatar.small {
   width: 1.6em;
   height: 1.6em;
 }
 
-/* line 21, ../../scss/_override.scss */
+/* line 25, ../../scss/_override.scss */
 img.avatar.medium {
   max-width: 3.2em;
   max-height: 3.2em;
 }
 
-/* line 22, ../../scss/_override.scss */
+/* line 26, ../../scss/_override.scss */
 img.avatar.large {
   border-radius: 6px;
 }
 
-/* line 23, ../../scss/_override.scss */
+/* line 27, ../../scss/_override.scss */
 ul, ol {
   list-style-position: inside;
 }
 
-/* line 24, ../../scss/_override.scss */
+/* line 28, ../../scss/_override.scss */
 h5.section-header {
   border-bottom: 1px #ddd solid;
   padding-bottom: 0.3em;
 }
 
-/* line 25, ../../scss/_override.scss */
+/* line 29, ../../scss/_override.scss */
 table.main {
   width: 100%;
 }
 
-/* line 26, ../../scss/_override.scss */
+/* line 30, ../../scss/_override.scss */
 .top-bar-section img.avatar {
   margin: auto 0.25em;
 }
 
-/* line 27, ../../scss/_override.scss */
+/* line 31, ../../scss/_override.scss */
 .page-content {
   margin: 1.875em auto;
 }
 
-/* line 28, ../../scss/_override.scss */
+/* line 32, ../../scss/_override.scss */
 .button span {
   font-weight: lighter;
 }
 
-/* line 29, ../../scss/_override.scss */
+/* line 33, ../../scss/_override.scss */
 .button.secondary.active {
   background-color: #ddd;
 }
 
-/* line 30, ../../scss/_override.scss */
+/* line 34, ../../scss/_override.scss */
 .button.secondary.active:hover, .button.secondary.active:focus {
   background-color: #d0d0d0;
 }
 
-/* line 31, ../../scss/_override.scss */
+/* line 35, ../../scss/_override.scss */
 .button-row > .left > *, .button-row > .right > * {
   margin: auto 0.25em;
   float: left;
 }
 
-/* line 32, ../../scss/_override.scss */
+/* line 36, ../../scss/_override.scss */
 .button-row > .left > *:first-child {
   margin-left: 0em;
 }
 
-/* line 33, ../../scss/_override.scss */
+/* line 37, ../../scss/_override.scss */
 .button-row > .right > *:last-child {
   margin-right: 0em;
 }
 
-/* line 35, ../../scss/_override.scss */
+/* line 39, ../../scss/_override.scss */
 .f-dropdown li {
   line-height: 166.66%;
 }
-/* line 36, ../../scss/_override.scss */
+/* line 40, ../../scss/_override.scss */
 .f-dropdown h6 {
   line-height: 1;
   font-size: 0.875em;
 }
-/* line 37, ../../scss/_override.scss */
+/* line 41, ../../scss/_override.scss */
 .f-dropdown input {
   margin: 0 0.5em 0 0;
 }
-/* line 38, ../../scss/_override.scss */
+/* line 42, ../../scss/_override.scss */
 .f-dropdown label {
   font-size: 1em;
 }
-/* line 39, ../../scss/_override.scss */
+/* line 43, ../../scss/_override.scss */
 .f-dropdown.with-ticks label {
   padding: 0.3125em 0.625em;
 }
-/* line 40, ../../scss/_override.scss */
+/* line 44, ../../scss/_override.scss */
 .f-dropdown .iconize {
   color: #2d7500;
 }
 
-/* line 42, ../../scss/_override.scss */
+/* line 46, ../../scss/_override.scss */
 ul.f-dropdown h6 {
   line-height: 2;
   margin: 0;
@@ -6999,36 +7008,36 @@ ul.f-dropdown h6 {
   color: #555;
 }
 
-/* line 43, ../../scss/_override.scss */
+/* line 47, ../../scss/_override.scss */
 .main-side-nav > .side-nav, h5 + .side-nav {
   padding: 0;
 }
 
-/* line 44, ../../scss/_override.scss */
+/* line 48, ../../scss/_override.scss */
 .main-side-nav .divider, .page-side-nav .divider {
   border: solid #ddd;
   border-width: 1px 0 0;
   margin: 0.5em auto 0.75em;
 }
 
-/* line 45, ../../scss/_override.scss */
+/* line 49, ../../scss/_override.scss */
 .side-nav.filter {
   line-height: 225%;
 }
 
-/* line 46, ../../scss/_override.scss */
+/* line 50, ../../scss/_override.scss */
 .side-nav > li {
   transition: background-color 0.2s ease;
   padding: 0 0.5em;
   border-radius: 3px;
 }
 
-/* line 47, ../../scss/_override.scss */
+/* line 51, ../../scss/_override.scss */
 .side-nav > li:hover, .side-nav > li:focus {
   background-color: #eee;
 }
 
-/* line 48, ../../scss/_override.scss */
+/* line 52, ../../scss/_override.scss */
 .label-item .color {
   display: inline-block;
   width: 1em;
@@ -7037,141 +7046,141 @@ ul.f-dropdown h6 {
   border-radius: 3px;
 }
 
-/* line 49, ../../scss/_override.scss */
+/* line 53, ../../scss/_override.scss */
 .issue-list {
   color: #333;
   font-size: 0.6em;
   list-style: none;
 }
 
-/* line 50, ../../scss/_override.scss */
+/* line 54, ../../scss/_override.scss */
 .issue-list > li {
   border: solid #e5e5e5;
   border-width: 0 1px 1px 1px;
   padding: 0.25em 0.5em;
 }
 
-/* line 51, ../../scss/_override.scss */
+/* line 55, ../../scss/_override.scss */
 .issue-list > li:first-child {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-top-width: 1px;
 }
 
-/* line 52, ../../scss/_override.scss */
+/* line 56, ../../scss/_override.scss */
 .issue-list > li:last-child {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 
-/* line 53, ../../scss/_override.scss */
+/* line 57, ../../scss/_override.scss */
 .issue-list .issue-actions, .issue-main .issue-actions {
   background: #f6f6f6;
 }
 
-/* line 54, ../../scss/_override.scss */
+/* line 58, ../../scss/_override.scss */
 .issue-list .issue-actions .button {
   margin: 0 0.1em 0 0;
 }
 
-/* line 55, ../../scss/_override.scss */
+/* line 59, ../../scss/_override.scss */
 .issue-list .issue-entry {
   padding: 0.25em 1em 0.75em 3em;
   color: #666;
   position: relative;
 }
 
-/* line 56, ../../scss/_override.scss */
+/* line 60, ../../scss/_override.scss */
 .issue-list.allow-edit .issue-entry {
   padding-left: 4.5em;
 }
 
-/* line 57, ../../scss/_override.scss */
+/* line 61, ../../scss/_override.scss */
 .issue-list .issue-entry:hover, .issue-list .issue-entry:focus {
   background-color: #f9f9f9;
 }
 
-/* line 58, ../../scss/_override.scss */
+/* line 62, ../../scss/_override.scss */
 .issue-list .issue-entry.selected {
   background-color: #f0f0f0;
 }
 
-/* line 59, ../../scss/_override.scss */
+/* line 63, ../../scss/_override.scss */
 .issue-list .issue-entry.selected:hover, .issue-list .issue-entry.selected:focus {
   background-color: #e9e9e9;
 }
 
-/* line 60, ../../scss/_override.scss */
+/* line 64, ../../scss/_override.scss */
 .issue-list .issue-id {
   float: right;
   color: #aaa;
 }
 
-/* line 61, ../../scss/_override.scss */
+/* line 65, ../../scss/_override.scss */
 .issue-list .issue-assignee {
   float: right;
   margin: 0.2em;
 }
 
-/* line 62, ../../scss/_override.scss */
+/* line 66, ../../scss/_override.scss */
 .issue-list .issue-select-control {
   position: absolute;
   top: 0.75em;
   left: 0.75em;
 }
 
-/* line 63, ../../scss/_override.scss */
+/* line 67, ../../scss/_override.scss */
 .issue-list h4 {
   font-size: 166.66%;
   margin: 0.2em auto;
 }
 
-/* line 64, ../../scss/_override.scss */
+/* line 68, ../../scss/_override.scss */
 .issue-list .issue-icon {
   float: left;
   margin: 0.25em auto auto -1.5em;
 }
 
-/* line 65, ../../scss/_override.scss */
+/* line 69, ../../scss/_override.scss */
 .issue-entry .label {
   zoom: 80%;
   line-height: 1.2;
 }
 
-/* line 66, ../../scss/_override.scss */
+/* line 70, ../../scss/_override.scss */
 .issue-main {
   padding: 1em;
   border: 1px solid #e5e5e5;
   border-radius: 3px;
 }
 
-/* line 67, ../../scss/_override.scss */
+/* line 71, ../../scss/_override.scss */
 .user-list {
   color: #666;
 }
 
-/* line 68, ../../scss/_override.scss */
+/* line 72, ../../scss/_override.scss */
 .user-list > li {
   text-align: center;
 }
 
-/* line 69, ../../scss/_override.scss */
+/* line 73, ../../scss/_override.scss */
 .user-list .avatar {
   margin-bottom: 0.5em;
 }
 
-/* line 70, ../../scss/_override.scss */
+/* line 74, ../../scss/_override.scss */
 .user-list h4 {
   font-size: 1em;
   margin: auto;
 }
 
-/* line 71, ../../scss/_override.scss */
+/* line 75, ../../scss/_override.scss */
 .user-list h4.subheader {
   font-size: 0.8em;
 }
 
-/* line 72, ../../scss/_override.scss */
+/* line 76, ../../scss/_override.scss */
 .placeholder-message {
   position: relative;
   height: 5em;
@@ -7179,7 +7188,7 @@ ul.f-dropdown h6 {
   color: #999;
   border-radius: 3px;
 }
-/* line 76, ../../scss/_override.scss */
+/* line 80, ../../scss/_override.scss */
 .placeholder-message span {
   display: block;
   position: absolute;
@@ -7188,65 +7197,65 @@ ul.f-dropdown h6 {
   text-align: center;
 }
 
-/* line 81, ../../scss/_override.scss */
+/* line 85, ../../scss/_override.scss */
 form textarea {
   transition: height 0.2s,box-shadow 0.45s,border-color 0.45s ease-in-out;
 }
 
-/* line 82, ../../scss/_override.scss */
+/* line 86, ../../scss/_override.scss */
 form .issue-main {
   background: #f6f6f6;
 }
 
-/* line 83, ../../scss/_override.scss */
+/* line 87, ../../scss/_override.scss */
 form.issue-edit > * > .columns, form.issue-edit .form-main {
   margin-bottom: 1em;
 }
 
-/* line 84, ../../scss/_override.scss */
+/* line 88, ../../scss/_override.scss */
 form.issue-edit textarea {
   height: 18.5em;
 }
 
-/* line 85, ../../scss/_override.scss */
+/* line 89, ../../scss/_override.scss */
 form.custom .custom.dropdown {
   border-radius: 3px;
 }
 
-/* line 86, ../../scss/_override.scss */
+/* line 90, ../../scss/_override.scss */
 form.custom .label-item label {
   font-size: 0.6em;
   line-height: 200%;
 }
 
-/* line 87, ../../scss/_override.scss */
+/* line 91, ../../scss/_override.scss */
 form.custom .label-item .custom.checkbox {
   border-radius: 3px;
 }
 
-/* line 88, ../../scss/_override.scss */
+/* line 92, ../../scss/_override.scss */
 form.custom .label-item .custom.checkbox.checked:before {
   content: '\2713';
 }
 
 @media only screen and (min-width: 768px) {
-  /* line 89, ../../scss/_override.scss */
+  /* line 93, ../../scss/_override.scss */
   .avatars.columns {
     padding-right: 0;
     text-align: right;
   }
 }
-/* line 90, ../../scss/_override.scss */
+/* line 94, ../../scss/_override.scss */
 .iconize + .description {
   display: none;
 }
 
-/* line 91, ../../scss/_override.scss */
+/* line 95, ../../scss/_override.scss */
 .iconize.with-text {
   padding: 0 0.25em;
 }
 
-/* line 92, ../../scss/_override.scss */
+/* line 96, ../../scss/_override.scss */
 .icon-back {
   opacity: 0.1;
   display: inline-block;
@@ -7256,24 +7265,24 @@ form.custom .label-item .custom.checkbox.checked:before {
   border: 0;
 }
 
-/* line 93, ../../scss/_override.scss */
+/* line 97, ../../scss/_override.scss */
 .icon-back:hover, .icon-back:focus {
   opacity: 0.8;
   border: 0;
 }
 
-/* line 94, ../../scss/_override.scss */
+/* line 98, ../../scss/_override.scss */
 .issue-head, .issue-head h4 {
   color: #999;
   font-weight: lighter;
 }
 
-/* line 95, ../../scss/_override.scss */
+/* line 99, ../../scss/_override.scss */
 .issue-head h4 strong {
   color: #666;
 }
 
-/* line 96, ../../scss/_override.scss */
+/* line 100, ../../scss/_override.scss */
 .issue-state > div {
   text-align: center;
   padding: 0.75em 1em;
@@ -7282,148 +7291,148 @@ form.custom .label-item .custom.checkbox.checked:before {
   border-radius: 3px;
 }
 
-/* line 97, ../../scss/_override.scss */
+/* line 101, ../../scss/_override.scss */
 .issue-state .open {
   background: #3b9900;
 }
 
-/* line 98, ../../scss/_override.scss */
+/* line 102, ../../scss/_override.scss */
 .issue-state .expired {
   background: #24a1c7;
 }
 
-/* line 99, ../../scss/_override.scss */
+/* line 103, ../../scss/_override.scss */
 .issue-state .closed {
   background: #e9e9e9;
   color: #333;
 }
 
-/* line 100, ../../scss/_override.scss */
+/* line 104, ../../scss/_override.scss */
 .issue-thread {
   padding-bottom: 1em;
 }
 
-/* line 101, ../../scss/_override.scss */
+/* line 105, ../../scss/_override.scss */
 .issue-thread > * {
   margin-bottom: 1em;
   margin-left: 4em;
 }
 
-/* line 102, ../../scss/_override.scss */
+/* line 106, ../../scss/_override.scss */
 .issue-thread .issue-main .avatar {
   float: left;
   margin: -1em auto auto -5em;
 }
 
-/* line 103, ../../scss/_override.scss */
+/* line 107, ../../scss/_override.scss */
 .issue-main + .button-row {
   margin-top: 1em;
 }
 
-/* line 104, ../../scss/_override.scss */
+/* line 108, ../../scss/_override.scss */
 .issue-main .issue-actions {
   margin: auto -1em;
   padding: 0.5em;
   color: #333;
 }
 
-/* line 105, ../../scss/_override.scss */
+/* line 109, ../../scss/_override.scss */
 .issue-main .issue-actions .issue-due {
   line-height: 200%;
 }
 
-/* line 106, ../../scss/_override.scss */
+/* line 110, ../../scss/_override.scss */
 .issue-main .issue-actions form, .issue-main .issue-actions form.custom .custom.dropdown {
   margin: 0;
 }
 
-/* line 107, ../../scss/_override.scss */
+/* line 111, ../../scss/_override.scss */
 .issue-meta {
   font-size: 0.6em;
   color: #666;
 }
 
-/* line 108, ../../scss/_override.scss */
+/* line 112, ../../scss/_override.scss */
 .issue-meta > .right {
   margin-left: 0.5em;
 }
 
-/* line 109, ../../scss/_override.scss */
+/* line 113, ../../scss/_override.scss */
 .issue-content {
   zoom: 80%;
   padding-top: 1em;
 }
-/* line 111, ../../scss/_override.scss */
+/* line 115, ../../scss/_override.scss */
 .issue-content :last-child {
   margin-bottom: 0;
 }
-/* line 112, ../../scss/_override.scss */
+/* line 116, ../../scss/_override.scss */
 .issue-content img {
   border: 1px #aaa solid;
   border-radius: 3px;
   margin: 1em 0.25em;
 }
 
-/* line 114, ../../scss/_override.scss */
+/* line 118, ../../scss/_override.scss */
 form.issue-set-label {
   margin: 0;
 }
 
-/* line 115, ../../scss/_override.scss */
+/* line 119, ../../scss/_override.scss */
 form.issue-set-label .side-nav {
   padding: 0 0 0.25em 0;
 }
 
-/* line 116, ../../scss/_override.scss */
+/* line 120, ../../scss/_override.scss */
 form.issue-set-label > *:last-child {
   margin-bottom: 0;
 }
 
-/* line 117, ../../scss/_override.scss */
+/* line 121, ../../scss/_override.scss */
 .issue-labels .dropdown.button {
   margin-top: -0.05em;
 }
 
-/* line 118, ../../scss/_override.scss */
+/* line 122, ../../scss/_override.scss */
 .issue-labels .label {
   width: 100%;
   line-height: 150%;
   font-weight: normal;
   text-align: left;
 }
-/* line 120, ../../scss/_override.scss */
+/* line 124, ../../scss/_override.scss */
 .issue-labels .label:first-child {
   border-radius: 3px 3px 0 0;
 }
-/* line 121, ../../scss/_override.scss */
+/* line 125, ../../scss/_override.scss */
 .issue-labels .label:last-child {
   border-radius: 0 0 3px 3px;
 }
 
-/* line 123, ../../scss/_override.scss */
+/* line 127, ../../scss/_override.scss */
 ul.profile-meta {
   list-style: none;
 }
-/* line 125, ../../scss/_override.scss */
+/* line 129, ../../scss/_override.scss */
 ul.profile-meta li {
   padding-left: 20px;
   text-indent: -20px;
   word-break: break-all;
 }
-/* line 126, ../../scss/_override.scss */
+/* line 130, ../../scss/_override.scss */
 ul.profile-meta .iconize {
   color: #555;
   margin: 0 4px 0 0;
 }
 
-/* line 128, ../../scss/_override.scss */
+/* line 132, ../../scss/_override.scss */
 .issue-thread .issue-history .issue-state {
   float: left;
   margin: 0 1em auto -5.25em;
   font-size: 0.6em;
 }
 
-/* line 129, ../../scss/_override.scss */
+/* line 133, ../../scss/_override.scss */
 .login-panel form {
   padding: 1em 1.5em 0 1.5em;
   border: solid #e5e5e5;
@@ -7432,7 +7441,7 @@ ul.profile-meta .iconize {
   border-bottom-right-radius: 3px;
 }
 
-/* line 130, ../../scss/_override.scss */
+/* line 134, ../../scss/_override.scss */
 .login-panel h3 {
   background: #24a1c7;
   color: #fff;
@@ -7445,145 +7454,145 @@ ul.profile-meta .iconize {
   border-top-right-radius: 3px;
 }
 
-/* line 131, ../../scss/_override.scss */
+/* line 135, ../../scss/_override.scss */
 span.postfix.with-button {
   font-size: 0.8125em;
 }
 
-/* line 132, ../../scss/_override.scss */
+/* line 136, ../../scss/_override.scss */
 input[type="file"], input[type="checkbox"], input[type="radio"], select {
   margin-right: 0.25em;
 }
 
-/* line 133, ../../scss/_override.scss */
+/* line 137, ../../scss/_override.scss */
 .text ol, .text ul {
   padding-left: 1em;
   text-indent: -1em;
 }
 
-/* line 134, ../../scss/_override.scss */
+/* line 138, ../../scss/_override.scss */
 .iconize.has-tip, .iconize.has-tip:hover, .iconize.has-tip:focus,
 img.has-tip, img.has-tip:hover, img.has-tip:focus {
   border: 0;
 }
 
-/* line 139, ../../scss/_override.scss */
+/* line 143, ../../scss/_override.scss */
 .treeview {
   font-size: 0.8em;
 }
-/* line 141, ../../scss/_override.scss */
+/* line 145, ../../scss/_override.scss */
 .treeview ul {
   list-style: none;
 }
-/* line 142, ../../scss/_override.scss */
+/* line 146, ../../scss/_override.scss */
 .treeview li {
   display: block;
   line-height: 200%;
 }
-/* line 145, ../../scss/_override.scss */
+/* line 149, ../../scss/_override.scss */
 .treeview li a {
   padding: 0.2em 0;
 }
-/* line 146, ../../scss/_override.scss */
+/* line 150, ../../scss/_override.scss */
 .treeview li > ul {
   margin-left: 20px;
 }
 
-/* line 150, ../../scss/_override.scss */
+/* line 154, ../../scss/_override.scss */
 nav.breadcrumbs {
   background: #fff;
   border-width: 1px 0;
   margin-bottom: 1em;
 }
 
-/* line 158, ../../scss/_override.scss */
+/* line 162, ../../scss/_override.scss */
 table.docs-list tr {
   background: #fff;
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: #e5e5e5;
 }
-/* line 164, ../../scss/_override.scss */
+/* line 168, ../../scss/_override.scss */
 table.docs-list thead {
   color: #2d7500;
 }
-/* line 166, ../../scss/_override.scss */
+/* line 170, ../../scss/_override.scss */
 table.docs-list tbody tr:hover {
   background: #f9f9f9;
 }
-/* line 167, ../../scss/_override.scss */
+/* line 171, ../../scss/_override.scss */
 table.docs-list tbody tr.selected {
   background: #f0f0f0;
 }
-/* line 168, ../../scss/_override.scss */
+/* line 172, ../../scss/_override.scss */
 table.docs-list tbody tr.selected:hover {
   background: #e9e9e9;
 }
-/* line 170, ../../scss/_override.scss */
+/* line 174, ../../scss/_override.scss */
 table.docs-list input[type="checkbox"] {
   margin: 0;
 }
-/* line 172, ../../scss/_override.scss */
+/* line 176, ../../scss/_override.scss */
 table.docs-list a[data-list-star] .icon-star.iconize {
   color: #ccc;
 }
-/* line 173, ../../scss/_override.scss */
+/* line 177, ../../scss/_override.scss */
 table.docs-list a[data-list-star] .icon-unstar.iconize {
   color: #ffbb33;
 }
-/* line 175, ../../scss/_override.scss */
+/* line 179, ../../scss/_override.scss */
 table.docs-list a {
   color: #222;
 }
-/* line 178, ../../scss/_override.scss */
+/* line 182, ../../scss/_override.scss */
 table.docs-list .detail-column span:after {
   content: ' ';
 }
-/* line 179, ../../scss/_override.scss */
+/* line 183, ../../scss/_override.scss */
 table.docs-list .detail-column span.time {
   font-size: 0.9em;
 }
-/* line 180, ../../scss/_override.scss */
+/* line 184, ../../scss/_override.scss */
 table.docs-list .detail-column span.editor {
   color: #777;
   font-size: 0.9em;
 }
-/* line 184, ../../scss/_override.scss */
+/* line 188, ../../scss/_override.scss */
 table .icon-column {
   width: 24px;
   text-align: center;
   vertical-align: middle;
 }
-/* line 185, ../../scss/_override.scss */
+/* line 189, ../../scss/_override.scss */
 table .detail-column {
   width: 33%;
 }
 
-/* line 188, ../../scss/_override.scss */
+/* line 192, ../../scss/_override.scss */
 .has-quote {
   text-align: center;
 }
-/* line 190, ../../scss/_override.scss */
+/* line 194, ../../scss/_override.scss */
 .has-quote .situation {
   display: block;
   margin: 1em auto;
   border-radius: 6px;
 }
-/* line 196, ../../scss/_override.scss */
+/* line 200, ../../scss/_override.scss */
 .has-quote .quote q {
   display: block;
   color: #6f6f6f;
 }
-/* line 199, ../../scss/_override.scss */
+/* line 203, ../../scss/_override.scss */
 .has-quote .quote q:before {
   content: '\300c';
 }
-/* line 200, ../../scss/_override.scss */
+/* line 204, ../../scss/_override.scss */
 .has-quote .quote q:after {
   content: '\300d';
 }
 
-/* line 205, ../../scss/_override.scss */
+/* line 209, ../../scss/_override.scss */
 .user-mention, .group-mention {
   font-weight: bold;
   color: inherit;
