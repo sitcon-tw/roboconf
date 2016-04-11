@@ -6,7 +6,7 @@
 		<table class="large-12" style="table-layout: fixed;">
 			<tr>
 				<td class="large-2">Token</td>
-				<td class="large-2">username</td>
+				<td class="large-2">暱稱</td>
 				<td class="large-3">職稱</td>
 				<td class="large-3">組別</td>
 				<td class="large-2">狀態</td>
@@ -14,7 +14,7 @@
 		{% for t in tokens %}
 			<tr style="font-size: 85%;">
 				<td style="overflow: hidden;"><a href="{% url 'users:reg_edit_token' t.token %}"><span class="icon-edit iconize" ></span></a><a href="{% url 'users:reg_form' t.token %}" ><span>{{ t.token }}</span></a></td>
-		<td style="overflow: hidden;">{{ t.username }}</td>
+		<td style="overflow: hidden;">{{ t.name }}</td>
                 <td style="overflow: hidden;">{{ t.title }}</td>
 				<td>{% for g in t.groups.all %}{{ g.name }}{% if not forloop.last %}, {% else %}{% endif %}{% endfor %}</td>
 				<td style="overflow: hidden;">{% if not t.user and t.valid %}已啟用{% elif t.user %}已被 <a href="{% url 'users:profile' t.user.username %}">{{ t.user.username }}</a> 註冊 {% else %}未啟用{% endif %}</td>

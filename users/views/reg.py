@@ -41,14 +41,17 @@ def reg_add_token(request):
         number = int(request.POST.get('number'))
         title = request.POST.get('title')
         usernames = request.POST.get('usernames').split(",")
-        usernames += [''] * (number - len(usernames))
         emails = request.POST.get('emails').split(",")
+        display_names = request.POST.get('display_names').split(",")
+        usernames += [''] * (number - len(usernames))
         emails += [''] * (number - len(emails))
-        for tn in range(0,number):
+        display_names += [''] * (number - len(display_names))
+        for tn in range(0, number):
             token = RegisterToken()
             token.title = title
             token.username = usernames[tn]
             token.email = emails[tn]
+            token.display_name = display_names[tn]
             token.save()
             for group_id in request.POST.getlist('groups'):
                 try:
