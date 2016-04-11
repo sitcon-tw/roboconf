@@ -38,14 +38,13 @@ def reg_add_token(request):
     status = ''
 
     if 'submit' in request.POST:
+        pad = lambda l, n: l + [''] * (n - len(l))
+
         number = int(request.POST.get('number'))
         title = request.POST.get('title')
-        usernames = request.POST.get('usernames').split(",")
-        emails = request.POST.get('emails').split(",")
-        display_names = request.POST.get('display_names').split(",")
-        usernames += [''] * (number - len(usernames))
-        emails += [''] * (number - len(emails))
-        display_names += [''] * (number - len(display_names))
+        usernames = pad(request.POST.get('usernames').split(","), number)
+        emails = pad(request.POST.get('emails').split(","), number)
+        display_names = pad(request.POST.get('display_names').split(","), number)
         for tn in range(0, number):
             token = RegisterToken()
             token.title = title
@@ -53,6 +52,7 @@ def reg_add_token(request):
             token.email = emails[tn]
             token.display_name = display_names[tn]
             token.save()
+
             for group_id in request.POST.getlist('groups'):
                 try:
                     token.groups.add(Group.objects.get(id=int(group_id)))
@@ -61,6 +61,9 @@ def reg_add_token(request):
                 except ValueError:
                     pass
             token.save()
+
+            if request.POST.get('send_email'):
+                send_template_mail(settings.DEFAULT_ACCOUNTS_SENDER, format_address(token.name, token.email), 'mail/reg_invitation.html', {'receiver': token})
 
     return render(request, 'users/reg_add_token.html', {
         'categories': sorted_categories,
