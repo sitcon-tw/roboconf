@@ -26,7 +26,7 @@ def sorted_groups(groups):
 def get_token_sorting_key(token):
     groups = [g.id for g in token.groups.all()]
     identity = ''.join([str(1 - groups.count(i)) for i in GROUP_PRIORITY])    # Sort by identity first
-    name = token.token
+    name = token.name
     return ''.join((identity, name))
 
 def get_group_sorting_key(group):
