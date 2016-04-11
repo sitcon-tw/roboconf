@@ -33,7 +33,8 @@ class PasswordResetForm(DjangoPasswordResetForm):
 
             context = {
                 'receiver': user,
-                'reset_link': reverse('users:reset_password_confirm', args=(generate_uid(user), generate_token(user))),
+                'uid': generate_uid(user),
+                'token': generate_token(user),
             }
 
             sender_address = settings.DEFAULT_ACCOUNTS_SENDER

@@ -2,50 +2,50 @@
 =====
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-<meta charset="utf-8">
-<title></title>
-<style>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
 body,table{
-    font-size: 14px;
+  font-size: 14px;
 }
 sup {
-    font-size:10px;
+  font-size:10px;
 }
-</style>
-</head>
-<body>
+    </style>
+  </head>
+  <body>
     <table align="center" width="500" cellpadding="2" cellspacing="2" style="border: 2px #ded solid; border-radius: 10px; padding: 10px; font-family: Arial; background-color: #fff; margin-top: 15px;">
-        <tr>
-            <td style="color: green; font-family: Arial; font-weight: bold;"><a href="http://coscup.org/"><img src="http://coscup.org/2012-theme/assets/coscup.png" height="50px" align="right"></a>
-                <p style="font-size: 16px;">歡迎加入 {{ site.title }} 籌備團隊！<br>
-                <a href="http://coscup.org/" style="color:green;text-decoration:none;">coscup.org</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="color: #466; text-align: justify;">
-                <p>Hi <b>{{ receiver.name }}</b> 您好：</p>
-                <p style="margin-left: 10px;">歡迎來到 <b>{{ site.title }}</b>，在此之前，我們需要為你辦理相關的通行證，避免你在 COSCUP 中走失。</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="padding: 10px; margin-top: 10px; background-color: #bfb; border-radius: 5px; color: #252; font-weight: bold;">工作人員登錄<sup>辦理通行證</sup></div>
-                <div style="text-align: justify; padding: 10px;">
-                    <p>請花一點點時間將它完成，填寫完畢後也請稍做檢查並送出，而你還會再收到一封指示信。</p>
-                    <p><ul><li><a href="{% url 'users:reg_form' receiver.token %}" target="_blank">{{ site.name }}</a></li></ul></p>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="color:#466;text-align:justify;">
-                <p style="margin-left:10px;">在收到下一封指示信之前，如有任何疑問，可以先向你的組長反應。</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="color: #575; text-align: center; font-size: 12px;">{{ site.title }} 行政組</td>
-        </tr>
+      <tr>
+        <td style="color: green; font-family: Arial; font-weight: bold;"><a href="http://coscup.org/"><img src="http://coscup.org/2012-theme/assets/coscup.png" height="50px" align="right"></a>
+          <p style="font-size: 16px;">歡迎加入 {{ site.title }} 籌備團隊！<br>
+          <a href="http://coscup.org/" style="color:green;text-decoration:none;">coscup.org</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="color: #466; text-align: justify;">
+          <p>Hi <b>{{ receiver.name }}</b> 您好：</p>
+          <p style="margin-left: 10px;">歡迎來到 <b>{{ site.title }}</b>，在此之前，我們需要為你辦理相關的通行證，避免你在 COSCUP 中走失。</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="padding: 10px; margin-top: 10px; background-color: #bfb; border-radius: 5px; color: #252; font-weight: bold;">工作人員登錄<sup>辦理通行證</sup></div>
+          <div style="text-align: justify; padding: 10px;">
+            <p>請花一點點時間將它完成，填寫完畢後也請稍做檢查並送出，而你還會再收到一封指示信。</p>
+            <p><ul><li><a href="{% url 'users:reg_form' receiver.token %}" target="_blank">{{ site.name }}</a></li></ul></p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="color:#466;text-align:justify;">
+          <p style="margin-left:10px;">在收到下一封指示信之前，如有任何疑問，可以先向你的組長反應。</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="color: #575; text-align: center; font-size: 12px;">{{ site.title }} 行政組</td>
+      </tr>
     </table>
-</body>
+  </body>
 </html>
 
