@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.core.validators import validate_email
 from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django.contrib.auth.models import User
@@ -44,6 +45,19 @@ class RegisterForm(DjangoUserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', )
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username', False)
+        if not (User.objects.filter(username=username).count() < 1 and username):
+            raise ValidationError("Username taken", code='username_taken')
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email', False)
+        validate_email(email)
+        if not (User.objects.filter(email=email).count() < 1 and email):
+            raise ValidationError("Email used", code='email_used')
+        return email
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)

@@ -96,8 +96,7 @@ def reg_form(request, token=None):
         return obj  # Retuen a template
     reg_token = obj
 
-    error = [] # workaround
-    if request.method == 'POST' and not error:
+    if request.method == 'POST':
         form = RegisterForm(request.POST)
         form.instance.backend = 'django.contrib.auth.backends.ModelBackend'
         if form.is_valid():
@@ -118,11 +117,11 @@ def reg_form(request, token=None):
             send_template_mail(settings.DEFAULT_ACCOUNTS_SENDER, format_address(u.profile.name, u.email), 'mail/user_welcome.html', {'receiver': u})
             login(request, form.instance)
             return redirect('users:edit', username=form.instance.username)
-        else:
-            if "username" in form.errors:
-                error.append("error_username")
-            if "email" in form.errors:
-                error.append("error_email")
+
+    try:
+        error = form.errors
+    except UnboundLocalError:
+        error = None
 
     return render(request, 'users/reg_form.html', {
         "token": token,
