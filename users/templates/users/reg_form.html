@@ -8,14 +8,14 @@
   </div>
 </div>
 {% else %}
-{% for e in error %}
+{% if error %}
 <div class="radius alert alert-box" data-alert>
-    {% if e == 'error_username'%}這個帳號不給用，換個帳號吧。
-    {% elif e == 'error_email' %}Email 怪怪的，再檢查一下吧。
-    {% endif %}
-	<a href="#" class="close">&times;</a>
+  {% if error.username %}這個帳號不給用，換個帳號吧。
+  {% elif error.email %}Email 怪怪的，再檢查一下吧，會不會填到別人的了呢？
+  {% endif %}
+  <a href="#" class="close">&times;</a>
 </div>
-{% endfor %}
+{% endif %}
 <div class="row">
   <div class="large-6 small-9 small-centered columns">
     <div class="login-panel">
