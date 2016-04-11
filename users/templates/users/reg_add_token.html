@@ -28,8 +28,8 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<label for="title">使用者名稱（以逗號分隔，可空）
-						<input type="textarea" id="username" name="username" value="{{ token.username }}"/></label>
+					<label for="title">暱稱（以逗號分隔，可空）
+						<textarea id="display_names" name="display_names" /></textarea>
 				</div>
 				<div class="small-6 columns">
 					<label for="title">電子郵件（以逗號分隔，可空）
@@ -37,8 +37,14 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="small-6 columns">
+					<label for="title">使用者名稱（以逗號分隔，可空）
+						<textarea id="usernames" name="usernames" /></textarea>
+				</div>
+			</div>
+			<div class="row">
 				<div class="small-4 columns">
-					<input type="number" name="number" id="number" min="0" max="10" placeholder="數量" required />
+					<input type="number" name="number" id="number" min="0" max="64" placeholder="數量" required />
 				</div>
 				<div class="small-8 columns">
 					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">選取組別</a></label>

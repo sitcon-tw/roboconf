@@ -38,15 +38,18 @@ def reg_add_token(request):
     if 'submit' in request.POST:
         number = int(request.POST.get('number'))
         title = request.POST.get('title')
-        usernames = ','.split(request.POST.get('usernames'))
+        usernames = request.POST.get('usernames').split(",")
+        emails = request.POST.get('emails').split(",")
+        display_names = request.POST.get('display_names').split(",")
         usernames += [''] * (number - len(usernames))
-        emails = ','.split(request.POST.get('emails'))
         emails += [''] * (number - len(emails))
-        for tn in range(0,number):
+        display_names += [''] * (number - len(display_names))
+        for tn in range(0, number):
             token = RegisterToken()
             token.title = title
             token.username = usernames[tn]
             token.email = emails[tn]
+            token.display_name = display_names[tn]
             token.save()
             for group_id in request.POST.getlist('groups'):
                 try:
@@ -108,6 +111,7 @@ def reg_form(request, token=None):
                 u = User()
                 u = form.instance
                 u.profile.title = reg_token.title
+                u.profile.display_name = reg_token.display_name
                 u.save()
                 u.profile.save()
                 for g in reg_token.groups.all():

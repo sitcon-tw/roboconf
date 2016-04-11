@@ -120,8 +120,16 @@ class RegisterToken(models.Model):
     groups = models.ManyToManyField(Group, related_name='tokens')
     valid = models.BooleanField(default=True)
     username = models.CharField(max_length=255, default="", blank=True, null=True)
+    display_name = models.CharField(max_length=255, default="", blank=True, null=True)
     email = models.CharField(max_length=255, default="", blank=True, null=True)
     user = models.ForeignKey(User, default=None, null=True, blank=True)
+
+    @property
+    def name(self):
+        if self.display_name:
+            return self.display_name
+        else:
+            return self.username
 
     def __str__(self):
         return '%s - %s - %s' % (self.name, self.title, self.token)
