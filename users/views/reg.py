@@ -6,6 +6,8 @@ from django.contrib.auth.models import Group, User
 from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
 
+from notifications.utils import send_template_mail, format_address
+
 from users.models import RegisterToken, UserProfile
 from users.utils import sorted_users, sorted_tokens, sorted_categories
 from users.forms import RegisterForm, TokenEditForm
@@ -94,7 +96,7 @@ def reg_form(request, token=None):
         return obj  # Retuen a template
     reg_token = obj
 
-    error = []
+    error = [] # workaround
     if request.method == 'POST' and not error:
         form = RegisterForm(request.POST)
         form.instance.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -112,6 +114,8 @@ def reg_form(request, token=None):
                 u.profile.save()
                 for g in reg_token.groups.all():
                     g.user_set.add(form.instance)
+
+            send_template_mail(settings.DEFAULT_ACCOUNTS_SENDER, format_address(u.profile.name, u.email), 'mail/user_welcome.html', {'receiver': u})
             login(request, form.instance)
             return redirect('users:edit', username=form.instance.username)
         else:

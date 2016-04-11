@@ -1,21 +1,129 @@
-[SITCON][行政組] 歡迎加入 SITCON 工作人員！
+{{ site.title }} 歡迎你 - {% if receiver.display_name == "" %}{{ receiver.username  }}{% elif receiver.username == "" %}{{ receiver.name  }}{% else %}{{ receiver.name  }} ({{ receiver.username  } }){% endif %}
+
 =====
-<div style="font-size: 1.2em; font-family: Roboto, Helvetica, Arial, sans-serif; padding: 1em 0.75em; background: #2d7500;">
-	<a href="{{ site.url }}" style="color: #fff; text-decoration: none;">{{ site.title }}</a>
-</div>
-<p>Hi {{ receiver.profile.title }} {{ receiver.profile.name }},</p>
-<p>歡迎加入 {{ site.title }} 工作人員的行列！SITCON 學生計算機年會致力於降低學生接觸資訊領域的門檻、提供彼此交流與發表研究的平台，同時冀望能夠因此而使學生的聲音被聽見。在開始之前，請容許我們協助您完成相關流程：</p>
-<ol>
-	<li>您於<a href="{{ site.url }}">{{ site.name }}</a>的帳號 <strong>{{ receiver.username }}</strong> 已經啟用，臨時密碼為 <em>{{ password }}</em>。請於<a href="{{ site.url }}{% url 'users:login' %}">登入</a>後立即<a href="{{ site.url }}{% url 'users:change_password' %}">修改您的密碼</a>。</li>
-{% if "工作人員" in groups %}
-	<li>籌備的相關事項皆會於 {{ site.email }} 郵件清單中討論，請到<a href="https://groups.google.com/forum/#!forum/sitcon">這裡</a>申請加入，並設定您的電子郵件偏好。</li>
-{% else %}
-	<li>請與您的組長聯絡，確認是否已經加入所屬組別的郵件清單中。</li>
-{% endif %}
-	<li>為了方便聯繫及讓其他工作人員認識你，請至<a href="{{ site.url }}{% url 'users:edit' receiver.username %}">個人檔案</a>填寫您的聯絡電話、系級等資訊。如有茹素、特殊病史、或須指定緊急聯絡人，可填寫於備註欄。</li>
-</ol>
-<p>再次歡迎您加入 {{ site.title }} 籌備團隊，讓我們共同努力、期待活動圓滿成功！祝<br/>萬事順心</p>
-<p></p>
-<p>{{ sender.profile.title }} {{ sender.profile.name }}</p>
-<hr/>
-<p style="font-size: 0.8em;">本信件由 {{ site.name }}自動寄送。</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body,table{
+				font-size: 14px;
+			}
+			sup {
+				font-size:10px;
+			}
+		</style>
+	</head>
+	<body>
+		<table align="center" width="500" cellpadding="2" cellspacing="2" style="border:2px #ded solid; border-radius:10px; padding:10px; font-family:Arial; background-color:#fff; margin-top:15px;">
+			<tr>
+				<td style="color:green; font-family:Arial; font-weight:bold; "><a href="http://coscup.org/"><img src="http://coscup.org/2012-theme/assets/coscup.png" height="50px" align="right" alt="圖片 COSCUP Logo"></a>
+					<p style="font-size:16px;">歡迎加入 {{ site.title }} 籌備團隊！<br>
+					<a href="http://coscup.org/" style="color:green;text-decoration:none;">coscup.org</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="color:#466;text-align:justify;">
+					<p><b>{{ receiver.profile.name }}</b> 您好：</p>
+					<p style="margin-left:10px;">嗨，歡迎你加入 <b>COSCUP</b> 籌備團隊</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">自我介紹</div>
+					<div style="text-align:justify;padding:10px;">
+						<p>首先，加入團隊時，請先知道 coscup-general@googlegroups.com 為團隊使用的郵件清單，另外可以查閱 <a href="https://groups.google.com/group/coscup-staff/">https://groups.google.com/group/coscup-staff/</a> 了解目前的籌備進度與狀態。</p>
+						<p>若你是第一次加入，或還沒有對團隊自我介紹過，請寫一份自我介紹，發送到 <a href="issues.coscup.org">"COSCUP 工作事項追蹤系統"</a>，自介越清楚，大家越容易認識你唷。</p>
+					</div>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">相關郵件清單說明</div>
+					<div style="text-align:justify;padding:10px;">
+						<ul>
+							<li>coscup-general@googlegroups.com：團隊主要溝通使用的郵件清單，也可使用<a href="https://groups.google.com/forum/#!forum/coscup-general">線上版</a>閱讀。但這郵件清單中的成員並非都為工作人員，因為今年我們希望做到，籌備階段也能對外公開討論，因此參與討論議題的成員將更加多元。</li>
+							<li>2015staff@coscup.org：為工作人員使用的郵件清單，除非有必要，只與工作人員討論的，才使用此郵件清單。</li>
+							<li><a href="https://groups.google.com/group/coscup-staff/">https://groups.google.com/group/coscup-staff/</a>：主要是封存、備份來自於 2015staff@coscup.org 的郵件內容，適用於後來如入的成員，了解查閱目前的籌備進度狀態。</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">籌備資訊</div>
+					<div style="text-align:justify;padding:10px;">
+						<ul>
+							<li>團隊溝通主要是利用 coscup-general@googlegroups.com，一些待處理議題都會丟上來，決策主要由總召與組長作主，但是任何人都歡迎針對議題提供意見。</li>
+							<li>文件則大量使用 Google Docs，各組組長會將相關的資料分享給你，請多加注意文件的修訂狀況。</li>
+							<li>過去的會議記錄與組織表等等各種資訊都可以在 Google Docs 中找到。</li>
+							<li>原則上大會的籌備資訊是公開的，但是某些組別有暗黑功能，像是議程、銷售、會眾、會計等。有些資訊、隱私資料不宜散佈，請洽該組組長瞭解暗黑力量的範疇。</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">團隊組織</div>
+					<div style="text-align:justify;padding:10px;">
+						<p>籌備工作由總召帶領，分工成議程、行銷公關、場務、會計、紀錄、行政、線路等等許多小組，每組的負責人是組長，主要責任是協調組內的工作人員，並完成各組任務，但通常不能只動口不動手喔。</p>
+						<p>小組內的工作人員由組長發佈徵人訊息後，對該組有興趣的人自行向組長報名，但要得到組長的同意並完成工作人員登錄，才算正式加入。（收到歡迎信的階段，應該已加入工作團隊）</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">開始工作</div>
+					<div style="text-align:justify;padding:10px;">
+						<p>COSCUP 籌備團隊的組織結構其實是很扁平的，因為籌備事項眾多，常有事情疏忽，需要每一位夥伴的細心注意。事件發生的時候，也需要每一位夥伴的自動自發認領。所以你若發現有些事情沒有人作，或是有些事情可以做的更好。也可以自願與組長或總召協調後認領下來執行。</p>
+						<p>不過責任上的分工，是總召做最後決定，各組組長會負責自己的範圍。原則上，每個人都應該會有一個自己的主要組別，再依據自己的能力額外支援其他組的事務，所以不代表你只能做該組的事務。</p>
+						<p>也歡迎你推薦適合的志工人選給組長或總召，但請小心隨意推薦也可能造成組長們的困擾阿。</p>
+						<p>通常你收到歡迎信，表示已完成工作人員登錄手續。團隊內，只有該組的組長才知道你的聯絡資料。各組組長或許會因為活動需求，需要你提供其他的資料。資料的蒐集、維護則由該組組長負責。</p>
+						<p>你也可以向組長確定你是否在工作人員名單中，以確保工作人員相關的權利。</p>
+						<p>另外你在加入之後，發現自己的時間不容許投入 COSCUP 的籌備工作，如果離大會時間還久，最負責任的做法是主動發信告知組長或總召後請辭，並完成登出手續，籌備團隊才好重新安排人力。</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">討論事情的習慣</div>
+					<div style="text-align:justify;padding:10px;">
+						<ul>
+							<li>夥伴是謙虛的、團隊是歡樂的、做事是熱血的，請維持這樣的氣氛。</li>
+							<li>雖然是熱血的，但也是專業的，發言前最好先作好功課，言之有據。</li>
+							<li>雖然是歡樂的，但請節制水量和注意水質。</li>
+							<li>雖然是謙虛的，但也不用把自己貶抑到火星文或白字連篇的國小程度。</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">郵件清單使用的基本規則</div>
+					<div style="text-align:justify;padding:10px;">
+						<ul>
+							<li>發信時，如果需要特定工作人員、或特定組別支援，請加入該組別組長、人員為收件者 （主要執行或必須知道） 或副本 （需要知道）。也請在標題加入 [組別] ，這樣負責人比較不容易漏信。</li>
+							<li>避免離題甚至文不對題：如果一個議題改變了討論主軸，請更改標題，以便其他人跟上討論。信太多的時候，和自己小組無關的討論可能整個 thread 都不看，所以請不要文不對題。</li>
+							<li>回信時，儘量回信在前、引言在後</li>
+							<li>回信時，記得使用「回覆全部」（Reply All），確保信件上的人員都能收到訊息。</li>
+							<li> 發現有事情沒做好，請務必在 coscup-general@googlegroups.com 上立刻提出。我們的文化喜歡有具體改進建議的指正，而指責就不必了，請把握對事不對人的原則提出建議。</li>
+							<li>鼓勵夥伴之間私下討論事情，有了決定之後，尤其是需要其他組配合的，一定要在 coscup-general@googlegroups.com 上公開講，才會留下記錄，免得之後大家記的不一樣，公說公有理，婆說婆有理。</li>
+							<li>組內討論的決議最好寄一份到 coscup-general@googlegroups.com 上留底，除非還不想太早公佈的神祕議題，也可以寄到只針對工作人員的 2015staffs@coscup.org 郵件清單。</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="padding:10px;margin-top:10px;background-color:#bfb;border-radius:5px;color:#252;font-weight:bold;">COSCUP 工作人員手冊</div>
+					<div style="text-align:justify;padding:10px;">
+						<p>另外，這裡有 COSCUP 工作人員手冊: http://bobchao.gitbooks.io/coscup-staff-handbook/ ，有任何問題可以參閱此電子書。</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="color: #575; text-align: center; font-size: 12px; ">{{ site.title }} 籌備團隊</td>
+			</tr>
+		</table>
+	</body>
+</html>
