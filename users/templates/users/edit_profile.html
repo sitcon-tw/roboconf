@@ -262,7 +262,7 @@
 			<ul class="side-nav users-actions">
 				{% if user == u %}
 				<li><a href="{% url 'users:change_password' %}"><span class="icon-password iconize"></span> 變更密碼</a></li>
-				{% elif privileged %}
+				{% elif perms.auth.change_user %}
 				<li><a href="{% url 'users:reset_password' %}?id={{ u.id }}"><span class="icon-password iconize"></span> 重設密碼</a></li>
 				<li>
 					<a href="#" onClick="$('#active-form').submit();"><span class="icon-{{ u.is_active|yesno:'deactivate,activate' }} iconize"></span> {{ u.is_active|yesno:'停用帳號,啟用帳號' }}</a>
