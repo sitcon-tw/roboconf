@@ -54,7 +54,7 @@ def edit(request, username):
     if request.POST.get('submit'):
 
         profile.display_name = request.POST.get('display_name')
-        if privileged:
+        if request.user.has_perm('auth.change_user'):
             profile.title = request.POST.get('title')
 
             groups = request.POST.getlist('groups')
