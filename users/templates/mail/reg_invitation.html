@@ -33,7 +33,7 @@ sup {
           <div style="padding: 10px; margin-top: 10px; background-color: #bfb; border-radius: 5px; color: #252; font-weight: bold;">工作人員登錄<sup>辦理通行證</sup></div>
           <div style="text-align: justify; padding: 10px;">
             <p>請花一點點時間將它完成，填寫完畢後也請稍做檢查並送出，而你還會再收到一封指示信。</p>
-            <p><ul><li><a href="{% url 'users:reg_form' receiver.token %}" target="_blank">{{ site.name }}</a></li></ul></p>
+            <p><ul><li><a href="{{ site.url }}{% url 'users:reg_form' receiver.token %}" target="_blank">{{ site.name }}</a></li></ul></p>
           </div>
         </td>
       </tr>
