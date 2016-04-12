@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os.path
-from hashlib import md5
+import hashlib
 from django.db import models
 from django.db.models import signals
 from django.contrib.auth.models import User, Group
@@ -11,7 +11,7 @@ from django.utils.timezone import now
 
 def photo_path(instance, filename):
     _, ext = os.path.splitext(filename)
-    hash_value = md5.new(instance.display_name.encode('utf8') + now().isoformat()).hexdigest()
+    hash_value = hashlib.md5(instance.display_name.encode('utf8') + now().isoformat().encode('utf8')).hexdigest()
     return 'photos/{}{}'.format(hash_value, ext)
 
 
@@ -84,7 +84,7 @@ class UserProfile(models.Model):
 
     @property
     def gravatar(self):
-        hash_value = md5(self.user.email.strip().lower().encode()).hexdigest()
+        hash_value = hashlib.md5(self.user.email.strip().lower().encode()).hexdigest()
         return ('https://secure.gravatar.com/avatar/%s?d=identicon' % hash_value)
 
     @property
