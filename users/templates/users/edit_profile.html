@@ -74,7 +74,7 @@
 			</div>
 			<div class="row">
 				<div class="small-4 columns">
-					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫之用，對同組組員可見</small></h5>
+					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫用，{% if not teamleader %}對同組組員可見{% else %}組長對所有人可見{% endif %}</small></h5>
 					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" />
 				</div>
 				<div class="small-4 columns">

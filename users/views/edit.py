@@ -154,6 +154,7 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'teamleader': request.user.groups.filter(id=settings.TEAM_LEADER_GROUP_ID).exists(),
             'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
             'categories': sorted_categories if privileged else None,
             'options': {
@@ -173,6 +174,7 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'teamleader': request.user.groups.filter(id=settings.TEAM_LEADER_GROUP_ID).exists(),
             'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
             'categories': sorted_categories if privileged else None,
             'options': {
