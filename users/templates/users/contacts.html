@@ -25,7 +25,7 @@
 					<img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
 					<a href="{% url 'users:profile' u.username %}">{{ u.profile.name }}</a>
 				</td>
-				<td><a href="https://coscup.slack.com/messages/@{{u.profile.slack}}">{{ u.profile.slack }}</a></td>
+				<td>{% if u.profile.slack %}<a href="https://coscup.slack.com/messages/@{{u.profile.slack}}">@{{ u.profile.slack }}</a>{% endif %}</td>
 				{% if authorized %}
 				<td>{% if u.profile.phone and allow_phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}

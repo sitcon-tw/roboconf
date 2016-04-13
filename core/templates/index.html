@@ -10,6 +10,7 @@
 		<ul class="profile-meta">
 			{% if user.profile.organization %}<li><span class="icon-school iconize"></span> {{ user.profile.organization }}</li>{% endif %}
 			{% if user.profile.phone %}<li><span class="icon-phone iconize"></span> {{ user.profile.phone }}</li>{% endif %}
+			{% if user.profile.slack %}<li><span style='display: inline-block; width: 16px; height: 16px; background: url("https://brandfolder.com/api/favicon/icon?size=16&domain=www.slack.com");'></span> <a href="https://coscup.slack.com/messages/@{{ user.profile.slack }}" style="padding-left: 4px;">@{{ user.profile.slack }}</a></li>{% endif %}
 			{% if user.email %}<li><span class="icon-email iconize"></span> {{ user.email }}</li>{% endif %}
 		</ul>
 	</div>
