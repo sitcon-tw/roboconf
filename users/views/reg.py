@@ -118,6 +118,8 @@ def reg_form(request, token=None):
                 u.profile.save()
                 for g in reg_token.groups.all():
                     g.user_set.add(form.instance)
+            if settings.CODE_FOR_REG_NOTIFICATION:
+                exec(settings.CODE_FOR_REG_NOTIFICATION)
             login(request, form.instance)
             return redirect('users:edit', username=form.instance.username)
 
