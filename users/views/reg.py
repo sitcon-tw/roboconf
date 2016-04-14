@@ -122,6 +122,8 @@ def reg_form(request, token=None):
                     g.user_set.add(form.instance)
 
             send_template_mail(settings.DEFAULT_ACCOUNTS_SENDER, format_address(u.profile.name, u.email), 'mail/user_welcome.html', {'receiver': u})
+            if settings.CODE_FOR_REG_NOTIFICATION:
+                exec(settings.CODE_FOR_REG_NOTIFICATION)
             login(request, form.instance)
             return redirect('users:edit', username=form.instance.username)
 
