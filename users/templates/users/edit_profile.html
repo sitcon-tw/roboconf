@@ -78,11 +78,11 @@
 					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" />
 				</div>
 				<div class="small-4 columns">
-					<h5>Slack 使用者名稱<br><small>您在 <a href="http://coscup.slack.com/" tabindex="-1">Slack</a> 上的使用者名稱</small></h5>
+					<h5>Slack 使用者名稱<br><small>您在 <a href="http://coscup.slack.com/" tabindex="-1" target="_blank">Slack</a> 上的使用者名稱</small></h5>
 					<input type="text" name="slack" maxlength="30" placeholder="COSCUP Slack 使用者名稱" value="{{ u.profile.slack }}" />
 				</div>
 				<div class="small-4 columns">
-					<h5>Redmine 使用者名稱<br><small>您在 <a href="http://issues.coscup.org/" tabindex="-1">工作事項追蹤系統</a> 上的使用者名稱</small></h5>
+					<h5>Redmine 使用者名稱<br><small>您在 <a href="http://issues.coscup.org/" tabindex="-1" target="_blank">工作事項追蹤系統</a> 上的使用者名稱</small></h5>
 					<input type="text" name="redmine" maxlength="30" placeholder="COSCUP Redmine 使用者名稱" value="{{ u.profile.redmine }}" />
 				</div>
 				<div class="columns"><small style="font-size: 85%;">註：Slack、Redmine 將會在完成工人登錄之後再由行政組為您邀請註冊。</small></div>
@@ -111,7 +111,7 @@
 			</div>
 			<div class="row">
 				<div class="small-6 columns">
-					<h5>衣服尺寸<span class="required"></span> <small>您的<a href="https://hackpad.com/CwXnztQrles" tabindex="-1">衣服尺寸</a>是？</small></h5>
+					<h5>衣服尺寸<span class="required"></span> <small>您的<a href="https://hackpad.com/CwXnztQrles" tabindex="-1" target="_blank">衣服尺寸</a>是？</small></h5>
 					<select name="shirt_size">
 						<option disabled>衣服尺寸</option>
 						{% if not u.profile.shirt_size %}<option value="" selected>（衣服尺寸）</option>{% endif %}
@@ -196,7 +196,7 @@
 			</div>
 			<hr>
 			<h4>服務時數證明</h4>
-			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;">志工服務時數證明將由開放文化基金會開立發證，如果你的組織單位（學校/公司）有需要志工服務時數證明之文件，將可以在這裡申請。如果你個人只是想留紀念的，請儘量以申請感謝狀為主，謝謝！<br>開放文化基金會將提供「志工服務時數證明」電子檔，可自行留存、列印檔案。<br>如有任何其他疑問，請聯絡 Slack ID: <a href="https://coscup.slack.com/messages/@singing/">singing</a>、Email：<a href="mailto:singing@ocf.tw">singing@ocf.tw</a>，<strong>有需要的話，請您務必填寫下列資料。</strong><br><span style="font-size: 85%;">註：服務時數開放登錄到 9/5 日，你可以待 COSCUP 結束後再來填寫實際時數與工作內容。</span></small></div>
+			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;">志工服務時數證明將由開放文化基金會開立發證，如果你的組織單位（學校/公司）有需要志工服務時數證明之文件，將可以在這裡申請。如果你個人只是想留紀念的，請儘量以申請感謝狀為主，謝謝！<br>開放文化基金會將提供「志工服務時數證明」電子檔，可自行留存、列印檔案。<br>如有任何其他疑問，請聯絡 Slack ID: <a href="https://coscup.slack.com/messages/@singing/" target="_blank">@singing</a>、Email：<a href="mailto:singing@ocf.tw" target="_blank">singing@ocf.tw</a>，<strong>有需要的話，請您務必填寫下列資料。</strong><br><span style="font-size: 85%;">註：服務時數開放登錄到 9/5 日，你可以待 COSCUP 結束後再來填寫實際時數與工作內容。</span></small></div>
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>是否需要服務時數證明<span class="required"></span></h5>
