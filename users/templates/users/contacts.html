@@ -5,13 +5,14 @@
 	<div class="large-1 columns">
 		<a class="right iconize icon-back has-tip" href="{% url 'users:list' %}" title="回到人員列表" data-tooltip></a>
 	</div>
-	<div class="large-{{ show_details|yesno:'11,9' }} columns">
+	<div class="large-10 columns end">
 		<h3>{{ site.title }} 工作人員通訊錄</h3>
 		<table class="user-contacts main">
 			<thead><tr>
 				<th>職稱</th>
 				<th>名稱</th>
 				<th>Slack</th>
+				<th>Redmine</th>
 				{% if authorized %}
 				<th>電話</th>
 				{% endif %}
@@ -26,6 +27,7 @@
 					<a href="{% url 'users:profile' u.username %}">{{ u.profile.name }}</a>
 				</td>
 				<td>{% if u.profile.slack %}<a href="https://coscup.slack.com/messages/@{{u.profile.slack}}">@{{ u.profile.slack }}</a>{% endif %}</td>
+				<td>{% if u.profile.redmine %}{{ u.profile.redmine }}{% endif %}</td>
 				{% if authorized %}
 				<td>{% if u.profile.phone and allow_phone %}<a href="tel:{{ u.profile.phone }}">{{ u.profile.phone }}</a>{% endif %}</td>
 				{% endif %}
@@ -42,9 +44,5 @@
 			<li><a href="{% url 'users:export' 'vcard' %}">vCard</a></li>
 		</ul>
 	</div>
-	{% if not show_details %}
-	<div class="large-2 columns">
-	</div>
-	{% endif %}
 </div>
 {% endblock %}
