@@ -122,4 +122,4 @@ class RegisterToken(models.Model):
     user = models.ForeignKey(User, default=None, null=True, blank=True)
 
     def __str__(self):
-        return '%s - %s' % (self.title, self.token)
+        return '%s - %s - %s' % (self.name, self.title, self.token)
