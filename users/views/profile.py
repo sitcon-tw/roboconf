@@ -5,6 +5,7 @@ from django.contrib.auth.views import redirect_to_login
 from core.api.decorators import api_endpoint
 from core.api.views import *
 
+@login_required
 @api_endpoint(public=True)
 def profile(request, username):
     user = get_object_or_404(User, username=username)
