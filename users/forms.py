@@ -70,4 +70,4 @@ class RegisterForm(DjangoUserCreationForm):
 class TokenEditForm(forms.models.ModelForm):
     class Meta:
         model = RegisterToken
-        fields = ('username', 'email', 'title', 'groups', 'valid')
+        fields = ('username', 'email', 'title', 'display_name', 'groups', 'valid')
