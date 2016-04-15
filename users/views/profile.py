@@ -7,6 +7,7 @@ from core.api.decorators import api_endpoint
 from core.api.views import *
 from users.models import GroupCategory
 
+@login_required
 @api_endpoint(public=True)
 def profile(request, username):
     user = get_object_or_404(User, username=username)
