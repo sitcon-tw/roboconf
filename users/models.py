@@ -139,4 +139,4 @@ class RegisterToken(models.Model):
             return self.username
 
     def __str__(self):
-        return '%s - %s' % (self.name, self.title, self.token)
+        return '%s - %s - %s' % (self.name, self.title, self.token)
