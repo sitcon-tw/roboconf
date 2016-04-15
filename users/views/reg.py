@@ -83,7 +83,7 @@ def reg_edit_token(request, token=None):
     reg_token = obj
 
     if request.method == 'POST':
-        form = TokenEditForm(request.POST)
+        form = TokenEditForm(request.POST, instance=reg_token)
         if form.is_valid():
             form.save()
             return redirect('users:reg_list_token')
