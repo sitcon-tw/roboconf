@@ -1,8 +1,8 @@
-staff.sitcon.org
+roboconf
 ================
 
-[![travis](https://img.shields.io/travis/sitcon-tw/staff.sitcon.org.svg)](https://travis-ci.org/sitcon-tw/staff.sitcon.org/)
-[![coveralls](https://coveralls.io/repos/sitcon-tw/staff.sitcon.org/badge.svg)](https:/coveralls.io/github/sitcon-tw/staff.sitcon.org)
+[![travis](https://img.shields.io/travis/sitcon-tw/roboconf.svg)](https://travis-ci.org/sitcon-tw/roboconf/)
+[![coveralls](https://coveralls.io/repos/sitcon-tw/roboconf/badge.svg)](https:/coveralls.io/github/sitcon-tw/roboconf)
 
 SITCON Internal Tracking & Conference Operation Network (Codename Roboconf) for Students' Information Technology CONference (SITCON). The website is used to operate though SITCON's administration process since 2014.
 
@@ -28,7 +28,7 @@ Development
 -----------
 It is recommended to use `virtualenv`.
 
-	cd staff.sitcon.org
+	cd roboconf
 	virtualenv venv
 	. venv/bin/activate # if you use bash
 
@@ -65,7 +65,7 @@ We recommend using PostgreSQL. Create a role and a database then grant all privi
 
 It is recommended to use `virtualenv`.
 
-	cd staff.sitcon.org
+	cd roboconf
 	virtualenv venv
 	. venv/bin/activate # if you use bash
 
