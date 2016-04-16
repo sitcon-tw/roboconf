@@ -48,7 +48,7 @@ Copy example settings
 
 Load database schema and initial data
 
-	python manage.py syncdb
+	python manage.py migrate
 	python manage.py loaddata */fixtures/*.json
 
 _Note: currently there are problems with loaddata on `master` branch, see commit 5d8436149cf22f0_
@@ -75,7 +75,7 @@ Install dependencies.
 
 Load database schema and initial data
 
-	python manage.py syncdb
+	python manage.py migrate
 	python manage.py loaddata */fixtures/*.json
 
 _Note: currently there are problems with loaddata on `master` branch, see commit 5d8436149cf22f0_
