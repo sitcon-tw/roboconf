@@ -75,7 +75,7 @@
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫用，{% if not teamleader %}對同組組員可見{% else %}組長對所有人可見{% endif %}</small></h5>
-					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" />
+					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" pattern="[0-9]+" />
 				</div>
 				<div class="small-4 columns">
 					<h5>Slack 使用者名稱<br><small>您在 <a href="http://coscup.slack.com/" tabindex="-1" target="_blank">Slack</a> 上的使用者名稱</small></h5>
