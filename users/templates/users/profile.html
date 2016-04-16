@@ -62,6 +62,7 @@
 				<td>{% if u.profile.transportation_aid and u.profile.transportation_fee != "" %}{{ u.profile.transportation_fee }}{% elif u.profile.transportation_aid %}需要{% else %}不需要{% endif %}</td>
 				{% if u.profile.transportation_aid and u.profile.transportation != "" %}<td>{{ u.profile.transportation }}</td>{% endif %}
 			</tr>
+			{% if not u.profile.accom == 0 or u.profile.transportation_aid %}
 			<tr>
 				<td>居住地</td>
 				<td>{{ u.profile.residence }}</td>
@@ -70,6 +71,8 @@
 				<td>住宿</td>
 				<td>{% if u.profile.accom == 2 %}需要{% elif u.profile.accom == 1 %}皆可{% else %}不需要{% endif %}</td>
 			</tr>
+			{% endif %}
+			{% if not u.profile.accom == 0 %}
 			<tr>
 				<td>希望的室友</td>
 				<td>{{ u.profile.roommate }}</td>
@@ -82,6 +85,7 @@
 				<td>備註</td>
 				<td>{{ u.profile.comment }}</td>
 			</tr>
+			{% endif %}
 		</table>
 		{% endif %}
 	</div>
