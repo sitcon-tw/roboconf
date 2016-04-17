@@ -74,7 +74,7 @@
 			</tr>
 			<tr>
 				<td>性別</td>
-				<td>{{ user.profile.gender }}</td>
+				<td>{% if user.profile.gender %}{% if user.profile.gender == 1 %}男{% elif user.profile.gender == 2 %}女{% else %}其他{% endif %}{% endif %}</td>
 			</tr>
 			{% endif %}
 			<tr>
