@@ -19,7 +19,7 @@
 	</div>
 	<div class="large-{% if show_detail %}4{% else %}9{% endif %} columns">
 		<h5 class="section-header">個人介紹</h5>
-		<p>{{ u.profile.bio|linebreaks }}</p>
+		<p>{{ u.profile.bio|urlize|linebreaks }}</p>
 		<h5><a href="{% url 'issues:assigned' u.id %}">待辦事項</a></h5>
 		<ul class="issue-list">
 		</ul>
