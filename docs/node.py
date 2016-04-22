@@ -32,7 +32,7 @@ class Node(object):
 
                     nodeobj = model.objects.get(id=nid_str[:-1])
 
-            except TypeError: pass
+            except ValueError: pass
 
             if not nodeobj:
                 from django.core.exceptions import ObjectDoesNotExist
