@@ -69,7 +69,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'core',
     'users',
-    'docs',
     'issues',
     'agenda',
     'notifications',
