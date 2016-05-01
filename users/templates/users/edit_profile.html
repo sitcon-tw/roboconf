@@ -238,7 +238,7 @@
 				{% endif %}
 			</ul>
 			{% with groups=u.groups.all %}
-			{% if perms.auth.change_user %}
+			{% if privileged %}
 			<div class="row">
 				<div class="columns">
 					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">{% for g in groups %}{{ g.name  }}{% if not forloop.last %}、{% endif %}{% empty %}選取組別{% endfor %}</a></label>
@@ -273,7 +273,7 @@
 
 {% endblock %}
 {% block scripts %}
-{% if perms.auth.change_user %}
+{% if privileged %}
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.group_checkbox').change(function() {
