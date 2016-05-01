@@ -6,6 +6,8 @@ from django.contrib.auth.models import Group, User
 from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
 
+from notifications.utils import send_template_mail, format_address
+
 from users.models import RegisterToken, UserProfile
 from users.utils import sorted_users, sorted_tokens, sorted_categories
 from users.forms import RegisterForm, TokenEditForm
