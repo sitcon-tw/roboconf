@@ -46,6 +46,7 @@ DEFAULT_ISSUE_SENDER = u'SITCON 夏令營行政系統:issues@staff.sitcon.camp'
 
 SUBMITTER_ACCOUNTS_SENDER = u'SITCON:accounts@staff.sitcon.camp'
 USER_ISSUE_SENDER = u'{0} (SITCON):issues@staff.sitcon.camp'
+BROADCAST_EMAIL = 'sitcon-camp@googlegroups.com'
 
 DEFAULT_SMS_SENDER = 'SITCON'
 
