@@ -54,7 +54,7 @@ class UserProfile(models.Model):
     transportation_hr = models.NullBooleanField(help_text='if transportation time >= 1hr', default=False, null=True)
     transportation = models.CharField(max_length=128, default='', help_text='transportation method', blank=True, null=True)
     transportation_fee = models.CharField(max_length=128, default='', help_text='transportation fee', blank=True, null=True)
-    accom = models.IntegerField(choices=((0, 'Not needed'), (1, 'Either'), (2, 'Needed')), help_text='need for accommodation', default=0)
+    accom = models.IntegerField(choices=((0, 'Not needed'), (1, 'Either'), (2, 'Needed')), help_text='need for accommodation', default=2)
     roommate = models.CharField(max_length=32, default='', help_text='requested roommate', blank=True, null=True)
     gender = models.IntegerField(choices=((1, 'Male'), (2, 'Female'), (9, 'Other')), help_text='', blank=True, null=True)
     personal_id = models.CharField(max_length=16, default='', help_text='id number, for insurance', blank=True, null=True)
