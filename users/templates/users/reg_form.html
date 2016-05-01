@@ -23,7 +23,7 @@
       <form class="users-login" action="{% url 'users:reg_form' token %}" method="POST">
         {% csrf_token %}
         <div class="row"><div class="large-12 columns">
-            <p>嗨 {{ obj.display_name }}，歡迎您加入 COSCUP 2016 籌備團隊！<br>在開始之前，請先在此註冊帳號，以便開始進行資料登錄。</p>
+            <p>嗨 {{ obj.display_name }}，歡迎您加入 {{ site.title }} 籌備團隊！<br>在開始之前，請先在此註冊帳號，以便開始進行資料登錄。</p>
         </div></div>
         <div class="row"><div class="large-12 columns">
           <label for="username">使用者名稱（英數）</label>
