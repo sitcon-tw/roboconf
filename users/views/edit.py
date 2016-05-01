@@ -77,8 +77,13 @@ def edit(request, username):
         profile.personal_id = request.POST.get('personal_id')
         profile.school = request.POST.get('school')
         profile.grade = request.POST.get('grade')
-        if request.POST.get('phone'):
-            profile.phone = request.POST.get('phone')
+        profile.on_site = False if request.POST.get('on_site') == 'False' else True
+        profile.phone = request.POST.get('phone')
+        profile.slack = request.POST.get('slack')
+        profile.birthday = request.POST.get('birthday')
+        profile.personal_id = request.POST.get('personal_id')
+        profile.ice_contact = request.POST.get('ice_contact')
+        profile.ice_phone = request.POST.get('ice_phone')
         if request.POST.get('residence'):
             profile.residence = request.POST.get('residence')
         if request.POST.get('shirt_size'):
@@ -153,6 +158,8 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'teamleader': request.user.groups.filter(id=settings.TEAM_LEADER_GROUP_ID).exists(),
+            'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,
@@ -171,6 +178,8 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'teamleader': request.user.groups.filter(id=settings.TEAM_LEADER_GROUP_ID).exists(),
+            'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,

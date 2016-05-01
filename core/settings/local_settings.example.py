@@ -106,6 +106,10 @@ LOGGING = {
     },
 }
 
+TEAM_GROUPCAT_ID = 2
+TEAM_LEADER_GROUP_ID = 4
+TEAM_SUBLEADER_GROUP_IDS = [4, 5]
+
 STAFF_GROUP_NAME = '工作人員'
 STAFF_GROUP_ID = 1
 
@@ -123,7 +127,8 @@ RESIDENCE_OPTIONS = (
 )
 
 SHIRT_SIZE_OPTIONS = (
-    'XS', 'S', 'M', 'L', 'XL', '2XL',
+   '男XS', '男S', '男M', '男L', '男XL', '男2XL', '男3XL',
+   '女S', '女M', '女L', '女XL'
 )
 
 DIET_OPTIONS = (
