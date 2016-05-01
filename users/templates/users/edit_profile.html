@@ -288,7 +288,7 @@
 			{% endwith %}
 			<div class="row">
 				<div class="columns {% if 'photo' in errors %}error{% endif %}">
-					<h6>個人頭像 <br><small>今年將於手冊上加入大家的頭像，請大家記得上傳，否則會變成預設圖唷！</small></h6>
+					<h6>個人頭像</h6>
 					<input type="file" name="photo" />
 					{% if 'photo_too_large' in errors %}<small>影像檔案太大了，伺服器表示悲傷</small>
 					{% elif 'invalid_photo' in errors %}<small>影像格式太奇怪，伺服器表示悲傷</small>{% endif %}
