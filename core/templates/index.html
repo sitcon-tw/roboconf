@@ -1,5 +1,5 @@
 {% extends 'core/master.html' %}
-{% block title %}{{ site.title }}{% endblock %}
+{% block title %}{{ site.name }}{% endblock %}
 {% block content %}
 <div class="row">
 	{% if user.is_authenticated %}
@@ -8,7 +8,7 @@
 		<h4>{{ user.profile.name }}</h4>
 		<h5 class="subheader">{{ user.profile.title }}</h5>
 	</div>
-	<div class="large-5 columns">
+	<div class="large-4 columns">
 		<h5 class="section-header"><a href="{% url 'issues:assigned' user.id %}">待辦清單</a></h5>
 		<ul class="issue-list">
 		{% for issue in issues %}
@@ -25,15 +25,69 @@
 		{% endfor %}
 		</ul>
 	</div>
-	<div class="large-4 columns">
-		<h5 class="section-header">聚會概覽</h5>
-		<p></p>
-	</div>
+	<div class="large-5 columns">
+		<h5 class="section-header">個人資料細節</h5>
+		<table class="main">
+			<!-- TODO icons -->
+			<tr>
+				<td>姓名</td>
+				<td>{{ u.last_name }}{{ u.first_name }}</td>
+			</tr>
+			<tr>
+				<td>年滿 20 歲</td>
+				<td>{% if user.profile.twenty %}<span class="icon-checkmark iconize"></span>是{% else %}<span class="icon-cross iconize"</span>否{% endif %}</td>
+			</tr>
+			<tr>
+				<td>曾是工人</td>
+				<td>{% if user.profile.prev_worker %}<span class="icon-checkmark iconize"></span>是{% else %}<span class="icon-cross iconize"></span>否{% endif %}</td>
+			</tr>
+			<tr>
+				<td>感謝狀</td>
+				<td>{% if user.profile.certificate %}<span class="icon-checkmark iconize"></span>需要{% else %}<span class="icon-cross iconize"></span>不需要{% endif %}</td>
+			</tr>
+			<tr>
+				<td>慶功宴</td>
+				<td>{% if user.profile.cel_dinner %}<span class="icon-checkmark iconize"></span>參加{% else %}<span class="icon-cross iconize"></span>不參加{% endif %}</td>
+			</tr>
+			<tr>
+				<td>衣服尺寸</td>
+				<td>{{ user.profile.shirt_size }}</td>
+			</tr>
+			<tr>
+				<td>飲食</td>
+				<td>{{ user.profile.diet }}</td>
+			</tr>
+			<tr>
+				<td>交通補助</td>
+				<td>{% if user.profile.transportation_aid and user.profile.transportation_fee != "" %}{{ user.profile.transportation_fee }}{% elif user.profile.transportation_aid %}需要{% else %}不需要{% endif %}</td>
+				{% if user.profile.transportation_aid and user.profile.transportation != "" %}<td>{{ user.profile.transportation }}</td>{% endif %}
+			</tr>
+			{% if not user.profile.accom == 0 or user.profile.transportation_aid %}
+			<tr>
+				<td>居住地</td>
+				<td>{{ user.profile.residence }}</td>
+			</tr>
+			<tr>
+				<td>住宿</td>
+				<td>{% if user.profile.accom == 2 %}需要{% elif user.profile.accom == 1 %}皆可{% else %}不需要{% endif %}</td>
+			</tr>
+			{% endif %}
+			{% if not user.profile.accom == 0 %}
+			<tr>
+				<td>希望的室友</td>
+				<td>{{ user.profile.roommate }}</td>
+			</tr>
+			<tr>
+				<td>性別</td>
+				<td>{{ user.profile.gender }}</td>
+			</tr>
+			{% endif %}
+		</table>
 	{% else %}
 	<div class="large-6 small-9 small-centered has-quote columns">
 		<h3 class="text-center">{{ site.name }}</h3>
 		<p class="quote">
-			<p>據說同時是個別名<a href="https://github.com/sitcon-tw/staff.sitcon.org"><abbr title="Roboconf">蘿蔔坑</abbr></a>的開源計劃。</p>
+			<p>據說同時是個別名<a href="https://github.com/sitcon-tw/roboconf"><abbr title="Roboconf">蘿蔔坑</abbr></a>的開源計劃。</p>
 			<p>必須<a href="{% url 'users:login' %}">登入</a>後才能完整使用此系統的所有功能；如果是工作人員，請向行政組索取帳號。</p>
 			<p>找的是學生計算機年會的網站？請拜訪 <a href="http://sitcon.org/">SITCON.org</a>。</p>
 		</p>

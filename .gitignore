@@ -12,3 +12,8 @@ venv/
 */.DS_Store
 .DS_Store
 .DS_Store?
+
+# py.test
+.coverage
+cache/
+htmlcov/

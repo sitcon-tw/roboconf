@@ -11,9 +11,6 @@
                 {% if user.is_authenticated %}
                 {% if user.profile.is_authorized %}
 				<li><a href="{% url 'issues:list' %}">待辦事項</a></li>
-				<li><a href="{% url 'docs:main' %}">文件</a></li>
-				<li><a href="#">聚會</a></li>
-				<li><a href="{% url 'agenda:main' %}">時間表</a></li>
 				<li><a href="{% url 'users:list' %}">人員</a></li>
 				{% if perms.notifications.add_message %}
 				<li><a href="{% url 'notifications:list' %}">通知</a></li>
@@ -30,10 +27,10 @@
 					</a>
 					<ul class="dropdown">
 						<li><label>{{ user.last_name }} {{ user.first_name }}</label></li>
-						<li><a href="{% url 'users:edit' user.username %}">帳號設定</a></li>
+						<li><a href="{% url 'users:edit' user.username %}">資料填寫</a></li>
 						{% if user.is_staff %}<li><a href="/backend/">系統設定</a></li>{% endif %}
 						<li class="divider"></li>
-						<li><a href="https://github.com/sitcon-tw/staff.sitcon.org/issues/new">回報問題</a></li>
+						<li><a href="https://github.com/sitcon-tw/roboconf/issues/new">回報問題</a></li>
 						<li><a href="{% url 'users:logout' %}">登出</a></li>
 					</ul>
 				</li>

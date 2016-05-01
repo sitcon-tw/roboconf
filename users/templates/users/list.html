@@ -4,11 +4,11 @@
 <div class="row">
 	<div class="large-9 columns">
 		<ul class="user-list large-block-grid-4">
-		{% for u in users %}
+		{% for u, privileged in users %}
 			<li class="user-item">
-				<a href="{% if perms.auth.add_user %}{% url 'users:edit' u.username %}{% else %}{% url 'users:profile' u.username %}{% endif %}">
+				<a href="{% url 'users:profile' u.username %}">
 					<img class="avatar medium" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
-					<h4>{{ u.profile.name }}</h4>
+					<div><h4 style="display: inline-block;">{{ u.profile.name }}</h4> {% if privileged or u == user %}<a href="{% url 'users:edit' u.username %}"><span class="icon-edit iconize" ></span></a>{% endif %}</div>
 					<h4 class="subheader">{{ u.profile.title }}</h4>
 				</a>
 			</li>
@@ -17,9 +17,10 @@
 	</div>
 	<div class="large-3 columns main-side-nav">
 		<ul class="side-nav users-actions">
-			{% if perms.auth.add_user %}<li><a href="{% url 'users:create' %}"><span class="icon-add iconize"></span> 新增人員</a></li>{% endif %}
+			{% if perms.auth.add_user %}<li><a href="{% url 'users:reg_list_token' %}"> 登錄系統</a></li>
+			<li><a href="{% url 'users:create' %}"><span class="icon-add iconize"></span> 新增人員</a></li>{% endif %}
 			<li><a href="{% url 'users:edit' user.username %}"><span class="icon-profile iconize"></span> 編輯個人檔案</a></li>
-			<li><a href="{% url 'users:contacts' %}"><span class="icon-contacts iconize"></span> 檢視通訊錄</a></li>
+			<li><a href="{% url 'users:contacts' %}?{{ query_string }}"><span class="icon-contacts iconize"></span> 檢視通訊錄</a></li>
 		</ul>
 		<div class="divider"></div>
 		{% for c, groups in categories.items %}

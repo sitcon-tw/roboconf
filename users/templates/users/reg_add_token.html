@@ -1,0 +1,88 @@
+{% extends 'core/master.html' %}
+{% block title %}登錄 Token 新增{{ block.super }}{% endblock %}
+{% block content %}
+{% if status %}
+<div class="radius {% if status == 'success' %}secondary{% else %}alert{% endif %} alert-box" data-alert>
+	{% if status == 'success' %}Token 新增成功。
+	{% else %}儲存資料時發生錯誤，請修正下列欄位。{% endif %}
+	<a href="#" class="close">&times;</a>
+</div>
+{% endif %}
+<div class="row">
+	<div class="large-1 avatars columns">
+		<a class="right iconize icon-back has-tip" href="{% url 'users:reg_list_token' %}" title="回到 Token 列表" data-tooltip></a>
+	</div>
+	<div class="large-8 columns">
+		<form action="{% url 'users:reg_add_token' %}" method="POST" class="profile-main">
+		{% csrf_token %}
+			<div class="row field-header">
+				<div class="small-12 columns">
+					<h6>新增 Token</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-8 columns">
+					<label for="title">職稱
+						<input type="text" id="title" name="title" /></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<label for="title">暱稱（以逗號分隔，可空）
+						<textarea id="display_names" name="display_names" /></textarea>
+				</div>
+				<div class="small-6 columns">
+					<label for="title">電子郵件（以逗號分隔，可空）
+						<textarea id="emails" name="emails" /></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<label for="title">使用者名稱（以逗號分隔，可空）
+						<textarea id="usernames" name="usernames" /></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<input type="number" name="number" id="number" min="0" max="64" placeholder="數量" required />
+				</div>
+				<div class="small-8 columns">
+					<label class="inline"><a href="#" id="groups_label" class="has-tip" title="設定權限" data-tooltip data-dropdown="groups_dropdown" data-default-content="選取組別">選取組別</a></label>
+					<ul id="groups_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
+					{% for c, groups in categories.items %}
+						<h6>{{ c.name }}</h6>
+						{% for g in groups %}
+						<li><label for="group_{{ g.id }}_checkbox"><input type="checkbox" class="group_checkbox" id="group_{{ g.id }}_checkbox" name="groups" value="{{ g.id }}" data-label="{{ g.name }}" />{{ g.name }}</label></li>
+						{% endfor %}
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-4 columns">
+					<label><input type="checkbox" name="send_email" value="send_email" checked>寄送 E-mail</label></label>
+				</div></div>
+			<div class="button-row">
+				<div class="right">
+					<input type="submit" class="radius button" name="submit" value="新增 Token" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="large-3 columns text">
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.group_checkbox').change(function() {
+		var sel = [];
+		$('.group_checkbox:checked').each(function (index,e) {
+			sel.push($.trim($(e).data('label')));
+		});
+		$('#groups_label').text(sel.length ? sel.join('、') : $('#groups_label').data('default-content'));
+	});
+});
+</script>
+{% endblock %}

@@ -26,7 +26,7 @@
 				<td>{{ u.profile.title }}</td>
 				<td>
 					<img class="avatar small" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
-					<a href="{% if perms.auth.change_user %}{% url 'users:edit' u.username %}{% else %}{% url 'users:profile' u.username %}{% endif %}">{{ u.profile.name }}</a>
+					<a href="{% url 'users:profile' u.username %}">{{ u.profile.name }}</a>
 				</td>
 				{% if show_details %}
 				<td>{{ u.last_name }} {{ u.first_name }}</td>

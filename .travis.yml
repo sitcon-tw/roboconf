@@ -1,0 +1,25 @@
+language: python
+
+python:
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "nightly"
+
+install:
+    - "pip install -U pip"
+    - "pip install -U pytest pytest-cov pytest-django coveralls"
+    - "pip install -r requirements.txt"
+    - "pip freeze"
+    - "cp core/settings/local_settings.example.py core/settings/local_settings.py"
+
+script:
+    - py.test
+
+after_success:
+    - coveralls
+
+matrix:
+    allow_failures:
+        - python: "2.7"
+        - python: "nightly"

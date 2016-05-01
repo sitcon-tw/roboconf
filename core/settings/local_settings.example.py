@@ -5,6 +5,7 @@
 
 # DEVELOPERS: names, secrets and site customizable details should be kept here
 
+
 import datetime
 
 SECRET_KEY = 'change this!'
@@ -36,15 +37,23 @@ SMS_API_SECRET = ''
 DEFAULT_SMS_SENDER = 'ROBOCONF'
 DEFAULT_SMS_COUNTRY_CODE = '886'    # Taiwan
 
-DEFAULT_FROM_EMAIL = '"SITCON 行政系統" <admin@staff.sitcon.camp>'
+DEFAULT_FROM_EMAIL = u'"SITCON 夏令營行政系統" <admin@staff.sitcon.camp>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-BROADCAST_EMAIL = 'sitcon@googlegroups.com'
 
-DEFAULT_NOTIFICATION_SENDER = 'SITCON 行政系統:notifications@staff.sitcon.camp'
-DEFAULT_ACCOUNTS_SENDER =  'SITCON 行政系統:accounts@staff.sitcon.camp'
-DEFAULT_ISSUE_SENDER = 'SITCON 行政系統:issues@staff.sitcon.camp'
+DEFAULT_NOTIFICATION_SENDER = u'SITCON 夏令營行政系統:notifications@staff.sitcon.camp'
+DEFAULT_ACCOUNTS_SENDER =  u'SITCON 夏令營行政系統:accounts@staff.sitcon.camp'
+DEFAULT_ISSUE_SENDER = u'SITCON 夏令營行政系統:issues@staff.sitcon.camp'
 
+SUBMITTER_ACCOUNTS_SENDER = u'SITCON:accounts@staff.sitcon.camp'
 USER_ISSUE_SENDER = u'{0} (SITCON):issues@staff.sitcon.camp'
+
+DEFAULT_SMS_SENDER = 'SITCON'
+
+SUBMISSION_START = datetime.datetime(2014, 12, 5, 12, 0, 0)
+SUBMISSION_END = datetime.datetime(2015, 1, 31, 6, 38, 0)
+SUBMISSION_RULE_DOCID = 'MUY'
+
+ISSUE_EXPIRE_TIMEDELTA = datetime.timedelta(hours=12)
 
 LOGGING = {
     'version': 1,
@@ -97,6 +106,10 @@ LOGGING = {
     },
 }
 
+TEAM_GROUPCAT_ID = 2
+TEAM_LEADER_GROUP_ID = 4
+TEAM_SUBLEADER_GROUP_IDS = [4, 5]
+
 STAFF_GROUP_NAME = '工作人員'
 STAFF_GROUP_ID = 1
 
@@ -114,7 +127,8 @@ RESIDENCE_OPTIONS = (
 )
 
 SHIRT_SIZE_OPTIONS = (
-    'XS', 'S', 'M', 'L', 'XL', '2XL',
+   '男XS', '男S', '男M', '男L', '男XL', '男2XL', '男3XL',
+   '女S', '女M', '女L', '女XL'
 )
 
 DIET_OPTIONS = (

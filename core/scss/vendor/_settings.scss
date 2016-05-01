@@ -25,9 +25,9 @@ $default-float: left;
 
 // $body-bg: #fff;
 // $body-font-color: #222;
-$body-font-family: "PT Sans", "Ubuntu", "Trebuchet MS", /* Fallback */
+$body-font-family: "Helvetica Neue", Helvetica, Arial, /* Fallback */
 					"Source Han Sans TC", "Noto Sans T Chinese", /* FOSS */
-					"LantingHei TC", "Apple LiGothic", /* OS X */
+					"Pingfang TC", "LiHei Pro", /* OS X */
 					"Microsoft Jhenghei", /* Windows */
 					sans-serif;
 $body-font-weight: 300;
@@ -45,7 +45,7 @@ $body-font-weight: 300;
 
 $primary-color: #18528e;
 $secondary-color: #e9e9e9;
-$alert-color: #af322e;
+$alert-color: #2f322e;
 $success-color: #58803d;
 
 // Make sure border radius matches unless we want it different.
@@ -349,7 +349,7 @@ $code-font-family: Consolas, Inconsolata, 'Source Code Pro', Monaco, monospace;
 
 // We use these to control button border styles.
 
-$button-border-width: 0;
+// $button-border-width: 1px;
 $button-border-style: none;
 
 // We use this to set the default radius used throughout the core.
@@ -1239,7 +1239,7 @@ $topbar-bg-color: #131313;
 
 // Style the top bar dropdown elements
 
-$topbar-dropdown-bg: $topbar-bg-color;
+$topbar-dropdown-bg: #333;
 // $topbar-dropdown-link-color: #fff;
 $topbar-dropdown-link-bg: $topbar-bg-color;
 // $topbar-dropdown-toggle-size: 5px;
@@ -1251,7 +1251,7 @@ $topbar-dropdown-link-bg: $topbar-bg-color;
 // $topbar-link-color: #fff;
 $topbar-link-color-hover: #58cbfb;
 $topbar-link-color-active: $topbar-link-color-hover;
-$topbar-link-weight: 500;
+// $topbar-link-weight: bold;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 $topbar-link-bg-hover: $topbar-bg-color;
