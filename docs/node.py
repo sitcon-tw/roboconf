@@ -19,7 +19,7 @@ class Node(object):
 
         else:
             try:
-                nid_str = urlsafe_base64_decode(nid)
+                nid_str = urlsafe_base64_decode(nid).decode()
 
                 if re.match('\d+[FD]', nid_str):
                     node_type = nid_str[-1:]
