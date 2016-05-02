@@ -1,5 +1,4 @@
-{{ site.title }} 歡迎你 - {% if receiver.display_name == "" %}{{ receiver.username  }}{% elif receiver.username == "" %}{{ receiver.name  }}{% else %}{{ receiver.name  }} ({{ receiver.username  } }){% endif %}
-
+{{ site.title }} 歡迎你 - {% if receiver.profile.display_name == "" %}{{ receiver.username }}{% elif receiver.username == "" %}{{ receiver.profile.name }}{% else %}{{ receiver.profile.name }}({{ receiver.username }}){% endif %}
 =====
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
