@@ -6,10 +6,12 @@ from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetFo
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+import re
 
 from notifications.utils import format_address, send_template_mail
 from users.models import RegisterToken
 from users.token import generate_uid, generate_token
+
 
 
 class PasswordResetForm(DjangoPasswordResetForm):
@@ -49,6 +51,8 @@ class RegisterForm(DjangoUserCreationForm):
         username = self.cleaned_data.get('username', False)
         if not (User.objects.filter(username=username).count() < 1 and username):
             raise ValidationError("Username taken", code='username_taken')
+        elif not re.match(r'[0-9A-Za-z_@\+\.\-]+', username):
+            raise ValidationError("Invalid username", code="invalid_username")
         return username
 
     def clean_email(self):
