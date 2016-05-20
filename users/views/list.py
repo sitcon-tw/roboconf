@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
 from users.utils import sorted_users, sorted_categories
+from users.models import GroupCategory
+from django.db.models.fields import BooleanField
+from collections import OrderedDict
 
 formats = {
     'html': ('text/html', 'users/export.html'),
@@ -116,32 +119,54 @@ def export(request, format=None):
     authorized = request.user.profile.is_authorized()
     trusted = request.user.profile.is_trusted()
     users = apply_filter(filters=filters, groups=groups, trusted=trusted)
+    team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
 
     users_output = []
     for user in sorted_users(users):
-        entity = {
-            'id': user.username,
-            'name': user.profile.name,
-            'title': user.profile.title,
-            'avatar': user.profile.avatar,
-            'email': user.email,
-        }
+        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+        sensitive = user == request.user or request.user.has_perm('auth.change_user')
+        same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
+        allow_phone = privileged or same_team or user.groups.filter(pk__in=settings.TEAM_SUBLEADER_GROUP_IDS)
 
-        if authorized:
-            entity['phone'] = user.profile.phone
-
-        if trusted:
-            entity['model_id'] = user.id
-            entity['last_name'] = user.last_name
-            entity['first_name'] = user.first_name
-            entity['school'] = user.profile.school
-            entity['grade'] = user.profile.grade
-            entity['residence'] = user.profile.residence
-            entity['shirt_size'] = user.profile.shirt_size
-            entity['diet'] = user.profile.diet
-            entity['bio'] = user.profile.bio or None
-            entity['comment'] = user.profile.comment
-            entity['groups'] = ' '.join([str(g.id) for g in user.groups.all()])
+        entity = OrderedDict()
+        entity['id'] = user.id
+        entity['username'] = user.username
+        entity['groups'] = ','.join([str(g.name) for g in user.groups.all()])
+        entity['email'] = user.email
+        entity['display_name'] = user.profile.display_name
+        entity['title'] = user.profile.title
+        entity['last_name'] = user.last_name if privileged else ""
+        entity['first_name'] = user.first_name if privileged else ""
+        entity['school'] = user.profile.school
+        entity['grade'] = user.profile.grade
+        entity['avatar'] = user.profile.avatar if "gravatar" in user.profile.avatar else settings.SITE_URL + user.profile.avatar
+        entity['phone'] = user.profile.phone if allow_phone else ""
+        entity['twenty'] = ("TRUE" if user.profile.twenty else "FALSE") if privileged else ""
+        entity['certificate'] = ("TRUE" if user.profile.certificate else "FALSE") if privileged else ""
+        entity['cel_dinner'] = ("TRUE" if user.profile.cel_dinner else "FALSE") if privileged else ""
+        entity['prev_worker'] = ("TRUE" if user.profile.prev_worker else "FALSE") if privileged else ""
+        entity['residence'] = user.profile.residence if privileged else ""
+        entity['shirt_size'] = user.profile.shirt_size if privileged else ""
+        entity['diet'] = user.profile.diet if privileged else ""
+        entity['transportation_aid'] = ("TRUE" if user.profile.transportation_aid else "FALSE") if privileged else ""
+        entity['transportation_hr'] = ("TRUE" if user.profile.transportation_hr else "FALSE") if privileged else ""
+        entity['transportation'] = user.profile.transportation if privileged else ""
+        entity['transportation_fee'] = user.profile.transportation_fee if privileged else ""
+        entity['accom'] = ({0: "FALSE", 2: "TRUE", 1: "Either"}.get(user.profile.accom)) if privileged else ""
+        entity['roommate'] = user.profile.roommate if privileged else ""
+        entity['gender'] = ({1: "Male", 2: "Female", 9: "Other"}.get(user.profile.accom)) if privileged else ""
+        try:
+            languages = [f.verbose_name for f in user.profile.language._meta.fields if type(f) == BooleanField and getattr(user.profile.language, f.name)]
+            entity['language'] = ",".join((languages + [user.profile.language.other]) if user.profile.language.other else languages)
+        except AttributeError:
+            entity['language'] = ""
+        try:
+            abilitiess = [f.verbose_name for f in user.profile.abilities._meta.fields if type(f) == BooleanField and getattr(user.profile.abilities, f.name)]
+            entity['abilities'] = ",".join((abilitiess + [user.profile.abilities.other]) if user.profile.abilities.other else abilitiess)
+        except AttributeError:
+            entity['abilities'] = ""
+        entity['bio'] = user.profile.bio
+        entity['comment'] = user.profile.comment if privileged else ""
 
         users_output.append(entity)
 
