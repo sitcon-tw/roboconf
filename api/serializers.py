@@ -3,10 +3,15 @@ from rest_framework import serializers
 from users.models import UserProfile
 from users.utils import sorted_users
 
-class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
+class UserProfilePrivateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('url', 'user', 'display_name', 'bio', 'title', 'avatar')
+
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('url', 'user', 'display_name', 'title', 'avatar')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer()
@@ -16,7 +21,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('pk', 'url', 'profile', 'groups')
 
 class UserPrivateSerializer(serializers.HyperlinkedModelSerializer):
-    profile = UserProfileSerializer()
+    profile = UserProfilePrivateSerializer()
 
     class Meta:
         model = User
