@@ -93,6 +93,15 @@ def edit(request, username):
         if request.POST.get('accom'):
             profile.accom = int(request.POST.get('accom'))
         profile.roommate = request.POST.get('roommate')
+<<<<<<< Updated upstream
+=======
+
+        profile.volunteering_proof = False if request.POST.get('volunteering_proof') == 'False' else True
+        profile.volunteering_duration = request.POST.get('volunteering_duration')
+        profile.volunteering_time = request.POST.get('volunteering_time')
+        profile.volunteering_work_done = request.POST.get('volunteering_work_done')
+        profile.birthday = request.POST.get('birthday')
+>>>>>>> Stashed changes
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
         profile.cel_dinner = False if request.POST.get('cel_dinner') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True

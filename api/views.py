@@ -3,13 +3,17 @@ from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from api.serializers import *
 from users.models import UserProfile
-from users.utils import sorted_groups
+from users.utils import sorted_users, sorted_groups, sorted_categories
 from django.db.models import QuerySet
 from oauth2_provider.ext.rest_framework import TokenHasScope
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
+
+    def list(self, request):
+        serializer = UserSerializer(sorted_users(self.queryset), many=True, context={ 'request': request } )
+        return Response(serializer.data)
 
 class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = UserProfile.objects.filter(user__is_active=True)
