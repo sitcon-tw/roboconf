@@ -101,6 +101,10 @@ LOGGING = {
 STAFF_GROUP_NAME = '工作人員'
 STAFF_GROUP_ID = 1
 
+TEAM_GROUPCAT_ID = 2
+TEAM_LEADER_GROUP_ID = 2
+TEAM_SUBLEADER_GROUP_IDS = [2, 12, 14]
+
 URGENT_ISSUE_ID = 2
 
 GROUP_PRIORITY = [3, 1, 6, 7, 5, 8, 4, 9, 2, 14, 19, 20, 15, 13, 18, 12, 11, 10]    # Sort by team lead -> staff -> consultant
