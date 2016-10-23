@@ -1,16 +1,15 @@
-from django.shortcuts import render, redirect
+import re
 from django.conf import settings
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User
-from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
-
-from notifications.utils import send_template_mail, format_address
-
-from users.models import RegisterToken, UserProfile
-from users.utils import sorted_users, sorted_tokens, sorted_categories
+from django.db import transaction
+from django.shortcuts import redirect, render
+from notifications.utils import format_address, send_template_mail
 from users.forms import RegisterForm, TokenEditForm
+from users.models import RegisterToken
+from users.utils import sorted_categories, sorted_tokens
 
 
 @login_required
@@ -38,19 +37,21 @@ def reg_add_token(request):
     status = ''
 
     if 'submit' in request.POST:
-        pad = lambda l, n: l + [''] * (n - len(l))
+        pad = lambda l, n: l + [('', '', '')] * (n - len(l))
+        padt = lambda l: l + ('',) * (3 - len(l))
 
-        number = int(request.POST.get('number'))
+        number = request.POST.get('number')
+        data = request.POST.get('data').split('\n')[:-1]
+        number = int(number) if number else len(data)
+        data = pad([padt(tuple(re.split(r'[,|;"\t]', x))) for x in data], number)
         title = request.POST.get('title')
-        usernames = pad(request.POST.get('usernames').split(","), number)
-        emails = pad(request.POST.get('emails').split(","), number)
-        display_names = pad(request.POST.get('display_names').split(","), number)
-        for tn in range(0, number):
+
+        for tn in data:
             token = RegisterToken()
             token.title = title
-            token.username = usernames[tn]
-            token.email = emails[tn]
-            token.display_name = display_names[tn]
+            token.username = tn[2]
+            token.email = tn[0]
+            token.display_name = tn[1]
             token.save()
 
             for group_id in request.POST.getlist('groups'):
@@ -63,7 +64,9 @@ def reg_add_token(request):
             token.save()
 
             if request.POST.get('send_email'):
-                send_template_mail(settings.DEFAULT_ACCOUNTS_SENDER, format_address(token.name, token.email), 'mail/reg_invitation.html', {'receiver': token})
+                send_template_mail(settings.DEFAULT_ACCOUNTS_SENDER,
+                                   format_address(token.name, token.email),
+                                   'mail/reg_invitation.html', {'receiver': token})
 
     return render(request, 'users/reg_add_token.html', {
         'categories': sorted_categories,
