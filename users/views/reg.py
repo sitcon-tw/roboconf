@@ -41,7 +41,7 @@ def reg_add_token(request):
         padt = lambda l: l + ('',) * (3 - len(l))
 
         number = request.POST.get('number')
-        data = request.POST.get('data').split('\n')[:-1]
+        data = request.POST.get('data').splitlines()
         number = int(number) if number else len(data)
         data = pad([padt(tuple(re.split(r'[,|;"\t]', x))) for x in data], number)
         title = request.POST.get('title')
