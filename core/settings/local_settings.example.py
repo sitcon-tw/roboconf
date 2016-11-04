@@ -127,3 +127,5 @@ DIET_OPTIONS = (
     '忌牛肉', '忌豬肉', '忌海鮮',
     '方便素', '蛋奶素', '全素',
 )
+
+EVENT_START_DATE = datetime.date(2017, 3, 18)
