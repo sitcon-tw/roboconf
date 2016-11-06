@@ -9,5 +9,6 @@ TITLE:{{ user.title }}
 PHOTO;VALUE=uri:{{ user.avatar }}
 {% if user.phone %}TEL;TYPE=cell:{{ user.phone }}{% endif %}
 EMAIL:{{ user.email }}
+NOTE:{{ user.bio }}
 END:VCARD
 {% endfor %}{% endautoescape %}

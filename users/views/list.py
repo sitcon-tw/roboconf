@@ -8,6 +8,7 @@ from users.utils import sorted_users, sorted_categories
 from users.models import GroupCategory
 from django.db.models.fields import BooleanField
 from collections import OrderedDict
+from users.models import UserProfile
 
 formats = {
     'html': ('text/html', 'users/export.html'),
