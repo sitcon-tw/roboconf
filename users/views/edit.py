@@ -158,8 +158,6 @@ def edit(request, username):
                 'residence': settings.RESIDENCE_OPTIONS,
                 'shirt_size': settings.SHIRT_SIZE_OPTIONS,
                 'diet': settings.DIET_OPTIONS,
-                'event_date': settings.EVENT_START_DATE,
-                'age_year': settings.EVENT_START_DATE.year - 20,
                 'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
                 'gender': [(1, '男'), (2, '女'), (9, '其他')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
@@ -167,6 +165,8 @@ def edit(request, username):
                 'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
             },
             'status': status,
+            'event_date': settings.EVENT_START_DATE,
+            'majority_year': settings.EVENT_START_DATE.year - 20,
         })
     else:
         render_template_url = 'users/edit_profile.html'
@@ -178,8 +178,6 @@ def edit(request, username):
                 'residence': settings.RESIDENCE_OPTIONS,
                 'shirt_size': settings.SHIRT_SIZE_OPTIONS,
                 'diet': settings.DIET_OPTIONS,
-                'event_date': settings.EVENT_START_DATE,
-                'age_year': settings.EVENT_START_DATE.year - 20,
                 'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
                 'gender': [(1, '男'), (2, '女'), (9, '其他')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
@@ -188,4 +186,6 @@ def edit(request, username):
             },
             'errors': errors,
             'status': status,
+            'event_date': settings.EVENT_START_DATE,
+            'majority_year': settings.EVENT_START_DATE.year - 20,
         })

@@ -84,8 +84,8 @@
 					<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />
 				</div>
 				<div class="small-5 columns">
-					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 {{ age_year }} 年 {{ event_date.month }} 月 {{ event_date.day }} 號（含）前出生</input></label>
-					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 {{ age_year }} 年 {{ event_date.month }} 月 {{ event_date.day }} 號後出生，<br>且已經獲得家長同意參加 SITCON</input></label>
+					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 {{ majority_year }} 年 {{ event_date.month }} 月 {{ event_date.day }} 號（含）前出生</input></label>
+					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 {{ majority_year }} 年 {{ event_date.month }} 月 {{ event_date.day }} 號後出生，<br>且已經獲得家長同意參加 SITCON</input></label>
 				</div>
 			</div>
 			<div class="row">
