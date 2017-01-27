@@ -40,14 +40,22 @@
 				{% endif %}
 			</div>
 			<div class="row">
-				<div class="columns">
-					<h5>姓名 <small>您的本名，我們不會告訴任何人！</small></h5>
+				<div class="small-8 columns">
+					<h5>姓名<br><small>您的本名，僅供行政組使用。</small></h5>
 				</div>
-				<div class="small-6 columns">
+				<div class="small-4 columns">
+					<h5>英文名<br><small>今年的感謝狀上有英文姓名欄位，請各位填寫</small></h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
 					<input type="text" name="last_name" maxlength="30" placeholder="姓" value="{{ u.last_name }}" />
 				</div>
-				<div class="small-6 columns">
+				<div class="small-5 columns">
 					<input type="text" name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
+				</div>
+				<div class="small-4 columns">
+					<input type="text" name="eng_name" maxlength="30" placeholder="英文名" value="{{ u.eng_name }}" />
 				</div>
 			</div>
 			<div class="row">
@@ -62,18 +70,18 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-2 columns">
+				{% if speaker %}<div class="small-2 columns">
 					<h5>性別</h5>
 				</div>
 				<div class="small-5 columns">
 					<h5>身份證字號 <br><small>若有住宿需求記得填寫，我們不會外流的！</small></h5>
-				</div>
+				</div>{% endif %}
 				<div class="small-5 columns">
 					<h5>出生日期 <br><small>以身分證上登記的為準，請選擇一個符合您的描述。</small></h5>
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-2 columns">
+				{% if not speaker %}<div class="small-2 columns">
 					<select name="gender">
 						<option disabled>性別</option>
 						{% if not u.profile.gender %}<option value="" selected>（性別）</option>{% endif %}
@@ -82,7 +90,7 @@
 				</div>
 				<div class="small-5 columns">
 					<input type="text" name="personal_id" maxlength="10" placeholder="身份證字號" value="{{ u.profile.personal_id }}" />
-				</div>
+				</div>{% endif %}
 				<div class="small-5 columns">
 					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 {{ majority_year }} 年 {{ event_date.month }} 月 {{ event_date.day }} 號（含）前出生</input></label>
 					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 {{ majority_year }} 年 {{ event_date.month }} 月 {{ event_date.day }} 號後出生，<br>且已經獲得家長同意參加 SITCON</input></label>
@@ -150,7 +158,7 @@
 					<textarea name="transportation_fee" placeholder="預估交通費用" maxlength="64">{{ u.profile.transportation_fee }}</textarea>
 				</div>
 			</div>
-			<div class="row">
+			{% if not speaker %}<div class="row">
 				<div class="small-6 columns">
 					<h5>是否需要住宿 <br><small>除特殊需求之外，住宿順序將按照出發地遠近來安排，因床位有限，所以雙北不保證一定可以住哦！</small></h5>
 					<select name="accom">
@@ -166,7 +174,7 @@
 						{% for i, r in options.roommate %}<option value="{{ i }}"{% if u.profile.roommate.id == i %} selected{% endif %}>{{ r }}</option>{% endfor %}
 					</select>
 				</div>
-			</div>
+			</div>{% endif %}
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>是否需要感謝狀 <small>（將印本名）</small></h5>

@@ -15,6 +15,7 @@ from users.utils import *
 def edit(request, username):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+    speaker = user.groups.filter(pk=settings.SPKR_GROUP_ID).exists()
 
     if not (user == request.user or privileged):
         from django.core.exceptions import PermissionDenied
@@ -70,6 +71,7 @@ def edit(request, username):
 
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
+        user.eng_name = request.POST.get('eng_name')
 
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))
@@ -91,7 +93,8 @@ def edit(request, username):
         profile.transportation_fee = request.POST.get('transportation_fee')
         if request.POST.get('accom'):
             profile.accom = int(request.POST.get('accom'))
-        profile.roommate = request.POST.get('roommate')
+        if request.POST.get('roommate'):
+            profile.roommate = request.POST.get('roommate')
         profile.certificate = False if request.POST.get('certificate') == 'False' else True
         profile.cel_dinner = False if request.POST.get('cel_dinner') == 'False' else True
         profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
@@ -153,6 +156,7 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'speaker': speaker,
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,
@@ -173,6 +177,7 @@ def edit(request, username):
         return render(request, render_template_url, {
             'u': user,
             'privileged': privileged,
+            'speaker': speaker,
             'categories': sorted_categories if privileged else None,
             'options': {
                 'residence': settings.RESIDENCE_OPTIONS,

@@ -38,6 +38,7 @@ class UserProfile(models.Model):
     photo = models.FileField(upload_to=photo_path, blank=True)
 
     display_name = models.CharField(max_length=32, blank=True, null=False, default='')
+    eng_name = models.CharField(max_length=32, blank=True, null=False, default='')
     title = models.CharField(max_length=32, blank=True, null=False, default='')
     school = models.CharField(max_length=32, default='', help_text='school or company', blank=True, null=False)
     grade = models.CharField(max_length=32, default='', help_text='department and grade / position', blank=True, null=False)
