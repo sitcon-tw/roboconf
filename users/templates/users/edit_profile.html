@@ -40,21 +40,21 @@
 				{% endif %}
 			</div>
 			<div class="row">
-				<div class="small-8 columns">
+				<div class="small-7 columns">
 					<h5>姓名<br><small>您的本名，僅供行政組使用。</small></h5>
 				</div>
-				<div class="small-4 columns">
-					<h5>英文名<br><small>今年的感謝狀上有英文姓名欄位，請各位填寫</small></h5>
+				<div class="small-5 columns">
+					<h5>英文名<br><small>今年的感謝狀上有英文姓名欄位，請協助填寫</small></h5>
 				</div>
 			</div>
 			<div class="row">
 				<div class="small-3 columns">
 					<input type="text" name="last_name" maxlength="30" placeholder="姓" value="{{ u.last_name }}" />
 				</div>
-				<div class="small-5 columns">
-					<input type="text" name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
-				</div>
 				<div class="small-4 columns">
+					<input type="tkxt" name="first_name" maxlength="30" placeholder="名" value="{{ u.first_name }}" />
+				</div>
+				<div class="small-5 columns">
 					<input type="text" name="eng_name" maxlength="30" placeholder="英文名" value="{{ u.profile.eng_name }}" />
 				</div>
 			</div>
