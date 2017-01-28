@@ -71,7 +71,7 @@ def edit(request, username):
 
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
-        user.eng_name = request.POST.get('eng_name')
+        profile.eng_name = request.POST.get('eng_name')
 
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))

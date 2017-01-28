@@ -137,6 +137,7 @@ def export(request, format=None):
         entity['title'] = user.profile.title
         entity['last_name'] = user.last_name if privileged else ""
         entity['first_name'] = user.first_name if privileged else ""
+        entity['eng_name'] = user.profile.eng_name if privileged else ""
         entity['school'] = user.profile.school
         entity['grade'] = user.profile.grade
         entity['avatar'] = user.profile.avatar if "gravatar" in user.profile.avatar else settings.SITE_URL + user.profile.avatar
