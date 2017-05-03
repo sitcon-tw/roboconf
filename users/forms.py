@@ -14,6 +14,7 @@ from users.token import generate_uid, generate_token
 
 
 
+
 class PasswordResetForm(DjangoPasswordResetForm):
     def clean_email(self):
         email = self.cleaned_data['email']
