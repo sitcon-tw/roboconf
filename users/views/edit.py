@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.validators import validate_email
 from django.db.models.fields import BooleanField
 from django.conf import settings
 from core.imaging import resize_image
-from users.models import *
+from users.models import UserProfile, Language, Ability
 from users.utils import *
 
 @login_required
 def edit(request, username):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
-    speaker = user.groups.filter(pk=settings.SPKR_GROUP_ID).exists()
 
     if not (user == request.user or privileged):
         from django.core.exceptions import PermissionDenied
@@ -41,15 +39,11 @@ def edit(request, username):
         profile = UserProfile(user=user)
 
     if not user.profile.language:
-        lang = language()
-        lang.save()
-        user.profile.language = lang
+        user.profile.language = Language.objects.create()
         user.profile.save()
 
     if not user.profile.abilities:
-        abil = abilities()
-        abil.save()
-        user.profile.abilities = abil
+        user.profile.abilities = Ability.objects.create()
         user.profile.save()
 
     if request.POST.get('submit'):
@@ -67,7 +61,7 @@ def edit(request, username):
                 try:
                     if group_id not in old_groups:
                         user.groups.add(Group.objects.get(id=group_id))
-                except GroupDoesNotExist: pass
+                except Group.DoesNotExist: pass
 
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
@@ -75,34 +69,29 @@ def edit(request, username):
 
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))
-        profile.twenty = False if request.POST.get('twenty') == 'False' else True
+        profile.twenty = (request.POST.get('twenty') == 'False')
         profile.personal_id = request.POST.get('personal_id')
         profile.school = request.POST.get('school')
         profile.grade = request.POST.get('grade')
-        profile.on_site = False if request.POST.get('on_site') == 'False' else True
+        profile.on_site = (request.POST.get('on_site') == 'False')
         profile.phone = request.POST.get('phone')
         profile.slack = request.POST.get('slack')
         profile.birthday = request.POST.get('birthday')
         profile.personal_id = request.POST.get('personal_id')
         profile.ice_contact = request.POST.get('ice_contact')
         profile.ice_phone = request.POST.get('ice_phone')
-        if request.POST.get('residence'):
-            profile.residence = request.POST.get('residence')
-        if request.POST.get('shirt_size'):
-            profile.shirt_size = request.POST.get('shirt_size')
-        if request.POST.get('diet'):
-            profile.diet = request.POST.get('diet')
-        profile.transportation_aid = False if request.POST.get('transportation_aid') == 'False' else True
-        profile.transportation_hr = False if request.POST.get('transportation_hr') == 'False' else True
+        profile.residence = request.POST.get('residence') or ''
+        profile.shirt_size = request.POST.get('shirt_size') or ''
+        profile.diet = request.POST.get('diet') or ''
+        profile.transportation_aid = (request.POST.get('transportation_aid') == 'False')
+        profile.transportation_hr = (request.POST.get('transportation_hr') == 'False')
         profile.transportation = request.POST.get('transportation')
         profile.transportation_fee = request.POST.get('transportation_fee')
-        if request.POST.get('accom'):
-            profile.accom = int(request.POST.get('accom'))
-        if request.POST.get('roommate'):
-            profile.roommate = request.POST.get('roommate')
-        profile.certificate = False if request.POST.get('certificate') == 'False' else True
-        profile.cel_dinner = False if request.POST.get('cel_dinner') == 'False' else True
-        profile.prev_worker = False if request.POST.get('prev_worker') == 'False' else True
+        profile.accom = int(request.POST.get('accom') or 2)
+        profile.roommate = request.POST.get('roommate') or ''
+        profile.certificate = (request.POST.get('certificate') == 'False')
+        profile.cel_dinner = (request.POST.get('cel_dinner') == 'False')
+        profile.prev_worker = (request.POST.get('prev_worker') == 'False')
         profile.language.other = request.POST.get('language_other')
         profile.abilities.other = request.POST.get('abilities_other')
 
@@ -112,7 +101,7 @@ def edit(request, username):
                 errors += ['photo', 'photo_too_large']
             else:
                 try:
-                    image_data, mime  = resize_image(photo, size=settings.AVATAR_IMAGE_SIZE_LIMIT)
+                    image_data, mime = resize_image(photo, size=settings.AVATAR_IMAGE_SIZE_LIMIT)
                     resized_photo = SimpleUploadedFile(name=photo.name, content=image_data, content_type=mime)
                     profile.photo = resized_photo
                 except ValueError:
@@ -120,29 +109,11 @@ def edit(request, username):
 
         data = dict(request.POST.lists())
 
-        try:
-            data['language']
-        except KeyError:
-            for f in [f.name for f in language._meta.fields if type(f) == BooleanField]:
-                setattr(user.profile.language, f, False)
-        else:
-            for f in [f.name for f in language._meta.fields if type(f) == BooleanField]:
-                if f not in data['language']:
-                    setattr(user.profile.language, f, False)
-                else:
-                    setattr(user.profile.language, f, True)
+        for f in [f.name for f in Language._meta.fields if type(f) == BooleanField]:
+            setattr(user.profile.language, f, data.get('language', {}).get(f, False))
 
-        try:
-            data['abilities']
-        except KeyError:
-            for f in [f.name for f in abilities._meta.fields if type(f) == BooleanField]:
-                setattr(user.profile.abilities, f, False)
-        else:
-            for f in [f.name for f in abilities._meta.fields if type(f) == BooleanField]:
-                if f not in data['abilities']:
-                    setattr(user.profile.abilities, f, False)
-                else:
-                    setattr(user.profile.abilities, f, True)
+        for f in [f.name for f in Ability._meta.fields if type(f) == BooleanField]:
+            setattr(user.profile.abilities, f, data.get('language', {}).get(f, False))
 
         profile.bio = request.POST.get('bio')
         profile.comment = request.POST.get('comment')
@@ -171,8 +142,8 @@ def edit(request, username):
                 'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
                 'gender': [(1, '男'), (2, '女'), (9, '其他')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
-                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
-                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
+                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in Language._meta.fields if type(f) == BooleanField],
+                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in Ability._meta.fields if type(f) == BooleanField],
             },
             'status': status,
             'event_date': settings.EVENT_START_DATE,
@@ -193,8 +164,8 @@ def edit(request, username):
                 'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
                 'gender': [(1, '男'), (2, '女'), (9, '其他')],
                 'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
-                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
-                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
+                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in Language._meta.fields if type(f) == BooleanField],
+                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in Ability._meta.fields if type(f) == BooleanField],
             },
             'errors': errors,
             'status': status,

@@ -15,13 +15,13 @@ def photo_path(instance, filename):
     return 'photos/{}{}'.format(hash_value, ext)
 
 
-class abilities(models.Model):
+class Ability(models.Model):
     medical = models.BooleanField(default=False, verbose_name='醫療')
     legal = models.BooleanField(default=False, verbose_name='法律')
     pr = models.BooleanField(default=False, verbose_name='公關')
     other = models.CharField(max_length=64, default='', help_text='other special abilities', blank=True)
 
-class language(models.Model):
+class Language(models.Model):
     english = models.BooleanField(default=False, verbose_name='英語')
     japanese = models.BooleanField(default=False, verbose_name='日語')
     taiwanese = models.BooleanField(default=False, verbose_name='台語')
@@ -61,8 +61,8 @@ class UserProfile(models.Model):
     ice_contact = models.CharField(max_length=32, default='', help_text='Emergency contact info', blank=True, null=True)
     ice_phone = models.CharField(max_length=32, default='', help_text='emergency contact number', blank=True, null=True)
     birthday = models.CharField(max_length=10, default='', help_text='birthday, for insurance', blank=True, null=True)
-    language = models.OneToOneField(language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
-    abilities = models.OneToOneField(abilities, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
+    language = models.OneToOneField(Language, help_text='language abilities', related_name='+', blank=True, default=None, null=True)
+    abilities = models.OneToOneField(Ability, help_text='other abilities', related_name='+', blank=True, default=None, null=True)
     bio = models.TextField(max_length=512, default='', help_text='biography', blank=True, null=False)
     comment = models.TextField(max_length=512, default='', blank=True, null=False)
 
