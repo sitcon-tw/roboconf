@@ -5,8 +5,8 @@ from django.contrib.auth.admin import UserAdmin
 
 admin.site.register(UserProfile)
 admin.site.register(GroupCategory)
-admin.site.register(language)
-admin.site.register(abilities)
+admin.site.register(Language)
+admin.site.register(Ability)
 
 class MyUserAdmin(UserAdmin):
     actions = ['disable', 'enable']
