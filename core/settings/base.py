@@ -34,16 +34,19 @@ USE_I18N = True    # TODO: Implement internationalization
 USE_L10N = True
 USE_TZ = True
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + [
-    'core.context_processors.site_url',
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'core.context_processors.site_url',
+            ],
+        }
+    },
 ]
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-TEMPLATE_DIRS = ()
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',

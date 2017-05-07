@@ -1,7 +1,7 @@
 Django==1.9.4
 dj-database-url==0.4.0
 markdown==2.6.5
-bleach==1.4.2
+bleach==1.4.3
 mdx_del_ins==1.0
 mdx_linkify==0.6
 pytz==2016.1

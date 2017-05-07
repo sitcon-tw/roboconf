@@ -65,15 +65,14 @@ def edit(request, username):
 
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
-        profile.eng_name = request.POST.get('eng_name')
 
         if request.POST.get('gender'):
             profile.gender = int(request.POST.get('gender'))
-        profile.twenty = (request.POST.get('twenty') == 'False')
+        profile.twenty = (request.POST.get('twenty') == 'True')
         profile.personal_id = request.POST.get('personal_id')
         profile.school = request.POST.get('school')
         profile.grade = request.POST.get('grade')
-        profile.on_site = (request.POST.get('on_site') == 'False')
+        profile.on_site = (request.POST.get('on_site') == 'True')
         profile.phone = request.POST.get('phone')
         profile.slack = request.POST.get('slack')
         profile.birthday = request.POST.get('birthday')
@@ -83,15 +82,15 @@ def edit(request, username):
         profile.residence = request.POST.get('residence') or ''
         profile.shirt_size = request.POST.get('shirt_size') or ''
         profile.diet = request.POST.get('diet') or ''
-        profile.transportation_aid = (request.POST.get('transportation_aid') == 'False')
-        profile.transportation_hr = (request.POST.get('transportation_hr') == 'False')
+        profile.transportation_aid = (request.POST.get('transportation_aid') == 'True')
+        profile.transportation_hr = (request.POST.get('transportation_hr') == 'True')
         profile.transportation = request.POST.get('transportation')
         profile.transportation_fee = request.POST.get('transportation_fee')
         profile.accom = int(request.POST.get('accom') or 2)
         profile.roommate = request.POST.get('roommate') or ''
-        profile.certificate = (request.POST.get('certificate') == 'False')
-        profile.cel_dinner = (request.POST.get('cel_dinner') == 'False')
-        profile.prev_worker = (request.POST.get('prev_worker') == 'False')
+        profile.certificate = (request.POST.get('certificate') == 'True')
+        profile.cel_dinner = (request.POST.get('cel_dinner') == 'True')
+        profile.prev_worker = (request.POST.get('prev_worker') == 'True')
         profile.language.other = request.POST.get('language_other')
         profile.abilities.other = request.POST.get('abilities_other')
 
@@ -110,10 +109,10 @@ def edit(request, username):
         data = dict(request.POST.lists())
 
         for f in [f.name for f in Language._meta.fields if type(f) == BooleanField]:
-            setattr(user.profile.language, f, data.get('language', {}).get(f, False))
+            setattr(user.profile.language, f, f in data.get('language', []))
 
         for f in [f.name for f in Ability._meta.fields if type(f) == BooleanField]:
-            setattr(user.profile.abilities, f, data.get('language', {}).get(f, False))
+            setattr(user.profile.abilities, f, f in data.get('abilities', []))
 
         profile.bio = request.POST.get('bio')
         profile.comment = request.POST.get('comment')
