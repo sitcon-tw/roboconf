@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import date
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
@@ -66,8 +67,19 @@ def edit(request, username):
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
 
-        if request.POST.get('gender'):
-            profile.gender = int(request.POST.get('gender'))
+        gender = request.POST.get('gender')
+        if gender:
+            try:
+                profile.gender = int(gender)
+            except ValueError: pass
+
+        birthday = request.POST.get('birthday')
+        if birthday:
+            try:
+                profile.birthday = date.strptime(birthday, '%Y-%m-%d')
+            except ValueError: pass
+
+        profile.eng_name = request.POST.get('eng_name') or ''
         profile.twenty = (request.POST.get('twenty') == 'True')
         profile.personal_id = request.POST.get('personal_id')
         profile.school = request.POST.get('school')
@@ -75,7 +87,6 @@ def edit(request, username):
         profile.on_site = (request.POST.get('on_site') == 'True')
         profile.phone = request.POST.get('phone')
         profile.slack = request.POST.get('slack')
-        profile.birthday = request.POST.get('birthday')
         profile.personal_id = request.POST.get('personal_id')
         profile.ice_contact = request.POST.get('ice_contact')
         profile.ice_phone = request.POST.get('ice_phone')
@@ -89,6 +100,7 @@ def edit(request, username):
         profile.accom = int(request.POST.get('accom') or 2)
         profile.roommate = request.POST.get('roommate') or ''
         profile.certificate = (request.POST.get('certificate') == 'True')
+        profile.require_printed_cert = (request.POST.get('require_printed_cert') and True)
         profile.cel_dinner = (request.POST.get('cel_dinner') == 'True')
         profile.prev_worker = (request.POST.get('prev_worker') == 'True')
         profile.language.other = request.POST.get('language_other')

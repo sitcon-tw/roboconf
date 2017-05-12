@@ -99,7 +99,7 @@
 			<hr>
 			<h4>工作人員福利</h4>
 			<div class="row">
-				<div class="small-6 columns">
+				<div class="small-7 columns">
 					<h5>是否需要感謝狀<span class="required"></span> <small>將印本名</small></h5>
 					<label for="certificate_t" style="display: inline-block;" onclick="">
 						<input id="certificate_t" name="certificate" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.certificate %}checked{% endif %}>是
@@ -107,8 +107,11 @@
 					<label for="certificate_f" onclick="" style="display: inline-block;">
 						<input id="certificate_f" name="certificate" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.certificate %}checked{% endif %}>否
 					</label>
+					<label for="require_printed_cert_field" style="display: inline-block;">
+						<input id="require_printed_cert_field" name="require_printed_cert" style="margin-left: 15px" type="checkbox" {% if not u.profile.require_printed_cert %}checked{% endif %}>我還需要紙本的
+					</label>
 				</div>
-				<div class="small-6 columns">
+				<div class="small-5 columns">
 					<h5>是否出席慶功宴<span class="required"></span></h5>
 					<label for="cel_dinner_t" style="display: inline-block;" onclick="">
 						<input id="cel_dinner_t" name="cel_dinner" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.cel_dinner %}checked{% endif %}>是
@@ -116,6 +119,14 @@
 					<label for="cel_dinner_f" onclick="" style="display: inline-block;">
 						<input id="cel_dinner_f" name="cel_dinner" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.cel_dinner %}checked{% endif %}>否
 					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns">
+					<h5>外文姓名 <small>您尊爵不凡的英文姓名！將用於發放感謝狀</small></h5>
+				</div>
+				<div class="small-12 columns">
+					<input type="text" name="eng_name" maxlength="30" placeholder="英文姓名" value="{{ u.profile.eng_name }}" />
 				</div>
 			</div>
 			<div class="row">
@@ -142,7 +153,7 @@
 			<div class="row">
 				<div class="small-6 columns">
 					<h5>出生年月日 <small>僅供保險申請之用</small></h5>
-					{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏，請洽行政組修改">{{ u.profile.birthday|length }} 位數</span>{% else %}<input type="text" name="birthday" maxlength="10" placeholder="出生年月日 （例：1995/12/31）" value="{{ u.profile.birthday }}" />{% endif %}
+					{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏，請洽行政組修改">{{ u.profile.birthday|length }} 位數</span>{% else %}<input type="date" name="birthday" maxlength="10" placeholder="出生年月日 （例：1995-12-31）" value="{{ u.profile.birthday|default_if_none:"" }}" />{% endif %}
 				</div>
 				<div class="small-6 columns">
 					<h5>身份證字號 <small>僅供保險申請之用</small></h5>
@@ -204,26 +215,26 @@
 			<h4>住宿</h4>
 			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;">有需要的話，請您務必填寫下列資料。</small></div>
 			<div class="row">
-				<div class="small-5 columns">
+				<div class="small-6 columns">
 					<h5>是否需要住宿<span class="required"></span> <small>夏令營工作人員預設住宿</small></h5>
 					<select name="accom">
 						<option disabled>是否需要住宿</option>
 						{% for i, a in options.accom %}<option value="{{ i }}"{% if u.profile.accom == i %} selected{% endif %}>{{ a }}</option>{% endfor %}
 					</select>
 				</div>
-				<div class="small-7 columns">
-					<h5>希望的室友 <br><small>行政組將盡力協助，請事先講好，並同房的都要互相填寫彼此哦！（可留空）</small></h5>
-					<input type="text" name="roommate" maxlength="32" placeholder="希望的室友" value="{{ u.profile.roommate }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-5 columns end">
+				<div class="small-6 columns end">
 					<h5>性別 <small>僅供住宿分配之用</small></h5>
 					<select name="gender">
 						<option disabled>性別</option>
 						{% if not u.profile.gender %}<option value="" selected>（性別）</option>{% endif %}
 						{% for g, n in options.gender %}<option value="{{ g }}"{% if u.profile.gender == g %} selected{% endif %}>{{ n }}</option>{% endfor %}
 					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<h5>希望的室友 <br><small>行政組將盡力協助，請事先講好，並同房的都要互相填寫彼此哦！（可留空）</small></h5>
+					<input type="text" name="roommate" maxlength="32" placeholder="希望的室友" value="{{ u.profile.roommate }}" />
 				</div>
 			</div>
 			<hr>
@@ -314,6 +325,12 @@ $(document).ready(function() {
 			sel.push($.trim($(e).data('label')));
 		});
 		$('#groups_label').text(sel.length ? sel.join('、') : $('#groups_label').data('default-content'));
+	});
+	$('#certificate_f').change(function() {
+		var rpc_checkbox = $('#require_printed_cert_field');
+		var value = $(this).prop('checked');
+		rpc_checkbox.prop('disabled', value);
+		if (value) rpc_checkbox.prop('checked', false);
 	});
 });
 </script>
