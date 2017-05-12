@@ -327,9 +327,9 @@ class Migration(migrations.Migration):
             name='Ability',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('medical', models.BooleanField(default=False, verbose_name='\xe9\x86\xab\xe7\x99\x82')),
-                ('legal', models.BooleanField(default=False, verbose_name='\xe6\xb3\x95\xe5\xbe\x8')),
-                ('pr', models.BooleanField(default=False, verbose_name='\xe5\x85\xac\xe9\x97\x9c')),
+                ('medical', models.BooleanField(default=False, verbose_name='醫療')),
+                ('legal', models.BooleanField(default=False, verbose_name='法律')),
+                ('pr', models.BooleanField(default=False, verbose_name='公關')),
                 ('other', models.CharField(blank=True, default='', help_text='other special abilities', max_length=64)),
             ],
         ),
