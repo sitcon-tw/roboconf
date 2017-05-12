@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('photo', models.FileField(blank=True, upload_to=users.models.photo_path)),
                 ('comment', models.TextField(blank=True)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
-                ('abilities', models.OneToOneField(blank=True, default=None, help_text='other abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.abilities')),
+                ('abilities', models.OneToOneField(blank=True, default=None, help_text='other abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.Ability')),
                 ('accom', models.IntegerField(choices=[(0, 'Not needed'), (1, 'Either'), (2, 'Needed')], default=0, help_text='need for accommodation')),
                 ('cel_dinner', models.NullBooleanField(help_text='need for celebratory dinner')),
                 ('certificate', models.NullBooleanField(help_text='need for certificate')),
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userprofile',
             name='language',
-            field=models.OneToOneField(blank=True, default=None, help_text='language abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.language'),
+            field=models.OneToOneField(blank=True, default=None, help_text='language abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.Language'),
         ),
         migrations.AddField(
             model_name='userprofile',
@@ -181,7 +181,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='userprofile',
             name='abilities',
-            field=models.OneToOneField(blank=True, default=None, help_text='other abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.abilities'),
+            field=models.OneToOneField(blank=True, default=None, help_text='other abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.Ability'),
         ),
         migrations.AlterField(
             model_name='userprofile',
@@ -231,7 +231,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='userprofile',
             name='language',
-            field=models.OneToOneField(blank=True, default=None, help_text='language abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.language'),
+            field=models.OneToOneField(blank=True, default=None, help_text='language abilities', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='users.Language'),
         ),
         migrations.AlterField(
             model_name='userprofile',
