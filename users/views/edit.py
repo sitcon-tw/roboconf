@@ -64,10 +64,10 @@ def edit(request, username):
                         user.groups.add(Group.objects.get(id=group_id))
                 except Group.DoesNotExist: pass
 
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
 
-        gender = request.POST.get('gender')
+        gender = request.POST.get('gender', 9)
         if gender:
             try:
                 profile.gender = int(gender)
@@ -81,32 +81,32 @@ def edit(request, username):
                 birthday = None
         profile.birthday = birthday
 
-        profile.eng_name = request.POST.get('eng_name') or ''
+        profile.eng_name = request.POST.get('eng_name', '')
         profile.twenty = (request.POST.get('twenty') == 'True')
-        profile.personal_id = request.POST.get('personal_id')
-        profile.school = request.POST.get('school')
-        profile.grade = request.POST.get('grade')
+        profile.personal_id = request.POST.get('personal_id', '')
+        profile.school = request.POST.get('school', '')
+        profile.grade = request.POST.get('grade', '')
         profile.on_site = (request.POST.get('on_site') == 'True')
-        profile.phone = request.POST.get('phone')
-        profile.slack = request.POST.get('slack')
-        profile.personal_id = request.POST.get('personal_id')
-        profile.ice_contact = request.POST.get('ice_contact')
-        profile.ice_phone = request.POST.get('ice_phone')
-        profile.residence = request.POST.get('residence') or ''
-        profile.shirt_size = request.POST.get('shirt_size') or ''
-        profile.diet = request.POST.get('diet') or ''
+        profile.phone = request.POST.get('phone', '')
+        profile.slack = request.POST.get('slack', '')
+        profile.personal_id = request.POST.get('personal_id', '')
+        profile.ice_contact = request.POST.get('ice_contact', '')
+        profile.ice_phone = request.POST.get('ice_phone', '')
+        profile.residence = request.POST.get('residence', '')
+        profile.shirt_size = request.POST.get('shirt_size', '')
+        profile.diet = request.POST.get('diet', '')
         profile.transportation_aid = (request.POST.get('transportation_aid') == 'True')
         profile.transportation_hr = (request.POST.get('transportation_hr') == 'True')
-        profile.transportation = request.POST.get('transportation')
-        profile.transportation_fee = request.POST.get('transportation_fee')
-        profile.accom = int(request.POST.get('accom') or 2)
-        profile.roommate = request.POST.get('roommate') or ''
+        profile.transportation = request.POST.get('transportation', '')
+        profile.transportation_fee = request.POST.get('transportation_fee', '')
+        profile.accom = int(request.POST.get('accom', 2))
+        profile.roommate = request.POST.get('roommate', '')
         profile.certificate = (request.POST.get('certificate') == 'True')
-        profile.require_printed_cert = (request.POST.get('require_printed_cert') and True)
+        profile.require_printed_cert = bool(request.POST.get('require_printed_cert', False))
         profile.cel_dinner = (request.POST.get('cel_dinner') == 'True')
         profile.prev_worker = (request.POST.get('prev_worker') == 'True')
-        profile.language.other = request.POST.get('language_other')
-        profile.abilities.other = request.POST.get('abilities_other')
+        profile.language.other = request.POST.get('language_other', '')
+        profile.abilities.other = request.POST.get('abilities_other', '')
 
         photo = request.FILES.get('photo')
         if photo:
