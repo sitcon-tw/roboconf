@@ -73,11 +73,13 @@ def edit(request, username):
                 profile.gender = int(gender)
             except ValueError: pass
 
-        birthday = request.POST.get('birthday')
+        birthday = request.POST.get('birthday') or None
         if birthday:
             try:
-                profile.birthday = date.strptime(birthday, '%Y-%m-%d')
-            except ValueError: pass
+                birthday = date.strptime(birthday, '%Y-%m-%d')
+            except ValueError:
+                birthday = None
+        profile.birthday = birthday
 
         profile.eng_name = request.POST.get('eng_name') or ''
         profile.twenty = (request.POST.get('twenty') == 'True')
