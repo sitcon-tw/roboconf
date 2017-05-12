@@ -11,6 +11,7 @@ def replace_null_fields(app, schema_editor):
         profile.transportation = profile.transportation or ''
         profile.transportation_fee = profile.transportation_fee or ''
         profile.roommate = profile.roommate or ''
+        profile.birthday = profile.birthday or None
         profile.personal_id = profile.personal_id or ''
         profile.ice_contact = profile.ice_contact or ''
         profile.ice_phone = profile.ice_phone or ''
