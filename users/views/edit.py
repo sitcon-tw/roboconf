@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import date
+from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
@@ -76,7 +76,7 @@ def edit(request, username):
         birthday = request.POST.get('birthday') or None
         if birthday:
             try:
-                birthday = date.strptime(birthday, '%Y-%m-%d')
+                birthday = datetime.strptime(birthday, '%Y-%m-%d').date()
             except ValueError:
                 birthday = None
         profile.birthday = birthday
