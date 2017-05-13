@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
+# noqa; E701, E133
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.validators import validate_email
 from django.db.models.fields import BooleanField
 from django.conf import settings
 from core.imaging import resize_image
 from users.models import UserProfile, Language, Ability
-from users.utils import *
+from users.utils import sorted_categories
 
 @login_required
 def edit(request, username):
