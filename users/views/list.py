@@ -144,6 +144,7 @@ def export(request, format=None):
         if privileged:
             entity['twenty'] = ("TRUE" if user.profile.twenty else "FALSE")
             entity['certificate'] = ("TRUE" if user.profile.certificate else "FALSE")
+            entity['require_printed_cert'] = ("TRUE" if user.profile.require_printed_cert else "FALSE")
             entity['cel_dinner'] = ("TRUE" if user.profile.cel_dinner else "FALSE")
             entity['on_site'] = ("TRUE" if user.profile.on_site else "FALSE")
             entity['prev_worker'] = ("TRUE" if user.profile.prev_worker else "FALSE")
