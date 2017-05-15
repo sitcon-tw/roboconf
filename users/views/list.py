@@ -90,10 +90,7 @@ def ajax(request):
 
 @login_required
 def contacts(request):
-    if not request.user.is_authenticated():
-        from django.contrib.auth.views import redirect_to_login
-        return redirect_to_login(request.path)
-    elif not request.user.profile.is_authorized():
+    if not request.user.profile.is_authorized():
         return redirect('index')
 
     filters = request.GET.getlist('find')
@@ -113,10 +110,11 @@ def export(request, format=None):
     if format and format not in formats.keys():
         from django.http import Http404
         raise Http404
+    elif not request.user.profile.is_authorized():
+        return redirect('index')
 
     filters = request.GET.getlist('find')
     groups = request.GET.get('g')
-    authorized = request.user.profile.is_authorized()
     trusted = request.user.profile.is_trusted()
     users = apply_filter(filters=filters, groups=groups, trusted=trusted)
     team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
@@ -133,6 +131,7 @@ def export(request, format=None):
         entity['username'] = user.username
         entity['groups'] = ','.join([str(g.name) for g in user.groups.all()])
         entity['email'] = user.email
+        entity['name'] = user.profile.name
         entity['display_name'] = user.profile.display_name
         entity['title'] = user.profile.title
         entity['last_name'] = user.last_name if privileged else ""
@@ -141,25 +140,28 @@ def export(request, format=None):
         entity['grade'] = user.profile.grade
         entity['avatar'] = user.profile.avatar if "gravatar" in user.profile.avatar else settings.SITE_URL + user.profile.avatar
         entity['phone'] = user.profile.phone if allow_phone else ""
-        entity['twenty'] = ("TRUE" if user.profile.twenty else "FALSE") if privileged else ""
-        entity['certificate'] = ("TRUE" if user.profile.certificate else "FALSE") if privileged else ""
-        entity['cel_dinner'] = ("TRUE" if user.profile.cel_dinner else "FALSE") if privileged else ""
-        entity['on_site'] = ("TRUE" if user.profile.on_site else "FALSE") if privileged else ""
-        entity['prev_worker'] = ("TRUE" if user.profile.prev_worker else "FALSE") if privileged else ""
-        entity['residence'] = user.profile.residence if privileged else ""
-        entity['shirt_size'] = user.profile.shirt_size if privileged else ""
-        entity['diet'] = user.profile.diet if privileged else ""
-        entity['transportation_aid'] = ("TRUE" if user.profile.transportation_aid else "FALSE") if privileged else ""
-        entity['transportation_hr'] = ("TRUE" if user.profile.transportation_hr else "FALSE") if privileged else ""
-        entity['transportation'] = user.profile.transportation if privileged else ""
-        entity['transportation_fee'] = user.profile.transportation_fee if privileged else ""
-        entity['accom'] = ({0: "FALSE", 2: "TRUE", 1: "Either"}.get(user.profile.accom)) if privileged else ""
-        entity['roommate'] = user.profile.roommate if privileged else ""
-        entity['gender'] = ({1: "Male", 2: "Female", 9: "Other"}.get(user.profile.accom)) if privileged else ""
-        entity['personal_id'] = user.profile.personal_id if sensitive else ("<" + str(len(user.profile.personal_id)) + ">" if privileged else "")
-        entity['ice_contact'] = user.profile.ice_contact if privileged else ""
-        entity['ice_phone'] = user.profile.ice_phone if privileged else ""
-        entity['birthday'] = user.profile.birthday if sensitive else ("<" + str(len(user.profile.birthday)) + ">" if privileged else "")
+
+        if privileged:
+            entity['twenty'] = ("TRUE" if user.profile.twenty else "FALSE")
+            entity['certificate'] = ("TRUE" if user.profile.certificate else "FALSE")
+            entity['cel_dinner'] = ("TRUE" if user.profile.cel_dinner else "FALSE")
+            entity['on_site'] = ("TRUE" if user.profile.on_site else "FALSE")
+            entity['prev_worker'] = ("TRUE" if user.profile.prev_worker else "FALSE")
+            entity['residence'] = user.profile.residence
+            entity['shirt_size'] = user.profile.shirt_size
+            entity['diet'] = user.profile.diet
+            entity['transportation_aid'] = ("TRUE" if user.profile.transportation_aid else "FALSE")
+            entity['transportation_hr'] = ("TRUE" if user.profile.transportation_hr else "FALSE")
+            entity['transportation'] = user.profile.transportation
+            entity['transportation_fee'] = user.profile.transportation_fee
+            entity['accom'] = ({0: "FALSE", 2: "TRUE", 1: "Either"}.get(user.profile.accom))
+            entity['roommate'] = user.profile.roommate
+            entity['gender'] = ({1: "Male", 2: "Female", 9: "Other"}.get(user.profile.accom))
+            entity['personal_id'] = user.profile.personal_id if sensitive else ("<" + str(len(user.profile.personal_id)) + ">")
+            entity['ice_contact'] = user.profile.ice_contact
+            entity['ice_phone'] = user.profile.ice_phone
+            entity['birthday'] = user.profile.birthday if sensitive else ("<" + str(len(user.profile.birthday)) + ">")
+            entity['comment'] = user.profile.comment
         try:
             languages = [f.verbose_name for f in user.profile.language._meta.fields if type(f) == BooleanField and getattr(user.profile.language, f.name)]
             entity['language'] = ",".join((languages + [user.profile.language.other]) if user.profile.language.other else languages)
@@ -171,7 +173,6 @@ def export(request, format=None):
         except AttributeError:
             entity['abilities'] = ""
         entity['bio'] = user.profile.bio
-        entity['comment'] = user.profile.comment if privileged else ""
 
         users_output.append(entity)
 
