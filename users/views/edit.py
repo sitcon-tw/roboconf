@@ -88,7 +88,6 @@ def edit(request, username):
         profile.grade = request.POST.get('grade', '')
         profile.on_site = (request.POST.get('on_site') == 'True')
         profile.phone = request.POST.get('phone', '')
-        profile.slack = request.POST.get('slack', '')
         profile.personal_id = request.POST.get('personal_id', '')
         profile.ice_contact = request.POST.get('ice_contact', '')
         profile.ice_phone = request.POST.get('ice_phone', '')

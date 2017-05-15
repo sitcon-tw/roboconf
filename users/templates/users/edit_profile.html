@@ -78,7 +78,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-4 columns">
+				<div class="small-6 columns">
 					<h5>是否曾是 SITCON 年會或夏令營工人？<span class="required"></span></h5>
 					<label for="prev_worker_t" style="display: inline-block;" onclick="">
 						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.prev_worker %}checked{% endif %}>是
@@ -87,13 +87,9 @@
 						<input id="prev_worker_f" name="prev_worker" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.prev_worker %}checked{% endif %}>否
 					</label>
 				</div>
-				<div class="small-4 columns">
+				<div class="small-6 columns">
 					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫用，對所有工人可見。</small></h5>
 					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" pattern="[0-9]+" />
-				</div>
-				<div class="small-4 columns end">
-					<h5>Slack 使用者名稱<br><small>您在 <a href="http://sitcon.slack.com/" tabindex="-1" target="_blank">Slack</a> 上的使用者名稱</small></h5>
-					<input type="text" name="slack" maxlength="32" placeholder="SITCON Slack 使用者名稱" value="{{ u.profile.slack }}" />
 				</div>
 			</div>
 			<hr>
@@ -108,7 +104,7 @@
 						<input id="certificate_f" name="certificate" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.certificate %}checked{% endif %}>否
 					</label>
 					<label for="require_printed_cert_field" style="display: inline-block;">
-						<input id="require_printed_cert_field" name="require_printed_cert" style="margin-left: 15px" type="checkbox" {% if not u.profile.require_printed_cert %}checked{% endif %}>我還需要紙本的
+						<input id="require_printed_cert_field" name="require_printed_cert" style="margin-left: 15px" type="checkbox" {% if  u.profile.require_printed_cert %}checked{% endif %}>我還需要紙本的
 					</label>
 				</div>
 				<div class="small-5 columns">
