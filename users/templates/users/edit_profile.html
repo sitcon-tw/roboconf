@@ -57,22 +57,6 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-6 columns" style="margin-bottom: 8px;">
-					<h5>出生日期<span class="required"></span><br><small>以身分證上登記的為準，請選擇一個符合您的描述</small></h5>
-					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1996 年 8 月 20 號（含）前出生</input></label>
-					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1996 年 8 月 20 號後出生，<br>且已經獲得家長同意參加 COSCUP。</input></label>
-				</div>
-				<div class="small-6 columns">
-					<h5>是否曾是 COSCUP 工作人員<span class="required"></span></h5>
-					<label for="prev_worker_t" style="display: inline-block;" onclick="">
-						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.prev_worker %}checked{% endif %}>是
-					</label>
-					<label for="prev_worker_f" onclick="" style="display: inline-block;">
-						<input id="prev_worker_f" name="prev_worker" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.prev_worker %}checked{% endif %}>否
-					</label>
-				</div>
-			</div>
-			<div class="row">
 				<div class="small-4 columns">
 					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫用，{% if not teamleader %}對同組組員可見{% else %}組長對所有人可見{% endif %}</small></h5>
 					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" pattern="[0-9]+" />
@@ -129,7 +113,7 @@
 			</div>
 			<hr>
 			<h4>交通補助</h4>
-			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;">由於預算限制，今年我們僅能提供<strong>部份</strong>之交通費補助，補助上限為來回<strong>客運票價總額之 50%</strong>。<br><strong>有需要的話，請您務必填寫下列資料。</strong></small></div>
+			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;"><strong>有需要的話，請您務必填寫下列資料。</strong></small></div>
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>是否需要交通補助<span class="required"></span></h5>
@@ -140,7 +124,7 @@
 						<input id="transportation_aid_f" name="transportation_aid" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.transportation_aid %}checked{% endif %}>否
 					</label>
 				</div>
-				<div class="small-4 columns">
+				<div class="small-8 columns">
 					<h5>所在地 <small>若有住宿需求，也請務必填寫</small></h5>
 					<select name="residence">
 						<option disabled>所在地</option>
@@ -148,24 +132,11 @@
 						{% for r in options.residence %}<option{% if u.profile.residence == r %} selected{% endif %}>{{ r }}</option>{% endfor %}
 					</select>
 				</div>
-				<div class="small-4 columns">
-					<h5>交通時間是否大於一小時</h5>
-					<label for="transportation_hr_t" style="display: inline-block;" onclick="">
-						<input id="transportation_hr_t" name="transportation_hr" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.transportation_hr %}checked{% endif %}>是
-					</label>
-					<label for="transportation_hr_f" onclick="" style="display: inline-block;">
-						<input id="transportation_hr_f" name="transportation_hr" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.transportation_hr %}checked{% endif %}>否
-					</label>
-				</div>
 			</div>
 			<div class="row">
-				<div class="small-6 columns">
+				<div class="small-8 columns">
 					<h5>預估交通方式 <small>請寫出主要使用的交通工具。</small></h5>
 					<textarea name="transportation" placeholder="預估交通方式" maxlength="128">{{ u.profile.transportation }}</textarea>
-				</div>
-				<div class="small-6 columns">
-					<h5>預估交通費用 <small>請注意，我們可能無法提供全額補助。</small></h5>
-					<textarea name="transportation_fee" placeholder="預估交通費用" maxlength="128">{{ u.profile.transportation_fee }}</textarea>
 				</div>
 			</div>
 			<hr>
@@ -196,7 +167,7 @@
 			</div>
 			<hr>
 			<h4>服務時數證明</h4>
-			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;">志工服務時數證明將由開放文化基金會開立發證，如果你的組織單位（學校/公司）有需要志工服務時數證明之文件，將可以在這裡申請。如果你個人只是想留紀念的，請儘量以申請感謝狀為主，謝謝！<br>開放文化基金會將提供「志工服務時數證明」電子檔，可自行留存、列印檔案。<br>如有任何其他疑問，請聯絡 Slack ID: <a href="https://coscup.slack.com/messages/@singing/" target="_blank">@singing</a>、Email：<a href="mailto:singing@ocf.tw" target="_blank">singing@ocf.tw</a>，<strong>有需要的話，請您務必填寫下列資料。</strong><br><span style="font-size: 85%;">註：服務時數開放登錄到 9/5 日，你可以待 COSCUP 結束後再來填寫實際時數與工作內容。</span></small></div>
+			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"></div>
 			<div class="row">
 				<div class="small-4 columns">
 					<h5>是否需要服務時數證明<span class="required"></span></h5>
@@ -207,23 +178,9 @@
 						<input id="volunteering_proof_f" name="volunteering_proof" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.volunteering_proof %}checked{% endif %}>否
 					</label>
 				</div>
-				<div class="small-4 columns">
+				<div class="small-8 columns">
 					<h5>出生年月日<br><small>僅供服務時數證明檔案使用。</small></h5>
 					{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏，請洽行政組修改">{{ u.profile.birthday|length }} 位數</span>{% else %}<input type="text" name="birthday" maxlength="10" placeholder="出生年月日 （例：1995/12/31）" value="{{ u.profile.birthday }}" />{% endif %}
-				</div>
-				<div class="small-4 columns">
-					<h5>服務時數<br><small>舉頭三尺有組長，請依實際服務狀況填寫</small></h5>
-					<input type="number" name="volunteering_duration" maxlength="8" min="0" placeholder="服務時數（小時）" value="{{ u.profile.volunteering_duration }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-6 columns">
-					<h5>服務時間 <small>請寫出您的服務起始日期與結束日期。</small></h5>
-					<textarea name="volunteering_time" placeholder="起始日期與結束日期 （例：2016/08/20-2016/08/21）" maxlength="32">{{ u.profile.volunteering_time }}</textarea>
-				</div>
-				<div class="small-6 columns">
-					<h5>服務內容 <small>舉頭三尺有組長，請依實際服務狀況填寫</small></h5>
-					<textarea name="volunteering_work_done" placeholder="服務內容" maxlength="256">{{ u.profile.volunteering_work_done }}</textarea>
 				</div>
 			</div>
 			<hr>
