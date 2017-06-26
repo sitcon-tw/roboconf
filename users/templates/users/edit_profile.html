@@ -57,6 +57,22 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="small-6 columns" style="margin-bottom: 8px;">
+					<h5>出生日期<span class="required"></span><br><small>以身分證上登記的為準，請選擇一個符合您的描述</small></h5>
+					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1997 年 8 月 5 號（含）前出生</input></label>
+					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1997 年 8 月 5 號後出生，<br>且已經獲得監護人同意參與 COSCUP。</input></label>
+				</div>
+				<div class="small-6 columns">
+					<h5>是否曾是 COSCUP 工作人員<span class="required"></span></h5>
+					<label for="prev_worker_t" style="display: inline-block;" onclick="">
+						<input id="prev_worker_t" name="prev_worker" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.prev_worker %}checked{% endif %}>是
+					</label>
+					<label for="prev_worker_f" onclick="" style="display: inline-block;">
+						<input id="prev_worker_f" name="prev_worker" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.prev_worker %}checked{% endif %}>否
+					</label>
+				</div>
+			</div>
+			<div class="row">
 				<div class="small-4 columns">
 					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫用，{% if not teamleader %}對同組組員可見{% else %}組長對所有人可見{% endif %}</small></h5>
 					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" pattern="[0-9]+" />
