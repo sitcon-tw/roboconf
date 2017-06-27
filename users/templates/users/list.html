@@ -72,16 +72,7 @@ $('.team_selector').on('change', '.team_checkbox', function() {
 		url: '/users/' + uid + '/team/' + tid,
 		data: {data: state},
 		success: function (data) {
-			if (state) {
-				if (subheader.children().length > 0) {
-					subheader.append(' ');
-				}
-				subheader.append('<span class="radius secondary label"></span>');
-				subheader.find('span').last().attr('name', tid).html(team_name);
-			} else {
-				subheader.find('span[name="' + tid + '"]').remove();
-				subheader.trim();
-			}
+			subheader.html(data.map(function(g) { return '<span class="radius secondary label" name="' + g['id'] + '">' + g['name'] + '</span>'; }).join())
 		},
 		error: function (data) {}
 	})

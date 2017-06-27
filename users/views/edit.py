@@ -11,6 +11,7 @@ from django.conf import settings
 from core.imaging import resize_image
 from users.models import *
 from users.utils import *
+import json
 
 @login_required
 def team(request, username, tid):
@@ -37,7 +38,7 @@ def team(request, username, tid):
         status = 'error'
 
     if status == 'success':
-        return HttpResponse('success')
+        return HttpResponse(json.dumps([{'id': g.id, 'name': g.name} for g in GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.filter(id__in=user.groups.all())]), content_type="application/json; charset=utf-8")
     else:
         return HttpResponse(' '.join(errors))
 
