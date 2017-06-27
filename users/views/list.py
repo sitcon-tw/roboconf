@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from core.api.decorators import api_endpoint, ajax_required
 from core.api.views import render_json
-from users.utils import sorted_users, sorted_categories
+from users.utils import sorted_users, sorted_categories, sorted_groups
 from users.models import GroupCategory
 from django.db.models.fields import BooleanField
 from collections import OrderedDict
@@ -28,7 +28,7 @@ def list(request):
     trusted = request.user.profile.is_trusted()
     users = apply_filter(filters=filters, groups=groups, trusted=trusted)
     users = sorted_users(users)
-    teamlist = [(t, t in request.user.profile.lead_team.all()) for t in GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all()]
+    teamlist = [(t, t in request.user.profile.lead_team.all()) for t in sorted_groups(GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all())]
 
     for i, user in enumerate(users):
         privileged = request.user.has_perm('auth.change_user')
