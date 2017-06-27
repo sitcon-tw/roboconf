@@ -9,7 +9,7 @@
 				<a href="{% url 'users:profile' u.username %}">
 					<img class="avatar medium" src="{{ u.profile.avatar }}" alt="{{ u.profile.name }}" />
 					<div><h4 style="display: inline-block;">{{ u.profile.name }}</h4> {% if privileged or u == user %}<a href="{% url 'users:edit' u.username %}"><span class="icon-edit iconize" ></span></a>{% endif %} {% if teamleader %}<a href="#" data-tooltip data-dropdown="select_team_{{ u.username }}" data-default-content="選取組別"><span class="icon-add iconize" ></span></a>{% endif %}</div>
-					<h4 class="subheader">{% for g in groups %}<span class="radius secondary label" name="{{ g.id }}">{{ g.name }}</span>{% if not forloop.last %}&nbsp;{% endif %}{% endfor %}</h4>
+					<h4 class="subheader">{% for g in groups %}<span class="radius secondary label" name="{{ g.id }}">{{ g.name }}</span>{% if not forloop.last %} {% endif %}{% endfor %}</h4>
 					<ul id="select_team_{{ u.username }}" class="f-dropdown with-ticks team_selector" name="{{ u.username }}" data-dropdown-content>
 						{% for t, t_enabled in teams %}
 						<li><label for="{{ u.username }}_group_{{ t.id }}_checkbox"><input type="checkbox" class="team_checkbox" id="{{ u.username }}_group_{{ t.id }}_checkbox" name="{{ u.username }}_groups" value="{{ t.id }}" data-label="{{ t.name }}" {% if g in groups %}checked{% endif %} {% if not t_enabled %}disabled{% endif %} />{{ t.name }}</label></li>
@@ -74,7 +74,7 @@ $('.team_selector').on('change', '.team_checkbox', function() {
 		success: function (data) {
 			if (state) {
 				if (subheader.children().length > 0) {
-					subheader.append('&nbsp;');
+					subheader.append(' ');
 				}
 				subheader.append('<span class="radius secondary label"></span>');
 				subheader.find('span').last().attr('name', tid).html(team_name);
