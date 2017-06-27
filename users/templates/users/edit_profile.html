@@ -59,8 +59,8 @@
 			<div class="row">
 				<div class="small-6 columns" style="margin-bottom: 8px;">
 					<h5>出生日期<span class="required"></span><br><small>以身分證上登記的為準，請選擇一個符合您的描述</small></h5>
-					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1997 年 8 月 5 號（含）前出生</input></label>
-					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1997 年 8 月 5 號後出生，<br>且已經獲得監護人同意參與 COSCUP。</input></label>
+					<label><input type="radio" name="twenty" value="True"{% if u.profile.twenty %} checked{% endif %}>我在 1997 年 8 月 4 號（含）前出生</input></label>
+					<label><input type="radio" name="twenty" value="False"{% if not u.profile.twenty %} checked{% endif %}>我在 1997 年 8 月 4 號後出生，<br>且已經獲得監護人同意參與 COSCUP。</input></label>
 				</div>
 				<div class="small-6 columns">
 					<h5>是否曾是 COSCUP 工作人員<span class="required"></span></h5>
@@ -74,7 +74,7 @@
 			</div>
 			<div class="row">
 				<div class="small-4 columns">
-					<h5>電話號碼<span class="required"></span><br><small>僅供工作人員聯繫用，{% if not teamleader %}對同組組員可見{% else %}組長對所有人可見{% endif %}</small></h5>
+					<h5>手機號碼<span class="required"></span><br><small>僅供工作人員聯繫用，{% if not teamleader %}對同組組員可見{% else %}組長對所有人可見{% endif %}</small></h5>
 					<input type="tel" name="phone" placeholder="電話號碼 （例：0987654321）" value="{{ u.profile.phone }}" pattern="[0-9]+" />
 				</div>
 				<div class="small-4 columns">
@@ -85,7 +85,7 @@
 					<h5>Redmine 使用者名稱<br><small>您在 <a href="http://issues.coscup.org/" tabindex="-1" target="_blank">工作事項追蹤系統</a> 上的使用者名稱</small></h5>
 					<input type="text" name="redmine" maxlength="30" placeholder="COSCUP Redmine 使用者名稱" value="{{ u.profile.redmine }}" />
 				</div>
-				<div class="columns"><small style="font-size: 85%;">註：Slack、Redmine 將會在完成工人登錄之後再由行政組為您邀請註冊。</small></div>
+				<div class="columns"><small style="font-size: 85%;"></small></div>
 			</div>
 			<hr>
 			<h4>工作人員福利</h4>
@@ -119,7 +119,7 @@
 					</select>
 				</div>
 				<div class="small-6 columns">
-					<h5>飲食習慣<span class="required"></span> <small>若有其他會過敏的食材，請在備註欄位補充！</small></h5>
+					<h5>飲食習慣<span class="required"></span></h5>
 					<select name="diet">
 						<option disabled>飲食習慣</option>
 						{% if not u.profile.diet %}<option value="" selected>（飲食習慣）</option>{% endif %}
@@ -167,7 +167,7 @@
 					</select>
 				</div>
 				<div class="small-7 columns">
-					<h5>希望的室友 <br><small>行政組將盡力協助，請事先講好，並彼此都要填寫對方哦！（可留空）</small></h5>
+					<h5>希望的室友 <br><small>有雙人與四人房，請先彼此講好並都要填寫。本欄資訊僅作為參考，不保證一定會一起住</small></h5>
 					<input type="text" name="roommate" maxlength="32" placeholder="希望的室友" value="{{ u.profile.roommate }}" />
 				</div>
 			</div>
