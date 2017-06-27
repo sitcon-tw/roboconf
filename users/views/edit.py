@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.validators import validate_email
@@ -12,9 +13,38 @@ from users.models import *
 from users.utils import *
 
 @login_required
+def team(request, username, tid):
+    user = get_object_or_404(User, username=username)
+    team = get_object_or_404(Group, id=tid)
+    privileged = request.user.has_perm('auth.change_user')
+
+    if not (team in request.user.profile.lead_team.all() or privileged):
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied
+
+    errors = []
+    status = ''
+
+    if request.POST.get('data') == 'true':
+        team.user_set.add(user)
+    else:
+        team.user_set.remove(user)
+
+    if len(errors) < 1:
+        team.save()
+        status = 'success'
+    else:
+        status = 'error'
+
+    if status == 'success':
+        return HttpResponse('success')
+    else:
+        return HttpResponse(' '.join(errors))
+
+@login_required
 def edit(request, username):
     user = get_object_or_404(User, username=username)
-    privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+    privileged = request.user.has_perm('auth.change_user')
 
     if not (user == request.user or privileged):
         from django.core.exceptions import PermissionDenied

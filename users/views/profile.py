@@ -11,7 +11,7 @@ from users.models import GroupCategory
 @api_endpoint(public=True)
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+    privileged = request.user.has_perm('auth.change_user')
 
     team_list = [x.id for x in GroupCategory.objects.get(pk=2).groups.all()]
     same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])

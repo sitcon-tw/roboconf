@@ -68,7 +68,7 @@ class UserProfile(models.Model):
     bio = models.TextField(max_length=512, default='', help_text='biography', blank=True, null=True)
     comment = models.TextField(max_length=512, default='', blank=True, null=True)
 
-    lead_team = models.ForeignKey(Group, help_text='leading team', default=None, null=True, blank=True, related_name='leader')
+    lead_team = models.ManyToManyField(Group, help_text='leading team', default=None, null=True, blank=True, related_name='leader')
 
     def __str__(self):
         return '%s - %s' % (self.title, self.user.username)

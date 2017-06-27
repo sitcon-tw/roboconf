@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^me$', views.me, name='me'),
     url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)$', views.profile, name='profile'),
     url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)/edit$', views.edit, name='edit'),
+    url(r'^(?P<username>[0-9A-Za-z_@\+\.\-]+)/team/(?P<tid>[0-9]+)$', views.team, name='team'),
     url(r'^(?P<username_or_pk>[0-9A-Za-z_@\+\.\-]+)/photo$', views.photo.general, name='photo_general'),
     url(r'^(?P<username_or_pk>[0-9A-Za-z_@\+\.\-]+)/photo/small$', views.photo.small, name='photo_small'),
     url(r'^(?P<username_or_pk>[0-9A-Za-z_@\+\.\-]+)/photo/medium$', views.photo.medium, name='photo_medium'),

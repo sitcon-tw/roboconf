@@ -28,15 +28,18 @@ def list(request):
     trusted = request.user.profile.is_trusted()
     users = apply_filter(filters=filters, groups=groups, trusted=trusted)
     users = sorted_users(users)
+    teamlist = [(t, t in request.user.profile.lead_team.all()) for t in GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all()]
 
     for i, user in enumerate(users):
-        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
-        users[i] = (user, privileged)
+        privileged = request.user.has_perm('auth.change_user')
+        users[i] = (user, privileged, user.groups.filter(id__in=GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all()))
 
     return render(request, 'users/list.html', {
         'users': users,
         'query_string': request.META["QUERY_STRING"],
+        'teamleader': len(request.user.profile.lead_team.all()) > 0,
         'categories': sorted_categories,
+        'teams': teamlist,
         'filters': filters,
         'params': request.GET.urlencode(),
     })
