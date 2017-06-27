@@ -107,7 +107,7 @@ def contacts(request):
     team_list = [x.id for x in GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()]
 
     for i, user in enumerate(users):
-        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk=request.user.profile.lead_team_id).exists()
+        privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk__in=request.user.profile.lead_team.all()).exists()
         same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
         allow_phone = privileged or same_team or user.groups.filter(pk__in=settings.TEAM_SUBLEADER_GROUP_IDS)
         users[i] = (user, allow_phone)
