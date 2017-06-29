@@ -46,6 +46,7 @@ def team(request, username, tid):
 def edit(request, username):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user')
+    teams = sorted_groups(GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all())
 
     if not (user == request.user or privileged):
         from django.core.exceptions import PermissionDenied
@@ -83,10 +84,21 @@ def edit(request, username):
         user.profile.save()
 
     if request.POST.get('submit'):
-
         profile.display_name = request.POST.get('display_name')
         if request.user.has_perm('auth.change_user'):
             profile.title = request.POST.get('title')
+
+            lead_teams = request.POST.getlist('lead_teams')
+            old_lead_teams = user.profile.lead_team.all()
+            for team in old_lead_teams:
+                if team.id not in lead_teams:
+                    user.profile.lead_team.remove(team)
+            for team_id in lead_teams:
+                try:
+                    if team_id not in old_lead_teams:
+                        user.profile.lead_team.add(Group.objects.get(id=team_id))
+                except GroupDoesNotExist:
+                    pass
 
             groups = request.POST.getlist('groups')
             old_groups = user.groups.all()
@@ -97,7 +109,8 @@ def edit(request, username):
                 try:
                     if group_id not in old_groups:
                         user.groups.add(Group.objects.get(id=group_id))
-                except GroupDoesNotExist: pass
+                except GroupDoesNotExist:
+                    pass
 
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
@@ -186,44 +199,24 @@ def edit(request, username):
         else:
             status = 'error'
 
-    if status == 'success':
-        render_template_url = 'users/edit_profile.html'
-        return render(request, render_template_url, {
-            'u': user,
-            'privileged': privileged,
-            'teamleader': request.user.groups.filter(id=settings.TEAM_LEADER_GROUP_ID).exists(),
-            'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
-            'categories': sorted_categories if privileged else None,
-            'options': {
-                'residence': settings.RESIDENCE_OPTIONS,
-                'shirt_size': settings.SHIRT_SIZE_OPTIONS,
-                'diet': settings.DIET_OPTIONS,
-                'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
-                'gender': [(1, '男'), (2, '女'), (9, '其他')],
-                'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
-                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
-                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
-            },
-            'status': status,
-        })
-    else:
-        render_template_url = 'users/edit_profile.html'
-        return render(request, render_template_url, {
-            'u': user,
-            'privileged': privileged,
-            'teamleader': request.user.groups.filter(id=settings.TEAM_LEADER_GROUP_ID).exists(),
-            'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
-            'categories': sorted_categories if privileged else None,
-            'options': {
-                'residence': settings.RESIDENCE_OPTIONS,
-                'shirt_size': settings.SHIRT_SIZE_OPTIONS,
-                'diet': settings.DIET_OPTIONS,
-                'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
-                'gender': [(1, '男'), (2, '女'), (9, '其他')],
-                'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
-                'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
-                'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
-            },
-            'errors': errors,
-            'status': status,
-        })
+    render_template_url = 'users/edit_profile.html'
+    return render(request, render_template_url, {
+        'u': user,
+        'privileged': privileged,
+        'teamleader': len(user.profile.lead_team.all()) > 0,
+        'teams': teams,
+        'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
+        'categories': sorted_categories if privileged else None,
+        'options': {
+            'residence': settings.RESIDENCE_OPTIONS,
+            'shirt_size': settings.SHIRT_SIZE_OPTIONS,
+            'diet': settings.DIET_OPTIONS,
+            'accom': [(0, '不需要'), (1, '皆可'), (2, '需要')],
+            'gender': [(1, '男'), (2, '女'), (9, '其他')],
+            'roommate': [(r.id, r.profile.title + " " + r.profile.display_name + " (" + r.username + ")") for r in User.objects.filter(groups=settings.STAFF_GROUP_ID).exclude(id=user.id)],
+            'language': [(f.name, f.verbose_name, getattr(user.profile.language, f.name)) for f in language._meta.fields if type(f) == BooleanField],
+            'abilities': [(f.name, f.verbose_name, getattr(user.profile.abilities, f.name)) for f in abilities._meta.fields if type(f) == BooleanField],
+        },
+        'status': status,
+        'errors': errors
+    })

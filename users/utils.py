@@ -11,9 +11,8 @@ def generate_password():
 def get_user_sorting_key(user):
     groups = [g.id for g in user.groups.all()]
     identity = ''.join([str(1 - groups.count(i)) for i in GROUP_PRIORITY])    # Sort by identity first
-    title = user.profile.title.ljust(5)
     name = user.profile.name
-    return ''.join((identity, title, name))
+    return ''.join((identity, name))
 
 def sorted_users(users):
     return sorted(users, key=get_user_sorting_key)

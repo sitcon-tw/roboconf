@@ -11,8 +11,8 @@
 					<div><h4 style="display: inline-block;">{{ u.profile.name }}</h4> {% if privileged or u == user %}<a href="{% url 'users:edit' u.username %}"><span class="icon-edit iconize" ></span></a>{% endif %} {% if teamleader %}<a href="#" data-dropdown="select_team_{{ u.username }}" data-default-content="選取組別"><span class="icon-add iconize" ></span></a>{% endif %}</div>
 					<h4 class="subheader">{% for g in groups %}<span class="radius secondary label" name="{{ g.id }}">{{ g.name }}</span>{% if not forloop.last %} {% endif %}{% endfor %}</h4>
 					<ul id="select_team_{{ u.username }}" class="f-dropdown with-ticks team_selector" name="{{ u.username }}" data-dropdown-content>
-						{% for t, t_enabled in teams %}
-						<li><label for="{{ u.username }}_group_{{ t.id }}_checkbox"><input type="checkbox" class="team_checkbox" id="{{ u.username }}_group_{{ t.id }}_checkbox" name="{{ u.username }}_groups" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in groups %}checked{% endif %} {% if not t_enabled %}disabled{% endif %} />{{ t.name }}</label></li>
+						{% for t in teams %}
+						<li><label for="{{ u.username }}_group_{{ t.id }}_checkbox"><input type="checkbox" class="team_checkbox" id="{{ u.username }}_group_{{ t.id }}_checkbox" name="{{ u.username }}_groups" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in groups %}checked{% endif %} {% if t not in user.profile.lead_team.all %}disabled{% endif %} />{{ t.name }}</label></li>
 						{% endfor %}
 					</ul>
 				</a>
