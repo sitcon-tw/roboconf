@@ -16,7 +16,7 @@ def photo_path(instance, filename):
 
 
 class abilities(models.Model):
-    medical = models.BooleanField(default=False, verbose_name='醫療')
+    medical = models.BooleanField(default=False, verbose_name='醫療或急救')
     legal = models.BooleanField(default=False, verbose_name='法律')
     pr = models.BooleanField(default=False, verbose_name='公關')
     other = models.CharField(max_length=64, default='', help_text='other special abilities', blank=True)
