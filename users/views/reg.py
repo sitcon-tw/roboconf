@@ -38,7 +38,7 @@ def reg_add_token(request):
     status = ''
 
     if 'submit' in request.POST:
-        number = int(request.POST.get('number'))
+        number = int(request.POST.get('number') or '0')
         title = request.POST.get('title')
         groups = request.POST.getlist('groups')
         data = split_trim_pad(number,
