@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from notifications.utils import send_template_mail, format_address
 
 from users.models import RegisterToken, UserProfile
-from users.utils import sorted_users, sorted_tokens, sorted_categories
+from users.utils import sorted_users, sorted_tokens, sorted_categories, split_trim_pad
 from users.forms import RegisterForm, TokenEditForm
 
 
@@ -38,22 +38,23 @@ def reg_add_token(request):
     status = ''
 
     if 'submit' in request.POST:
-        pad = lambda l, n: l + [''] * (n - len(l))
-
         number = int(request.POST.get('number'))
         title = request.POST.get('title')
-        usernames = pad(request.POST.get('usernames').split(","), number)
-        emails = pad(request.POST.get('emails').split(","), number)
-        display_names = pad(request.POST.get('display_names').split(","), number)
-        for tn in range(0, number):
+        groups = request.POST.getlist('groups')
+        data = split_trim_pad(number,
+            request.POST.get('usernames'),
+            request.POST.get('emails'),
+            request.POST.get('display_names'))
+
+        for username, email, d_n in zip(*data):
             token = RegisterToken()
             token.title = title
-            token.username = usernames[tn]
-            token.email = emails[tn]
-            token.display_name = display_names[tn]
+            token.username = username
+            token.email = email
+            token.display_name = d_n
             token.save()
 
-            for group_id in request.POST.getlist('groups'):
+            for group_id in groups:
                 try:
                     token.groups.add(Group.objects.get(id=int(group_id)))
                 except Group.DoesNotExist:

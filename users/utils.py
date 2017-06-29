@@ -1,5 +1,6 @@
 from users.models import *
 from core.settings import *
+import re
 
 def generate_password():
     from os import urandom
@@ -37,3 +38,9 @@ def get_group_sorting_key(group):
 
 def sorted_categories():
     return { category : sorted_groups(category.groups.all()) for category in GroupCategory.objects.all() }
+
+def split_trim_pad(num, *data):
+    data = tuple([x.strip() for x in datum.split('\n')] for datum in data)
+    num = max(max(map(len, data)), num)
+    pad = lambda l, num=num: l + [''] * (num - len(l))
+    return tuple(map(pad, data))
