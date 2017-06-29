@@ -247,7 +247,7 @@
 					<label class="inline"><a href="#" id="lead_teams_label" class="has-tip" title="設為組長" data-tooltip data-dropdown="lead_teams_dropdown" data-default-content="設為組長"><strong>{% for t in user.profile.lead_team.all %}{{ t.name }}{% if not forloop.last %}、{% else %} 組長{% endif %}{% empty %}設為組長{% endfor %}</strong></a></label>
 					<ul id="lead_teams_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
 						{% for t in teams %}
-						<li><label for="teams_{{ t.id }}_checkbox"><input type="checkbox" class="teams_checkbox" id="teams_{{ t.id }}_checkbox" name="lead_teams" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in user.profile.lead_team.all %}checked{% endif %} />{{ t.name }}</label></li>
+						<li><label for="teams_{{ t.id }}_checkbox"><input type="checkbox" class="lead_teams_checkbox" id="teams_{{ t.id }}_checkbox" name="lead_teams" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in user.profile.lead_team.all %}checked{% endif %} />{{ t.name }}</label></li>
 						{% endfor %}
 					</ul>
 				</div>
@@ -276,6 +276,13 @@
 {% if privileged %}
 <script type="text/javascript">
 $(document).ready(function() {
+	$('.lead_teams_checkbox').change(function() {
+		var sel = [];
+		$('.lead_teams_checkbox:checked').each(function (index,e) {
+			sel.push($.trim($(e).data('label')));
+		});
+		$('#lead_teams_label').text(sel.length ? sel.join('、') + ' 組長' : $('#lead_teams_label').data('default-content'));
+	});
 	$('.group_checkbox').change(function() {
 		var sel = [];
 		$('.group_checkbox:checked').each(function (index,e) {
