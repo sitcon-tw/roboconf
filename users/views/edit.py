@@ -46,7 +46,8 @@ def team(request, username, tid):
 def edit(request, username):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user')
-    teams = sorted_groups(GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all())
+    team_list = sorted_groups(GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all())
+    user_teams = user.groups.filter(id__in=GroupCategory.objects.get(id=settings.TEAM_GROUPCAT_ID).groups.all())
 
     if not (user == request.user or privileged):
         from django.core.exceptions import PermissionDenied
@@ -204,7 +205,8 @@ def edit(request, username):
         'u': user,
         'privileged': privileged,
         'teamleader': len(user.profile.lead_team.all()) > 0,
-        'teams': teams,
+        'teams': user_teams,
+        'team_list': team_list,
         'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
         'categories': sorted_categories if privileged else None,
         'options': {

@@ -19,7 +19,7 @@
 			<div class="divider"></div>
 			<div class="row">
 				<div class="columns">
-					<h4>{{ u.profile.title }} <span class="has-tip" title="{% if privileged %}請至 Django 後台更改登入帳號{% else %}請聯繫行政組以更改你的登入帳號{% endif %}">{{ u.username }}</span> <small><span class="has-tip" title="{% if privileged %}請至 Django 後台更改 email{% else %}請聯繫行政組以更改你的 email{% endif %}">{{ u.email }}</span></small></h4>
+					<h4>{% for t in teams %}<span class="radius secondary label" name="{{ t.id }}">{{ t.name }}</span>{% if not forloop.last %} {% endif %}{% endfor %} <span class="has-tip" title="{% if privileged %}請至 Django 後台更改登入帳號{% else %}請聯繫行政組以更改你的登入帳號{% endif %}">{{ u.username }}</span> <small><span class="has-tip" title="{% if privileged %}請至 Django 後台更改 email{% else %}請聯繫行政組以更改你的 email{% endif %}">{{ u.email }}</span></small></h4>
 				</div>
 			</div>
 			<div class="row">
@@ -246,7 +246,7 @@
 					</ul>
 					<label class="inline"><a href="#" id="lead_teams_label" class="has-tip" title="設為組長" data-tooltip data-dropdown="lead_teams_dropdown" data-default-content="設為組長"><strong>{% for t in user.profile.lead_team.all %}{{ t.name }}{% if not forloop.last %}、{% else %} 組長{% endif %}{% empty %}設為組長{% endfor %}</strong></a></label>
 					<ul id="lead_teams_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
-						{% for t in teams %}
+						{% for t in team_list %}
 						<li><label for="teams_{{ t.id }}_checkbox"><input type="checkbox" class="lead_teams_checkbox" id="teams_{{ t.id }}_checkbox" name="lead_teams" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in user.profile.lead_team.all %}checked{% endif %} />{{ t.name }}</label></li>
 						{% endfor %}
 					</ul>
