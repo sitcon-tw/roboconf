@@ -244,10 +244,10 @@
 						{% endfor %}
 						{% endfor %}
 					</ul>
-					<label class="inline"><a href="#" id="lead_teams_label" class="has-tip" title="設為組長" data-tooltip data-dropdown="lead_teams_dropdown" data-default-content="設為組長"><strong>{% for t in user.profile.lead_team.all %}{{ t.name }}{% if not forloop.last %}、{% else %} 組長{% endif %}{% empty %}設為組長{% endfor %}</strong></a></label>
+					<label class="inline"><a href="#" id="lead_teams_label" class="has-tip" title="設為組長" data-tooltip data-dropdown="lead_teams_dropdown" data-default-content="設為組長"><strong>{% for t in u.profile.lead_team.all %}{{ t.name }}{% if not forloop.last %}、{% else %} 組長{% endif %}{% empty %}設為組長{% endfor %}</strong></a></label>
 					<ul id="lead_teams_dropdown" class="f-dropdown with-ticks" data-dropdown-content>
 						{% for t in team_list %}
-						<li><label for="teams_{{ t.id }}_checkbox"><input type="checkbox" class="lead_teams_checkbox" id="teams_{{ t.id }}_checkbox" name="lead_teams" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in user.profile.lead_team.all %}checked{% endif %} />{{ t.name }}</label></li>
+						<li><label for="teams_{{ t.id }}_checkbox"><input type="checkbox" class="lead_teams_checkbox" id="teams_{{ t.id }}_checkbox" name="lead_teams" value="{{ t.id }}" data-label="{{ t.name }}" {% if t in u.profile.lead_team.all %}checked{% endif %} />{{ t.name }}</label></li>
 						{% endfor %}
 					</ul>
 				</div>
