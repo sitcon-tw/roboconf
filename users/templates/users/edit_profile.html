@@ -120,7 +120,7 @@
 			<h4>交通補助</h4>
 			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;"><strong>請先詳閱 <a href="https://docs.google.com/document/d/1OofffTT3T5IeSvDX0A1Pfm8y4EWgzAI2BN9_Jld_AIc/pub">COSCUP 2017 工作人員交通費用補助辦法</a>。有需要的話，請您務必填寫下列資料。</strong></small></div>
 			<div class="row">
-				<div class="small-4 columns">
+				<div class="small-6 columns">
 					<h5>是否需要交通補助<span class="required"></span></h5>
 					<label for="transportation_aid_t" style="display: inline-block;" onclick="">
 						<input id="transportation_aid_t" name="transportation_aid" type="radio" value="True" style="margin-right: 5px;" {% if u.profile.transportation_aid %}checked{% endif %}>是
@@ -129,7 +129,7 @@
 						<input id="transportation_aid_f" name="transportation_aid" style="margin-left: 15px" type="radio" value="False" {% if not u.profile.transportation_aid %}checked{% endif %}>否
 					</label>
 				</div>
-				<div class="small-8 columns">
+				<div class="small-6 columns">
 					<h5>所在地 <small>若有住宿需求，也請務必填寫</small></h5>
 					<select name="residence">
 						<option disabled>所在地</option>
@@ -139,7 +139,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-8 columns">
+				<div class="columns">
 					<h5>預估交通方式 <small>請寫出主要使用的交通工具。</small></h5>
 					<textarea name="transportation" placeholder="預估交通方式" maxlength="128">{{ u.profile.transportation }}</textarea>
 				</div>
@@ -148,26 +148,26 @@
 			<h4>住宿</h4>
 			<div class="columns" style="padding-left: 5px; margin-bottom: 10px;"><small style="font-size: 85%;">由於床位有限，不保證所有人皆能被分配到住宿名額。除了特殊工作事項，將按照所在地遠近分配。<br><strong>有需要的話，請您務必填寫下列資料。</strong></small></div>
 			<div class="row">
-				<div class="small-5 columns">
+				<div class="small-6 columns">
 					<h5>是否需要住宿<span class="required"></span></h5>
 					<select name="accom">
 						<option disabled>是否需要住宿</option>
 						{% for i, a in options.accom %}<option value="{{ i }}"{% if u.profile.accom == i %} selected{% endif %}>{{ a }}</option>{% endfor %}
 					</select>
 				</div>
-				<div class="small-7 columns">
-					<h5>希望的室友 <br><small>有雙人與四人房，請先彼此講好並都要填寫。本欄資訊僅作為參考，不保證一定會一起住</small></h5>
-					<input type="text" name="roommate" maxlength="32" placeholder="希望的室友" value="{{ u.profile.roommate }}" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-5 columns end">
+				<div class="small-6 columns">
 					<h5>性別 <small>僅供住宿分配之用</small></h5>
 					<select name="gender">
 						<option disabled>性別</option>
 						{% if not u.profile.gender %}<option value="" selected>（性別）</option>{% endif %}
 						{% for g, n in options.gender %}<option value="{{ g }}"{% if u.profile.gender == g %} selected{% endif %}>{{ n }}</option>{% endfor %}
 					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns">
+					<h5>希望的室友 <br><small>有雙人與四人房，請先彼此講好並都要填寫。本欄資訊僅作為參考，不保證一定會一起住</small></h5>
+					<input type="text" name="roommate" maxlength="32" placeholder="希望的室友" value="{{ u.profile.roommate }}" />
 				</div>
 			</div>
 			<hr>
