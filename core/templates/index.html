@@ -6,7 +6,7 @@
 	<div class="large-3 columns">
 		<img class="avatar large" src="{{ user.profile.avatar }}" alt="{{ user.profile.name }}" />
 		<h4>{{ user.profile.name }}</h4>
-		<h5 class="subheader">{{ user.profile.title }}</h5>
+		<h5 class="subheader">{% for t in teams %}<span class="radius secondary label" name="{{ t.id }}">{{ t.name }}</span>{% if not forloop.last %} {% endif %}{% endfor %}</h5>
 		<ul class="profile-meta">
 			{% if user.profile.organization %}<li><span class="icon-school iconize"></span> {{ user.profile.organization }}</li>{% endif %}
 			{% if user.profile.phone %}<li><span class="icon-phone iconize"></span> {{ user.profile.phone }}</li>{% endif %}

@@ -13,7 +13,7 @@ def profile(request, username):
     user = get_object_or_404(User, username=username)
     privileged = request.user.has_perm('auth.change_user')
 
-    team_list = [x.id for x in GroupCategory.objects.get(pk=2).groups.all()]
+    team_list = GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()
     same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
 
     if request.is_ajax():
@@ -37,6 +37,7 @@ def profile(request, username):
         'allow_phone': privileged or same_team or user.profile.lead_team,
         'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
         'privileged': privileged,
+        'teams': team_list,
         'show_detail': user == request.user or privileged or request.user.has_perm('view_profile_detail'),
     })
 
