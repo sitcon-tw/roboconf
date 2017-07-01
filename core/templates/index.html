@@ -54,7 +54,7 @@
 			</tr>
 			<tr>
 				<td>交通補助</td>
-				<td>{% if user.profile.transportation_aid and user.profile.transportation_fee != "" %}{{ user.profile.transportation_fee }}{% elif user.profile.transportation_aid %}需要{% else %}不需要{% endif %}</td>
+				<td>{% if user.profile.transportation_aid %}需要{% else %}不需要{% endif %}</td>
 				{% if user.profile.transportation_aid and user.profile.transportation != "" %}<td>{{ user.profile.transportation }}</td>{% endif %}
 			</tr>
 			{% if not user.profile.accom == 0 or user.profile.transportation_aid %}
@@ -79,26 +79,18 @@
 			{% endif %}
 			<tr>
 				<td>服務證明</td>
-				<td>{% if user.profile.volunteering_proof %}<span class="icon-checkmark iconize"></span>需要{% else %}<span class="icon-cross iconize"></span>不需要{% endif %}</td>
+				<td>{% if u.profile.volunteering_proof %}<span class="icon-checkmark iconize"></span>需要{% else %}<span class="icon-cross iconize"></span>不需要{% endif %}</td>
 			</tr>
-			{% if user.profile.volunteering_proof %}
+			{% if u.profile.volunteering_proof %}
 			<tr>
 				<td>出生年月日</td>
-				<td>{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏">{{ user.profile.birthday|length }} 位數</span>{% else %}{{ user.profile.birthday }}{% endif %}</td>
-			</tr>
-			<tr>
-				<td>服務時數</td>
-				<td>{{ user.profile.volunteering_duration }}</td>
-			</tr>
-			<tr>
-				<td>服務時間</td>
-				<td>{{ user.profile.volunteering_time }}</td>
-			</tr>
-			<tr>
-				<td>服務內容</td>
-				<td>{{ user.profile.volunteering_work_done }}</td>
+				<td>{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏">{{ u.profile.birthday|length }} 位數</span>{% else %}{{ u.profile.birthday }}{% endif %}</td>
 			</tr>
 			{% endif %}
+			<tr>
+				<td>備註</td>
+				<td>{{ u.profile.comment }}</td>
+			</tr>
 		</table>
 	{% else %}
 	<div class="large-6 small-9 small-centered has-quote columns">

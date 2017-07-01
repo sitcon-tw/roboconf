@@ -59,7 +59,7 @@
 			</tr>
 			<tr>
 				<td>交通補助</td>
-				<td>{% if u.profile.transportation_aid and u.profile.transportation_fee != "" %}{{ u.profile.transportation_fee }}{% elif u.profile.transportation_aid %}需要{% else %}不需要{% endif %}</td>
+				<td>{% if u.profile.transportation_aid %}需要{% else %}不需要{% endif %}</td>
 				{% if u.profile.transportation_aid and u.profile.transportation != "" %}<td>{{ u.profile.transportation }}</td>{% endif %}
 			</tr>
 			{% if not u.profile.accom == 0 or u.profile.transportation_aid %}
@@ -90,18 +90,6 @@
 			<tr>
 				<td>出生年月日</td>
 				<td>{% if not sensitive %}<span class="has-tip" title="因個資原因隱藏">{{ u.profile.birthday|length }} 位數</span>{% else %}{{ u.profile.birthday }}{% endif %}</td>
-			</tr>
-			<tr>
-				<td>服務時數</td>
-				<td>{{ u.profile.volunteering_duration }}</td>
-			</tr>
-			<tr>
-				<td>服務時間</td>
-				<td>{{ u.profile.volunteering_time }}</td>
-			</tr>
-			<tr>
-				<td>服務內容</td>
-				<td>{{ u.profile.volunteering_work_done }}</td>
 			</tr>
 			{% endif %}
 			<tr>
