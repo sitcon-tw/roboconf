@@ -15,6 +15,7 @@ def profile(request, username):
 
     team_list = GroupCategory.objects.get(pk=settings.TEAM_GROUPCAT_ID).groups.all()
     same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
+    teamleader = any([user.profile.lead_team.filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
 
     if request.is_ajax():
         if user.is_active:
@@ -34,7 +35,7 @@ def profile(request, username):
 
     return render(request, 'users/profile.html', {
         'u': user,
-        'allow_phone': privileged or same_team or len(user.profile.lead_team.all()),
+        'allow_phone': privileged or teamleader,
         'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
         'privileged': privileged,
         'teams': filter(lambda x: x in user.groups.all(), team_list),
