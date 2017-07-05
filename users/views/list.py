@@ -109,7 +109,7 @@ def contacts(request):
     for i, user in enumerate(users):
         privileged = request.user.has_perm('auth.change_user') or user.groups.filter(pk__in=request.user.profile.lead_team.all()).exists()
         same_team = any([user.groups.filter(pk__in=team_list).filter(pk=k.id).exists() for k in request.user.groups.filter(pk__in=team_list)])
-        allow_phone = privileged or same_team or user.groups.filter(pk__in=settings.TEAM_SUBLEADER_GROUP_IDS)
+        allow_phone = privileged or same_team or len(user.profile.lead_team.all())
         users[i] = (user, allow_phone)
 
     return render(request, 'users/contacts.html', {

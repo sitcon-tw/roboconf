@@ -34,7 +34,7 @@ def profile(request, username):
 
     return render(request, 'users/profile.html', {
         'u': user,
-        'allow_phone': privileged or same_team or user.profile.lead_team,
+        'allow_phone': privileged or same_team or len(user.profile.lead_team.all()),
         'sensitive': user == request.user or request.user.has_perm('auth.change_user'),
         'privileged': privileged,
         'teams': filter(lambda x: x in user.groups.all(), team_list),
